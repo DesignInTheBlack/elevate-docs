@@ -6,7 +6,7 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'CSS',
+			title: 'Utility First, Design Driven',
 			favicon: './src/assets/dark.svg',
 			logo: {
 				light: './src/assets/light.svg',
