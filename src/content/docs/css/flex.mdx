@@ -1,0 +1,59 @@
+---
+title: "Flex Shorthand"
+description: A guide to the flex shorthand in Elevate CSS.
+---
+
+Elevate offers a streamlined flexbox experience, with defined properties
+for both row and column flexbox layouts as well as a large number of supported modifiers to describe
+flex layouts or adjust flex children as necessary.
+
+```html
+Declaring a Flexbox Row in Elevate
+<div class = "row">
+
+Declaring a Flexbox Column in Elevate
+<div class = "col">
+```
+
+<br/>
+<br/>
+
+For further convenience, Elevate introduces normalized axes - meaning that
+you can refer directly to the intended axis without the need to be considerate of flex orientation.
+
+<br/>
+
+```html
+Normalized Axes In Elevate
+<div class = "row:x-center:y-start">
+
+X is always horizontal, Y is always vertical
+```
+
+<br/>
+
+
+## `Row` & `Col` Modifiers
+
+The following table describes the supported modifiers for the `row` property, along with the expected options.
+
+| **Modifier**   | **Expected Values**                                                | **Example** |
+|---------------------|-----------------------------------------------------------|-------------|
+| X-Axis              | `x-start`, `x-end`, `x-center`, `x-between`, `x-around`, `x-evenly`, `x-stretch`, `x-baseline`| `row:x-center` |
+| Y-Axis              | `y-start`, `y-end`, `y-center`, `y-between`, `y-around`, `y-evenly`, `y-stretch`, `y-baseline` | `col:y-start`|
+| Wrap                | `nowrap`, `wrap`, `wrap-reverse`                            | `row:x-start:wrap`|
+
+<br/>
+
+## `Item` Modifiers
+
+The following table describes the supported modifiers for the child (item) property, along with the expected options.
+
+| **Modifier**   | **Expected Values**                                                | **Example** |
+|---------------------|-----------------------------------------------------------| ---------- |
+| Grow                | `g-0`, `g-1`, `g-auto`                                    | `item:g-1`        |
+| Shrink              | `s-0`, `s-1`                                              | `item:s-1`        |
+| Self                | `self-start`, `self-end`, `self-center`, `self-stretch`, `self-auto` | `item:self-auto`  |
+| Order               | `order-first`, `order-0`, `order-1`, `order-2`, `order-3`, `order-last` | `item:order-0`   |
+| Basis               | `basis-{value}` (where `{value}` corresponds to a spacing token) | `item:basis-auto` |
+

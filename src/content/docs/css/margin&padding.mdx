@@ -1,0 +1,46 @@
+---
+title: "Margin & Padding"
+description: A guide to the margin and padding properties in Elevate CSS.
+---
+
+
+## Margin and Padding Modifiers
+
+The `margin` (abbreviated as `mg`) and `padding` (abbreviated as `pd`) properties support various spacing configurations. You can use **spacing tokens** to define the values, with the following syntax:
+
+<br/>
+
+### `Margin` Modifiers
+
+| **Modifier**         | **Expected Values**                | **Example** |
+|---------------------------|---------------------------|-------------|
+| Margin Values (All Sides)        | SpacingToken (e.g., `d3`)         | `mg:d2`       |
+|  (X/Y) | SpacingToken (e.g., `d3`)  | `mg:d2:d3` (First value applies to the X axis and second value applies to the Y axis) |
+|  (Individual Sides) | SpacingToken (e.g., `d3`)  | `mg:d2:d3:d4:d5` |
+
+<br/>
+
+### `Padding` Modifiers
+
+| **Modifier**         | **Expected Values**                | **Example** |
+|---------------------------|---------------------------|-------------|
+| Padding Values (All Sides)       | SpacingToken (e.g., `d3`)        | `pd:d2`       |
+| (X/Y) | SpacingToken (e.g., `d3`)  | `pd:d2:d3` (First value applies to the X axis and second value applies to the Y axis) |
+| (Individual Sides)| SpacingToken (e.g., `d3`)  | `pd:d2:d3:d4:d5`|
+
+
+<br/>
+<br/>
+
+Elevate also supports single directional properties for margin and padding such as: 
+
+| **Single Directional Properties**         | **Expected Values**                | **Example** |
+|---------------------------|---------------------------|-------------|
+| pt   | SpacingToken (e.g., `d3`)  | `pd-t:d2` |
+| pb   | SpacingToken (e.g., `d3`)  | `pd-b:d2` |
+| pl   | SpacingToken (e.g., `d3`)  | `pd-l:d2` |
+| pr   | SpacingToken (e.g., `d3`)  | `pd-r:d2` |
+| mt   | SpacingToken (e.g., `d3`)  | `mg-t:d2` |
+| mb   | SpacingToken (e.g., `d3`)  | `mg-b:d2` |
+| ml   | SpacingToken (e.g., `d3`)  | `mg-l:d2` |
+| mr   | SpacingToken (e.g., `d3`)  | `mg-r:d2` |

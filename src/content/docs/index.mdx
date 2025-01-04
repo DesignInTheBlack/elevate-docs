@@ -1,36 +1,172 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: "Elevate CSS"
+description: Reimagining the Utility First CSS Framework.
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
-  image:
-    file: ../../assets/houston.webp
+  tagline: Reimagining the Utility First CSS Framework.
   actions:
-    - text: Example Guide
-      link: /guides/example/
-      icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
+    - text: Let's Get Started
+      link: /guides/2-getting-started/
+      icon: right-arrow 
+    - text: Download the Alpha
+      link: https://github.com/DesignInTheBlack/Elevate
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
-## Next steps
+<br/>
+
+<Aside type="caution" title="Please Excuse Our Progress">
+In its current iteration (v0.1-alpha), Elevate CSS is a proof of concept and subject to change. Your feedback is invaluable as this project evolves from a technical prototype into a fully realized utility framework.
+</Aside>
+
+<br/>
+
+## Let's Try Something Different
+
+Elevate CSS reimagines utility-first CSS with a generative, design-driven approach. By combining token-driven architecture with build-time validation, it transforms your styling into a seamless extension of your design system—ensuring every utility string is intentional, consistent, and error-free.
+
+Unlike traditional utility frameworks, Elevate dynamically generates only the CSS you need, tailored to your project. Its expressive property:modifier syntax acts as both code and documentation, enabling scalable, readable, and future-proof styling.
+
+With Elevate, you define styles and syntactic affordances that grow with your projects, your design system, and your team's way of thinking - without bloated libraries or arbitrary classes. Elevate CSS isn’t just a framework; it’s a foundation for clarity, scalability, and creative freedom.
+
+It is my sincere hope that, even in it's early stages, you will find Elevate CSS to be useful, enjoyable, and above all else - thought provoking. 
+
+<br/>
+<br/>
+
+> "When I am working on a problem, I never think about beauty. But when I have finished, if the solution is not beautiful?"
+>
+> "... I know it is wrong."
+>
+> **R. Buckminster Fuller**
+
+<br/>
+<br/>
+
+## Expressive Syntax, Considerate Structure
+
+With an expressive, inherently organized, and semantically pleasing syntax, Elevate CSS empowers you to create maintainable, error-free, 
+and future-proof codebases that pivot and grow with you, your design system, and your project. No bloated class lists, no repetitive modifiers, and no one off
+values driving your styling into chaos.
+
+<br/>
+
+```html
+<div class ="pd:d4:d2 row:x-center:y-center">
+	<p class = "text:heading-6:purple @hover:[text:indigo-light:bold_pd-b:d3]  /lg/ text:heading-2 pd-l:d4">Elevate Describes Your Components</p>
+</div>
+```
+
+<br/>
+<br/>
+
+
+
+## Utility First, Design-Driven
+
+<br/>
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Build-Time Validation" icon="approve-check-circle">
+		Your design tokens, your syntax rules, validated every single time you save a file.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Informative Error Handling" icon="warning">
+		Elevate will let you know when and where you've made a mistake and then help you fix it. 
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	<Card title="Semantically Pleasing Syntax" icon="seti:css">
+		Elegant, expressive,  easy to read and maintain utility string syntax. It's a different kind of CSS.
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Configurable and Extendable" icon="open-book">
+		Designed to adapt to your evolving needs and to grow with you and your design system.
 	</Card>
 </CardGrid>
+
+<br/>
+
+## Elevate's Design Philosophy
+
+At its core, Elevate CSS aims to resolve shortcomings in the current utility-first CSS ecosystem by introducing design-driven features, intelligent abstractions, and syntactic conventions that enhance the experience of creating and maintaining front-end codebases.
+
+<br/>
+
+### Core Principles
+
+The framework is built upon three guiding principles:
+
+- **Expressive and Intentional**  
+   Styling should be self-documenting, clearly expressing design intent for better readability and long-term maintainability.
+
+- **Consistent and Considerate**  
+   The design system should be the single source of truth, strictly enforced through build-time validation to prevent off-scale values and unauthorized modifications.
+
+- **Extensible and Reliable**  
+   The syntax should empower growth and adaptation without sacrificing simplicity of configuration or stability.
+
+<br/>
+
+
+### Challenges with Current Utility-First Frameworks
+
+Utility-first frameworks like Tailwind CSS have revolutionized front-end styling, yet they pose several challenges:
+
+1. **Design System Drift**  
+   Utility classes can stray from the design system, leading to inconsistencies over time.
+
+2. **Verbose and Non-Semantic Classes**  
+   Long, non-semantic class names obscure design intent and hinder maintainability.
+
+3. **Runtime Error Discovery**  
+   Errors like invalid class names often surface only during runtime, delaying fixes.
+
+4. **Scaling Challenges**  
+   Large projects struggle to maintain cohesion without heavy reliance on documentation and team discipline.
+
+5. **Limited Build-Time Guarantees**  
+   Existing frameworks lack robust validation mechanisms for utility classes during the build process.
+
+<br/>
+
+
+### How Elevate CSS Addresses These Challenges
+
+Elevate CSS directly confronts these issues with innovative solutions:
+
+- **Immutable Design Decisions**  
+   By anchoring styling decisions to unchangeable design tokens and predefined rules, Elevate ensures alignment with the design system and eliminates drift.
+
+- **Declarative Syntax**  
+   The `property:modifier` syntax promotes clarity, serving as both functional styling and documentation of design intent.
+
+- **Build-Time Validation**  
+   Errors are caught early, thanks to a compiler that rigorously checks utility strings against the design system and syntax rules.
+
+- **Scalable Consistency**  
+   Token-driven validation and structured configuration make Elevate inherently scalable, reliable, and adaptable to your evolving needs.
+
+- **Engineering Precision**  
+   Compiler-driven guarantees provide a level of rigor comparable to back-end systems, enhancing front-end reliability and maintainability.
+
+<br/>
+
+
+## Are You Ready?
+
+Elevate CSS represents a new adventure in utility-first frameworks. Explore its capabilities, share your feedback, and contribute to its growth. Together, we can redefine the standards of front-end styling and create a more consistent, maintainable, and scalable future for design and development.
+
+## Join The Community
+
+Let's Build Elevate CSS together. Share your ideas, get help, and contribute to the future of utility-first CSS.
+
+import { Icon } from '@astrojs/starlight/components';
+
+<div style="display: flex; align-items: center; gap: 0.5rem;">
+  <Icon name="discord" />
+  <a href="https://discord.gg/T3X2vBYA" style="text-decoration: none;">Join The Discord</a>
+</div>
+<div style="display: flex; align-items: center; gap: 0.5rem;">
+  <Icon name="github" />
+  <a href="https://github.com/DesignInTheBlack/Elevate" style="text-decoration: none;">Explore The Repository</a>
+</div>

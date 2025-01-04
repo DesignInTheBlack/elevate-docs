@@ -6,20 +6,43 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
+			title: 'CSS',
+			favicon: './src/assets/dark.svg',
+			logo: {
+				light: './src/assets/light.svg',
+				dark: './src/assets/dark.svg',
+				replacesTitle: true,
+			  },
+			  
+			customCss: [
+				// Relative path to your custom CSS file
+				'./src/styles/custom.css',
+				'@fontsource-variable/raleway/index.css',
+
+			  ],
 			social: {
-				github: 'https://github.com/withastro/starlight',
+				discord: 'https://discord.gg/T3X2vBYA',
+				github: 'https://github.com/DesignInTheBlack/Elevate',
 			},
 			sidebar: [
 				{
-					label: 'Guides',
+					label: 'Learning Elevate',
 					items: [
 						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
+						{ label: 'Getting Started', slug: 'guides/2-getting-started' },
+						{ label: 'Configuration', slug: 'guides/3-configuration' },
 					],
 				},
 				{
-					label: 'Reference',
+					label: `Designed Defaults`,
+					autogenerate: { directory: 'default' },
+				},
+				{
+					label: 'Writing Elevate',
+					autogenerate: { directory: 'css' },
+				},
+				{
+					label: 'Further Reading',
 					autogenerate: { directory: 'reference' },
 				},
 			],

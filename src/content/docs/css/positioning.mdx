@@ -1,0 +1,41 @@
+---
+title: "Positioning Elements"
+description: A guide to positioning elements in Elevate CSS.
+---
+
+## Position
+
+Direct properties for specifying the position of an element:
+
+| Property   | Description |
+|------------|-------------|
+| `relative` |relative to its normal position. |
+| `absolute` |relative to its nearest positioned ancestor. |
+| `fixed`    | relative to the viewport. |
+| `sticky`   |relative to the viewport, but only when it is within the viewport. |
+| `static`   | according to the normal flow of the document. |
+| `initial`  | Sets the property to its default value. |
+| `inherit`  | Inherit the position from the parent element. |
+
+<br/>
+
+## Direction
+
+Compound properties for specifying the final horizontal or vertical position of an element:
+
+| Property   | Expected Values | Example     |
+|------------|--------------------|-----------------------|
+| `left`    | SpacingToken (e.g., `d3`)      |  `left:d4`  |
+| `right`   | SpacingToken (e.g., `d3`)      |  `right:d4`  |
+| `top`     | SpacingToken (e.g., `d3`)      |  `top:d4`   |
+| `bottom`  | SpacingToken (e.g., `d3`)      |  `bottom:d4`   |
+
+<br/>
+
+## Z-Index
+
+Compound properties for specifying the z-index of an element:
+
+| Property   | Expected Values |  Example        |
+|------------|--------------------|-----------------------|
+| `z`       | NumericToken  (e.g., `30`)      | `z:30` |

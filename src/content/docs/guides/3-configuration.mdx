@@ -1,0 +1,294 @@
+---
+title: "Configuration & Extension"
+description: "Learn how to configure and extend Elevate CSS."
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Elevate offers a powerful and flexible configuration system that’s easy to adapt to your project’s design and architectural goals. **However, with great power comes great responsibility**—be sure to review each configuration option carefully to ensure it aligns with your project's needs.
+
+
+## Basic Configuration
+
+Elevate’s general settings are defined in `elevate/config/elevate.ts`:
+
+```typescript
+// elevate/config/elevate.ts
+const options = {
+  Watch: './',                   // Directory to watch for changes
+  FileTypes: ['html', 'jsx', 'tsx', 'astro'],  // File extensions to scan
+  Output: './'                   // Output directory for generated CSS
+};
+
+export const config = options;
+```
+<br/>
+<br/>
+
+Next up, you can import and distribute design system tokens in `elevate/config/design.ts`:
+
+```typescript
+// elevate/config/design.ts
+
+// Design System Token Imports 
+// (includes both standard system tokens and custom tokens)
+
+// Example: Utility import for additional spacing/height
+import { heightUtility } from "../core/system/etc/height.js";
+
+// Example: Custom values import
+import { BrandColors } from "../design/example-brandTokens.js";
+
+// System standard imports
+import { colors } from "../core/system/design/colors.js";
+import { spacing } from "../core/system/design/spacing.js";
+import { typography } from "../core/system/design/typography.js";
+import { breakpoints } from '../core/system/design/breakpoints.js';
+
+// Token Definitions
+export const designSystem = {
+  ColorToken: colors,
+  BreakPointToken: breakpoints,
+  SpacingToken: { ...spacing, ...heightUtility },
+  FontSizeToken: typography.size,
+  FontFamilyToken: typography.family,
+  LineHeightToken: typography.leading,
+  LetterSpacingToken: typography.tracking,
+  FontWeightToken: typography.weight,
+
+  // Spread in custom token categories
+  ...BrandColors
+};
+```
+<br/>
+<br/>
+Finally, syntax rule mappings are imported and distributed, and custom properties are defined, in `elevate/config/syntax.ts`:
+
+```typescript
+// elevate/config/syntax.ts
+
+// Import Rule Files
+import { Brand } from "../rules/example-brandRules.js";
+
+// Spread Rules into Rules Object
+export const rules = {
+  ...Brand
+};
+
+// Define Custom Property and CSS Declaration Relationship
+export const relationships = {
+  // Example Custom Property Definition
+  brand: {
+    "background-color": "BrandBackgroundRule",
+    "color": "BrandCopyRule"
+  }
+};
+```
+
+<br/>
+
+## Customization Tasks Cheat Sheet
+
+In the majority of cases, you’ll only ever need to either:
+<br/>
+A. **Integrate Design System Tokens**  
+   - Create token files in `elevate/design`.  
+   - Decide on whether you need to maintain compatibility with existing Elevate properties:
+     - **Yes:** Spread your custom token objects into existing tokencategories in `config/design.ts`.  
+     - **No:** Create new token categories in `config/design.ts` and then see option 'B' below.
+<br/>
+B. **Expand Upon Elevate's Syntax**  
+   - Create new rule files in `elevate/rules`.  
+   - Import and spread these new rules into the `rules` object in `config/syntax.ts`.  
+   - Define new properties in the `relationships` object in `config/syntax.ts`, mapping tokens and rules to CSS declarations according to your needs.
+
+<br/>
+<br/>
+
+<Aside type="caution" title="Token Categories and Compatibility">
+  In `config/design.ts`, you can spread your design token imports into the following existing token categories and they will be immediately compatible with Elevate's existing properties:
+
+    ColorToken <br/>
+    BreakPointToken <br/>
+    SpacingToken <br/>
+    FontSizeToken <br/>
+    FontFamilyToken <br/>
+    LineHeightToken <br/>
+    LetterSpacingToken <br/>
+    FontWeightToken
+
+</Aside>
+
+
+<br/>
+
+## Design System Integration
+
+If your goal is to integrate your design system tokens into Elevate:
+<br/>
+<br/>
+
+1. **Add new categorized design tokens** to the `elevate/design` directory:
+
+```typescript
+// elevate/design/example-brandTokens.ts
+
+export const BrandColors = {
+  BrandBackgroundTokens: {
+    'popgreen': '#39FF14'
+  },
+  BrandCopyTokens: {
+    'popwhite': '#FFFFFF'
+  }
+};
+```
+
+<br/>
+<br/>
+
+2. **Import the new token categories** into `elevate/config/design.ts`:
+
+```typescript
+// elevate/config/design.ts
+import { BrandColors } from "../design/example-brandTokens.js";
+```
+
+<br/>
+<br/>
+
+
+3. **Spread the new token categories** into the appropriate token definitions:
+
+```typescript
+// elevate/config/design.ts
+
+// Token Definitions
+export const designSystem = {
+  ColorToken: {
+    ...colors,
+    ...BrandColors.BrandBackgroundTokens,
+    ...BrandColors.BrandCopyTokens
+  }
+};
+```
+
+<br/>
+<br/>
+
+You can now reference these tokens in your utility strings as you would any of the existing Elevate tokens.
+
+<br/>
+<br/>
+
+## Extending Elevate’s Syntax
+
+To create product-specific or project-specific syntax rules, follow these steps:
+<br/>
+1. **Create a new file** in the `elevate/rules` directory.
+
+```typescript
+// elevate/rules/example-brandRules.ts
+export const Brand = {
+  BrandBackgroundRule: {
+    "bg-": "BrandBackgroundToken"
+  },
+  BrandCopyRule: {
+    "copy-": "BrandTextToken"
+  }
+};
+```
+<br/>
+<br/>
+
+<Aside type="caution" title="Rule Files vs. Properties">
+  When creating a new rule file, remember you’re defining the <strong>modifier syntax</strong> (e.g., <code>bg-</code>, <code>copy-</code>), not the property itself. You’ll establish a <strong>new property</strong> (e.g., <code>brand</code>) in <code>elevate/config/syntax.ts</code> to map these modifiers to the appropriate CSS declarations.
+</Aside>
+
+<br/>
+<br/>
+
+2. **Import the new rule file** into `elevate/config/syntax.ts` and spread it in the `rules` object:
+
+```typescript
+// elevate/config/syntax.ts
+import { Brand } from "../rules/example-brandRules.js";
+
+export const rules = {
+  ...Brand
+};
+```
+
+<br/>
+<br/>
+
+
+3. **Define a new property** in the `relationships` object and map your new modifier rules to the appropriate CSS declarations:
+
+```typescript
+// elevate/config/syntax.ts
+export const relationships = {
+  brand: {
+    "background-color": "BrandBackgroundRule",
+    "color": "BrandCopyRule"
+  }
+};
+```
+
+<br/>
+<br/>
+
+
+4. **Test your new property** in an appropriate filetype (e.g. `.html`):
+
+```html
+<div class="brand:bg-popgreen:copy-popwhite"></div>
+```
+
+<br/>
+<br/>
+
+Please note that Elevate includes a number of special token types that provide additional capabilities beyond the core functionality for specific situations. 
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+<br/>
+
+<LinkCard title="See System Token Types" href="/reference/system-token-types/" />
+
+<br/>
+<br/>
+
+
+<Aside type="danger" title="Token Collisions & How to Avoid Them">
+  Elevate supports an order-agnostic syntax structure. It applies a "first match wins" strategy whereby the first CSS declaration expecting a token or rule claims it. However, <strong>token collisions</strong> can occur if two declarations under a single property share the same token type.
+
+  <strong>Example:</strong> A single property defines both <code>color: ColorToken</code> and <code>border-color: ColorToken</code>. If you pass a color token, Elevate applies it to the first matching declaration. To avoid collisions, create new rules in <code>elevate/rules</code> to differentiate them, and reference those rules in the property definition rather than referencing the token type directly.
+</Aside>
+
+<br/>
+<br/>
+
+## Troubleshooting & Helpful Tips
+
+### Common Issues
+<br/>
+1. **Token not mapping correctly?**  
+   - Check if the design token is **exported** from its file.  
+   - Ensure the token is properly **imported** and **spread** in `config/design.ts`.  
+   - Confirm that any **rules** involving these tokens are correctly defined and imported in `config/syntax.ts`.
+<br/>
+2. **Performance Considerations**  
+   - Use rules for syntactic relationships, syntax expansion, or preventing token collisions.  
+   - Keep the number of tokens and rules minimal to limit complexity.
+<br/>
+3. **Naming Conventions**  
+   - Use clear, semantic names (e.g., `BrandColorToken`, `TextAlignRule`).  
+   - Avoid overly generic names that can cause collisions.  
+   - Prefix them to indicate their purpose, especially if you have many tokens.
+
+<br/>
+
+## Want To Go Deeper?
+
+Elevate’s configurability makes it easy to integrate any design system or add custom features. Familiarize yourself with the existing rules in `core/system` to understand how Elevate maps tokens and rules to CSS declarations. Leverage this knowledge to create robust, maintainable utility-based styles that reflect your unique design system—while also ensuring **maximum compatibility** with Elevate’s defaults whenever possible.
+

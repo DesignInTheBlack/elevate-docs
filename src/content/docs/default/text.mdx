@@ -1,0 +1,68 @@
+---
+title: "Typography"
+description: A guide to font sizes in Elevate's typography system
+---
+
+Elevate's typography system offers a flexible and consistent way to manage text sizes across your application. It defines a set of font sizes tailored for various use cases, from subtle footnotes to bold, prominent headings.
+
+import { Aside } from '@astrojs/starlight/components';
+
+<br/>
+
+<Aside title="You've Gotta Start Somewhere, Right?">
+Elevate includes a set of sensible defaults for most things, but you can always extend them or override them as you see fit. For more information, check out the [Configuration & Extension](/guides/3-configuration/) guide.
+</Aside>
+
+## How It Works
+
+The font sizes are defined in `elevate/core/system/etc/typography.ts` as part of the `size` property:
+
+```typescript
+export const typography = {
+  size: {
+    tiny: '0.533rem',
+    small: '0.711rem',
+    base: '1rem',
+    heading6: '1.125rem',
+    heading5: '1.5rem',
+    heading4: '2.25rem',
+    heading3: '3.375rem',
+    heading2: '5.062rem',
+    heading1: '7.594rem',
+    eyebrow: '0.583rem'
+  }
+};
+```
+
+
+## Font Sizes
+
+| Name        | Value     | Description                                |
+|-------------|-----------|--------------------------------------------|
+| `tiny`      | 0.533rem  | Smallest size for subtle or legal text.    | 
+| `small`     | 0.711rem  | Slightly larger text for captions.         | 
+| `base`      | 1rem      | Standard body text size.                   |
+| `heading6`  | 1.125rem  | Smallest heading size.                     | 
+| `heading5`  | 1.5rem    | Slightly larger heading for subsections.   | 
+| `heading3`  | 3.375rem  | Large headings for standout content.       | 
+| `heading2`  | 5.062rem  | Extra-large headings for important areas.  |
+| `heading1`  | 7.594rem  | Largest size for main titles.              | 
+| `eyebrow`   | 0.583rem  | Decorative text for overlines or tags.     |
+
+
+## Simplified, Hierarchical Text Styling
+
+The font sizes in Elevate help create:
+1. **Clear Text Hierarchy**: Sizes are designed to visually guide the reader.
+2. **Readability**: Well-balanced text scales ensure optimal legibility across devices.
+3. **Clean Markup**: Developers can use size tokens directly without the need for additional styling.
+
+For example:
+```html
+<div class="text:heading1">Welcome to Elevate</div>
+<p class="text:base">This is the body text styled with the base size.</p>
+<div class="text:tiny">Disclaimer: Tiny text for subtle information.</div>
+```
+
+This approach ensures a consistent and readable typography system.
+

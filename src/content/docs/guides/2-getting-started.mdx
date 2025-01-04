@@ -1,0 +1,266 @@
+---
+title: "Getting Started with Elevate CSS"
+description: Learn how to get started with Elevate CSS.
+---
+
+This quick start guide is included to give you an opportunity to dive right into the world of Elevate CSS. With that said, however, it is **highly recommended** that you familiarize yourself with the **configuration** section as well as it provides a deeper understanding of Elevate's capabilities, functionality, and best practices as well as how to best leverage the framework for your specific needs.
+
+<br/>
+
+### Installation and Usage
+import { Steps } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components';
+
+<br/>
+
+<Steps>
+
+1. Download the Elevate CSS alpha from GitHub <Code code={`git clone https://github.com/DesignInTheBlack/Elevate.git`} title={`Terminal`}/>
+
+2. Install Elevate's Dependencies <Code code={`npm install`} title={`Terminal`}/>
+
+3. Watch Files for Changes and Convert Elevate's Syntax to CSS <Code code={`npm start`} title={`Terminal`}/>
+
+</Steps>
+
+<br/>
+
+### Basic Configuration
+
+Elevate’s general settings are defined in `elevate/config/elevate.ts`:
+
+```typescript
+// elevate/config/elevate.ts
+const options = {
+  Watch: './',                   // Directory to watch for changes
+  FileTypes: ['html', 'jsx', 'tsx', 'astro'],  // File extensions to scan
+  Output: './'                   // Output directory for generated CSS
+};
+
+export const config = options;
+```
+<br/>
+
+### What Are 'Utility Strings'?
+
+<br/>
+
+**Basic Usage:**  
+
+At the heart of Elevate's syntax is what are called "utility strings", which are used to describe styling and serve as the basis for CSS generation while simultaneously doubling as the actual CSS classes. This convention means that, by default, your CSS files only ever contain classes that are actually being used in your markup.
+
+Unlike traditional utility frameworks which come packed with pre-defined utility classes, you are effectively writing CSS as you write utility strings in Elevate through the expression of property and modifier combinations - which are validated against your design system and a series of built-in conventions as well as your own custom syntax rules at build-time to ensure consistency.
+
+<br/>
+
+**The Utility String Format**:
+
+```html
+<div class = "property:modifier">
+```
+
+<br/>
+
+**Direct Properties:**  
+
+Direct properties are properties that do not require any modifier and that define a single CSS declaration. Generally used for layout and positioning.
+
+```html
+<div class="block"> <!-- display: block -->
+```
+
+<br/>
+
+**Compound Properties:** 
+
+Compound properties are properties that require one or more modifiers to be applied. These properties are used to create more complex CSS declarations.
+
+```html
+
+<div class="text:dark:bold:left">     
+
+<!--
+.text\:dark\:bold\:left {
+color: #2C2638;
+font-weight: 700;
+text-align: left;
+}
+-->
+
+```
+
+<br/>
+
+**Practical Examples:**
+
+Bringing it all together, here are some examples of Elevate's syntax in action:
+
+```html
+<div class="text:bold:purple">      <!-- Bold text with purple color -->
+<div class="bg-color:purple">          <!-- Background color set to purple -->
+<div class="row:x-center:y-start">  <!-- Row layout with specific alignment -->
+<div class="absolute left:d12 z:10">  <!-- Absolute positioning, d12 from the left, and z-index of 10  -->
+```
+
+<br/>
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside title=" Modifiers are Order Agnostic">
+You can write text:red:bold or text:bold:red and the order doesn't matter. We'll get to the how and why later, but for now, just know that you can use any order you want.
+</Aside>
+
+<br/>
+
+### Breakpoints and Responsive Design
+
+<br/>
+
+Elevate affords and enforces a mobile-first, organized syntax for responsive design:
+
+<br/>
+
+```html
+<div class="text:purple p:d1:d2 /md/ text:right /lg/ @hover:[text:green:right]"> 
+```
+
+<br/>
+
+Universal classes are applied on the far-left and apply to all breakpoints by default unless overridden at a breakpoint. Breakpoints are specified using the `/breakpoint/` syntax, allowing you to discern the responsive behavior of an element at a glance and keeping things organized by default.
+
+<br/>
+
+<Aside type = "caution" title="Scratching Your Head?">
+At this point, you're probably wondering what the "@" is for, right? Don't worry, we'll get to that explanation next.
+</Aside>
+
+<br/>
+
+### Operator Flags
+
+In order to allow for greater flexibility, Elevate supports a series of flags to further refine styling choices and to support more complex and dynamic behaviors while preserving semantic clarity.
+
+<br/>
+
+**The Contextual Flag [@]:**  
+
+Allows complex, conditional styling for states, conditions, and other pseudo-classes or pseudo-elements:
+
+```html
+<div class="@hover:[text:green:right_p:d1]">  <!-- Hover state changes text and adds padding. -->
+```
+<br/>
+
+Note that you can chain property modifier combinations with an underscore inside of the contextual flag's brackets. This allows more concise expression of design intent. No more pseudo-class spam or unnecessary nesting!
+
+<br/>
+
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+<LinkCard title="See Currently Supported Selectors" href="/reference/supported-selectors/" />
+
+<br/>
+
+**The Functional Flag [$]:**  
+
+Exempt certain classes from CSS generation (e.g. for JavaScript interactions or labelling):
+
+```html
+<div class="$mySelector">
+```
+
+<br/>
+
+
+
+<br/>
+
+### The Elements of Elevate
+
+<br/>
+
+Elevate's systems are driven by three distinct elements:
+
+<br/>
+
+1. **Design Tokens**  
+   - **Purpose:** Global, immutable design constraints.  
+   - **Location:** `design/` directory  
+   - **Configuration:** `elevate/config/design.ts` and `elevate/design`
+   - **Characteristics:** Centralized values, enforce system-wide consistency.
+
+   **Example:**
+   ```typescript
+   // design/example-brandTokens.ts
+   export const BrandColors = {
+
+      //Define New Token Categories
+
+      BrandBackgroundTokens: {
+      'popgreen':'#39FF14'
+      },
+
+      BrandCopyTokens: {
+      'popwhite': '#FFFFFF',
+      }
+
+   } 
+
+   ```
+
+<br/>
+
+2. **Syntactic Rules**  
+   - **Purpose:** Property-specific structural validation and syntax construction or extension.  
+   - **Location:** `rules/` directory  
+   - **Configuration:**  `elevate/config/syntax.ts` and `elevate/rules`
+   - **Characteristics:** Validate property values, provide transformations, and structure or extend syntax.
+
+   **Example:**
+   ```typescript
+   // rules/example-brandRules.ts
+
+   export const Brand = {
+
+      BrandBackgroundRule: {
+      "bg-": "BrandBackgroundToken"
+      },
+
+      BrandCopyRule: {
+      "copy-": "BrandTextToken"
+      }
+
+   }
+
+   ```
+
+<br/>
+
+3. **Property Declarations**  
+   - **Purpose:** Mapping design system tokens and/or syntax rule mappings to CSS declarations.  
+   - **Location:** `config/` directory  
+   - **Configuration:**  `elevate/config/syntax.ts` 
+   - **Characteristics:** Validate property values, provide transformations, and structure or extend syntax.
+
+   **Example:**
+   ```typescript
+
+   //Define Custom Property and CSS Declaration Relationship
+    export const relationships = {
+    //Example Custom Property Definition
+    brand: 
+    { "background-color": "BrandBackgroundRule", 
+      "color": "BrandCopyRule" },
+    };
+
+   ```
+
+   <br/>
+
+4. **This Is Elevate CSS**:
+
+   ```html
+   <div class="brand:bg-popgreen:copy-popwhite"></div>
+   ```
+

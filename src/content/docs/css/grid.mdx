@@ -1,0 +1,71 @@
+---
+title: Grid Shorthand
+description: A guide to the grid shorthand in Elevate CSS.
+---
+
+Elevate CSS simplifies CSS Grid layouts by introducing a concise shorthand syntax for defining grid properties. This guide explains how to use the `grid` property with modifiers for rows, columns, and gaps.
+
+
+```html
+<!-- Declaring a Grid Layout -->
+<div class="grid:gap-d3:row-2:col-4">
+```
+
+<br/>
+
+## `Grid` Modifiers
+Elevate supports the following modifiers for the grid property:
+
+| **Modifier**             | **Expected Values**              | **Example**                          |
+|--------------------------|----------------------------------|--------------------------------------|
+| Gap            | SpacingToken (e.g., `d3`)      | `grid:gap-d3`                        |
+| Row           | NumericToken (e.g., `2`, `5`)         | `grid:row-2`                         |
+| Col            | NumericToken (e.g., `4`, `3`)         | `grid:col-4`                         |
+
+<br/>
+
+
+## Examples of Grid Layouts
+
+<br/>
+
+### 1. Defining a Gap
+Use the `gap-{value}` modifier to specify the spacing between grid items:
+
+```html
+<div class="grid:gap-d3">
+```
+
+<br/>
+
+### 2. Setting Rows
+Define the number of rows in your grid using the `row-{value}` modifier:
+
+<br/>
+
+```html
+<div class="grid:row-2">
+```
+
+<br/>
+
+### 3. Setting Columns
+Define the number of columns in your grid using the `col-{value}` modifier:
+
+```html
+<div class="grid:col-4">
+```
+
+<br/>
+
+### 4. Combining Modifiers
+Combine multiple modifiers for a complete grid layout:
+
+```html
+<div class="grid:gap-d3:row-3:col-5">
+```
+
+<br/>
+
+Elevate CSS ensures creating grid layouts is intuitive and concise, enabling dynamic designs with minimal effort.
+

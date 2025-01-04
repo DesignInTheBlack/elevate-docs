@@ -1,0 +1,62 @@
+---
+title: "System Token Types"
+description: Elevate's native token types, affording specific capabilities.
+---
+
+## Special Tokens
+
+ Elevate includes a number of "helper" token types that provide additional capabilities beyond the core functionality for specific situations. These can be used to extend the framework's capabilities, but they should be used with caution. 
+
+ <br/>
+
+### Pass-Through Tokens 
+   - Unrestricted value entry.  
+   - No build-time validation, for dynamic or flexible values.
+   - Primarily used for CSS rules that require special syntax (e.g., URLs or complex values).
+   - Not recommended for general styling.
+   <br/>
+
+   **Example:**
+
+   ```typescript
+   // propertyAttributeMap.ts
+   rotate: {
+     "rotate": "PassThroughToken" // Allows any rotation value
+   }
+   ```
+
+   ```html
+   <div class="rotate:((90deg))"></div>
+   ```
+<br/>
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside title="'Pass Through' Means Literally">
+When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. Noting, however, that you should omit the quatation marks.
+</Aside>
+
+
+<br/>
+
+### Numeric Tokens 
+   - For numeric values.  
+   - Build-time validation ensures that the value is a valid number.
+   - Primarily used for CSS rules that require numeric values.
+
+   <br/>
+
+   **Example:**
+
+   ```typescript
+   //Elevate's declaration map, responsible for matching modifiers to CSS declarations for a given property.
+   // =============================
+    // Z-Index
+    // =============================
+    z: { "z-index": "NumericToken" }
+   ```
+
+   ```html
+   <div class="z:20"></div>
+   ```
+<br/>

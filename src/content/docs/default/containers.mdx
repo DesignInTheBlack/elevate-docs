@@ -1,0 +1,81 @@
+
+---
+title: "Containers"
+description: How Elevate's 'Contain' Class Simplifies Layouts
+---
+
+The contain class in Elevate is a utility for centering elements with consistent, responsive padding. It simplifies layouts by removing the need for bulky wrappers or custom styles, providing an elegant way to maintain evenly distributed containers across screen sizes.
+
+import { Aside } from '@astrojs/starlight/components';
+
+<br/>
+
+<Aside title="You've Gotta Start Somewhere, Right?">
+Elevate includes a set of sensible defaults for most things, but you can always extend them or override them as you see fit. For more information, check out the [Configuration & Extension](/guides/3-configuration/) guide.
+</Aside>
+
+## Why Use Contain?
+
+In traditional web development, creating centered containers often requires extra wrapper elements, manual padding adjustments, or repeated CSS rules for different screen sizes. These methods can become messy and hard to maintain.
+
+The contain class resolves these issues by:
+1. **Consistency Across Breakpoints**: Padding values are managed via a central file and applied via a single class, ensuring a unified layout regardless of screen size.
+2. **Simplicity**: The class generates all necessary CSS automatically, reducing boilerplate and making your codebase cleaner.
+
+
+
+## How It Works
+
+The contain class is defined in `elevate/core/system/etc/contain.ts`, where breakpoints map to spacing tokens:
+
+```typescript
+export const contain = {
+  '2xs': 'd5',
+  'xs': 'd5',
+  'sm': 'd5',
+  'md': 'd8',
+  'lg': 'd8',
+  'xl': 'd8',
+  '2xl': 'd8',
+  '3xl': 'c12',
+  '4xl': 'c12',
+  '5xl': 'c12',
+};
+```
+
+### Example
+For the `lg` breakpoint:
+- Breakpoint: `lg` (`min-width: 1024px`).
+- Spacing: `d8` (`2rem`).
+
+Generated CSS:
+```css
+@media only screen and (min-width: 1024px) {
+  .contain {
+    margin:auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+```
+
+This automation ensures:
+- **No Manual CSS Rules**: The system creates all responsive styles for you.
+- **Consistency**: All containers adhere to a unified padding scale, ensuring that content is visually balanced across screen sizes.
+
+
+## Simplified, Evenly Distributed Layouts
+
+The contain class is especially useful for:
+1. **Centering Content**: Perfect for layouts like headers, footers, or sections that need consistent horizontal padding.
+2. **Responsive Design**: Adapts padding dynamically based on screen size.
+3. **Cleaner Markup**: Avoids unnecessary wrapper elements, reducing complexity in your HTML.
+
+For example:
+```html
+<div class="contain">
+  <h1>Welcome to Elevate</h1>
+</div>
+```
+This approach centers the container on the screen and ensures that the content will not get too close to the edges.
+

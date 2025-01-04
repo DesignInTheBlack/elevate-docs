@@ -1,0 +1,27 @@
+---
+title: Borders
+description: A guide to borders in Elevate CSS.
+---
+
+## `Border` Modifiers
+
+Elevate supports the following modifiers for the `border` (abbreviated as `bd`) property:
+
+| **Modifier**   | **Expected Values**                                                | **Example** |
+|---------------------|-----------------------------------------------------------|------------|
+| Width         |  SpacingToken (e.g., `d3`)      | `bd:w-d4` |
+| Style       | `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset`, `outset`                        | `bd:dashed` |
+| Radius       |   SpacingToken (e.g., `d3`)   | `bd:r-d4` |
+| Color       |   Colortoken (e.g., `purple-light`)   | `bd:purple-light` |
+
+<br/>
+<br/>
+
+Elevate also supports single directional properties for border such as: 
+
+| **Single Directional Properties**         | **Expected Values**                | **Example** |
+|---------------------------|---------------------------|-------------|
+| bd-t   | See Modifiers Above  | `bd-t:w-d4:purple-light` |
+| bd-b   | See Modifiers Above  | `bd-b:r-d2:w-d2:dashed` |
+| bd-l   | See Modifiers Above  | `bd-l:w-d2:solid` |
+| bd-r   | See Modifiers Above  | `bd-r:w-d6:solid:indigo` |

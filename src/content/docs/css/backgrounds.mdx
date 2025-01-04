@@ -1,0 +1,33 @@
+---
+title: Backgrounds
+description: A guide to backgrounds in Elevate CSS.
+---
+
+Elevate CSS features a number of background properties. These properties include:
+
+<br/>
+
+## Setting Backgrounds
+
+| Property   | Expected Values | Example     |
+|------------|--------------------|-----------------------|
+| bg-img   | PassThroughToken (e.g.,  `(url(https://example.com/image.jpg))` )      |  `bg-img:(url(https://example.com/image.jpg))`  |
+| bg-color  | ColorToken (e.g., `purple-light`)      |  `bg-color:purple-light`  |
+| bg-attr  |  `cover`,`contain`, `no-repeat`, `repeat-x`, `repeat-y`, `repeat`,`space`, `round`, `initial`, `revert`, `unset`, `revert-layer`, `pos-top-center`, `pos-top-right`, `pos-right-top`, `pos-right-center`, `pos-right-bottom`, `pos-bottom-right`, `pos-bottom-center`, `pos-bottom-left`, `pos-left-bottom`, `pos-left-center`, `pos-left-top`, `pos-center`   |  `bg-attr:cover`  |
+        
+
+
+<br/>
+<br/>
+
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside title="'Pass Through' Means Literally">
+When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. Noting, however, that you should omit the quatation marks.
+</Aside>
+
+
+
+
+
