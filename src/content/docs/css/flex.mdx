@@ -41,7 +41,7 @@ The following table describes the supported modifiers for the `row` property, al
 |---------------------|-----------------------------------------------------------|-------------|
 | X-Axis              | `x-start`, `x-end`, `x-center`, `x-between`, `x-around`, `x-evenly`, `x-stretch`, `x-baseline`| `row:x-center` |
 | Y-Axis              | `y-start`, `y-end`, `y-center`, `y-between`, `y-around`, `y-evenly`, `y-stretch`, `y-baseline` | `col:y-start`|
-| Wrap                | `nowrap`, `wrap`, `wrap-reverse`                            | `row:x-start:wrap`|
+| Wrap                | `no-wrap`, `wrap`, `reverse`                            | `row:x-start:wrap`|
 
 <br/>
 
@@ -51,9 +51,9 @@ The following table describes the supported modifiers for the child (item) prope
 
 | **Modifier**   | **Expected Values**                                                | **Example** |
 |---------------------|-----------------------------------------------------------| ---------- |
-| Grow                | `g-0`, `g-1`, `g-auto`                                    | `item:g-1`        |
-| Shrink              | `s-0`, `s-1`                                              | `item:s-1`        |
+| Grow                | `no-grow`, `grow`, `auto`                                    | `item:g-1`        |
+| Shrink              | `no-shrink`, `shrink`                                              | `item:s-1`        |
 | Self                | `self-start`, `self-end`, `self-center`, `self-stretch`, `self-auto` | `item:self-auto`  |
-| Order               | `order-first`, `order-0`, `order-1`, `order-2`, `order-3`, `order-last` | `item:order-0`   |
-| Basis               | `basis-{value}` (where `{value}` corresponds to a spacing token) | `item:basis-auto` |
+| Order               | `order-{value}` (where `{value}` corresponds to a numeric token)` | `item:order-5`   |
+| Basis               | `basis-{value}` (where `{value}` corresponds to a spacing token) | `item:basis-d5` |
 
