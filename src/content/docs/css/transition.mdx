@@ -1,0 +1,20 @@
+---
+title: Transition
+description: A guide to transition in Elevate CSS.
+---
+
+Elevate CSS features a compound property for setting the color of a resizing caret:
+
+<br/>
+
+### The `transition` Property
+
+| Property   | Expected Values | Example     |
+|------------|--------------------|-----------------------|
+| `transition` | `ultra-fast`, `fast`, `medium`, `slow`, `ultra-slow`, `ease`, `ease-in`, `ease-out`, `linear`, `snappy`, `fluid`, `relaxed`  |  `transition:snappy`  |
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside title="Effects are Token Driven">
+As with all other effects in Elevate CSS, transitions are considered to be a "design decision" and as such are treated as design system tokens. This means you can override the preset options, bring your own, etc
+</Aside>
