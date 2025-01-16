@@ -1,0 +1,391 @@
+
+/* CSS Reset */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  transition: all 0.3s ease; /* Smooth transitions */
+  scroll-behavior: smooth; /* Smooth scrolling for anchored links */
+}
+
+body, h1, h2, h3, h4, p,
+figure, blockquote, dl, dd {
+  margin-block-end: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+h1, h2, h3, h4,
+button, input, label {
+  line-height: 1.1;
+}
+
+h1, h2,
+h3, h4 {
+  text-wrap: balance;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+a {
+  text-decoration: none; /* no underline */
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+input, button,
+textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+:target {
+  scroll-margin-block: 5ex;
+}
+
+/* Added universal animations for better UI feedback */
+*, *::before, *::after {
+  transition: all 0.3s ease; /* Catch-all transition */
+}
+
+
+
+@media only screen and (min-width:20rem) {
+.contain {
+    margin:auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    }
+}
+@media only screen and (min-width:30rem) {
+.contain {
+    margin:auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    }
+}
+@media only screen and (min-width:40rem) {
+.contain {
+    margin:auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    }
+}
+@media only screen and (min-width:48rem) {
+.contain {
+    margin:auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    }
+}
+@media only screen and (min-width:64rem) {
+.contain {
+    margin:auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    }
+}
+@media only screen and (min-width:80rem) {
+.contain {
+    margin:auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    }
+}
+@media only screen and (min-width:96rem) {
+.contain {
+    margin:auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    }
+}
+@media only screen and (min-width:120rem) {
+.contain {
+    margin:auto;
+    padding-left: 16rem;
+    padding-right: 16rem;
+    }
+}
+@media only screen and (min-width:160rem) {
+.contain {
+    margin:auto;
+    padding-left: 16rem;
+    padding-right: 16rem;
+    }
+}
+@media only screen and (min-width:240rem) {
+.contain {
+    margin:auto;
+    padding-left: 16rem;
+    padding-right: 16rem;
+    }
+}
+
+.bg-color\:green\+2 {
+background-color: #63F3E0;
+}
+
+.w\:full {
+width: 100%;
+}
+
+.h\:d12 {
+height: 3rem;
+}
+
+.row\:x-center\:y-center {
+display:flex;
+flex-direction:row;
+justify-content: center;
+align-items: center;
+}
+
+.bg-color\:green\+1 {
+background-color: #4CD8BE;
+}
+
+.bg-color\:green {
+background-color: #3CAA96;
+}
+
+.bg-color\:green-1 {
+background-color: #2C7E6F;
+}
+
+.mg-t\:d4 {
+margin-top: 1rem;
+}
+
+.bg-color\:green-2 {
+background-color: #1E5147;
+}
+
+.row {
+display:flex;
+flex-direction:row;
+justify-content: x;
+align-items: y;
+flex-wrap: FlexWrapRule;
+}
+
+.bg-color\:orange\+2 {
+background-color: #FFB07A;
+}
+
+.bg-color\:orange\+1 {
+background-color: #FF9A5B;
+}
+
+.bg-color\:orange {
+background-color: #F48247;
+}
+
+.bg-color\:orange-1 {
+background-color: #B56335;
+}
+
+.bg-color\:orange-2 {
+background-color: #714222;
+}
+
+.bg-color\:red\+2 {
+background-color: #FF627F;
+}
+
+.bg-color\:red\+1 {
+background-color: #F9426A;
+}
+
+.bg-color\:red {
+background-color: #D82A54;
+}
+
+.bg-color\:red-1 {
+background-color: #A1203E;
+}
+
+.bg-color\:red-2 {
+background-color: #691727;
+}
+
+.bg-color\:purple\+2 {
+background-color: #D940FF;
+}
+
+.bg-color\:purple\+1 {
+background-color: #BA1CFF;
+}
+
+.bg-color\:purple {
+background-color: #9B16D8;
+}
+
+.bg-color\:purple-1 {
+background-color: #6F10A0;
+}
+
+.bg-color\:purple-2 {
+background-color: #4A095F;
+}
+
+.bg-color\:indigo\+2 {
+background-color: #A3A9FF;
+}
+
+.bg-color\:indigo\+1 {
+background-color: #8891FF;
+}
+
+.bg-color\:indigo {
+background-color: #7075D3;
+}
+
+.bg-color\:indigo-1 {
+background-color: #53589A;
+}
+
+.bg-color\:indigo-2 {
+background-color: #363B5F;
+}
+
+.mg-b\:d4 {
+margin-bottom: 1rem;
+}
+
+.pattern\:prism {
+background: linear-gradient(90deg, hsla(194,74%,56%,0.2), hsla(266,74%,56%,0.2), hsla(338,74%,56%,0.2), hsla(50,74%,56%,0.2), hsla(122,74%,56%,0.2));
+}
+
+.h\:c4 {
+height: 5.5rem;
+}
+
+.pattern\:finish {
+background: repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 4px), linear-gradient(90deg, currentColor, currentColor);
+}
+
+.pattern\:carbon {
+background: radial-gradient(circle at center center, transparent, rgba(0,0,0,0.2)), repeating-linear-gradient(135deg, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 1px, transparent 1px, transparent 4px), repeating-linear-gradient(45deg, rgba(0,0,0,0.4) 0px, rgba(0,0,0,0.4) 5px, transparent 5px, transparent 6px), linear-gradient(90deg, currentColor, currentColor);
+}
+
+.pattern\:wheat {
+background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05), transparent 80%), repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 6px), repeating-linear-gradient(44deg, currentColor 0 1px, transparent 1px 6px);
+}
+
+.pattern\:headshot {
+background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05), transparent 80%), linear-gradient(to bottom right, transparent 30%, currentColor 70%);
+}
+
+.pattern\:changeling {
+background: repeating-linear-gradient(0deg, currentColor 0 20px, transparent 20px 40px), repeating-linear-gradient(60deg, currentColor 0 20px, transparent 20px 40px), repeating-linear-gradient(120deg, currentColor 0 20px, transparent 20px 40px);
+}
+
+.pattern\:curtains {
+background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 2px), repeating-linear-gradient(44deg, currentColor 0 1px, transparent 1px 2px);
+}
+
+.pattern\:glow {
+background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.2), transparent), radial-gradient(circle at 65% 65%, rgba(255,255,255,0.15), transparent), currentColor;
+}
+
+.pattern\:plastic {
+background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 40%), radial-gradient(circle at 50% 8%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%);
+}
+
+.pattern\:lattice {
+background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 15px), repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 15px);
+}
+
+.pattern\:speckled {
+background: repeating-linear-gradient(to right, currentColor 0 4px, transparent 4px 8px), repeating-linear-gradient(to bottom, currentColor 0 4px, transparent 4px 8px);
+}
+
+.pattern\:herringbone {
+background: repeating-linear-gradient(135deg, currentColor 0 10px, transparent 10px 20px), repeating-linear-gradient(225deg, currentColor 0 10px, transparent 10px 20px);
+}
+
+.pattern\:pointgrid {
+background: radial-gradient(circle, currentColor 1px, transparent 1px) 0 0 / 10px 10px, radial-gradient(circle, currentColor 2px, transparent 2px) 5px 5px / 10px 10px;
+}
+
+.pattern\:halftone {
+background: radial-gradient(circle, currentColor 1px, transparent 1px) 0 0 / 6px 6px, radial-gradient(circle, transparent 3px, currentColor 3px) 3px 3px / 6px 6px;
+}
+
+.pattern\:shimmer {
+background: linear-gradient(to bottom, transparent, currentColor 50%, transparent);
+}
+
+.pattern\:tape {
+background: repeating-linear-gradient(45deg, currentColor 0 25px, transparent 25px 50px);
+}
+
+.pattern\:grid {
+background: repeating-linear-gradient(currentColor 0 1px, transparent 1px 20px), repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 20px);
+}
+
+.pattern\:velvet {
+background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 6px);
+}
+
+.pattern\:bubbles {
+background: radial-gradient(circle, transparent 4px, currentColor 5px, transparent 6px) 0 0 / 20px 20px, radial-gradient(circle, transparent 4px, currentColor 5px, transparent 6px) 10px 10px / 20px 20px;
+}
+
+.pattern\:microfiber {
+background: radial-gradient(circle, currentColor 1px, transparent 2px) 2px 2px / 6px 6px;
+}
+
+.pattern\:honeycomb {
+background: repeating-linear-gradient(60deg, currentColor 0 2px, transparent 2px 20px), repeating-linear-gradient(120deg, currentColor 0 2px, transparent 2px 20px);
+}
+
+.pattern\:hatching {
+background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 10px), repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 10px);
+}
+
+.pattern\:cotton {
+background: radial-gradient(circle, currentColor 2px, transparent 2px) 0 0 / 10px 10px, radial-gradient(circle, currentColor 2px, transparent 2px) 5px 5px / 10px 10px;
+}
+
+.pattern\:zigzag {
+background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 4px, currentColor 4px 6px, transparent 6px 8px);
+}
+
+.pattern\:thickstripes {
+background: repeating-linear-gradient(45deg, currentColor 0 15px, transparent 15px 30px);
+}
+
+.pattern\:thinstripes {
+background: repeating-linear-gradient(45deg, currentColor 0 5px, transparent 5px 10px);
+}
+
+
+

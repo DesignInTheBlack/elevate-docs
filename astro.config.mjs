@@ -13,11 +13,11 @@ export default defineConfig({
 				dark: './src/assets/dark.svg',
 				replacesTitle: true,
 			  },
-			  
 			customCss: [
 				// Relative path to your custom CSS file
 				'./src/styles/custom.css',
 				'@fontsource-variable/raleway/index.css',
+				'./src/styles/elevate.css',
 
 			  ],
 			social: {
