@@ -3,7 +3,7 @@ title: "Getting Started with Elevate CSS"
 description: Learn how to get started with Elevate CSS.
 ---
 
-This quick start guide is included to give you an opportunity to dive right into the world of Elevate CSS with a demo project. Note that as this is a proof-of-concept, it is not intended to be used as a production-ready framework yet. With that said, however, it is **highly recommended** that you familiarize yourself with the **configuration** section as well as it provides a deeper understanding of Elevate's capabilities, functionality, and best practices as well as how to best leverage the framework for your specific needs.
+This quick start guide is included to give you an opportunity to dive right into the world of Elevate CSS. Note that as this is in alpha, it is not intended to be used as a production-ready framework yet. With that said, however, it is **highly recommended** that you familiarize yourself with the **configuration** section as well as it provides a deeper understanding of Elevate's capabilities, functionality, and best practices as well as how to best leverage the framework for your specific needs.
 
 <br/>
 
@@ -15,11 +15,11 @@ import { Code } from '@astrojs/starlight/components';
 
 <Steps>
 
-1. Download the Elevate CSS alpha from GitHub <Code code={`git clone https://github.com/DesignInTheBlack/Elevate.git`} title={`Terminal`}/>
+1. Use NPM to Install Elevate <Code code={`npm install elevate-framework`} title={`Terminal`}/>
 
-2. Install Elevate's Dependencies <Code code={`npm install`} title={`Terminal`}/>
+2. Run the Elevate setup script <Code code={`npx elevate-framework prepare`} title={`Terminal`}/>
 
-3. Watch Files for Changes and Convert Elevate's Syntax to CSS <Code code={`npm start`} title={`Terminal`}/>
+3. Watch Files for Changes and Convert Elevate's Syntax to CSS <Code code={`npm run elevate`} title={`Terminal`}/>
 
 </Steps>
 
@@ -32,10 +32,11 @@ Elevate’s general settings are defined in `elevate/config/elevate.ts`:
 ```typescript
 // elevate/config/elevate.ts
 const options = {
-  Watch: './',                   // Directory to watch for changes
-  FileTypes: ['html', 'jsx', 'tsx', 'astro'],  // File extensions to scan
-  Output: './'                   // Output directory for generated CSS
-};
+    Watch:'./elevate/templates', // Folder to watch for changes
+    FileTypes:['html', 'jsx', 'tsx', 'astro'], //Valid filetypes to watch for changes
+    Output:'./', //Where to put the compiled CSS
+    Extend:[] //Non-Compiled CSS files to include
+}
 
 export const config = options;
 ```
@@ -96,7 +97,7 @@ text-align: left;
 Bringing it all together, here are some examples of Elevate's syntax in action:
 
 ```html
-<div class="text:bold:purple">      <!-- Bold text with purple color -->
+<div class="text:purple font:bold">      <!-- Bold text with purple color -->
 <div class="bg-color:purple">          <!-- Background color set to purple -->
 <div class="row:x-center:y-start">  <!-- Row layout with specific alignment -->
 <div class="absolute left:d12 z:10">  <!-- Absolute positioning, d12 from the left, and z-index of 10  -->
@@ -162,12 +163,12 @@ import { LinkCard } from '@astrojs/starlight/components';
 
 <br/>
 
-**The Functional Flag [$]:**  
+**The Ignore Flag [-]:**  
 
-Exempt certain classes from CSS generation (e.g. for JavaScript interactions or labelling):
+Exempt certain classes from CSS generation (e.g. for JavaScript interactions, labelling, or applying non-compiled CSS classes):
 
 ```html
-<div class="$mySelector">
+<div class="-mySelector">
 ```
 
 <br/>
