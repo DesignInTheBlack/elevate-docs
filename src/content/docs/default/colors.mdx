@@ -8,65 +8,170 @@ Elevate CSS comes with a thoughtfully designed default color scheme built into t
 import { Aside } from '@astrojs/starlight/components';
 
 <br/>
+<br/>
+
 
 
 <Aside title="You've Gotta Start Somewhere, Right?">
 Elevate includes a set of sensible defaults for most things, but you can always extend them or override them as you see fit. For more information, check out the [Configuration & Extension](/guides/3-configuration/) guide.
 </Aside>
 
-##  Color Structure
-Each color in the default palette is categorized into five variations:
 
-- **-2**: The deepest shade, suitable for accents or text on light backgrounds.
-- **-1**: A moderately dark shade for subtle emphasis.
-- **Base Color**: The core shade of the color family.
-- **+1**: A slightly lighter shade for backgrounds or highlights.
-- **+2**: The softest shade, ideal for backgrounds or low contrast elements.
+## Color Structure
+
+Below is an **expanded** explanation of our **9-step color ramp**, spanning from **-4** to **+4**. This extended structure offers more granular control over color usage, from **deepest** shades for text or accents to **lightest** tints for subtle backgrounds or highlights.
+
+### 9-Step Ramp
+
+**-4**: The **darkest** shade. Ideal for high-contrast text or very strong emphasis. <br/>
+
+**-3**: A **very deep** tone, still excellent for text on light backgrounds or bold accents. <br/>
+
+**-2**: A **deep** shade, suitable for stronger accents, outlines, or text on lighter backgrounds. <br/>
+
+**-1**: A **moderately dark** shade, providing subtle emphasis for text, borders, or icons. <br/>
+
+**Base Color**: The **core shade** — often used for brand elements or primary highlights. <br/>
+
+**+1**: A **lighter** tint—useful for backgrounds, hover states, or gentle highlights. <br/>
+
+**+2**: A **soft** tint for low-contrast elements, such as secondary backgrounds or UI components. <br/>
+
+**+3**: An **even lighter** tint approaching a pastel range, suitable for large backgrounds or subdued highlights. <br/>
+
+**+4**: The **lightest** tint—close to a near-white variant, perfect for minimal backgrounds, subtle overlays, or dividing elements. <br/>
+
+<br/>
+<br/>
+
 
 These colors can be passed as a modifier in the following format: basecolor-shade, e.g. `text:purple` or `bg-color:red-light`.
 
 You can utilize shades by adding a number to the base color, e.g. `bg-color:red-1` or `bg-color:red+2`.
 
+<br/>
+<br/>
+
+
 Below is an overview of the default colors with their respective shades:
 
-<div class = "row"> 
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:indigo-2 mg-t:d4"> -2 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:indigo-1"> -1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:indigo"> Indigo </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:indigo+1"> +1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:indigo+2"> +2 </div>
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo text:white">Indigo</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:indigo+4 text:black">+4</div>
 </div>
 
-<div class = "row"> 
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:purple-2 mg-t:d4"> -2 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:purple-1"> -1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:purple"> Purple </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:purple+1"> +1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:purple+2"> +2 </div>
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple text:white">Purple</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:purple+4 text:black">+4</div>
 </div>
 
-<div class = "row"> 
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:red-2 mg-t:d4"> -2 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:red-1"> -1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:red"> Red </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:red+1"> +1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:red+2"> +2 </div>
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red text:white">Red</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:red+4 text:black">+4</div>
 </div>
 
-<div class = "row"> 
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:orange-2 mg-t:d4"> -2 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:orange-1"> -1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:orange"> Orange </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:orange+1"> +1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:orange+2"> +2 </div>
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange text:white">Orange</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:orange+4 text:black">+4</div>
 </div>
 
-<div class = "row"> 
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:green-2 mg-t:d4"> -2 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:green-1"> -1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:green"> Green </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:green+1"> +1 </div>
-    <div class = "row:x-center:y-center h:d12 w:full bg-color:green+2"> +2 </div>
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green text:white">Green</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:green+4 text:black">+4</div>
+</div>
+
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue text:white">Blue</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:blue+4 text:black">+4</div>
+</div>
+
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink text:white">Pink</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:pink+4 text:black">+4</div>
+</div>
+
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow text:white">Yellow</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:yellow+4 text:black">+4</div>
+</div>
+
+
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey-4 mg-t:d4 text:white">-4</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey-3 text:white">-3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey-2 text:white">-2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey-1 text:white">-1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey text:white">Grey</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey+1 text:black">+1</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey+2 text:black">+2</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey+3 text:black">+3</div>
+  <div class="row:x-center:y-center h:d12 w:full bg-color:grey+4 text:black">+4</div>
+</div>
+
+<div class="row">
+  <div class="row:x-center:y-center h:d12 w:full bg-color:black mg-t:d4 text:white">Black</div>
+</div>
+
+<div class="row">
+
+  <div class="row:x-center:y-center h:d12 w:full bg-color:white mg-t:d4 text:black">White</div>
+
 </div>
 
 
