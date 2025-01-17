@@ -3,7 +3,7 @@ title: Pattern
 description: A guide to pattern in Elevate CSS.
 ---
 
-Elevate CSS features a compound property for setting the pattern as well as the colors of a background pattern:
+Elevate CSS features a compound property for setting the pattern as well as the colors of a background pattern and includes a number of attractive and flexible default patterns to be used for the background of elements:
 
 <br/>
 
@@ -11,9 +11,21 @@ Elevate CSS features a compound property for setting the pattern as well as the 
 
 | Property   | Expected Values | Example     |
 |------------|--------------------|-----------------------|
-| `pattern` | `thinstripes`, `thickstripes`, `zigzag`, `cotton`, `hatching`, `honeycomb`, `microfiber`, `bubbles`, `velvet`, `grid`, `tape`, `shimmer`, `halftone`, `pointgrid`, `herringbone`, `speckled`, `lattice`, `plastic`, `glow`, `curtains`, `changeling`, `headshot`, `wheat`, `carbon`, `finish`, `prism`  |  `pattern:dots`  |
+| `pattern` | `thinstripes`, `thickstripes`, `zigzag`, `cotton`, `hatching`, `honeycomb`, `microfiber`, `bubbles`, `velvet`, `grid`, `tape`, `shimmer`, `halftone`, `pointgrid`, `herringbone`, `speckled`, `lattice`, `plastic`, `glow`, `curtains`, `changeling`, `headshot`, `wheat`, `carbon`, `finish`, `prism`  |  `pattern:carbon`  |
 
 
+### Modifiers
+
+| Modifier  | Expected Values | Example     |
+|------------|--------------------|-----------------------|
+| `fore` |  Colortoken (e.g., `indigo+2`) |  `pattern:carbon:fore-indigo+2`  |
+| `back` |  Colortoken (e.g., `indigo-1`) |  `pattern:carbon:back-indigo-2`  |
+
+<br/>
+Elevate recommends mixing and matching patterns with different colors to create a unique and visually appealing background for your elements
+<br/>
+
+  <div class="w:full h:c4 pattern:carbon:fore-indigo+2:back-indigo-1 mg-t:d4 mg-b:d4"></div>
 
 <br/>
 <br/>
