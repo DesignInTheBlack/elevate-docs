@@ -3,11 +3,13 @@ title: "Specificity"
 description: Learn how to avoid specificity issues in Elevate CSS.
 ---
 
+### Addressing Specificity Issues
+
 Elevate CSS allows you to write more concise and semantic utility classes by using property and modifier combinations. However, in certain cases, this can come at a cost to the specificity of your CSS, leading to potential issues with cascading and overriding classes.
 
 To address this, Elevate provides a specific property which allows you to isolate a given class list and thus quickly correct or outright avoid any potential issues of specificity.
 
-<br/>
+
 
 ### The `scope` Property
 
@@ -18,9 +20,8 @@ To address this, Elevate provides a specific property which allows you to isolat
 <br/>
 <br/>
 
- While the modifier is a PassThroughToken and you can use whatever you like, Elevate recommends using a unique string that is specific to the class list you are targeting and preferably referential to the component or subcomponent the class list is responsible for. This helps to ensure that your CSS is as specific as possible, reducing the risk of conflicts with other classes.
+ While the modifier is a PassThroughToken and you can use whatever you like, Elevate recommends using a unique string that is specific to the class list you are targeting and preferably referential to the component or subcomponent the class list is responsible for.
 
-<br/>
 <br/>
 
 ```html
@@ -28,3 +29,5 @@ To address this, Elevate provides a specific property which allows you to isolat
 <div class="scope:firstColumn col-spans:from-1:to-2 row:x-center:y-center bg-color:green+1 /lg/ pd-y:d8 col-spans:from-1:to-3"></div>
 
 ```
+<br/>
+ This helps to ensure that your CSS is as specific as possible, reducing the risk of conflicts with other classes.
