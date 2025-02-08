@@ -1,5 +1,5 @@
 ---
-title: Grid Shorthand
+title: Grids
 description: A guide to the grid shorthand in Elevate CSS.
 ---
 
@@ -7,7 +7,7 @@ Elevate CSS simplifies CSS Grid layouts by introducing a series of concise short
 
 <br/>
 
-## `grid` Modifiers
+## `grid` Property Modifiers
 Elevate supports the following modifiers for the `grid` property:
 
 | **Modifier**             | **Expected Values**              | **Example**                          |
@@ -20,17 +20,30 @@ Elevate supports the following modifiers for the `grid` property:
 
 <br/>
 
-## `row-spans` and `col-spans` Modifiers
+## `row-spans` and `col-spans` Property Modifiers
 The `row-spans` and `col-spans` properties can be used to specify the number of rows or columns a cell should span across. These properties accept the following syntax:
 
 | **Modifier**             | **Expected Values**              | **Example**                          |
 |--------------------------|----------------------------------|--------------------------------------|
-| From     | NumericToken (e.g., `2`, up to 12)         | `col-spans:from-2`                         |
-| To          | NumericToken (e.g., `4`, up to 12)         | `row-spans:from-1:to-3`                         |
+| From     | NumericToken (e.g., `2`, up to 12) or `all`         | `col-spans-all`                         |
+| To          | NumericToken (e.g., `4`, up to 12) or `all`         | `row-spans:from-1:to-3`                         |
+
+<br/>
+
+## `auto` Property Modifiers
+The `auto` properties utilize the passthrough token to allow for more traditionally robust control over the layout of grid items. These properties accept the following syntax:
+
+| **Modifier**             | **Expected Values**              | **Example**                          |
+|--------------------------|----------------------------------|--------------------------------------|
+| 'auto-col'    | PassThroughToken (e.g.,  `(minmax(100px, auto))` )          | `auto-col:(minmax(100px, auto))`                         |
+| 'auto-row'        | PassThroughToken (e.g.,  `(minmax(20%, 80vmax))` )         | `auto-row:(minmax(20%, 80vmax))`                         |
+| 'auto-flow'    | PassThroughToken (e.g.,  `(row dense)` )         | `auto-flow:(row dense)`                         |
+
+<br/>
 
 ## Examples of Grid Layouts
 
-Elevate CSS ensures creating grid layouts is intuitive and concise, enabling dynamic design with minimal effort.
+Elevate CSS ensures creating grid layouts is intuitive and concise, enabling dynamic design with minimal effort while simultaneously preserving the power and flexibility of CSS Grid.
 
 ```html
 <!-- Declaring a Grid Layout -->

@@ -35,7 +35,7 @@ X is always horizontal, Y is always vertical
 
 ## `Row` & `Col` Modifiers
 
-The following table describes the supported modifiers for the `row` property, along with the expected options.
+The following table describes the supported modifiers for the `row` and `col` properties, along with the expected options.
 
 | **Modifier**   | **Expected Values**                                                | **Example** |
 |---------------------|-----------------------------------------------------------|-------------|
@@ -45,15 +45,27 @@ The following table describes the supported modifiers for the `row` property, al
 
 <br/>
 
-## `Item` Modifiers
+## `row-r` & `col-r` Modifiers
 
-The following table describes the supported modifiers for the child (item) property, along with the expected options.
+The following table describes the supported modifiers for the `row-r` and `col-r` (reverse) properties, along with the expected options.
+
+| **Modifier**   | **Expected Values**                                                | **Example** |
+|---------------------|-----------------------------------------------------------|-------------|
+| X-Axis              | `x-start`, `x-end`, `x-center`, `x-between`, `x-around`, `x-evenly`, `x-stretch`, `x-baseline`| `row-r:x-center` |
+| Y-Axis              | `y-start`, `y-end`, `y-center`, `y-between`, `y-around`, `y-evenly`, `y-stretch`, `y-baseline` | `col-r:y-start`|
+| Wrap                | `no-wrap`, `wrap`, `reverse`                            | `row-r:x-start:wrap`|
+
+<br/>
+
+## `Child` Modifiers
+
+The following table describes the supported modifiers for the `child` property, along with the expected options.
 
 | **Modifier**   | **Expected Values**                                                | **Example** |
 |---------------------|-----------------------------------------------------------| ---------- |
-| Grow                | `no-grow`, `grow`, `auto`                                    | `item:grow`        |
-| Shrink              | `no-shrink`, `shrink`                                              | `item:shrink`        |
-| Self                | `start`, `end`, `center`, `stretch`, `auto` | `item:auto`  |
-| Order               | `order-{value}` (where `{value}` corresponds to a numeric token) | `item:order-5`   |
-| Basis               | `basis-{value}` (where `{value}` corresponds to a spacing token) | `item:basis-d5` |
+| Grow                | `no-grow`, `grow`, `auto`                                    | `child:grow`        |
+| Shrink              | `no-shrink`, `shrink`                                              | `child:shrink`        |
+| Self                | `start`, `end`, `center`, `stretch`, `auto` | `child:auto`  |
+| Order               | `order-{value}` (where `{value}` corresponds to a numeric token) | `child:order-5`   |
+| Basis               | `basis-{value}` (where `{value}` corresponds to a spacing token) | `child:basis-d5` |
 
