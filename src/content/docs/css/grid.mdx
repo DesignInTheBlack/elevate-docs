@@ -29,6 +29,23 @@ The `row-spans` and `col-spans` properties can be used to specify the number of 
 | To          | NumericToken (e.g., `4`, up to 12) or `all`         | `row-spans:from-1:to-3`                         |
 
 <br/>
+<br/>
+<br/>
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside title="Evenly Distributing Space">
+Note that you can also add `fr` to the end of the `rows` and `cols` modifiers to indicate fractional rows or columns. That is, evenly distribute the available space among the specified number of rows or columns.
+
+```html
+<!-- Four Evenly Columns of Evenly Distributed Space -->
+<div class="grid:rows-4-fr">
+```
+
+</Aside>
+
+<br/>
+<br/>
 
 ## `auto` Property Modifiers
 The `auto` properties utilize the passthrough token to allow for more traditionally robust control over the layout of grid items. These properties accept the following syntax:
