@@ -5,14 +5,14 @@ description: A guide to positioning elements in Elevate CSS.
 
 ## Position
 
-Direct properties for specifying the position of an element:
+Direct properties for specifying the positioning of an element:
 
 | Property   | Description |
 |------------|-------------|
-| `relative` |relative to its normal position. |
-| `absolute` |relative to its nearest positioned ancestor. |
+| `relative` | relative to its normal position. |
+| `absolute` | relative to its nearest positioned ancestor. |
 | `fixed`    | relative to the viewport. |
-| `sticky`   |relative to the viewport, but only when it is within the viewport. |
+| `sticky`   | relative to the viewport, but only when it is within the viewport. |
 | `static`   | according to the normal flow of the document. |
 | `initial`  | Sets the property to its default value. |
 | `inherit`  | Inherit the position from the parent element. |
@@ -34,8 +34,18 @@ Compound properties for specifying the final horizontal or vertical position of 
 
 ## Z-Index
 
-Compound properties for specifying the z-index of an element:
+Compound property for specifying the z-index of an element:
 
 | Property   | Expected Values |  Example        |
 |------------|--------------------|-----------------------|
 | `z`       | NumericToken  (e.g., `30`)      | `z:30` |
+
+<br/>
+
+## Empty Content
+
+Pseudo-elements require a declared content value in order to be rendered if empty. As such, Elevate provides a direct property to do so:
+
+| Property   | Description |
+|------------|-------------|
+| `empty` |equivalent to `content: ""`|

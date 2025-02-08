@@ -1,33 +1,30 @@
 ---
-title: Pattern
+title: Patterns [Experimental]
 description: A guide to pattern in Elevate CSS.
 ---
 
-Elevate CSS features a compound property for setting the pattern as well as the colors of a background pattern and includes a number of attractive and flexible default patterns to be used for the background of elements:
+Elevate CSS features an experimental compound property for setting the pattern as well as the colors of a background pattern and includes a number of attractive and flexible default patterns to be used for the background of elements:
 
 <br/>
 
-### The `pattern` Property
+### `pattern` Property
 
 | Property   | Expected Values | Example     |
 |------------|--------------------|-----------------------|
 | `pattern` | `thinstripes`, `thickstripes`, `zigzag`, `cotton`, `hatching`, `honeycomb`, `microfiber`, `bubbles`, `velvet`, `grid`, `tape`, `shimmer`, `halftone`, `pointgrid`, `herringbone`, `speckled`, `lattice`, `plastic`, `glow`, `curtains`, `changeling`, `headshot`, `wheat`, `carbon`, `finish`, `prism`  |  `pattern:carbon`  |
 
 
-### Modifiers
+### `pattern` Modifiers
 
 | Modifier  | Expected Values | Example     |
 |------------|--------------------|-----------------------|
-| `fore` |  ColorToken (e.g., `indigo+2`) |  `pattern:carbon:fore-indigo+2`  |
-| `back` |  ColorToken (e.g., `indigo-1`) |  `pattern:carbon:back-indigo-2`  |
+| `fg` |  ColorToken (e.g., `indigo+2`) |  `pattern:carbon:fg-indigo+2`  |
+| `bg` |  ColorToken (e.g., `indigo-1`) |  `pattern:carbon:bg-indigo-2`  |
 
 <br/>
 Elevate recommends mixing and matching patterns with different colors to create a unique and visually appealing background for your elements
 <br/>
 
-  <div class="w:full h:c4 pattern:carbon:fore-indigo+2:back-indigo-1 mg-t:d4 mg-b:d4"></div>
-
-<br/>
 <br/>
 
 import { Aside } from '@astrojs/starlight/components';
@@ -37,10 +34,10 @@ As with all other effects in Elevate CSS, transitions are considered to be a "de
 </Aside>
 
 <br/>
-<br/>
 
 
- <div class="w:full h:c4 pattern:thinstripes mg-t:d4 mg-b:d4"></div>
+
+  <div class="w:full h:c4 pattern:thinstripes mg-t:d4 mg-b:d4"></div>
   <div class="w:full h:c4 pattern:thickstripes mg-t:d4 mg-b:d4"></div>
   <div class="w:full h:c4 pattern:zigzag mg-t:d4 mg-b:d4"></div>
   <div class="w:full h:c4 pattern:cotton mg-t:d4 mg-b:d4"></div>

@@ -31,6 +31,7 @@ export default defineConfig({
 						// Each item here is one entry in the navigation menu.
 						{ label: 'Getting Started', slug: 'guides/2-getting-started' },
 						{ label: 'Configuration', slug: 'guides/3-configuration' },
+						{ label: 'Specificity', slug: 'guides/3-specificity' },
 					],
 				},
 				{

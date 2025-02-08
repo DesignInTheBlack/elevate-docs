@@ -5,7 +5,7 @@ description: A guide to the text properties in Elevate CSS.
 
 Elevate features three properties responsible for styling text elements: `text`, `font`, and `format`. Text is responsible for defining how text is presented and flows within a container, while font focuses on the characteristics of the typeface itself, and format is used to control the spacing between lines of text as well as other general formatting options.
 
-## `Text` Property Modifiers
+## `text` Property Modifiers
 
 The following table describes the supported tokens and rules for the `text` property, along with the expected options and their output CSS.
 
@@ -13,11 +13,11 @@ The following table describes the supported tokens and rules for the `text` prop
 |---------------------|-----------------------------------------------------------|------------|
 | `color`             |   ColorToken (e.g., `purple+1`)   | `text:purple+1` |
 | `text-align`        | `left`, `center`, `right`, `justify`                      | `text:left` |
-| `max-width`         | `note (20ch)`,`brief (45ch)`,`blog (65ch)`,`book (70ch)`,`essay (75ch)`,`full (80ch)`               | `text:book` |
+| `max-width`         | `note` (20ch),<br/>`brief` (45ch),<br/>`blog` (65ch),<br/>`book` (70ch),<br/>`essay` (75ch),<br/>`full` (80ch)               | `text:book` |
 | `text-decoration`    | `none`, `underline`, `overline`, `line-through`, `underline-overline`, `underline-line-through`, `overline-line-through`, `underline-overline-line-through`           | `text:underline` |
 | `line-height`       | `none`, `hug`, `snug`, `normal`, `relaxed`, `loose`, `spacious`, `extra-spacious`             | `text:spacious` |
 
-## `Font` Property Modifiers
+## `font` Property Modifiers
 
 The following table describes the supported tokens and rules for the `font` property, along with the expected options and their output CSS.
 
@@ -25,17 +25,17 @@ The following table describes the supported tokens and rules for the `font` prop
 |---------------------|-----------------------------------------------------------|------------|
 | `font-size`         | `tiny`, `small`, `base`, `h6`, `h5`, `h4`, `h3`, `h2`, `h1`, `eyebrow`   | `font:small` |
 | `font-family`       | `sans`, `serif`, `mono`                        | `font:sans` |
-| `font-weight`       | `thin`, `extra-light`, `light`, `regular`, `medium`, `semibold`, `bold`, `extra-bold`, `black`     | `font:bold` |
+| `font-weight`       | `thin` (100),<br/>`extra-light` (200),<br/>`light` (300),<br/>`regular` (400),<br/>`medium` (500),<br/>`semibold` (600),<br/>`bold` (700),<br/>`extra-bold` (800),<br/>`black` (900)     | `font:bold` |
 | `letter-spacing`    | `extra-tight`, `tight`, `normal`, `wide`, `wider`, `widest` | `font:widest` |
 
-## `Format` Property Modifiers
+## `format` Property Modifiers
 
 The following table describes the supported tokens and rules for the `format` property, along with the expected options and their output CSS.
 
 | **Modifier**   | **Expected Values**                                                | **Example** |
 |---------------------|-----------------------------------------------------------|------------|
-| `text-transform`         | 'left','center','right','justify'      | `format:uppercase` |
-| `hyphens`       |     'none','manual','auto'                 | `format:auto` |
-| `white-space`       | 'no-wrap','normal','pre-line','pre-wrap','pre','break-spaces'   | `format:pre` |
-| `word-break`       | 'normal','all','keep','word'         | `format:word` |
-| `overflow-wrap`    | 'normal','break-word','anywhere' | `format:anywhere` |
+| `text-transform`         | `left`,`center`,`right`,`justify`      | `format:uppercase` |
+| `hyphens`       |     `none`,`manual`,`auto`                 | `format:auto` |
+| `white-space`       | `no-wrap`,`normal`,`pre-line`,`pre-wrap`,`pre`,`break-spaces`   | `format:pre` |
+| `word-break`       | `normal`,`all`,`keep`,`word`         | `format:word` |
+| `overflow-wrap`    | `normal`,`break-word`,`anywhere` | `format:anywhere` |
