@@ -5,29 +5,34 @@ description: Learn how to avoid specificity issues in Elevate CSS.
 
 ### Addressing Specificity Issues
 
-Elevate CSS allows you to write more concise and semantic utility classes by using property and modifier combinations. However, in certain cases, this can come at a cost to the specificity of your CSS, leading to potential issues with cascading and overriding classes.
+Elevate CSS encourages concise, semantic class names by combining properties with modifiers. In some situations, this flexibility can lower selector specificity, which may let other styles override your intent.
 
-To address this, Elevate provides a specific property which allows you to isolate a given class list and thus quickly correct or outright avoid any potential issues of specificity.
+To prevent conflicts, Elevate provides a **context utility**. It creates a temporary, named scope so that everything inside it gains higher, predictable specificity.
 
+### The `context` Property
 
-
-### The `scope` Property
-
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `scope` |  PassThroughToken (e.g.,  `someUniqueString` )   |  `scope:someUniqueString`  |
+| Property | Expected Values | Example |
+|----------|-----------------|---------|
+| `ctx`    | PassThroughToken (for example, `someUniqueString`) | `ctx:someUniqueString` |
+| `ctx-end`| None            | `ctx-end` |
 
 <br/>
-<br/>
 
- While the modifier is a PassThroughToken and you can use whatever you like, Elevate recommends using a unique string that is specific to the class list you are targeting and preferably referential to the component or subcomponent the class list is responsible for.
+Although the modifier accepts any string, use a name that clearly relates to the component you are styling. It keeps your markup self-documenting.
 
 <br/>
 
 ```html
-
-<div class="scope:firstColumn col-spans:from-1:to-2 row:x-center:y-center bg-color:green+1 /lg/ pd-y:d8 col-spans:from-1:to-3"></div>
-
+<div class="ctx:someComponent w:full col:x-start:y-end /lg/ grid:cols-5-fr:rows-1:gap-d12">
+  <div class="h:full bd:round-d6 col:x-start:y-between /lg/ col-spans:from-1:to-3">
+    <h2 class="font:h6:regular:sans text:fwhite mg-b:d6 /lg/ mg-b:c3">
+      Declaring Contexts Is Fun
+    </h2>
+    <p class="font:h6:sans:regular:tight text:findigogray:brief mg-b:d6 /lg/ mg-b:0 ctx:end">
+      Any class between ctx:someComponent and ctx:end is now scoped to the someComponent context and will not collide with styles elsewhere.
+    </p>
+  </div>
+</div>
 ```
 <br/>
- This helps to ensure that your CSS is as specific as possible, reducing the risk of conflicts with other classes.
+Place ctx:name at the start of the section you want to isolate, then add ctx-end where that section finishes. Every class between these two markers inherits the context, giving you a clean, conflict-free way to manage specificity.
