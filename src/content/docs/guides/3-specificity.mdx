@@ -14,7 +14,7 @@ To prevent conflicts, Elevate provides a **context utility**. It creates a tempo
 | Property | Expected Values | Example |
 |----------|-----------------|---------|
 | `ctx`    | PassThroughToken (for example, `someUniqueString`) | `ctx:someUniqueString` |
-| `ctx-end`| None            | `ctx-end` |
+| `ctx:end`| None            | `ctx:end` |
 
 <br/>
 
@@ -35,4 +35,4 @@ Although the modifier accepts any string, use a name that clearly relates to the
 </div>
 ```
 <br/>
-Place ctx:name at the start of the section you want to isolate, then add ctx-end where that section finishes. Every class between these two markers inherits the context, giving you a clean, conflict-free way to manage specificity.
+Place `ctx:someUniqueString` at the start of the section you want to isolate, then add `ctx:end` where that section finishes. Every class between these two markers inherits the context, giving you a clean, conflict-free way to manage specificity.
