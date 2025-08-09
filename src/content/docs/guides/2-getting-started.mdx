@@ -32,12 +32,15 @@ Elevate’s general settings are defined in `elevate/config/elevate.ts`:
 ```typescript
 const options = {
     Watch:'./elevate/templates', // Folder to watch for changes
-    FileTypes:['html', 'jsx', 'tsx', 'astro'], //Valid filetypes to watch for changes
-    Output:'./', //Where to put the compiled CSS
-    Extend:[], //CSS files to include as well
-    ClassRegex: [
-        /class\s*=\s*"([^"]+)"/g, // Matches class="..."
-    ]
+    FileTypes:['html', 'jsx', 'tsx', 'astro'], // Valid filetypes to watch for changes
+    Output:'./', // Where to put the compiled CSS
+    Extend:[], // CSS files to include as well
+    ClassRegex: [ // You can add more regex patterns here to match additional classing structures for your preferred stack
+        /\bclass\s*=\s*"([^"]*)"/g,                          // class="..."
+        /\bclassName\s*=\s*"([^"]*)"/g,                      // className="..."
+        /\bclassName\s*=\s*{\s*`([\s\S]*?)`}/g               // className={`...`}
+    ],
+    SafeList:['myClass','myOtherClass']
 }
 
 export const config = options
@@ -109,8 +112,8 @@ Bringing it all together, here are some examples of Elevate's syntax in action:
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title=" Modifiers are Order Agnostic">
-You can write text:red:bold or text:bold:red and the order doesn't matter. We'll get to the how and why later, but for now, just know that you can use any order you want.
+<Aside title="Modifiers are Order Agnostic">
+You can write `text:red:bold` or `text:bold:red` and the order doesn't matter. We'll get to the how and why later, but for now, just know that you can use any order you want.
 </Aside>
 
 <br/>
@@ -172,6 +175,23 @@ Exempt certain classes from CSS generation (e.g. for JavaScript interactions, la
 ```html
 <div class="-mySelector">
 ```
+
+<br/>
+
+<Aside title="Or Just Safelist Your Classes">
+You can also just add the classes you want to ignore to the safelist in `elevate/config/elevate.ts`. This is useful for integrating
+Elevate with other tools that require classes of their own:
+
+```html
+ ClassRegex: [
+        /\bclass\s*=\s*"([^"]*)"/g,                          // class="..."
+        /\bclassName\s*=\s*"([^"]*)"/g,                      // className="..."
+        /\bclassName\s*=\s*{\s*`([\s\S]*?)`}/g               // className={`...`}
+    ],
+    SafeList:['myClass','myOtherClass']
+```
+
+</Aside>
 
 <br/>
 
