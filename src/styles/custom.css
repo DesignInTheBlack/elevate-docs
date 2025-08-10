@@ -1,31 +1,303 @@
-/* Dark mode colors. */
+/* =========================================================
+ Base layout (unchanged)
+ ========================================================= */
 
+ body {
+
+  }
+  
+  .header {
+	border-bottom: none;
+  }
+  
+  .main-frame {
+	pointer-events: none;
+	position: relative;
+	backdrop-filter: blur(100px);
+  }
+  
+  .sidebar-pane {}
+  
+  .main-frame a,
+  .main-frame button {
+	pointer-events: auto;
+  }
+  
+  /* =========================================================
+   Aside tokens — simplified for solid-color panels
+   ========================================================= */
+  
+/* Dark mode colors. */
 :root {
-	--sl-font: 'Raleway Variable', serif;
-	--sl-color-accent-low: #28174a;
-	--sl-color-accent: #7d1ef0;
-	--sl-color-accent-high: #ccbdfe;
+  --sl-color-text-invert: #ffffff;
+	--sl-color-accent-low: #0d153a;
+	--sl-color-accent: #0015cc;
+	--sl-color-accent-high: #ffffff;
 	--sl-color-white: #ffffff;
-	--sl-color-gray-1: #eeebfc;
-	--sl-color-gray-2: #c2bfd3;
-	--sl-color-gray-3: #8c86aa;
-	--sl-color-gray-4: #585374;
-	--sl-color-gray-5: #393352;
-	--sl-color-gray-6: #27213f;
-	--sl-color-black: #181624;
+	--sl-color-gray-1: #ffffff;
+	--sl-color-gray-2: #ffffff;
+	--sl-color-gray-3: #ffffff;
+	--sl-color-gray-4: #ffffff;
+	--sl-color-gray-5: #383b45;
+	--sl-color-gray-6: #121418;
+	--sl-color-black: #101115;
+  --note-bg:     #1e5a66; /* Rich Teal */
+  --note-fg:     #e5f8fb; /* Very light cyan for contrast */
+  --note-border: #2eb4d5; /* Brighter teal edge */
+  
+  --tip-bg:      #1f8a5b; /* Deep Emerald */
+  --tip-fg:      #e5fff4; /* Soft mint white */
+  --tip-border:  #40e2b3; /* Bright mint-green edge */
+  
+  --caution-bg:  #665c1a; /* Muted Gold-Green */
+  --caution-fg:  #fffce6; /* Pale warm white */
+  --caution-border: #d4b84a; /* Brighter gold edge */
+  
+  --danger-bg:   #993366; /* Magenta Edge */
+  --danger-fg:   #ffe6f3; /* Light pink-white */
+  --danger-border: #ff5bb4; /* Bright pink edge */
+  
 }
-/* Light mode colors. */
-:root[data-theme='light'] {
-	--sl-color-accent-low: #d9cfff;
-	--sl-color-accent: #7f22f2;
-	--sl-color-accent-high: #3a1a6e;
-	--sl-color-white: #181624;
-	--sl-color-gray-1: #27213f;
-	--sl-color-gray-2: #393352;
-	--sl-color-gray-3: #585374;
-	--sl-color-gray-4: #8c86aa;
-	--sl-color-gray-5: #c2bfd3;
-	--sl-color-gray-6: #eeebfc;
-	--sl-color-gray-7: #f6f5fd;
-	--sl-color-black: #ffffff;
+
+
+
+
+
+  :where(.starlight-aside--note,
+		 .starlight-aside--tip,
+		 .starlight-aside--caution,
+		 .starlight-aside--danger) {
+	--aside-pad-y: 1rem;
+	--aside-pad-x: 1.25rem;
+	--aside-radius: 16px;
+  
+	/* Base neutrals */
+	--cosmic-panel: #000000;
+	--cosmic-ink:   #eaf2ff;
+	--cosmic-title: #ffffff;
+	--sl-color-text: var(--cosmic-ink);
+  
+	/* Per-type solid backgrounds and text colors */
+	
+  }
+  
+  /* =========================================================
+   Base aside — solid color, no glow
+   ========================================================= */
+  
+  .starlight-aside--note,
+  .starlight-aside--tip,
+  .starlight-aside--caution,
+  .starlight-aside--danger {
+	position: relative;
+	padding: var(--aside-pad-y) var(--aside-pad-x);
+	border-radius: var(--aside-radius);
+	border: 1px solid transparent;
+	background: var(--cosmic-panel);
+	color: var(--cosmic-ink);
+	overflow: hidden;
+	isolation: isolate;
+  }
+  
+  /* No layered visuals */
+  .starlight-aside--note::before,
+  .starlight-aside--tip::before,
+  .starlight-aside--caution::before,
+  .starlight-aside--danger::before,
+  .starlight-aside--note::after,
+  .starlight-aside--tip::after,
+  .starlight-aside--caution::after,
+  .starlight-aside--danger::after {
+	content: none;
+  }
+  
+  /* Content above visuals (kept for stacking safety) */
+  .starlight-aside__title,
+  .starlight-aside--note > *,
+  .starlight-aside--tip > *,
+  .starlight-aside--caution > *,
+  .starlight-aside--danger > * {
+	position: relative;
+	z-index: 1;
+  }
+  
+  /* Title styling */
+  .starlight-aside__title {
+	color: var(--cosmic-title);
+	font-weight: 900;
+	letter-spacing: 0.25px;
+	margin-bottom: 0.5rem;
+	line-height: 1.2;
+	text-shadow: none;
+  }
+  
+  /* Links */
+  .starlight-aside a {
+	color: inherit;
+	text-underline-offset: 2px;
+	text-decoration-thickness: 1.25px;
+  }
+  
+  /* =========================================================
+   Per-type individual styling — solid colors
+   ========================================================= */
+  
+  .starlight-aside--note {
+	background: var(--note-bg);
+	color: var(--note-fg);
+	border-color: var(--note-border);
+  }
+  
+  .starlight-aside--tip {
+	background: var(--tip-bg);
+	color: var(--tip-fg);
+	border-color: var(--tip-border);
+  }
+  
+  .starlight-aside--caution {
+	background: var(--caution-bg);
+	color: var(--caution-fg);
+	border-color: var(--caution-border);
+  }
+  
+  .starlight-aside--danger {
+	background: var(--danger-bg);
+	color: var(--danger-fg);
+	border-color: var(--danger-border);
+  }
+  
+  /* Code chips */
+  .starlight-aside--note code,
+  .starlight-aside--tip code,
+  .starlight-aside--caution code,
+  .starlight-aside--danger code {
+	background: rgba(255,255,255,0.08);
+	padding: 0.1em 0.35em;
+	border-radius: 6px;
+  }
+
+
+  /* Base fluid background (dark default) */
+#fluid-bg {
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: -1;
+  filter: blur(5px);
+  isolation: isolate;
 }
+
+#starfield {
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: -2;
+  isolation: isolate;
+}
+
+#starfield::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: -2;
+  opacity:0.5;
+  isolation: isolate;
+}
+
+/* Canvas sizing */
+#fluid-bg > #MarqueeCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity:0.7;
+}
+
+starlight-theme-select {
+  display: none !important;
+}
+
+.social-icons::after {
+display:none;
+}
+
+:where(.astro-3ii7xxms)[aria-current=page],
+:where(.astro-3ii7xxms)[aria-current=page]:hover,
+:where(.astro-3ii7xxms)[aria-current=page]:focus {
+	background: linear-gradient(
+		135deg,
+		hsl(155, 80%, 40%) 0%,    /* deep emerald */
+		hsl(195, 90%, 35%) 20%,   /* rich teal */
+		hsl(265, 90%, 45%) 50%,   /* strong violet */
+		hsl(320, 80%, 45%) 75%  /* magenta edge */
+	);
+	color: #fff;
+	border-radius: 8px;
+	background-size: 200% 200%;
+  margin-top:4px;
+  margin-bottom:4px;
+	animation: auroraShift 60s ease-in-out infinite; /* slow sweep */
+}
+
+@keyframes auroraShift {
+	0%   { background-position: 0% 50%; }
+	50%  { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+.sl-link-button:where(.astro-xwgiixxa).primary {
+  background: linear-gradient(
+    135deg,
+    hsl(155, 80%, 40%) 0%,    /* deep emerald */
+    hsl(195, 90%, 35%) 20%,   /* rich teal */
+    hsl(265, 90%, 45%) 50%,   /* strong violet */
+    hsl(320, 80%, 45%) 75%   /* magenta edge */
+  );
+  color: #fff;
+  background-size: 200% 200%;
+  animation: auroraShift 60s ease-in-out infinite;
+  /* optional if you want the same rounding as the link */
+  border-radius: 8px;
+  border:transparent;
+}
+
+/* include only if not already defined */
+@keyframes auroraShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.expressive-code .frame.has-title:not(.is-terminal) .title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    hsl(155, 80%, 40%) 0%,    /* deep emerald */
+    hsl(195, 90%, 35%) 20%,   /* rich teal */
+    hsl(265, 90%, 45%) 50%,   /* strong violet */
+    hsl(320, 80%, 45%) 75%  /* magenta edge */
+
+  );
+  background-size: 200% 200%;
+  animation: auroraShift 60s ease-in-out infinite;
+  border: none;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0; /* ensure it sits behind title text */
+  height:3px;
+  border-top:none !important;
+}
+
+
+
+
