@@ -253,7 +253,7 @@ display:none;
 	100% { background-position: 0% 50%; }
 }
 
-.sl-link-button:where(.astro-xwgiixxa).primary {
+.sl-link-button.primary {
   background: linear-gradient(
     135deg,
     hsl(155, 80%, 40%) 0%,    /* deep emerald */
