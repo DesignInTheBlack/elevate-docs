@@ -258,10 +258,9 @@ display:none;
     135deg,
     hsl(155, 80%, 40%) 0%,    /* deep emerald */
     hsl(195, 90%, 35%) 20%,   /* rich teal */
-    hsl(265, 90%, 45%) 50%,   /* strong violet */
-    hsl(320, 80%, 45%) 75%   /* magenta edge */
-  );
-  color: #fff;
+    hsl(265, 90%, 45%) 50%   /* strong violet */
+  ) !important;
+  color: #fff !important;
   background-size: 200% 200%;
   animation: auroraShift 60s ease-in-out infinite;
   /* optional if you want the same rounding as the link */
