@@ -173,6 +173,14 @@
   z-index: -1;
   filter: blur(2px);
   isolation: isolate;
+
+
+}
+
+@media (max-width: 899px) {
+  #fluid-bg {
+    display: none;
+  }
 }
 
 #starfield {

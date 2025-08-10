@@ -15,11 +15,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
   
   
   const palette = [
-    [0.1216, 0.5412, 0.3569], // Deep Emerald
-    [0.1176, 0.3529, 0.4000], // Rich Teal
-    [0.2745, 0.1490, 0.6000], // Strong Violet
-    [0.6000, 0.2000, 0.4000], // Magenta Edge
-];
+    [0.0863, 0.6667, 0.4588], // Deep Emerald
+    [0.0863, 0.6667, 0.4588], // Deep Emerald
+    [0.0863, 0.6667, 0.4588], // Deep Emerald
+    [0.0863, 0.6667, 0.4588], // Deep Emerald
+    [0.1373, 0.5608, 0.6667], // Rich Teal
+    [0.1373, 0.5608, 0.6667], // Rich Teal
+    [0.1373, 0.5608, 0.6667], // Rich Teal
+    [0.1373, 0.5608, 0.6667], // Rich Teal
+    [0.4745, 0.1373, 0.8667], // Strong Violet
+    [0.4745, 0.1373, 0.8667], // Strong Violet
+    [0.4745, 0.1373, 0.8667], // Strong Violet
+    [0.4745, 0.1373, 0.8667], // Strong Violet
+  ];
   
   
   let pointers = [];

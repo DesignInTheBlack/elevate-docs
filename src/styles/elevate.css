@@ -316,8 +316,12 @@ color: #0C0C0C;
 background-color: #FCFCFC;
 }
 
-.h\:auto,  .h\:auto {
-height: auto;
+.child\:grow,  .child\:grow {
+flex-grow: 1;
+}
+
+.h\:c2,  .h\:c2 {
+height: 4.5rem;
 }
 
 .row\:x-center\:y-center,  .row\:x-center\:y-center {
