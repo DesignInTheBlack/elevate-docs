@@ -13,7 +13,10 @@ import type { CstNode } from "chevrotain";
 // ╚════════════════════════════════════════════════════════════════════╝
 const State = createToken({ name: "stateFlag", pattern: /@[a-zA-Z0-9-]+:/ });
 const openState = createToken({ name: "openState", pattern: /\[/ });
-const DirectProperty = createToken({ name: "DirectProperty", pattern: /[-a-zA-Z][a-zA-Z0-9_-]*/ });
+const DirectProperty = createToken({ 
+    name: "DirectProperty", 
+    pattern: /[-a-zA-Z][a-zA-Z0-9_-]*(?!:)/ 
+});
 const PassProperty = createToken({ 
     name: "PassProperty", 
     pattern: /:([\w\-()'".,\s:\/\.@#%=&?]+)/ 
@@ -24,7 +27,7 @@ const Property = createToken({
 });
 const Modifier = createToken({ 
     name: "ColonModifier", 
-    pattern: /:[a-zA-Z0-9][a-zA-Z0-9\-+]*/ 
+    pattern: /:[a-zA-Z0-9][a-zA-Z0-9\-+.]*/ 
 });
 const closeState = createToken({ name: "closeState", pattern: /\]/ });
 const WhiteSpace = createToken({
@@ -64,15 +67,28 @@ class ElevateParser extends CstParser {
         $.RULE("ContextBlock", () => {
             $.CONSUME(State);
             $.CONSUME(openState);
+        
             $.MANY(() => {
-                $.CONSUME(Property);
-                $.MANY2(() => {
-                    $.CONSUME(Modifier);
-                });
+                $.OR([
+                    {
+                        ALT: () => {
+                            $.CONSUME(DirectProperty); // Matches a direct property (no modifiers)
+                        },
+                    },
+                    {
+                        ALT: () => {
+                            $.CONSUME(Property); // Matches a property
+                            $.MANY2(() => {
+                                $.CONSUME(Modifier); // Matches modifiers for the property
+                            });
+                        },
+                    },
+                ]);
             });
+        
             $.CONSUME(closeState);
         });
-
+        
 
         $.RULE("PassthroughBlock", () => {
             $.CONSUME(Property);

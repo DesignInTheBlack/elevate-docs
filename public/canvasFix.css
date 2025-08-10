@@ -1,0 +1,10 @@
+.main-frame {
+    pointer-events: none;
+    position: relative;
+    backdrop-filter: blur(100px);
+  }
+  
+  .main-frame a,
+  .main-frame button {
+    pointer-events: auto;
+  }

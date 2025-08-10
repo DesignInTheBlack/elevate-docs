@@ -188,13 +188,15 @@ For more information, refer to https://elevate-docs.pages.dev\n`
 function processModifiers(cst: any, context?: { fileName: string, lineNumber: number }) {
     const property = cst.children.Property[0].image;
     const directions = ["top", "left", "right", "bottom"];
+    const directionsx = ["left", "right"];
+    const directionsy = ["top", "bottom"];
     // Preprocess modifiers based on property type
     let modifiers = null;
     //Handle Directional Modifiers
 
-       if (property === "pd" || property === "mg" || property === "inset") {
+       if (property === "pd" || property === "mg" || property === "inset" || property === "mg-y" || property === "pd-y" || property === "mg-x" || property === "pd-x") {
 
-        modifiers =  directionExpansion(cst.children.ColonModifier)
+        modifiers =  directionExpansion(property,cst.children.ColonModifier)
 
        } 
        else {
@@ -204,23 +206,44 @@ function processModifiers(cst: any, context?: { fileName: string, lineNumber: nu
 
     // Map and construct rules for each modifier
     return modifiers.map((mod: any, index: number) => {
+        // Replace the colon in the mod.image string to get the modifier
         const modifier = mod.image.replace(":", "");
-     
-        const modType =
-            property === "pd" || property === "mg" || property === "inset"
-                ? [directions[index % directions.length]]
-                : getModifierType(modifier, property, context);
+    
+        // Determine the type of modifier based on the property
+        let modType;
+    
+        if (property === "mg-y" || property === "pd-y") {
+            // Use directionsy for "mg-y" or "pd-y"
+            const directionIndex = index % directionsy.length;
+            modType = [directionsy[directionIndex]];
+        } else if (property === "mg-x" || property === "pd-x") {
+            // Use directionsx for "mg-x" or "pd-x"
+            const directionIndex = index % directionsx.length;
+            modType = [directionsx[directionIndex]];
+        } else if (property === "pd" || property === "mg" || property === "inset") {
+            // Use directions for "pd", "mg", or "inset"
+            const directionIndex = index % directions.length;
+            modType = [directions[directionIndex]];
+        } else {
+            // Otherwise, determine the modifier type using the getModifierType function
+            modType = getModifierType(modifier, property, context);
+        }
+    
+        // Construct the rule using the modType, property, modifier, and context
         return constructRule(modType, property, modifier, context);
     });
+    
 }
 
 // Constructs a single CSS rule line by combining a property and a resolved modifier value.
 function constructRule(modType: string, property: string, modifier: string, context?: { fileName: string }) {
+
+    let criteria = declarationMap[property];
  
     return (
         getRuleName(modType, property, declarationMap, context) +
         ": " +
-        getModifierValue(modifier, context)
+        getModifierValue(modifier, criteria, context)
     );
 }
 
@@ -293,7 +316,7 @@ For more information, refer to https://elevate-docs.pages.dev\n`
 
 
 // Retrieves the actual CSS value for a given modifier by resolving it through token types and handlers.
-export function getModifierValue(modifier: string, context?: { fileName: string, lineNumber: number }): string {
+export function getModifierValue(modifier: string, criteria: any, context?: { fileName: string, lineNumber: number }): string {
 
     const modifierType = getModifierType(modifier, context);
 
@@ -309,7 +332,7 @@ export function getModifierValue(modifier: string, context?: { fileName: string,
     if (isAxisSpecificModifier(modifier)) {
         return getAxisSpecificValue(modifier);
     }
-    const value = getGeneralTokenValue(modifier);
+    const value = getGeneralTokenValue(modifier,criteria);
     if (value) {
         return value;
     }
@@ -339,17 +362,62 @@ For more information, refer to https://elevate-docs.pages.dev\n`
 }
 
 // Attempts to find a given modifier in the general token maps and returns its corresponding value if found.
-function getGeneralTokenValue(modifier: string): string | null {
-    for (const [typeName, values] of Object.entries(types)) {
+function getGeneralTokenValue(modifier: string, context: Record<string, string>): string | null {
+
+    if (context) {
+
+    // Check if the context contains the values 'top', 'left', 'bottom', or 'right'
+    const hasDirectionalValues = Object.values(context).some((value) =>
+        ['top', 'left', 'bottom', 'right'].includes(value)
+    );
+
+    // Filter types by the values of the context object
+    const filteredTypes = Object.entries(types)
+        .filter(([typeName]) => Object.values(context).includes(typeName))
+        .reduce((acc, [key, value]) => {
+            acc[key] = value;
+            return acc;
+        }, {});
+
+    // Use types or filteredTypes based on the presence of directional values
+    const sourceTypes = hasDirectionalValues ? types : filteredTypes;
+
+    // Existing logic with the selected source
+    for (const [typeName, values] of Object.entries(sourceTypes)) {
         if (['xAxis', 'yAxis'].includes(typeName)) {
             continue;
         }
+
         if (modifier in values) {
             return (values as Record<string, string>)[modifier];
         }
     }
+
     return null;
+    }
+
+    else {
+           // Existing logic with the selected source
+    for (const [typeName, values] of Object.entries(types)) {
+        if (['xAxis', 'yAxis'].includes(typeName)) {
+            continue;
+        }
+
+        if (modifier in values) {
+            return (values as Record<string, string>)[modifier];
+        }
+    }
+    }
+
+
+
+
+
+
 }
+
+
+
 
 // Handles compound modifiers with prefixes (property:r-modifier), resolving their token types and retrieving validated values.
 function handlePrefixModifier(modifier: string, context?: { fileName: string }): string {
@@ -403,7 +471,14 @@ For more information, refer to https://elevate-docs.pages.dev\n`
 }
 
 // Expands shorthand directional modifiers (p, m, inset) into full sets of values for all four sides.
-function directionExpansion(modifiers: any[]): any[] {
+function directionExpansion(property: string,modifiers: any[]): any[] {
+
+    if (property === "mg-y" || property === "pd-y" || property === "mg-x" || property === "pd-x") {
+        return Array(2).fill(modifiers[0]);
+    }
+
+    else {
+
 
     if (modifiers.length === 1) {
         // Expand a single value to all four sides
@@ -414,6 +489,10 @@ function directionExpansion(modifiers: any[]): any[] {
     }
     // Default: no preprocessing if already 4 values
     return modifiers;
+
+}
+
+
 }
 
 export function getRuleName(

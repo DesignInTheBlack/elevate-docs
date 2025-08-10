@@ -6,18 +6,18 @@ export const typography = {
       tiny: '0.533rem',
       small: '0.711rem',
       base: '1rem',
-      heading6: '1.125rem',
-      heading5: '1.5rem',
-      heading4: '2.25rem',
-      heading3: '3.375rem',
-      heading2: '5.062rem',
-      heading1: '7.594rem',
+      h6: '1.125rem',
+      h5: '1.5rem',
+      h4: '2.25rem',
+      h3: '3.375rem',
+      h2: '5.062rem',
+      h1: '7.594rem',
       eyebrow: '0.583rem'
     },
     
     leading: {
-      hug: '1',
-      tight: '1.2',
+      none: '1',
+      hug: '1.2',
       snug: '1.3',
       normal: '1.4',
       relaxed: '1.5',
@@ -36,11 +36,13 @@ export const typography = {
     },
   
     measure: {
-      'extra-narrow': '20ch',
-      narrow: '45ch',
-      medium: '60ch',
-      wide: '75ch',
-      'extra-wide': '90ch'
+      note: '20ch',
+      blob: '35ch',
+      brief: '45ch',
+      blog: '65ch',
+      book: '70ch',
+      essay: '75ch',
+      full: '80ch'
     },
   
     family: {
@@ -51,13 +53,13 @@ export const typography = {
 
     weight: {
       thin: '100',
-      extraLight: '200',
+      'extra-light': '200',
       light: '300',
       regular: '400',
       medium: '500',
       semibold: '600',
       bold: '700',
-      extraBold: '800',
+      'extra-bold': '800',
       black: '900'
     }
     

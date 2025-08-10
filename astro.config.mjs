@@ -16,7 +16,7 @@ export default defineConfig({
 			customCss: [
 				// Relative path to your custom CSS file
 				'./src/styles/custom.css',
-				'@fontsource/barlow/index.css',
+				'@fontsource-variable/raleway/index.css',
 				'./src/styles/elevate.css',
 
 			  ],

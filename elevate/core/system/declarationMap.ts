@@ -52,12 +52,24 @@ export const declarationMap = {
         "margin-bottom": "bottom"
     },
 
+    'mg-y': { "margin-top": "top", 
+        "margin-bottom": "bottom" },
+
+    'mg-x': { "margin-left": "left", 
+        "margin-right": "right" },
+
     pd: {
         "padding-top": "top",
         "padding-left": "left",
         "padding-right": "right",
         "padding-bottom": "bottom"
     },
+
+    'pd-y': { "padding-top": "top", 
+        "padding-bottom": "bottom" },
+
+    'pd-x': { "padding-left": "left", 
+        "padding-right": "right" },
 
     'pd-l': { "padding-left": "SpacingToken" },
     'pd-r': { "padding-right": "SpacingToken" },
@@ -114,7 +126,7 @@ export const declarationMap = {
         "flex-wrap": "FlexWrapRule"
     },
 
-    item: {
+    child: {
         "flex-basis": "FlexBasisRule",
         "flex-grow": "FlexGrowRule",
         "flex-shrink": "FlexShrinkRule",
@@ -129,16 +141,24 @@ export const declarationMap = {
         "font-size": "FontSizeToken",
         "font-family": "FontFamilyToken",
         "font-weight": "FontWeightToken",
-        "line-height": "LineHeightToken",
         "letter-spacing": "LetterSpacingToken",
+        
     },
 
     text: {
         "color": "ColorToken",
-        "text-transform": "TextTransformRule",
+        "line-height": "LineHeightToken",
         "max-width": "MeasureToken",
         "text-align": "TextAlignRule",
         "text-decoration": "TextDecorationRule",
+    },
+
+    format: {
+    "text-transform": "TextTransformRule",
+    "hyphens": "HyphensRule",
+    "white-space": "WhiteSpaceRule",
+    "word-break": "WordBreakRule",
+    "overflow-wrap": "OverflowWrapRule"
     },
 
 
@@ -186,9 +206,13 @@ export const declarationMap = {
     // =============================
     'bg-img': { "background-image": "PassThroughToken" },
     'bg-color': { 'background-color': "ColorToken" },
-    'bg-size': { "background-size": "BGSizeRule" },
-    'bg-position': { "background-position": "BGPositionRule" },
-    'bg-repeat': { "background-repeat": "BGRepeatRule" },
+    'bg-attr': { "background-size": "BGSizeRule",
+        "background-position": "BGPositionRule",
+        "background-repeat": "BGRepeatRule",
+        "background-attachment": "BackgroundAttachmentRule",
+        "background-origin": "BackgroundOriginRule",
+        "background-clip": "BackgroundClipRule",
+    },
 
 
     // =============================
@@ -197,8 +221,43 @@ export const declarationMap = {
     grid: {
         "grid-template-columns": "GridColumnRule",
         "grid-template-rows": "GridRowRule",
-        "grid-gap": "GridGapRule"
+        "gap": "GridGapRule",
+        "column-gap": "GridGapXRule",
+        "row-gap": "GridGapYRule"
     },
+    
+     'col-spans': {"grid-column-start":"SpanColumnStartRule",
+                  "grid-column-end": "SpanColumnEndRule",
+     },
+
+     'row-spans': {"grid-row-start":"SpanRowStartRule",
+                  "grid-row-end": "SpanRowEndRule",
+     },
+
+     'col-spans-all': {
+        "grid-column-start": "1", /* Start at the first column */
+        "grid-column-end": "-1"  /* End at the last column */
+     },
+
+     'row-spans-all': {
+        "grid-row-start": "1", /* Start at the first row */
+        "grid-row-end": "-1"  /* End at the last row */
+     },
+
+     'auto-col':{'grid-auto-columns': "PassThroughToken"},
+     'auto-row':{'grid-auto-rows': "PassThroughToken"},
+     'auto-flow':{'grid-auto-flow': "PassThroughToken"},
+
+
+     'content':{
+                'align-content': "AlignContentRule",
+                'justify-content': "JustifyContentRule"
+     },
+
+     'items':{
+                'align-items': "AlignItemsRule",
+                'justify-items': "JustifyItemsRule",  
+     },
 
 
     //To be documented
@@ -239,17 +298,6 @@ export const declarationMap = {
 
     'place-content': { "place-content": "PlaceRule" },
 
-    // =============================
-    // White Space
-    // =============================
-
-    'white-space': { "white-space": "WhiteSpaceRule" },
-
-    // =============================
-    // Word Break
-    // =============================
-
-    'break': { "word-break": "WordBreakRule" },
 
     // =============================
     // Pointer Events
@@ -274,30 +322,6 @@ export const declarationMap = {
     // =============================
 
     'vertical': { "vertical-align": "VerticalAlignmentRule" },
-
-    // =============================
-    // Hyphens
-    // =============================
-
-    'hyphens': { "hyphens": "HyphensRule" },
-
-    // =============================
-    // Background Attachment
-    // =============================
-
-    'bg-attach': { "background-attachment": "BackgroundAttachmentRule" },
-
-    // =============================
-    // Background Clip
-    // =============================
-
-    'bg-clip': { "background-clip": "BackgroundClipRule" },
-
-     // =============================
-    // Background Origin
-    // =============================
-
-    'bg-origin': { "background-origin": "BackgroundOriginRule" },
 
     // =============================
     // Outline
@@ -341,10 +365,30 @@ export const declarationMap = {
      },
 
      'contain':{},
+     
+    // =============================
+    // Opacity
+    // =============================
+
+    'opacity': { "opacity": "NumericToken" },
+
+    // =============================
+    // Object Position
+    // =============================
+
+    'fit': { "object-fit": "ObjectFitRule" },
+
+    // =============================
+    // Allow Empty Pseudo-Elements
+    // =============================
+
+    'empty':{"content": "''"},
 
 
-
+    // =============================
     // Allow User Overrides and Extensions
+    // =============================
+
     ...relationships
 
 };

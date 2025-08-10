@@ -2,26 +2,11 @@
  Base layout (unchanged)
  ========================================================= */
 
- body {
 
-  }
-  
-  .header {
+ .header {
 	border-bottom: none;
   }
   
-  .main-frame {
-	pointer-events: none;
-	position: relative;
-	backdrop-filter: blur(100px);
-  }
-  
-  .sidebar-pane {}
-  
-  .main-frame a,
-  .main-frame button {
-	pointer-events: auto;
-  }
   
   /* =========================================================
    Aside tokens — simplified for solid-color panels
@@ -32,7 +17,7 @@
   --sl-color-text-invert: #ffffff;
 	--sl-color-accent-low: #0d153a;
 	--sl-color-accent: #0015cc;
-	--sl-color-accent-high: #ffffff;
+	--sl-color-accent-high: #2eb4d5;
 	--sl-color-white: #ffffff;
 	--sl-color-gray-1: #ffffff;
 	--sl-color-gray-2: #ffffff;
@@ -186,7 +171,7 @@
   width: 100vw;
   height: 100%;
   z-index: -1;
-  filter: blur(5px);
+  filter: blur(2px);
   isolation: isolate;
 }
 
@@ -218,7 +203,7 @@
   width: 100%;
   height: 100%;
   display: block;
-  opacity:0.7;
+  opacity:0.85;
 }
 
 starlight-theme-select {
@@ -236,15 +221,14 @@ display:none;
 		135deg,
 		hsl(155, 80%, 40%) 0%,    /* deep emerald */
 		hsl(195, 90%, 35%) 20%,   /* rich teal */
-		hsl(265, 90%, 45%) 50%,   /* strong violet */
-		hsl(320, 80%, 45%) 75%  /* magenta edge */
+		hsl(265, 90%, 45%) 50%   /* strong violet */
 	);
 	color: #fff;
 	border-radius: 8px;
 	background-size: 200% 200%;
   margin-top:4px;
   margin-bottom:4px;
-	animation: auroraShift 60s ease-in-out infinite; /* slow sweep */
+	animation: auroraShift 20s ease-in-out infinite; /* slow sweep */
 }
 
 @keyframes auroraShift {
@@ -255,14 +239,14 @@ display:none;
 
 .sl-link-button.primary {
   background: linear-gradient(
-    135deg,
-    hsl(155, 80%, 40%) 0%,    /* deep emerald */
-    hsl(195, 90%, 35%) 20%,   /* rich teal */
-    hsl(265, 90%, 45%) 50%   /* strong violet */
-  ) !important;
+		135deg,
+		hsl(155, 80%, 40%) 0%,    /* deep emerald */
+		hsl(195, 90%, 35%) 20%,   /* rich teal */
+		hsl(265, 90%, 45%) 50%   /* strong violet */
+	) !important;
   color: #fff !important;
   background-size: 200% 200%;
-  animation: auroraShift 60s ease-in-out infinite;
+  animation: auroraShift 20s ease-in-out infinite;
   /* optional if you want the same rounding as the link */
   border-radius: 8px;
   border:transparent;
@@ -280,15 +264,13 @@ display:none;
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    135deg,
-    hsl(155, 80%, 40%) 0%,    /* deep emerald */
-    hsl(195, 90%, 35%) 20%,   /* rich teal */
-    hsl(265, 90%, 45%) 50%,   /* strong violet */
-    hsl(320, 80%, 45%) 75%  /* magenta edge */
-
-  );
+		135deg,
+		hsl(155, 80%, 40%) 0%,    /* deep emerald */
+		hsl(195, 90%, 35%) 20%,   /* rich teal */
+		hsl(265, 90%, 45%) 50%   /* strong violet */
+	) !important;
   background-size: 200% 200%;
-  animation: auroraShift 60s ease-in-out infinite;
+  animation: auroraShift 20s ease-in-out infinite;
   border: none;
   border-radius: inherit;
   pointer-events: none;
@@ -299,4 +281,20 @@ display:none;
 
 
 
+a:where[aria-current=true] {
+  color:red !important;
+}
 
+a:where(.astro-wy4te6ga) {
+  color:white !important;
+}
+
+:where([rel=next]) {
+  color:white !important;
+  background: linear-gradient(
+		135deg,
+		hsl(155, 80%, 40%) 0%,    /* deep emerald */
+		hsl(195, 90%, 35%) 20%,   /* rich teal */
+		hsl(265, 90%, 45%) 50%   /* strong violet */
+	) !important;
+}

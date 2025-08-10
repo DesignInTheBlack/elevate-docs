@@ -7,10 +7,15 @@ hero:
   actions:
     - text: Let's Get Started
       link: /guides/2-getting-started/
-      icon: right-arrow 
+      icon: right-arrow
     - text: View On Github
       link: https://github.com/DesignInTheBlack/Elevate
       variant: minimal
+head:
+  - tag: link
+    attrs:
+      rel: stylesheet
+      href: /canvasFix.css 
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
@@ -28,9 +33,11 @@ It is my sincere hope that, even in it's early stages, you will find Elevate CSS
 
 <br/>
 
+
 <div id = "starfield">
 </div>
 <div id="fluid-bg">
+
   <canvas id="MarqueeCanvas"></canvas>
 </div>
 <script src="/fluid.js" defer></script>
