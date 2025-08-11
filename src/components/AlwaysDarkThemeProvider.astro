@@ -1,0 +1,14 @@
+---
+/* Locks Starlight to dark, before CSS applies */
+---
+<script is:inline>
+    try { localStorage.setItem('starlight-theme', 'dark'); } catch {}
+    const html = document.documentElement;
+    html.dataset.theme = 'dark';
+  
+    // Hint browsers for form controls, scrollbars, etc.
+    const meta = document.createElement('meta');
+    meta.name = 'color-scheme';
+    meta.content = 'dark';
+    document.head.appendChild(meta);
+  </script>

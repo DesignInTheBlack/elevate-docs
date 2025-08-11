@@ -308,20 +308,25 @@ background: repeating-linear-gradient(45deg, currentColor 0 15px, transparent 15
 background: repeating-linear-gradient(45deg, currentColor 0 5px, transparent 5px 10px);
 }
 
+.w\:d12,  .w\:d12 {
+width: 3rem;
+}
+
+.font\:tiny\:bold,  .font\:tiny\:bold {
+font-size: 0.533rem;
+font-weight: 700;
+}
+
+.h\:d8,  .h\:d8 {
+height: 2rem;
+}
+
 .text\:black,  .text\:black {
 color: #0C0C0C;
 }
 
 .bg-color\:white,  .bg-color\:white {
 background-color: #FCFCFC;
-}
-
-.child\:grow,  .child\:grow {
-flex-grow: 1;
-}
-
-.h\:c2,  .h\:c2 {
-height: 4.5rem;
 }
 
 .row\:x-center\:y-center,  .row\:x-center\:y-center {
@@ -331,21 +336,8 @@ justify-content: center;
 align-items: center;
 }
 
-.mg-x\:d1,  .mg-x\:d1 {
-margin-left: 0.25rem;
-margin-right: 0.25rem;
-}
-
 .aspect\:square,  .aspect\:square {
 aspect-ratio: 1/1;
-}
-
-.row,  .row {
-display:flex;
-flex-direction:row;
-justify-content: x;
-align-items: y;
-flex-wrap: FlexWrapRule;
 }
 
 .text\:white,  .text\:white {
@@ -356,8 +348,24 @@ color: #FCFCFC;
 background-color: #0C0C0C;
 }
 
-.bd\:round-d2,  .bd\:round-d2 {
-border-radius: 0.5rem;
+.child\:end,  .child\:end {
+align-self: flex-end;
+}
+
+.child\:start,  .child\:start {
+align-self: flex-start;
+}
+
+.row,  .row {
+display:flex;
+flex-direction:row;
+justify-content: x;
+align-items: y;
+flex-wrap: FlexWrapRule;
+}
+
+.w\:d8,  .w\:d8 {
+width: 2rem;
 }
 
 .bg-color\:grey\+4,  .bg-color\:grey\+4 {
@@ -684,5 +692,19 @@ background-color: #2B304D;
 background-color: #22253F;
 }
 
+@media only screen and (min-width:64rem) {
+.h\:c2,  .h\:c2 {
+height: 4.5rem;
+}
+
+.w\:c2,  .w\:c2 {
+width: 4.5rem;
+}
+
+.bd\:round-d2,  .bd\:round-d2 {
+border-radius: 0.5rem;
+}
+
+}
 
 

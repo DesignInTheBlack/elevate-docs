@@ -6,6 +6,9 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
+			components: {
+				ThemeProvider: './src/components/AlwaysDarkThemeProvider.astro'
+			  },
 			title: 'Utility First, Design Driven',
 			favicon: './src/assets/dark.svg',
 			logo: {

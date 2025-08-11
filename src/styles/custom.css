@@ -306,3 +306,18 @@ a:where(.astro-wy4te6ga) {
 		hsl(265, 90%, 45%) 50%   /* strong violet */
 	) !important;
 }
+
+.-colorSquare {
+  margin-left:0.25rem;
+  margin-right:0.25rem;
+  margin-bottom:0.25rem;
+  margin-top:0.25rem;
+}
+
+.row {
+  margin-top:0 !important;
+}
+
+.row > * {
+  margin-top:0 !important;
+}
