@@ -307,12 +307,6 @@ a:where(.astro-wy4te6ga) {
 	) !important;
 }
 
-.-colorSquare {
-  margin-left:0.25rem;
-  margin-right:0.25rem;
-  margin-bottom:0.25rem;
-  margin-top:0.25rem;
-}
 
 .row {
   margin-top:0 !important;
@@ -320,4 +314,12 @@ a:where(.astro-wy4te6ga) {
 
 .row > * {
   margin-top:0 !important;
+}
+
+.-colorSquare {
+  margin-left:0.25rem;
+  margin-right:0.25rem;
+  margin-bottom:0.25rem;
+  margin-top:0.25rem !important;
+  border:solid 0.25px #2d303a; 
 }
