@@ -13,7 +13,7 @@ Elevate CSS features three compound properties for setting or configuring the ba
 |------------|--------------------|-----------------------|
 | `bg-img`   | PassThroughToken (e.g.,  `(url(https://example.com/image.jpg))` )      |  `bg-img:(url(https://example.com/image.jpg))`  |
 | `bg-color`  | ColorToken (e.g., `purple+1`)      |  `bg-color:purple+1`  |
-| `bg-exact`  | PassThroughToken (e.g., `(50% auto)` )      |  `bg-exact:(50% auto)`  |
+| `bg-exact`  | PassThroughToken (e.g., `(50%_auto)` )      |  `bg-exact:(50%_auto)`  |
 
 <br/>
 <br/>
@@ -21,8 +21,8 @@ Elevate CSS features three compound properties for setting or configuring the ba
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="'Pass Through' Means Literally">
-When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. Noting, however, that you should omit the quatation marks.
+<Aside title="Take Some Space">
+PassThroughTokens allow you to write spaces in your utility strings by placing an underscore (_) in place of the space, much like the operator flag (@) does
 </Aside>
 
 <br/>

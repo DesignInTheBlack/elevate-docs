@@ -12,8 +12,9 @@ description: Elevate's native token types, affording specific capabilities.
 ### Pass-Through Tokens 
    - Unrestricted value entry.  
    - No build-time validation, for dynamic or flexible values.
-   - Primarily used for CSS rules that require special syntax (e.g., URLs or complex values).
-   - Not recommended for general styling.
+   - Used for CSS rules that require special syntax (e.g., URLs or complex values such as transforms).
+   - Supports any value that can be passed through to a CSS declaration.
+   - Spaces are supported in the token value by using an underscore (_) to replace spaces.
    <br/>
 
    **Example:**
@@ -28,6 +29,7 @@ description: Elevate's native token types, affording specific capabilities.
    ```html
    <div class="rotate:((90deg))"></div>
    ```
+<br/>
 <br/>
 
 import { Aside } from '@astrojs/starlight/components';

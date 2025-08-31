@@ -12,5 +12,13 @@ Elevate CSS features two compound properties for setting the transform behavior 
 | Property   | Expected Values | Example     |
 |------------|--------------------|-----------------------|
 | `transform` | PassThroughToken (e.g.,  `(translateX(10px))` ) |  `transform:(translateX(10px))`  |
-| `origin` | PassThroughToken (e.g.,  `(top left)` ) |  `origin:(top left)`  |
+| `origin` | PassThroughToken (e.g.,  `(top_left)` ) |  `origin:(top_left)`  |
 
+<br/>
+<br/>
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside title="Take Some Space">
+PassThroughTokens allow you to write spaces in your utility strings by placing an underscore (_) in place of the space, much like the operator flag (@) does
+</Aside>

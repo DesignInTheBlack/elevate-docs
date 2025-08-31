@@ -2,6 +2,9 @@
  Base layout (unchanged)
  ========================================================= */
 
+ body {
+  overflow-x:clip
+ }
 
  .header {
 	border-bottom: none;

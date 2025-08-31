@@ -52,11 +52,17 @@ The `auto` properties utilize the passthrough token to allow for more traditiona
 
 | **Modifier**             | **Expected Values**              | **Example**                          |
 |--------------------------|----------------------------------|--------------------------------------|
-| 'auto-col'    | PassThroughToken (e.g.,  `(minmax(100px, auto))` )          | `auto-col:(minmax(100px, auto))`                         |
-| 'auto-row'        | PassThroughToken (e.g.,  `(minmax(20%, 80vmax))` )         | `auto-row:(minmax(20%, 80vmax))`                         |
-| 'auto-flow'    | PassThroughToken (e.g.,  `(row dense)` )         | `auto-flow:(row dense)`                         |
+| 'auto-col'    | PassThroughToken (e.g.,  `(minmax(100px,_auto))` )          | `auto-col:(minmax(100px,_auto))`                         |
+| 'auto-row'        | PassThroughToken (e.g.,  `(minmax(20%,_80vmax))` )         | `auto-row:(minmax(20%,_80vmax))`                         |
+| 'auto-flow'    | PassThroughToken (e.g.,  `(row_dense)` )         | `auto-flow:(row_dense)`                         |
 
 <br/>
+<br/>
+<br/>
+
+<Aside title="Take Some Space">
+PassThroughTokens allow you to write spaces in your utility strings by placing an underscore (_) in place of the space, much like the operator flag (@) does
+</Aside>
 
 ## Examples of Grid Layouts
 
