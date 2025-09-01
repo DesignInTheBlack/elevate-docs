@@ -3,9 +3,9 @@ title: "Elevate CSS"
 description: Let's Reimagine The Utility First CSS Framework.
 template: splash
 hero:
-  tagline: Let's Reimagine The Utility First CSS Framework.
+  tagline: Stop Translating. Start Compiling.
   actions:
-    - text: Let's Get Started
+    - text: Learn More
       link: /guides/2-getting-started/
       icon: right-arrow
     - text: View On Github
@@ -25,18 +25,18 @@ import { Aside } from '@astrojs/starlight/components';
   document.documentElement.dataset.theme = 'dark'
 </script>
 
-## Let's Try Something Different
+## Design, Compiled
 
-Elevate CSS reimagines utility-first CSS with a generative, design-driven approach. By combining token-driven architecture with build-time validation, it transforms your styling into a seamless extension of your design system—ensuring every utility string is intentional, consistent, and error-free.
+Stop translating between design tokens and arbitrary utility classes. Stop memorizing magic numbers. Stop shipping CSS you'll never use.
 
-Unlike traditional utility frameworks, Elevate dynamically generates only the CSS you need, tailored to your project. Its expressive property:modifier syntax acts as both code and documentation, enabling scalable, readable, and future-proof styling.
+Elevate compiles utilities directly from your design system. Write pd:lg and get exactly the spacing your designer defined. Write bg:primary and get exactly the color from your brand palette.
 
-With Elevate, you define styles and syntactic affordances that grow with your projects, your design system, and your team's way of thinking - without bloated libraries or arbitrary classes. Elevate CSS isn’t just a framework; it’s a foundation for clarity, scalability, and creative freedom.
+Elevate isn't just another CSS framework - it's an actual compiler. The entire toolkit is ~100KB and generates zero CSS until you write utilities. No massive stylesheets. No unused code. Just a build tool that turns your design tokens into exactly the CSS you need.
 
-It is my sincere hope that, even in it's early stages, you will find Elevate CSS to be useful, enjoyable, and above all else - thought provoking. 
+Zero pre-built styles. Zero translation layer. Zero compromises.
 
 <br/>
-
+<br/>
 
 <div id = "starfield">
 </div>
@@ -45,8 +45,6 @@ It is my sincere hope that, even in it's early stages, you will find Elevate CSS
   <canvas id="MarqueeCanvas"></canvas>
 </div>
 <script src="/fluid.js" defer></script>
-<br/>
-
 
 > "When I am working on a problem, I never think about beauty. But when I have finished, if the solution is not beautiful?"
 >
@@ -64,115 +62,155 @@ In its current iteration (v1.05 - Beta), Elevate CSS is in active development an
 
 <br/>
 
-## Expressive Syntax, Considerate Structure
 
-With an expressive, inherently organized, and semantically pleasing syntax, Elevate CSS empowers you to create maintainable, error-free, 
-and future-proof codebases that pivot and grow with you, your design system, and your project. No bloated class lists, no repetitive modifiers, and no one off
-values driving your styling into chaos.
 
+
+
+## The Tokens Are The Syntax
+
+No translation layer between your design decisions and your CSS. No memorizing arbitrary class names like p-4 or text-lg that tell you nothing about design intent. Your design language becomes your CSS language, creating a direct pipeline from design system to shipped code.
+Change lg: "2rem" to lg: "1.5rem" in your design tokens and every pd:lg across your entire codebase updates instantly. One source of truth. Zero drift. Zero hunting through stylesheets to update spacing values.
+
+
+<br/>
+<br/>
 <br/>
 
 ```html
+/* In your design system */
+spacing: { lg: "2rem" }
+colors: { primary: "#3b82f6" }
+
+/* In your code */
+pd:lg bg:primary
+
+/* Compiles to exactly */
+.pd\:lg {
+  padding: 2rem;
+}
+.bg\:primary {
+  background-color: #3b82f6;
+}
+```
+
+<br/>
+
+
+
+<br/>
+
+
+## CSS That Documents Itself
+
+Six months later, when you're debugging a layout issue at 11 PM, which one tells you why those specific values were chosen? Which one helps you understand the designer's intent?
+pd:lg means "large padding from our spacing scale" - it connects directly to your design system's language. p-4 means "some arbitrary padding that seemed right at the time" - it's divorced from any design context and forces you to reverse-engineer the intent.
+
+
+<br/>
+<br/>
+<br/>
+
+
+```html
 <div class ="pd:d4:d2 row:x-center:y-center">
-    <h1 class ="font:semibold:sans:h5 text:white:center mg-t:d12 /md/ font:h3 /lg/ font:h1">Utility First, Design Driven.</h1>
+    <h1 class ="font:sans:h5 mg-t:d12 /md/ font:h3 /lg/ font:h1">I Am The Documentation - Your CSS, probably.</h1>
 </div>
 ```
 
 <br/>
+
+
+
+
+
+## Catch Mistakes Before They Catch You
+
+Every utility string gets validated against your actual design tokens during compilation, not when users report broken layouts. Typos become build errors that stop deployment. Off-brand colors become compiler warnings that prevent design system drift. Visual inconsistency becomes structurally impossible because your CSS literally cannot generate values that don't exist in your design system.
+
+<br/>
+<br/>
 <br/>
 
 
+```html
 
-## Utility First, Design-Driven
+❌ Invalid Prefixed Value: Unable to determine spacing value "xlarge" 
+   in src/components/Button.tsx on line 23
 
+💡 Troubleshooting Tips:
+   1. Examine your prefixed value and ensure it matches the expected token type.
+   2. If this is a custom modifier, ensure that you are using the correct syntax.
+
+For more information, refer to https://elevate-docs.pages.dev
+
+```
+
+<br/>
+<br/>
+<br/>
 <br/>
 
 <CardGrid stagger>
+	<Card title="Generated on Demand" icon="rocket">
+		Zero pre-built utilities. CSS gets compiled from your design tokens exactly when you write it.
+	</Card>
 	<Card title="Build-Time Validation" icon="approve-check-circle">
-		Your design tokens, your syntax rules, validated every single time you save a file.
+		Type `pd:xlarge` instead of `pd:xl` and your build fails immediately. Typos become compiler errors.
 	</Card>
-	<Card title="Informative Error Handling" icon="warning">
-		Elevate will let you know when and where you've made a mistake and then help you fix it. 
+	<Card title="Semantic Utilities" icon="seti:css">
+		`bg:primary` tells you design intent. `bg-blue-500` tells you nothing about why that color was chosen.
 	</Card>
-	<Card title="Semantically Pleasing Syntax" icon="seti:css">
-		Elegant, expressive,  easy to read and maintain utility string syntax. It's a different kind of CSS.
-	</Card>
-	<Card title="Configurable and Extendable" icon="open-book">
-		Designed to adapt to your evolving needs and to grow with you and your design system.
+	<Card title="Design System Driven" icon="open-book">
+		Your tokens define your utilities. Change your design system and every component updates automatically.
 	</Card>
 </CardGrid>
 
 <br/>
 
-## Elevate's Design Philosophy
+## Responsive Design Made Readable
 
-At its core, Elevate CSS aims to resolve shortcomings in the current utility-first CSS ecosystem by introducing design-driven features, intelligent abstractions, and syntactic conventions that enhance the experience of creating and maintaining front-end codebases.
+Your medium breakpoint can be 768px today and 1024px tomorrow, and your utilities adapt automatically without touching a single class name. Instead of memorizing that md: means 768px and lg: means 1024px, you work with breakpoints that match your design system's language. When your design team decides tablets should break at 900px instead, you update one value and every responsive utility adjusts instantly.
 
 <br/>
+<br/>
+<br/>
 
-### Core Principles
-
-The framework is built upon three guiding principles:
-
-- **Expressive and Intentional**  
-   Styling should be self-documenting, clearly expressing design intent for better readability and long-term maintainability.
-
-- **Consistent and Considerate**  
-   The design system should be the single source of truth, strictly enforced through build-time validation to prevent off-scale values and unauthorized modifications.
-
-- **Extensible and Reliable**  
-   The syntax should empower growth and adaptation without sacrificing simplicity of configuration or stability.
+```html
+<div class ="w:c6 /md/ w:c8 /xl/ w:full">
+    <h1 class ="text:white:center">I'm Spatially Aware</h1>
+</div>
+```
 
 <br/>
 
 
-### Challenges with Current Utility-First Frameworks
 
-Utility-first frameworks like Tailwind CSS have revolutionized front-end styling, yet they pose several challenges:
+## States Without The Mess
 
-1. **Design System Drift**  
-   Utility classes can stray from the design system, leading to inconsistencies over time.
+Contextual styling that groups related properties together instead of scattering them across your class list like hover:bg-blue-600 hover:text-white hover:scale-105. No more hunting through dozens of classes to find which hover states belong to which element, or wondering if you forgot to add a focus state that matches your hover state. Everything that changes together stays together, making interactive components predictable and maintainable.
 
-2. **Verbose and Non-Semantic Classes**  
-   Long, non-semantic class names obscure design intent and hinder maintainability.
+<br/>
+<br/>
+<br/>
 
-3. **Runtime Error Discovery**  
-   Errors like invalid class names often surface only during runtime, delaying fixes.
-
-4. **Scaling Challenges**  
-   Large projects struggle to maintain cohesion without heavy reliance on documentation and team discipline.
-
-5. **Limited Build-Time Guarantees**  
-   Existing frameworks lack robust validation mechanisms for utility classes during the build process.
+```html
+<div class ="pd:d4:d2 row:x-center:y-center">
+    <div class ="w:full bg-color:green @hover:[bg-color:red_font:semibold_text:white]"><p>What Happens On Hover, Again?</p></div>
+</div>
+```
 
 <br/>
 
 
-### How Elevate CSS Addresses These Challenges
 
-Elevate CSS directly confronts these issues with innovative solutions:
+## The End of CSS Chaos
 
-- **Immutable Design Decisions**  
-   By anchoring styling decisions to unchangeable design tokens and predefined rules, Elevate ensures alignment with the design system and eliminates drift.
+Write bg:primary and get exactly the color your designer specified in your brand guidelines, not some approximation you remembered. Change that color definition once in your design tokens and watch every component, every page, every instance update automatically. No more drift between what designers specify and what ships. No more guesswork about which blue is the "right" blue. No more broken designs because someone used bg-blue-400 instead of bg-blue-500.
 
-- **Declarative Syntax**  
-   The `property:modifier` syntax promotes clarity, serving as both functional styling and documentation of design intent.
-
-- **Build-Time Validation**  
-   Errors are caught early, thanks to a compiler that rigorously checks utility strings against the design system and syntax rules.
-
-- **Scalable Consistency**  
-   Token-driven validation and structured configuration make Elevate inherently scalable, reliable, and adaptable to your evolving needs.
-
-- **Engineering Precision**  
-   Compiler-driven guarantees provide a level of rigor comparable to back-end systems, enhancing front-end reliability and maintainability.
 
 <br/>
+<br/>
 
-
-## Are You Ready?
-
-Elevate CSS represents a new adventure in utility-first frameworks. It is my hope that you will explore its capabilities, share your feedback, and contribute to its growth.
 
 ## Join The Community
 
