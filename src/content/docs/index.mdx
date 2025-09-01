@@ -68,8 +68,8 @@ In its current iteration (v1.05 - Beta), Elevate CSS is in active development an
 
 ## The Tokens Are The Syntax
 
-No translation layer between your design decisions and your CSS. No memorizing arbitrary class names like p-4 or text-lg that tell you nothing about design intent. Your design language becomes your CSS language, creating a direct pipeline from design system to shipped code.
-Change lg: "2rem" to lg: "1.5rem" in your design tokens and every pd:lg across your entire codebase updates instantly. One source of truth. Zero drift. Zero hunting through stylesheets to update spacing values.
+No translation layer between your design decisions and your CSS. No memorizing arbitrary class names like `p-4` or `text-lg` that tell you nothing about design intent. Your design language becomes your CSS language, creating a direct pipeline from design system to shipped code.
+Change `lg: "2rem"` to `lg: "1.5rem"` in your design tokens and every `pd:lg` across your entire codebase updates instantly. One source of truth. Zero drift. Zero hunting through stylesheets to update spacing values.
 
 
 <br/>
@@ -102,8 +102,9 @@ pd:lg bg:primary
 
 ## CSS That Documents Itself
 
-Six months later, when you're debugging a layout issue at 11 PM, which one tells you why those specific values were chosen? Which one helps you understand the designer's intent?
-pd:lg means "large padding from our spacing scale" - it connects directly to your design system's language. p-4 means "some arbitrary padding that seemed right at the time" - it's divorced from any design context and forces you to reverse-engineer the intent.
+Six months later, when you're debugging a layout issue at 11 PM, which one reads like a sentence describing what you intended? Which one connects to your design system's language?
+`pd:lg bg:primary text:inverse flows like natural language` - "padding large, background primary, text inverse." It tells the story of your design decisions using your design system's vocabulary.
+`p-4 bg-blue-500 text-white` is a string of arbitrary codes that forces you to decode what p-4 means, remember which 'blue' that `blue-500` represents, and reverse-engineer why those specific values seemed right six months ago.
 
 
 <br/>
@@ -113,7 +114,7 @@ pd:lg means "large padding from our spacing scale" - it connects directly to you
 
 ```html
 <div class ="pd:d4:d2 row:x-center:y-center">
-    <h1 class ="font:sans:h5 mg-t:d12 /md/ font:h3 /lg/ font:h1">I Am The Documentation - Your CSS, probably.</h1>
+    <h1 class ="font:sans:h5 mg-t:d12 /md/ font:h3 /lg/ font:h1">"I Am The Documentation" - Your CSS, Probably.</h1>
 </div>
 ```
 
@@ -134,6 +135,7 @@ Every utility string gets validated against your actual design tokens during com
 
 ```html
 
+
 ❌ Invalid Prefixed Value: Unable to determine spacing value "xlarge" 
    in src/components/Button.tsx on line 23
 
@@ -142,6 +144,7 @@ Every utility string gets validated against your actual design tokens during com
    2. If this is a custom modifier, ensure that you are using the correct syntax.
 
 For more information, refer to https://elevate-docs.pages.dev
+
 
 ```
 
@@ -169,7 +172,7 @@ For more information, refer to https://elevate-docs.pages.dev
 
 ## Responsive Design Made Readable
 
-Your medium breakpoint can be 768px today and 1024px tomorrow, and your utilities adapt automatically without touching a single class name. Instead of memorizing that md: means 768px and lg: means 1024px, you work with breakpoints that match your design system's language. When your design team decides tablets should break at 900px instead, you update one value and every responsive utility adjusts instantly.
+Your medium breakpoint can be `768px` today and `1024px` tomorrow, and your utilities adapt automatically without touching a single class name. Instead of memorizing that `md:` means `768px` and `lg:` means `1024px`, you work with breakpoints that match your design system's language. When your design team decides tablets should break at `900px` instead, you update one value and every responsive utility adjusts instantly. To top it all off, mobile first breakpoint flags ensure that you always understand what's happening and at what breakpoint.
 
 <br/>
 <br/>
@@ -187,7 +190,7 @@ Your medium breakpoint can be 768px today and 1024px tomorrow, and your utilitie
 
 ## States Without The Mess
 
-Contextual styling that groups related properties together instead of scattering them across your class list like hover:bg-blue-600 hover:text-white hover:scale-105. No more hunting through dozens of classes to find which hover states belong to which element, or wondering if you forgot to add a focus state that matches your hover state. Everything that changes together stays together, making interactive components predictable and maintainable.
+Contextual styling that groups related properties together instead of scattering them across your class list like `hover:bg-blue-600 hover:text-white hover:scale-105`. No more hunting through dozens of classes to find which hover states belong to which element, or wondering if you forgot to add a focus state that matches your hover state. Everything that changes together stays together, making interactive components predictable and maintainable.
 
 <br/>
 <br/>
@@ -203,9 +206,9 @@ Contextual styling that groups related properties together instead of scattering
 
 
 
-## The End of CSS Chaos
+## The End of C(SS)haos
 
-Write bg:primary and get exactly the color your designer specified in your brand guidelines, not some approximation you remembered. Change that color definition once in your design tokens and watch every component, every page, every instance update automatically. No more drift between what designers specify and what ships. No more guesswork about which blue is the "right" blue. No more broken designs because someone used bg-blue-400 instead of bg-blue-500.
+Write `bg:primary` and get exactly the color your designer specified in your brand guidelines, not some approximation you remembered. Change that color definition once in your design tokens and watch every component, every page, every instance update automatically. No more drift between what designers specify and what ships. No more guesswork about which blue is the "right" blue. No more broken designs because someone used `bg-blue-400` instead of `bg-blue-500`.
 
 
 <br/>
