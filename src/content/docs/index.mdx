@@ -3,7 +3,7 @@ title: "Elevate CSS"
 description: Let's Reimagine The Utility First CSS Framework.
 template: splash
 hero:
-  tagline: Elevate Your CSS
+  tagline: "Your design system. Actually enforced."
   actions:
     - text: Learn More
       link: /guides/2-getting-started/
@@ -15,7 +15,7 @@ head:
   - tag: link
     attrs:
       rel: stylesheet
-      href: /canvasFix.css 
+      href: /canvasFix.css
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
@@ -25,11 +25,16 @@ import { Aside } from '@astrojs/starlight/components';
   document.documentElement.dataset.theme = 'dark'
 </script>
 
-## Design, Compiled
+## Elevate CSS
+### End the Guessing Game
+Designer: "Use large spacing here."
 
-Stop translating between design tokens and arbitrary utility classes. Stop memorizing magic numbers. Stop shipping CSS you'll never use.
-Elevate compiles utilities directly from your design system. Write `pd:lg` and get exactly the spacing your designer defined. Write `bg:primary` and get exactly the color from your brand palette.
-When you write `pd:lg`, Elevate parses your utility string, validates it against your design tokens, and generates the exact CSS rule you need. Nothing exists until you write it. Change your tokens and every compiled utility updates automatically.
+You: "Is that `pd:4`? `pd:6`? `pd:8`?"
+Checks three components. Finds three different answers.
+Six months later: "Large spacing is now 20px instead of 24px."
+
+You: Searches 47 files. Changes 23 classes. Ships inconsistent spacing.
+What if your CSS just knew what "large" meant?
 
 <br/>
 <br/>
@@ -42,31 +47,18 @@ When you write `pd:lg`, Elevate parses your utility string, validates it against
 </div>
 <script src="/fluid.js" defer></script>
 
-> "When I am working on a problem, I never think about beauty. But when I have finished, if the solution is not beautiful?"
->
-> "... I know it is wrong."
->
-> **R. Buckminster Fuller**
-
-<br/>
-<br/>
-<br/>
-
 <Aside type="caution" title="Please Excuse Our Progress">
 In its current iteration (v1.05 - Beta), Elevate CSS is in active development and subject to change. Your feedback is invaluable as this project evolves into a fully realized utility framework.
 </Aside>
 
 <br/>
 
+## Write What You Mean
 
-
-
-
-## The Tokens Are The Syntax
-
-No translation layer between your design decisions and your CSS. No memorizing arbitrary class names like `p-4` or `text-lg` that tell you nothing about design intent. Your design language becomes your CSS language, creating a direct pipeline from design system to shipped code.
-Change `lg: "2rem"` to `lg: "1.5rem"` in your design tokens and every `pd:lg` across your entire codebase updates instantly. One source of truth. Zero drift. Zero hunting through stylesheets to update spacing values.
-
+`pd:large` compiles to your design system's exact definition of large padding.
+`bg:primary` outputs your brand's actual primary color.
+`text:heading` uses your typography scale, not a guess.
+When your design system changes, your CSS changes with it. Automatically.
 
 <br/>
 <br/>
@@ -91,84 +83,66 @@ pd:lg bg:primary
 
 <br/>
 
-
+---
 
 <br/>
 
+## Design Tokens Make CSS Classes
 
-## CSS That Documents Itself
-
-Six months later, when you're debugging a layout issue at 11 PM, which one reads like a sentence describing what you intended? Which one connects to your design system's language?
-`pd:lg bg:primary text:inverse flows like natural language` - "padding large, background primary, text inverse." It tells the story of your design decisions using your design system's vocabulary.
-`p-4 bg-blue-500 text-white` is a string of arbitrary codes that forces you to decode what p-4 means, remember which 'blue' that `blue-500` represents, and reverse-engineer why those specific values seemed right six months ago.
-
+Your designer updates large from 24px to 20px in the design system. Every pd:large across every component updates instantly. Zero file hunting. Zero missed updates. Zero drift between design and code.
+The source of truth stays singular.
 
 <br/>
 <br/>
 <br/>
-
 
 ```html
 <div class ="pd:d4:d2 row:x-center:y-center">
-    <h1 class ="font:sans:h5 mg-t:d12 /md/ font:h3 /lg/ font:h1">"I Am The Documentation" - Your CSS, Probably.</h1>
+  <h1 class ="font:sans:h5 mg-t:d12 /md/ font:h3 /lg/ font:h1">"I Am The Documentation" - Your CSS, Probably.</h1>
 </div>
 ```
 
 <br/>
 
+---
 
+<br/>
 
+## Build-time Validation Protects Your Design
 
-
-## Catch Mistakes Before They Catch You
-
-Every utility string gets validated against your actual design tokens during compilation, not when users report broken layouts. Typos become build errors that stop deployment. Off-brand colors become compiler warnings that prevent design system drift. Visual inconsistency becomes structurally impossible because your CSS literally cannot generate values that don't exist in your design system.
+Type pd:xlarge when only pd:large exists? Build fails with exact file location.
+Use a color token that doesn't exist? Compiler catches it before users see it.
+Try spacing values outside your design system? They don't compile.
+Your design system becomes enforceable, not just aspirational.
 
 <br/>
 <br/>
 <br/>
-
 
 ```html
-
-
-❌ Invalid Prefixed Value: Unable to determine spacing value "xlarge" 
+❌ Invalid Prefixed Value: Unable to determine spacing value "xlarge"
    in src/components/Button.tsx on line 23
 
 💡 Troubleshooting Tips:
    1. Examine your prefixed value and ensure it matches the expected token type.
    2. If this is a custom modifier, ensure that you are using the correct syntax.
 
-For more information, refer to https://elevate-docs.pages.dev
-
-
+For more information, refer to [https://elevate-docs.pages.dev](https://elevate-docs.pages.dev)
 ```
 
 <br/>
-<br/>
-<br/>
-<br/>
 
-<CardGrid stagger>
-	<Card title="Generated on Demand" icon="rocket">
-		Zero pre-built utilities. CSS gets compiled from your design tokens exactly when you write it.
-	</Card>
-	<Card title="Build-Time Validation" icon="approve-check-circle">
-		Type `pd:xlarge` instead of `pd:xl` and your build fails immediately. Typos become compiler errors.
-	</Card>
-	<Card title="Semantic Utilities" icon="seti:css">
-		`bg:primary` tells you design intent. `bg-blue-500` tells you nothing about why that color was chosen.
-	</Card>
-	<Card title="Design System Driven" icon="open-book">
-		Your tokens define your utilities. Change your design system and every component updates automatically.
-	</Card>
-</CardGrid>
+---
 
 <br/>
+<br/>
 
-## Responsive Design Made Readable
+## Syntax Built For Real Components
 
-Your medium breakpoint can be `768px` today and `1024px` tomorrow, and your utilities adapt automatically without touching a single class name. Instead of memorizing that `md:` means `768px` and `lg:` means `1024px`, you work with breakpoints that match your design system's language. When your design team decides tablets should break at `900px` instead, you update one value and every responsive utility adjusts instantly. To top it all off, mobile first breakpoint flags ensure that you always understand what's happening and at what breakpoint.
+Grouped state changes: @hover:[bg:darker_text:white_scale:105] keeps related hover effects together instead of scattered across class lists.
+Smart responsive design: /tablet/ w:8 /desktop/ w:full adapts when you change breakpoint pixel values.
+Directional shortcuts: pd:large for all sides, pd:large:medium for asymmetric padding that follows CSS shorthand logic.
+Escape hatch for edge cases: margin:(2rem_auto) when you need raw CSS values.
 
 <br/>
 <br/>
@@ -176,13 +150,15 @@ Your medium breakpoint can be `768px` today and `1024px` tomorrow, and your util
 
 ```html
 <div class ="w:c6 /md/ w:c8 /xl/ w:full">
-    <h1 class ="text:white:center">I'm Spatially Aware</h1>
+  <h1 class ="text:white:center">I'm Spatially Aware</h1>
 </div>
 ```
 
 <br/>
 
+---
 
+<br/>
 
 ## States Without The Mess
 
@@ -194,19 +170,63 @@ Contextual styling that groups related properties together instead of scattering
 
 ```html
 <div class ="pd:d4:d2 row:x-center:y-center">
-    <div class ="w:full bg-color:green @hover:[bg-color:red_font:semibold_text:white]"><p>What Happens On Hover, Again?</p></div>
+  <div class ="w:full bg-color:green @hover:[bg-color:red_font:semibold_text:white]"><p>What Happens On Hover, Again?</p></div>
 </div>
 ```
 
 <br/>
 
+---
+
+<br/>
+
+## Simple Setup, Powerful Results
+
+Install package. Configure design tokens. Write utilities.
+Built-in file watching, automatic compilation, and detailed error messages with line numbers. No webpack configuration. No build script modifications. No plugin dependencies.
 
 
-## The End of C(SS)haos
+<br/>
+<br/>
+<br/>
 
-Write `bg:primary` and get exactly the color your designer specified in your brand guidelines, not some approximation you remembered. Change that color definition once in your design tokens and watch every component, every page, every instance update automatically. No more drift between what designers specify and what ships. No more guesswork about which blue is the "right" blue. No more broken designs because someone used `bg-blue-400` instead of `bg-blue-500`.
+<CardGrid stagger>
+  <Card title="Generated on Demand" icon="rocket">
+    Zero pre-built utilities. CSS gets compiled from your design tokens exactly when you write it.
+  </Card>
+  <Card title="Build-Time Validation" icon="approve-check-circle">
+    Type `pd:xlarge` instead of `pd:xl` and your build fails immediately. Typos become compiler errors.
+  </Card>
+  <Card title="Semantic Utilities" icon="seti:css">
+    `bg:primary` tells you design intent. `bg-blue-500` tells you nothing about why that color was chosen.
+  </Card>
+  <Card title="Design System Driven" icon="open-book">
+    Your tokens define your utilities. Change your design system and every component updates automatically.
+  </Card>
+</CardGrid>
 
 
+<br/>
+<br/>
+
+## For Teams Who Ship Consistently
+
+Your design system defines spacing tokens but developers still guess at values.
+Your brand guidelines specify colors but CSS files contain hex codes and approximations.
+Your design team works in systematic scales while your code accumulates magic numbers.
+Elevate bridges this gap. Your design system becomes your CSS vocabulary.
+
+<br/>
+<br/>
+<br/>
+
+> "When I am working on a problem, I never think about beauty. But when I have finished, if the solution is not beautiful?"
+>
+> "... I know it is wrong."
+>
+> **R. Buckminster Fuller**
+
+<br/>
 <br/>
 <br/>
 
