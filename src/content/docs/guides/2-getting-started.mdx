@@ -292,3 +292,24 @@ Elevate's systems are driven by three distinct elements:
    <div class="brand:bg-popgreen:copy-popwhite"></div>
    ```
 
+### Isolating Elevate's Runtime
+
+<br/>
+
+In certain circumstances, you may want to run Elevate in a separate process to avoid conflicts with your project's dependencies. This is particularly useful when using Elevate alongside frameworks like Next.js, where dependency conflicts or module resolution issues may occur.
+This can be done by creating a separate package.json file in the `elevate` directory and then running `npm start` from within that directory. Note that you can change your preferred command in the Elevate specific json file if you so choose.
+
+```json
+{
+    "type": "module",
+    "scripts": {
+      "start": "set NODE_PATH=../node_modules && tsx core/index.ts"
+    }
+  }
+```
+
+If you encounter module resolution errors in the main setup while using Elevate with a framework like Next.js, try the isolated runtime approach first before further debugging dependency conflicts.
+
+<br/>
+
+
