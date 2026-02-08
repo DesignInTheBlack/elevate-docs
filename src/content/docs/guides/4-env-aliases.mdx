@@ -1,13 +1,13 @@
 ---
-title: "Env Aliases (Envelopes)"
-description: Condense and reopen class lists with env aliases.
+title: "Envelopes"
+description: Condense a utility list into a single class and reopen it later.
 ---
 
-Env aliases let you collapse a full utility string into a single reusable class and reopen it later when you need to edit.
+Envelopes let you collapse a full utility string into one named class and reopen it when you need to edit. They are stored in `elevate.env.json` and applied anywhere you use `env:name`.
 
-## Defining an Env Alias
+## Create An Envelope
 
-Add `env:name` to a class list alongside normal utilities. On save, Elevate captures the utilities and automatically condenses the class list down to just `env:name`.
+Add `env:name` alongside your utilities. On save, Elevate captures the utilities and condenses the class list to just `env:name`.
 
 ```html
 <div class="env:card pd-x:d4 bg-color:red mg-t:d1 @hover:[bg-color:blue]">
@@ -21,11 +21,9 @@ After save, the class list becomes:
 <div class="env:card"></div>
 ```
 
-The definition is stored in `elevate.env.json` and is used anywhere you write `env:card`.
+## Open An Envelope
 
-## Opening an Alias
-
-To edit an alias, use `env:name:open`. On save, Elevate expands the class list and keeps the `:open` marker so it stays open until you explicitly close it. While open, edits update the alias registry on save.
+To edit an envelope, use `env:name:open`. On save, Elevate expands the class list and keeps the `:open` marker so it stays open until you close it. While open, edits update the registry on save.
 
 ```html
 <div class="env:card:open"></div>
@@ -37,19 +35,51 @@ Expands to:
 <div class="env:card:open pd-x:d4 bg-color:red mg-t:d1 @hover:[bg-color:blue]"></div>
 ```
 
-To close and condense, remove `:open` and save:
+## Close An Envelope
+
+Remove `:open` and save to condense back to a single class:
 
 ```html
 <div class="env:card"></div>
 ```
 
-To re-open, replace `env:card` with `env:card:open`.
+## Envelope Lifecycle (What Changes In The File)
 
-## Rules and Notes
+1. **Define**
+   - You write `env:card` alongside utilities.
+   - On save, Elevate records the utilities into `elevate.env.json` and rewrites the class list to only `env:card`.
 
-- Prefer one env definition per class list. Multiple env definitions will skip auto-condense.
+2. **Open**
+   - You change the class to `env:card:open`.
+   - On save, Elevate expands the stored utilities into the class list and keeps `:open` so the envelope stays editable.
+   - While open, every save updates the envelope registry with your edits.
+
+3. **Close**
+   - You remove `:open`.
+   - On save, Elevate collapses the class list back to `env:card` and the registry keeps the latest version.
+
+## Combined Example
+
+This shows breakpoints and states captured inside an envelope:
+
+```html
+<div class="env:card pd:d4 bg-color:indigo-3 text:white /sm/ pd:d6 /lg/ bg-color:indigo @hover:[bg-color:indigo-2 text:white]">
+  Card
+</div>
+```
+
+On save, this becomes:
+
+```html
+<div class="env:card"></div>
+```
+
+## Rules And Notes
+
+- Prefer one envelope per class list. Multiple env definitions skip auto-condense.
 - Names allow letters, numbers, and dashes.
-- Breakpoints and state blocks are captured as part of the alias.
-- Combinator directives are not allowed inside env aliases.
+- Breakpoints and state blocks are captured as part of the envelope.
+- Combinator directives are not allowed inside envelopes.
 - Auto rewrite only runs on static class strings. Dynamic className expressions are skipped.
 - `env:open` expansion only runs when the class list contains only env tokens (plus optional ctx or breakpoint markers).
+

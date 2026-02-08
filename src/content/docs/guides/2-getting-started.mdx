@@ -178,13 +178,35 @@ import { LinkCard } from '@astrojs/starlight/components';
 
 <br/>
 
-### Env Aliases (Envelopes)
+### Envelopes
 
-Condense a full utility string into a single reusable class with `env:name`, then reopen it later with `env:name:open` to edit. Env aliases are a first-class way to create meaningful, reusable classes without leaving your HTML.
+Condense a full utility string into a single reusable class with `env:name`, then reopen it later with `env:name:open` to edit. Envelopes are a first-class way to create meaningful, reusable classes without leaving your HTML.
 
 <br/>
 
-<LinkCard title="Learn Env Aliases" href="/guides/4-env-aliases/" />
+<LinkCard title="Learn Envelopes" href="/guides/4-env-aliases/" />
+
+<br/>
+
+### Recommended Ordering
+
+When multiple features are used together, keep your class list in this order:
+
+`ctx -> env -> /breakpoint/ -> @state -> utilities`
+
+This keeps scanning predictable and makes overrides easy to reason about. Property modifier order remains agnostic within a utility.
+
+<br/>
+
+### Combined Example (All Features Together)
+
+```html
+<div class="ctx:card env:card /md/ @hover+focus-visible:[bg-color:indigo text:white] pd:d4 bg-color:indigo-3 text:white shadow:soft">
+  Card
+</div>
+```
+
+If you need to edit the envelope, swap `env:card` for `env:card:open`, make your changes, then remove `:open` to close it again.
 
 <br/>
 
@@ -331,6 +353,7 @@ This can be done by creating a separate package.json file in the `elevate` direc
 If you encounter module resolution errors in the main setup while using Elevate with a framework like Next.js, try the isolated runtime approach first before further debugging dependency conflicts.
 
 <br/>
+
 
 
 

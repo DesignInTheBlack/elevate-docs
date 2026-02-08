@@ -20,6 +20,7 @@ head:
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 import { Aside } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
 
 <script is:inline>
   document.documentElement.dataset.theme = 'dark'
@@ -27,25 +28,17 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## The System Knows the Way
 
-Designer: "Use large spacing here."
+“Use large spacing here.”
+Six months later, “large” is 20px.
 
-You: "Is that `pd:d4`, `pd:d6`, or `pd:d8`?"
-
-Checks three components. Finds three different answers.
-
-Six months later "large" is now 20px instead of 24px.
-
-Searches 47 files. Changes 23 classes. Still shipped inconsistent spacing.
-
-What if your CSS just knew what "large" meant to your design system?
+Elevate locks CSS to your design system so meaning never drifts.
 
 <br/>
 <br/>
 
-<div id = "starfield">
+<div id="starfield">
 </div>
 <div id="fluid-bg">
-
   <canvas id="MarqueeCanvas"></canvas>
 </div>
 <script src="/fluid.js" defer></script>
@@ -54,16 +47,17 @@ What if your CSS just knew what "large" meant to your design system?
 In its current iteration (v1.05 - Beta), Elevate CSS is in active development and subject to change. Your feedback is invaluable as this project evolves into a fully realized utility framework.
 </Aside>
 
-
 ## Write What You Mean
 
-`pd:d6` compiles to your design system's exact spacing token.
-`bg-color:indigo` outputs your brand's actual color token.
-`font:h3` uses your typography scale, not a guess.
-When your design system changes, your CSS changes with it. Automatically.
+`pd:d6` compiles to your exact spacing token.
+`bg-color:indigo` outputs your actual brand color.
+`font:h3` maps to your typography scale.
+
+No guessing. No approximations. When the design system changes, your CSS updates automatically.
 
 <br/>
 <br/>
+
 ```html
 /* In your design system */
 spacing: { d6: "1.5rem" }
@@ -85,28 +79,67 @@ pd:d6 bg-color:indigo
 <br/>
 <br/>
 
-## Design Tokens Define CSS Classes
+## Layout In One Class
 
-Your designer updates a spacing token from 24px to 20px in the design system. Every `pd:d6` across every component updates instantly. Zero file hunting. Zero missed updates. Zero drift between design and code.
-The source of truth stays singular.
+Elevate adds layout affordances: single-class primitives that encode common layout intent.
+
+Contain, Stack, Cluster, Split, Center, and Grid-Auto let you build real layouts without wrapper spam.
 
 <br/>
 <br/>
 
 ```html
-<div class ="pd-x:d6 pd-y:d3 row:x-center:y-center">
-  <h1 class ="font:sans:h5 mg-t:d3 /md/ font:h3 /lg/ font:h1">Your Design System In CSS</h1>
-</div>
+<section class="contain">
+  <div class="stack:gap-d6">
+    <div class="cluster:gap-d3 just-between">
+      <h2 class="text:white">Affordances</h2>
+      <button class="bg-color:indigo text:white pd-x:d3 pd-y:d2">Action</button>
+    </div>
+    <div class="split:ratio-2-1:gap-d6 /lg/ split:ratio-3-1">
+      <div class="bg-color:indigo-2 pd:d4">Main</div>
+      <div class="bg-color:indigo-1 pd:d4">Side</div>
+    </div>
+    <div class="grid-auto:min-c10:gap-d4">
+      <div class="bg-color:indigo-2 pd:d4">Card</div>
+      <div class="bg-color:indigo-2 pd:d4">Card</div>
+      <div class="bg-color:indigo-2 pd:d4">Card</div>
+    </div>
+  </div>
+</section>
 ```
 
+<br/>
+<br/>
+<br/>
+
+## Envelopes: Meta-Classes Without CSS Files
+
+Collapse any utility list into a named class and reopen it later when you need to edit.
+You get reusable, bespoke classes without leaving your HTML.
+
+<br/>
+<br/>
+
+```html
+<div class="env:card pd-x:d4 bg-color:indigo text:white shadow:soft">
+  Card
+</div>
+
+<!-- On save -->
+<div class="env:card"></div>
+
+<!-- Reopen to edit -->
+<div class="env:card:open"></div>
+```
+
+<br/>
 <br/>
 <br/>
 
 ## Build-time Validation Protects Your Vision
 
 Type `pd:d99` when only `pd:d6` exists? Build fails with exact file location.
-Use a color token that doesn't exist? Compiler catches it before users see it.
-Try spacing values outside your design system? They don't compile.
+Use a color token that doesn't exist? The compiler catches it before users see it.
 Your design system becomes enforceable, not just aspirational.
 
 <br/>
@@ -127,49 +160,32 @@ For more information, refer to [https://elevate-docs.pages.dev](https://elevate-
 <br/>
 <br/>
 
-## Syntax Built For Real Convenience
-
-Grouped state changes: `@hover:[bg-color:indigo text:white]` keeps related hover effects together instead of scattered across class lists.
-Smart responsive design: `/md/ w:c6 /xl/ w:full` adapts when you change breakpoint values.
-Directional shortcuts: `pd:d6` for all sides, `pd-x:d6` for horizontal padding, `pd-y:d6` for vertical padding.
-
-<br/>
-<br/>
-
-```html
-<div class ="w:full /md/ w:c6 /xl/ w:s2">
-  <h1 class ="text:white:center">I'm Spatially Aware</h1>
-</div>
-```
-
-<br/>
-<br/>
-
 ## States Without The Mess
 
-Contextual styling that groups related properties together instead of scattering them across your class list like `hover:bg-blue-600 hover:text-white hover:scale-105`. No more hunting through dozens of classes to find which hover states belong to which element, or wondering if you forgot to add a focus state that matches your hover state. Everything that changes together stays together, making interactive components predictable and maintainable.
+Grouped state changes keep interactions coherent: `@hover:[bg-color:indigo text:white]` ties related changes together.
 
 <br/>
 <br/>
 
 ```html
-<div class ="pd-x:d6 pd-y:d3 row:x-center:y-center">
-  <div class ="w:full bg-color:green @hover:[bg-color:red font:semibold text:white]"><p>What Happens On Hover, Again?</p></div>
+<div class="pd-x:d6 pd-y:d3 row:x-center:y-center">
+  <div class="w:full bg-color:green @hover:[bg-color:red font:semibold text:white]">
+    <p>What happens on hover?</p>
+  </div>
 </div>
 ```
 
+<br/>
 <br/>
 <br/>
 
 ## Simple Setup, Powerful Results
 
 Install package. Configure design tokens. Write utilities.
-Built-in file watching, automatic compilation, and detailed error messages with line numbers. No webpack configuration. No build script modifications. No plugin dependencies. And it's mobile first.
-
+Built-in file watching, automatic compilation, and detailed error messages with line numbers. No webpack configuration. No build script modifications. Mobile-first by default.
 
 <br/>
 <br/>
-
 
 <CardGrid stagger>
   <Card title="Generated on Demand" icon="rocket">
@@ -178,11 +194,17 @@ Built-in file watching, automatic compilation, and detailed error messages with 
   <Card title="Build-Time Validation" icon="approve-check-circle">
     Type `pd:d99` instead of `pd:d6` and your build fails immediately. Typos become compiler errors.
   </Card>
-  <Card title="Consistency, Enforced" icon="seti:css">
+  <Card title="Design System Driven" icon="seti:css">
+    Your tokens define your utilities. Change the system and every component updates automatically.
+  </Card>
+  <Card title="Consistency, Enforced" icon="open-book">
     Your utilities compile from design tokens. No approximations, no drift, no guessing which blue to use.
   </Card>
-  <Card title="Design System Driven" icon="open-book">
-    Your tokens define your utilities. Change your design system and every component updates automatically.
+  <Card title="Layout" icon="list-format">
+    Contain, Stack, Cluster, Split, Center, and Grid-Auto turn layout intent into single classes.
+  </Card>
+  <Card title="Envelopes" icon="document">
+    Collapse full utility lists into reusable classes you can reopen and edit anytime.
   </Card>
 </CardGrid>
 
@@ -191,10 +213,9 @@ Built-in file watching, automatic compilation, and detailed error messages with 
 
 ## For Teams Who Ship Consistently
 
-Your design system defines spacing tokens but developers still guess at values.
-Your brand guidelines specify colors but CSS files contain hex codes and approximations.
-Your design team works in systematic scales while your code accumulates magic numbers.
-Elevate CSS bridges the gap and your design system becomes the heart of your CSS vocabulary.
+Your design system defines spacing and color, but the code still drifts into guesses, hex codes, and magic numbers. Elevate bridges that gap so the system becomes the CSS vocabulary itself.
+
+Your designers work in systems. Your developers should too.
 
 <br/>
 <br/>
@@ -210,12 +231,9 @@ Elevate CSS bridges the gap and your design system becomes the heart of your CSS
 <br/>
 <br/>
 
-
 ## Join The Adventure.
 
 Let's Build Something Great, Together.
-
-import { Icon } from '@astrojs/starlight/components';
 
 <div style="display: flex; align-items: center; gap: 0.5rem;">
   <Icon name="discord" />

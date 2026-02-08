@@ -35,8 +35,8 @@ export default defineConfig({
 					{ label: 'Getting Started', slug: 'guides/2-getting-started' },
 					{ label: 'Configuration', slug: 'guides/3-configuration' },
 					{ label: 'Specificity', slug: 'guides/3-specificity' },
-					{ label: 'Layout Affordances', slug: 'css/layout-affordances' },
-					{ label: 'Env Aliases', slug: 'guides/4-env-aliases' },
+					{ label: 'Layout', slug: 'guides/layout' },
+					{ label: 'Envelopes', slug: 'guides/4-env-aliases' },
 				],
 			},
 				{
