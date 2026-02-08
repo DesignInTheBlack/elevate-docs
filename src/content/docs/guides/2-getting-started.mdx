@@ -27,7 +27,7 @@ import { Code } from '@astrojs/starlight/components';
 
 ### Basic Configuration
 
-Elevate’s general settings are defined in `elevate/config/elevate.ts`:
+Elevate's general settings are defined in `elevate/config/elevate.ts`:
 
 ```typescript
 const options = {
@@ -35,12 +35,16 @@ const options = {
     FileTypes:['html', 'jsx', 'tsx', 'astro'], // Valid filetypes to watch for changes
     Output:'./', // Where to put the compiled CSS
     Extend:[], // CSS files to include as well
-    ClassRegex: [ // You can add more regex patterns here to match additional classing structures for your preferred stack
-        /\bclass\s*=\s*"([^"]*)"/g,                          // class="..."
-        /\bclassName\s*=\s*"([^"]*)"/g,                      // className="..."
-        /\bclassName\s*=\s*{\s*`([\s\S]*?)`}/g               // className={`...`}
-    ],
-    SafeList:['myClass','myOtherClass']
+    ClassRegex: [
+      /\bclass\s*=\s*"([^"]*)"/g,                // class="..."
+      /\bclass\s*=\s*'([^']*)'/g,                // class='...'
+      /\bclassName\s*=\s*"([^"]*)"/g,            // className="..."
+      /\bclassName\s*=\s*'([^']*)'/g,            // className='...'
+      /\bclassName\s*=\s*{\s*`([\s\S]*?)`\s*}/g,  // className={`...`}
+      /\bclassName\s*=\s*{\s*"([^"]*)"\s*}/g,    // className={"..."}
+      /\bclassName\s*=\s*{\s*'([^']*)'\s*}/g,    // className={'...'}
+      ],
+    SafeList:[]
 }
 
 export const config = options
@@ -83,12 +87,12 @@ Compound properties are properties that require one or more modifiers to be appl
 
 ```html
 
-<div class="text:dark:bold:left">     
+<div class="text:grey-2:snug:left">     
 
 <!--
-.text\:dark\:bold\:left {
-color: #2C2638;
-font-weight: 700;
+.text\:grey-2\:snug\:left {
+color: #25262A;
+line-height: 1.3;
 text-align: left;
 }
 -->
@@ -114,7 +118,7 @@ Bringing it all together, here are some examples of Elevate's syntax in action:
 import { Aside } from '@astrojs/starlight/components';
 
 <Aside title="Modifiers are Order Agnostic">
-You can write `text:red:bold` or `text:bold:red` and the order doesn't matter. We'll get to the how and why later, but for now, just know that you can use any order you want.
+You can write `text:grey-2:left:snug` or `text:snug:grey-2:left` and the order doesn't matter. We'll get to the how and why later, but for now, just know that you can use any order you want.
 </Aside>
 
 <br/>
@@ -130,7 +134,7 @@ Elevate affords and enforces a mobile-first, organized syntax for responsive des
 
 
 ```html
-<div class="text:purple p:d1:d2 /md/ text:right /lg/ @hover:[text:green:right]"> 
+<div class="text:purple pd:d1 /md/ pd:d2 /lg/ @hover:[text:green text:right]"> 
 ```
 
 <br/>
@@ -157,11 +161,13 @@ In order to allow for greater flexibility, Elevate supports a series of flags to
 Allows complex, conditional styling for states, conditions, and other pseudo-classes or pseudo-elements:
 
 ```html
-<div class="@hover:[text:green:right_p:d1]">  <!-- Hover state changes text and adds padding. -->
+<div class="@hover:[text:green text:right pd:d1]">  <!-- Hover state changes text and adds padding. -->
 ```
 <br/>
 
-Note that you can chain property modifier combinations with an underscore inside of the contextual flag's brackets. This allows more concise expression of design intent. No more pseudo-class spam or unnecessary nesting!
+You can chain property modifier combinations inside the contextual flag's brackets using spaces. Underscores are still accepted for backwards compatibility. This allows more concise expression of design intent. No more pseudo-class spam or unnecessary nesting!
+
+State chains use `+`, for example: `@hover+focus-visible:[bg-color:indigo text:white]`.
 
 <br/>
 
@@ -169,6 +175,16 @@ Note that you can chain property modifier combinations with an underscore inside
 import { LinkCard } from '@astrojs/starlight/components';
 
 <LinkCard title="See Currently Supported Selectors" href="/reference/supported-selectors/" />
+
+<br/>
+
+### Env Aliases (Envelopes)
+
+Condense a full utility string into a single reusable class with `env:name`, then reopen it later with `env:name:open` to edit. Env aliases are a first-class way to create meaningful, reusable classes without leaving your HTML.
+
+<br/>
+
+<LinkCard title="Learn Env Aliases" href="/guides/4-env-aliases/" />
 
 <br/>
 
@@ -189,11 +205,15 @@ Elevate with other tools that require classes of their own:
 
 ```html
  ClassRegex: [
-        /\bclass\s*=\s*"([^"]*)"/g,                          // class="..."
-        /\bclassName\s*=\s*"([^"]*)"/g,                      // className="..."
-        /\bclassName\s*=\s*{\s*`([\s\S]*?)`}/g               // className={`...`}
+      /\bclass\s*=\s*"([^"]*)"/g,                // class="..."
+      /\bclass\s*=\s*'([^']*)'/g,                // class='...'
+      /\bclassName\s*=\s*"([^"]*)"/g,            // className="..."
+      /\bclassName\s*=\s*'([^']*)'/g,            // className='...'
+      /\bclassName\s*=\s*{\s*`([\s\S]*?)`\s*}/g,  // className={`...`}
+      /\bclassName\s*=\s*{\s*"([^"]*)"\s*}/g,    // className={"..."}
+      /\bclassName\s*=\s*{\s*'([^']*)'\s*}/g,    // className={'...'}
     ],
-    SafeList:['myClass','myOtherClass']
+    SafeList:[]
 ```
 
 </Aside>
@@ -311,5 +331,6 @@ This can be done by creating a separate package.json file in the `elevate` direc
 If you encounter module resolution errors in the main setup while using Elevate with a framework like Next.js, try the isolated runtime approach first before further debugging dependency conflicts.
 
 <br/>
+
 
 

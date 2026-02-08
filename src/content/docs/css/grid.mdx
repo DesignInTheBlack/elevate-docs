@@ -12,11 +12,22 @@ Elevate supports the following modifiers for the `grid` property:
 
 | **Modifier**             | **Expected Values**              | **Example**                          |
 |--------------------------|----------------------------------|--------------------------------------|
-| Rows           | NumericToken (e.g., `2`, up to 12)         | `grid:rows-2`                         |
-| Cols            | NumericToken (e.g., `4`, up to 12)         | `grid:cols-4`                         |
+| Rows           | `rows-2` or `rows-2-fr` (up to 12)         | `grid:rows-2`                         |
+| Cols            | `cols-4` or `cols-4-fr` (up to 12)         | `grid:cols-4-fr`                      |
 | Gap            | SpacingToken (e.g., `d3`)      | `grid:gap-d3`                        |
-| xGap            | SpacingToken (e.g., `d3`)      | `grid:xgap-d3`                        |
-| yGap            | SpacingToken (e.g., `d3`)      | `grid:ygap-d3`                        |
+| ColGap         | SpacingToken (e.g., `d3`)      | `grid:colgap-d3`                     |
+| RowGap         | SpacingToken (e.g., `d3`)      | `grid:rowgap-d3`                     |
+
+<br/>
+
+## Grid Areas
+
+Use pass-through values to define template areas and assign areas to items:
+
+| Property   | Expected Values | Example |
+|------------|------------------|---------|
+| `grid-template-areas` | PassThroughToken (e.g., `("header_header"_"sidebar_main")`) | `grid-template-areas:("header_header"_"sidebar_main")` |
+| `grid-area` | PassThroughToken (e.g., `(header)`) | `grid-area:(header)` |
 
 <br/>
 
@@ -25,8 +36,10 @@ The `row-spans` and `col-spans` properties can be used to specify the number of 
 
 | **Modifier**             | **Expected Values**              | **Example**                          |
 |--------------------------|----------------------------------|--------------------------------------|
-| From     | NumericToken (e.g., `2`, up to 12) or `all`         | `col-spans-all`                         |
-| To          | NumericToken (e.g., `4`, up to 12) or `all`         | `row-spans:from-1:to-3`                         |
+| From     | NumericToken (e.g., `1`, up to 12)         | `col-spans:from-1:to-3`                         |
+| To          | NumericToken (e.g., `3`, up to 12)         | `row-spans:from-2:to-4`                         |
+| All          | None (direct property)         | `col-spans-all`                         |
+| All          | None (direct property)         | `row-spans-all`                         |
 
 <br/>
 <br/>

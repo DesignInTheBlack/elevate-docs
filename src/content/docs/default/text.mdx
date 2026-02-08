@@ -16,7 +16,7 @@ Elevate includes a set of sensible defaults for most things, but you can always 
 
 ## How It Works
 
-The font sizes are defined in `elevate/core/system/etc/typography.ts` as part of the `size` property:
+The font sizes are defined in `elevate/core/system/design/typography.ts` as part of the `size` property:
 
 ```typescript
 export const typography = {
@@ -62,7 +62,7 @@ The font sizes in Elevate help create:
 For example:
 ```html
 <div class="font:h1:sans text:red+1:blog">Welcome to Elevate</div>
-<p class="font:base:loose text:indigo">This is the body text styled with the base size.</p>
+<p class="font:base text:indigo:loose">This is the body text styled with the base size.</p>
 <div class="font:tiny text:grey">Disclaimer: Tiny text for subtle information.</div>
 ```
 

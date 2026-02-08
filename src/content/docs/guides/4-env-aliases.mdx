@@ -1,0 +1,55 @@
+---
+title: "Env Aliases (Envelopes)"
+description: Condense and reopen class lists with env aliases.
+---
+
+Env aliases let you collapse a full utility string into a single reusable class and reopen it later when you need to edit.
+
+## Defining an Env Alias
+
+Add `env:name` to a class list alongside normal utilities. On save, Elevate captures the utilities and automatically condenses the class list down to just `env:name`.
+
+```html
+<div class="env:card pd-x:d4 bg-color:red mg-t:d1 @hover:[bg-color:blue]">
+  Env definition
+</div>
+```
+
+After save, the class list becomes:
+
+```html
+<div class="env:card"></div>
+```
+
+The definition is stored in `elevate.env.json` and is used anywhere you write `env:card`.
+
+## Opening an Alias
+
+To edit an alias, use `env:name:open`. On save, Elevate expands the class list and keeps the `:open` marker so it stays open until you explicitly close it. While open, edits update the alias registry on save.
+
+```html
+<div class="env:card:open"></div>
+```
+
+Expands to:
+
+```html
+<div class="env:card:open pd-x:d4 bg-color:red mg-t:d1 @hover:[bg-color:blue]"></div>
+```
+
+To close and condense, remove `:open` and save:
+
+```html
+<div class="env:card"></div>
+```
+
+To re-open, replace `env:card` with `env:card:open`.
+
+## Rules and Notes
+
+- Prefer one env definition per class list. Multiple env definitions will skip auto-condense.
+- Names allow letters, numbers, and dashes.
+- Breakpoints and state blocks are captured as part of the alias.
+- Combinator directives are not allowed inside env aliases.
+- Auto rewrite only runs on static class strings. Dynamic className expressions are skipped.
+- `env:open` expansion only runs when the class list contains only env tokens (plus optional ctx or breakpoint markers).

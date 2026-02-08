@@ -32,11 +32,13 @@ export default defineConfig({
 					label: 'Learning Elevate',
 					items: [
 						// Each item here is one entry in the navigation menu.
-						{ label: 'Getting Started', slug: 'guides/2-getting-started' },
-						{ label: 'Configuration', slug: 'guides/3-configuration' },
-						{ label: 'Specificity', slug: 'guides/3-specificity' },
-					],
-				},
+					{ label: 'Getting Started', slug: 'guides/2-getting-started' },
+					{ label: 'Configuration', slug: 'guides/3-configuration' },
+					{ label: 'Specificity', slug: 'guides/3-specificity' },
+					{ label: 'Layout Affordances', slug: 'css/layout-affordances' },
+					{ label: 'Env Aliases', slug: 'guides/4-env-aliases' },
+				],
+			},
 				{
 					label: `Designed Defaults`,
 					autogenerate: { directory: 'default' },

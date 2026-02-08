@@ -1,0 +1,156 @@
+---
+title: "Layout Affordances"
+description: Intent-driven layout primitives that compress common patterns into one class.
+---
+
+Elevate layout affordances are single-class primitives that encode a common layout intent.
+They reduce wrapper spam and keep layout intent readable at a glance.
+
+## Contain
+
+`contain` is a global class generated from your contain map. It centers content with responsive horizontal padding.
+
+```html
+<div class="contain">
+  <section class="stack:gap-d6">
+    <h1 class="text:white">Contained content</h1>
+  </section>
+</div>
+```
+
+Notes:
+- Output includes `margin:auto` and responsive `padding-left/right`.
+- Values are configured in `elevate/core/system/etc/contain.ts`.
+
+---
+
+## Stack
+
+Vertical flow with consistent spacing and optional alignment.
+
+```html
+<div class="stack:gap-d4 align-center">
+  <h2 class="text:white">Title</h2>
+  <p class="text:gray-2">Body copy</p>
+  <button class="bg-color:indigo text:white pd-x:d4 pd-y:d2">Action</button>
+</div>
+```
+
+| **Modifier** | **Expected Values** | **Example** |
+|---|---|---|
+| Gap | `gap-{spacing}` | `stack:gap-d4` |
+| Align | `align-start`, `align-end`, `align-center`, `align-stretch`, `align-baseline`, `align-self-start`, `align-self-end` | `stack:align-center` |
+| Justify | `just-start`, `just-end`, `just-center`, `just-between`, `just-around`, `just-evenly`, `just-left`, `just-right` | `stack:just-between` |
+| Direction | `reverse` | `stack:reverse` |
+
+Defaults:
+- `display:flex`
+- `flex-direction:column`
+
+---
+
+## Cluster
+
+Horizontal wrap with gap and alignment. Ideal for tags, toolbars, button rows.
+
+```html
+<div class="cluster:gap-d3 align-center just-between">
+  <div class="text:gray-1">Left</div>
+  <div class="row:gap-d2">
+    <button class="bg-color:indigo text:white pd-x:d3 pd-y:d2">Save</button>
+    <button class="bd:width-d1:solid:indigo-1 text:indigo-1 pd-x:d3 pd-y:d2">Cancel</button>
+  </div>
+</div>
+```
+
+| **Modifier** | **Expected Values** | **Example** |
+|---|---|---|
+| Gap | `gap-{spacing}` | `cluster:gap-d3` |
+| Align | `align-start`, `align-end`, `align-center`, `align-stretch`, `align-baseline`, `align-self-start`, `align-self-end` | `cluster:align-center` |
+| Justify | `just-start`, `just-end`, `just-center`, `just-between`, `just-around`, `just-evenly`, `just-left`, `just-right` | `cluster:just-between` |
+| Wrap | `wrap`, `no-wrap`, `reverse` | `cluster:no-wrap` |
+
+Defaults:
+- `display:flex`
+- `flex-direction:row`
+- `flex-wrap:wrap`
+
+---
+
+## Split
+
+Two-column layout with clean ratio control.
+
+```html
+<div class="split:ratio-2-1:gap-d6">
+  <div class="bg-color:indigo-2 pd:d4">Main</div>
+  <div class="bg-color:indigo-1 pd:d4">Side</div>
+</div>
+```
+
+| **Modifier** | **Expected Values** | **Example** |
+|---|---|---|
+| Ratio | `ratio-1-1`, `ratio-2-1`, `ratio-1-2`, `ratio-3-1`, `ratio-1-3`, `ratio-2-2`, `ratio-3-2`, `ratio-2-3` | `split:ratio-2-1` |
+| Gap | `gap-{spacing}` | `split:gap-d6` |
+
+Defaults:
+- `display:grid`
+- `grid-template-columns:1fr 1fr`
+
+---
+
+## Center
+
+Centers a block horizontally, with optional max width and text alignment.
+
+```html
+<div class="center:max-c12 text">
+  <h2 class="text:white">Centered section</h2>
+  <p class="text:gray-2">Readable width, clean focus.</p>
+</div>
+```
+
+| **Modifier** | **Expected Values** | **Example** |
+|---|---|---|
+| Max width | `max-{spacing}` | `center:max-c12` |
+| Text align | `text` | `center:text` |
+
+Defaults:
+- `margin-left:auto`
+- `margin-right:auto`
+
+---
+
+## Grid-Auto
+
+Responsive card grids without manual breakpoints. Uses `auto-fit` + `minmax`.
+
+```html
+<div class="grid-auto:min-c10:gap-d4">
+  <div class="bg-color:indigo-2 pd:d4">Card</div>
+  <div class="bg-color:indigo-2 pd:d4">Card</div>
+  <div class="bg-color:indigo-2 pd:d4">Card</div>
+</div>
+```
+
+| **Modifier** | **Expected Values** | **Example** |
+|---|---|---|
+| Min width | `min-{spacing}` | `grid-auto:min-c10` |
+| Gap | `gap-{spacing}` | `grid-auto:gap-d4` |
+| Fit mode | `fit` or `fill` | `grid-auto:fill` |
+
+Defaults:
+- `display:grid`
+- `grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr))`
+
+---
+
+## Breakpoints
+
+All affordances work with breakpoint scoping:
+
+```html
+<div class="stack:gap-d4 /md/ cluster:gap-d3 /lg/ split:ratio-2-1:gap-d6">
+  ...
+</div>
+```

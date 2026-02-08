@@ -4,6 +4,7 @@ description: A guide to place in Elevate CSS.
 ---
 
 Elevate CSS features a single compound property for setting the placement of an element:
+`place` is an alias for `place-content`.
 
 <br/>
 
@@ -11,4 +12,14 @@ Elevate CSS features a single compound property for setting the placement of an 
 
 | Property   | Expected Values | Example     |
 |------------|--------------------|-----------------------|
-| `place` |  `center`, `center-start`, `center-end`, `center-stretch`, `start-center`, `start`, `start-end`, `start-stretch`, `end-center`, `end-start`, `end`, `end-stretch`, `stretch-center`, `stretch-start`, `stretch-end`, `stretch`, `baseline-center`, `baseline-stretch`, `first-baseline-center`, `first-baseline-stretch`, `last-baseline-center`, `last-baseline-stretch`, `space-between-center`, `space-between-start`, `space-between-end`, `space-between-stretch`, `space-around-center`, `space-around-start`, `space-around-end`, `space-around-stretch`, `space-evenly-center`, `space-evenly-start`, `space-evenly-end`, `space-evenly-stretch`, `stretch-space-between`, `stretch-space-around`, `stretch-space-evenly`, `inherit`, `initial`, `revert`, `revert-layer`, `unset` |  `place:between`  |
+| `place` |  `center`, `center-start`, `center-end`, `center-stretch`, `start-center`, `start`, `start-end`, `start-stretch`, `end-center`, `end-start`, `end`, `end-stretch`, `stretch-center`, `stretch-start`, `stretch-end`, `stretch-stretch`, `baseline-center`, `baseline-stretch`, `first-baseline-center`, `first-baseline-stretch`, `last-baseline-center`, `last-baseline-stretch`, `space-between-center`, `space-between-start`, `space-between-end`, `space-between-stretch`, `space-around-center`, `space-around-start`, `space-around-end`, `space-around-stretch`, `space-evenly-center`, `space-evenly-start`, `space-evenly-end`, `space-evenly-stretch`, `stretch-space-between`, `stretch-space-around`, `stretch-space-evenly`, `inherit`, `initial`, `revert`, `revert-layer`, `unset` |  `place:space-between-start`  |
+
+<br/>
+
+### Self Alignment
+
+| Property   | Expected Values | Example |
+|------------|------------------|---------|
+| `align-self` | `align-start`, `align-end`, `align-center`, `align-stretch`, `align-baseline`, `align-self-start`, `align-self-end` | `align-self:align-center` |
+| `justify-self` | `just-start`, `just-end`, `just-center`, `just-stretch`, `just-baseline`, `just-self-start`, `just-self-end` | `justify-self:just-center` |
+| `place-self` | Same values as `place` | `place-self:center-start` |

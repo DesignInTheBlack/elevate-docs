@@ -3,7 +3,7 @@ title: Outline
 description: A guide to outline in Elevate CSS.
 ---
 
-Elevate CSS features a compound property for setting the color of a resizing caret:
+Elevate CSS features a compound property for setting outline color, width, style, and offset:
 
 <br/>
 
@@ -16,3 +16,7 @@ Elevate CSS features a compound property for setting the color of a resizing car
 | `style` |  `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset`, `outset`, `none`, `hidden`|  `outline:dotted`  |
 | `offset` |  SpacingToken (e.g., `d4`) |  `outline:off-d4`  |
 | `radius` |  SpacingToken (e.g., `d4`) |  `outline:round-d4`  |
+
+<br/>
+
+Note: `outline:round-*` sets `border-radius` on the element (there is no native `outline-radius` property).

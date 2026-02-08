@@ -29,7 +29,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 Designer: "Use large spacing here."
 
-You: "Is that `pd:4`, `pd:6`, or `pd:8`?"
+You: "Is that `pd:d4`, `pd:d6`, or `pd:d8`?"
 
 Checks three components. Finds three different answers.
 
@@ -57,48 +57,45 @@ In its current iteration (v1.05 - Beta), Elevate CSS is in active development an
 
 ## Write What You Mean
 
-`pd:large` compiles to your design system's exact definition of large padding.
-`bg:primary` outputs your brand's actual primary color.
-`text:heading` uses your typography scale, not a guess.
+`pd:d6` compiles to your design system's exact spacing token.
+`bg-color:indigo` outputs your brand's actual color token.
+`font:h3` uses your typography scale, not a guess.
 When your design system changes, your CSS changes with it. Automatically.
 
 <br/>
 <br/>
 ```html
 /* In your design system */
-spacing: { lg: "2rem" }
-colors: { primary: "#3b82f6" }
+spacing: { d6: "1.5rem" }
+colors: { indigo: "#5865EF" }
 
 /* In your code */
-pd:lg bg:primary
+pd:d6 bg-color:indigo
 
 /* Compiles to exactly */
-.pd\:lg {
-  padding: 2rem;
+.pd\:d6 {
+  padding: 1.5rem;
 }
-.bg\:primary {
-  background-color: #3b82f6;
+.bg-color\:indigo {
+  background-color: #5865EF;
 }
 ```
 
-
 <br/>
-
-
-
+<br/>
 <br/>
 
 ## Design Tokens Define CSS Classes
 
-Your designer updates large from 24px to 20px in the design system. Every `pd:large` across every component updates instantly. Zero file hunting. Zero missed updates. Zero drift between design and code.
+Your designer updates a spacing token from 24px to 20px in the design system. Every `pd:d6` across every component updates instantly. Zero file hunting. Zero missed updates. Zero drift between design and code.
 The source of truth stays singular.
 
 <br/>
 <br/>
 
 ```html
-<div class ="pd-x:large pd-y:small row:x-center:y-center">
-  <h1 class ="font:sans:h5 mg-t:small /md/ font:h3 /lg/ font:h1">Your Design System In CSS</h1>
+<div class ="pd-x:d6 pd-y:d3 row:x-center:y-center">
+  <h1 class ="font:sans:h5 mg-t:d3 /md/ font:h3 /lg/ font:h1">Your Design System In CSS</h1>
 </div>
 ```
 
@@ -107,7 +104,7 @@ The source of truth stays singular.
 
 ## Build-time Validation Protects Your Vision
 
-Type `pd:xlarge` when only `pd:large` exists? Build fails with exact file location.
+Type `pd:d99` when only `pd:d6` exists? Build fails with exact file location.
 Use a color token that doesn't exist? Compiler catches it before users see it.
 Try spacing values outside your design system? They don't compile.
 Your design system becomes enforceable, not just aspirational.
@@ -116,10 +113,10 @@ Your design system becomes enforceable, not just aspirational.
 <br/>
 
 ```html
-❌ Invalid Prefixed Value: Unable to determine spacing value "xlarge"
+Error: Invalid Prefixed Value: Unable to determine spacing value "d99"
    in src/components/Button.tsx on line 23
 
-💡 Troubleshooting Tips:
+Troubleshooting Tips:
    1. Examine your prefixed value and ensure it matches the expected token type.
    2. If this is a custom modifier, ensure that you are using the correct syntax.
 
@@ -132,15 +129,15 @@ For more information, refer to [https://elevate-docs.pages.dev](https://elevate-
 
 ## Syntax Built For Real Convenience
 
-Grouped state changes: `@hover:[bg:darker_text:white]` keeps related hover effects together instead of scattered across class lists.
-Smart responsive design: `/tablet/ w:large /desktop/ w:full` adapts when you change breakpoint pixel values.
-Directional shortcuts: `pd:large` for all sides, `pd-x:large` for horizontal padding, `pd-y:large` for vertical padding.
+Grouped state changes: `@hover:[bg-color:indigo text:white]` keeps related hover effects together instead of scattered across class lists.
+Smart responsive design: `/md/ w:c6 /xl/ w:full` adapts when you change breakpoint values.
+Directional shortcuts: `pd:d6` for all sides, `pd-x:d6` for horizontal padding, `pd-y:d6` for vertical padding.
 
 <br/>
 <br/>
 
 ```html
-<div class ="w:mobile /md/ w:tablet /xl/ w:full">
+<div class ="w:full /md/ w:c6 /xl/ w:s2">
   <h1 class ="text:white:center">I'm Spatially Aware</h1>
 </div>
 ```
@@ -156,8 +153,8 @@ Contextual styling that groups related properties together instead of scattering
 <br/>
 
 ```html
-<div class ="pd-x:large pd-y:small row:x-center:y-center">
-  <div class ="w:full bg-color:green @hover:[bg-color:red_font:semibold_text:white]"><p>What Happens On Hover, Again?</p></div>
+<div class ="pd-x:d6 pd-y:d3 row:x-center:y-center">
+  <div class ="w:full bg-color:green @hover:[bg-color:red font:semibold text:white]"><p>What Happens On Hover, Again?</p></div>
 </div>
 ```
 
@@ -179,7 +176,7 @@ Built-in file watching, automatic compilation, and detailed error messages with 
     Zero pre-built utilities. CSS gets compiled from your design tokens exactly when you write it. Ship what you use - 100kb new in the box.
   </Card>
   <Card title="Build-Time Validation" icon="approve-check-circle">
-    Type `pd:xlarge` instead of `pd:xl` and your build fails immediately. Typos become compiler errors.
+    Type `pd:d99` instead of `pd:d6` and your build fails immediately. Typos become compiler errors.
   </Card>
   <Card title="Consistency, Enforced" icon="seti:css">
     Your utilities compile from design tokens. No approximations, no drift, no guessing which blue to use.
@@ -228,3 +225,4 @@ import { Icon } from '@astrojs/starlight/components';
   <Icon name="github" />
   <a href="https://github.com/DesignInTheBlack/Elevate" style="text-decoration: none;">Explore The Repository</a>
 </div>
+

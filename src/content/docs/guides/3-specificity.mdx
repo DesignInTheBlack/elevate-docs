@@ -13,26 +13,31 @@ To prevent conflicts, Elevate provides a **context utility**. It creates a tempo
 
 | Property | Expected Values | Example |
 |----------|-----------------|---------|
-| `ctx`    | PassThroughToken (for example, `someUniqueString`) | `ctx:someUniqueString` |
-| `ctx:end`| None            | `ctx:end` |
+| `ctx`    | PassThroughToken (for example, `card`) | `ctx:card` |
+| `ctx:end`| None (closes the most recent scope) | `ctx:end` |
+| `ctx:end:Name`| None (closes a specific scope) | `ctx:end:card` |
 
 <br/>
 
-Although the modifier accepts any string, use a name that clearly relates to the component you are styling. It keeps your markup self-documenting.
+Although the modifier accepts any string, use a name that clearly relates to the component you are styling. It keeps your markup self-documenting, and `ctx:end:Name` helps prevent mismatched nesting.
 
 <br/>
 
 ```html
-<div class="ctx:someComponent w:full col:x-start:y-end /lg/ grid:cols-5-fr:rows-1:gap-d12">
-  <div class="h:full bd:round-d6 col:x-start:y-between /lg/ col-spans:from-1:to-3">
-    <h2 class="font:h6:regular:sans text:fwhite mg-b:d6 /lg/ mg-b:c3">
+<div class="ctx:card w:full grid:cols-5-fr:rows-1:gap-d6 /lg/ grid:cols-12-fr">
+  <div class="h:full bd:round-d4 col:x-start:y-between /lg/ col-spans:from-1:to-6">
+    <h2 class="font:h5:regular:sans text:white mg-b:d4">
       Declaring Contexts Is Fun
     </h2>
-    <p class="font:h6:sans:regular:tight text:findigogray:brief mg-b:d6 /lg/ mg-b:0 ctx:end">
-      Any class between ctx:someComponent and ctx:end is now scoped to the someComponent context and will not collide with styles elsewhere.
+    <p class="font:base:sans:regular text:grey+2:brief:snug mg-b:d4 /lg/ mg-b:0 ctx:end:card">
+      Any class between ctx:card and ctx:end:card is now scoped to the card context and will not collide with styles elsewhere.
     </p>
   </div>
 </div>
 ```
 <br/>
-Place `ctx:someUniqueString` at the start of the section you want to isolate, then add `ctx:end` where that section finishes. Every class between these two markers inherits the context, giving you a clean, conflict-free way to manage specificity.
+Place `ctx:Name` at the start of the section you want to isolate, then add `ctx:end` (or `ctx:end:Name`) where that section finishes. Every class between these two markers inherits the context, giving you a clean, conflict-free way to manage specificity.
+
+<br/>
+
+Combinator directives (for example, `@child+hover:[...]`) require an active ctx scope so they can target a specific context boundary.

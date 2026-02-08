@@ -17,6 +17,22 @@ Elevate CSS features two compound properties for setting the transform behavior 
 <br/>
 <br/>
 
+### Structured Transform Helpers (Pass Through)
+
+These properties forward the value you provide directly into the CSS property:
+
+| Property   | Expected Values | Example     |
+|------------|------------------|-------------|
+| `translate` | PassThroughToken (e.g., `(10px,_20px)` ) | `translate:(10px,_20px)` |
+| `scale` | PassThroughToken (e.g., `(1.1)` ) | `scale:(1.1)` |
+| `rotate` | PassThroughToken (e.g., `(45deg)` ) | `rotate:(45deg)` |
+| `skew` | PassThroughToken (e.g., `(skew(10deg))` ) | `skew:(skew(10deg))` |
+
+<br/>
+<br/>
+
+Note: `skew` forwards its value into the `transform` property.
+
 import { Aside } from '@astrojs/starlight/components';
 
 <Aside title="'Pass Through' Means Literally">
