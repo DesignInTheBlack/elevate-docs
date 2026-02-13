@@ -1,4 +1,4 @@
----
+﻿---
 title: "Elevate CSS"
 description: Let's Reimagine The Utility First CSS Framework.
 template: splash
@@ -28,8 +28,8 @@ import { Icon } from '@astrojs/starlight/components';
 
 ## The System Knows the Way
 
-“Use large spacing here.”
-Six months later, “large” is 20px.
+"Use large spacing here."
+Six months later, "large" is 20px.
 
 Elevate locks CSS to your design system so meaning never drifts.
 
@@ -136,6 +136,45 @@ You get reusable, bespoke classes without leaving your HTML.
 <br/>
 <br/>
 
+## Context Scoping, Not Specificity Wars
+
+Use `ctx:` to isolate a component so utilities never collide across the page.
+Everything between `ctx:name` and `ctx:end` is scoped to that boundary.
+
+<br/>
+<br/>
+
+```html
+<div class="ctx:card">
+  <h3 class="text:white">Card</h3>
+  <button class="@child+hover:[bg-color:indigo_text:white]">Hover me</button>
+</div>
+<div class="ctx:end:card"></div>
+```
+
+<br/>
+<br/>
+<br/>
+
+## Relational Selectors, Not Custom CSS
+
+Target children, descendants, siblings, and ancestors directly inside utilities.
+
+<br/>
+<br/>
+
+```html
+<div class="ctx:panel @children:[bg-color:grey-2_text:white] pd:d3">
+  <div>Child A</div>
+  <div>Child B</div>
+</div>
+<div class="ctx:end:panel"></div>
+```
+
+<br/>
+<br/>
+<br/>
+
 ## Build-time Validation Protects Your Vision
 
 Type `pd:d99` when only `pd:d6` exists? Build fails with exact file location.
@@ -189,7 +228,7 @@ Built-in file watching, automatic compilation, and detailed error messages with 
 
 <CardGrid stagger>
   <Card title="Generated on Demand" icon="rocket">
-    Zero pre-built utilities. CSS gets compiled from your design tokens exactly when you write it. Ship what you use - 100kb new in the box.
+    Zero pre-built utilities. CSS gets compiled from your design tokens exactly when you write it. Ship what you use - not 100kb new in the box.
   </Card>
   <Card title="Build-Time Validation" icon="approve-check-circle">
     Type `pd:d99` instead of `pd:d6` and your build fails immediately. Typos become compiler errors.
@@ -205,6 +244,12 @@ Built-in file watching, automatic compilation, and detailed error messages with 
   </Card>
   <Card title="Envelopes" icon="document">
     Collapse full utility lists into reusable classes you can reopen and edit anytime.
+  </Card>
+  <Card title="Contexts" icon="layers">
+    Scope any section with ctx:... so utilities never collide across components.
+  </Card>
+  <Card title="Relational Selectors" icon="shuffle">
+    Use @child, @descendants, @siblings, and @ancestor without writing custom CSS.
   </Card>
 </CardGrid>
 
@@ -243,4 +288,5 @@ Let's Build Something Great, Together.
   <Icon name="github" />
   <a href="https://github.com/DesignInTheBlack/Elevate" style="text-decoration: none;">Explore The Repository</a>
 </div>
+
 

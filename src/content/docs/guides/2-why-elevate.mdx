@@ -1,0 +1,120 @@
+---
+title: "Why Elevate?"
+description: Why Elevate exists and what it gives you.
+---
+
+Elevate is for teams who want CSS to speak the same language as their design system and never drift. It keeps meaning consistent, keeps markup readable, and ends specificity fights without hiding the CSS.
+
+## The Problem Elevate Solves
+
+Design tokens live in a system, but CSS lives in files, components, and muscle memory. That split creates drift. One engineer chooses 20px for "large," another picks 24px, and both are "close enough." The UI loses a shared language, and the system turns into vague vibes instead of real tokens.
+
+## The Core Idea: Tokens Are Utilities
+
+Elevate removes the translation layer. Your design tokens are the utilities, not approximations of them. The only valid way to express spacing, color, type, and scale is by the system itself. When "large" changes, you update the system and the markup stays true.
+
+```html
+pd:d6 bg-color:indigo font:h3
+```
+
+## Clarity at Scale with Context Scoping
+
+`ctx:` creates explicit scope boundaries so utilities do not collide across components. Instead of fighting specificity or inventing one-off class names, you wrap a region in a named context and its rules stay local. Contexts can nest, so you can scope a component inside a page section without leaking styles up or down.
+
+```html
+<div class="ctx:card">
+  <h3 class="text:white">Card</h3>
+  <button class="@child+hover:[bg-color:indigo_text:white]">Hover me</button>
+</div>
+<div class="ctx:end:card"></div>
+```
+
+```html
+<section class="ctx:marketing">
+  <div class="ctx:card">
+    <h3 class="text:white">Card</h3>
+    <button class="@child+hover:[bg-color:indigo_text:white]">Hover me</button>
+  </div>
+  <div class="ctx:end:card"></div>
+</section>
+<div class="ctx:end:marketing"></div>
+```
+
+## Envelopes: Reusable Classes Without CSS Files
+
+Collapse any utility list into a named class and reopen it later to edit. The source remains in markup, not hidden in a separate stylesheet.
+
+```html
+<div class="env:card pd:d4 bg-color:indigo text:white shadow:soft">
+  Card
+</div>
+```
+
+On save, that becomes:
+
+```html
+<div class="env:card"></div>
+```
+
+Later, reopen the same envelope anywhere to evolve the class without hunting down every instance:
+
+```html
+<div class="env:card bg-color:indigo-2 text:white pd:d5 bd:round-d2 shadow:soft">
+  Card
+</div>
+```
+
+That updates the shared `env:card` definition while keeping usage clean everywhere else.
+
+## Relational Styling, First Class
+
+Elevate lets you style relationships directly in markup. Target immediate children, deep descendants, adjacent siblings, all following siblings, or even an ancestor that contains a trigger. This keeps styles aligned with structure and avoids extra wrapper classes or custom selectors.
+
+```html
+<div class="ctx:panel @children:[bg-color:grey-2_text:white] pd:d3">
+  <div>Child A</div>
+  <div>Child B</div>
+</div>
+<div class="ctx:end:panel"></div>
+```
+
+## Layout Affordances That Reduce Markup
+
+Layout primitives encode intent in a single class. That means fewer wrappers, less CSS drift, and more consistent structure across a codebase. Compose `contain`, `stack`, and `cluster` to build real UI layouts without hand-rolling every flex/grid combination.
+
+```html
+<section class="contain">
+  <div class="stack:gap-d6">
+    <div class="cluster:gap-d3:just-between">
+      <h2 class="text:white">Title</h2>
+      <button class="bg-color:indigo text:white pd-x:d3 pd-y:d2">Action</button>
+    </div>
+  </div>
+</section>
+```
+
+## Guardrails That Save Time
+
+Tokens are order-agnostic and validated at build time. Elevate catches typos, unknown tokens, and invalid combinations early so you get fast feedback instead of silent layout bugs. The compiler is the gatekeeper, so your UI stays clean.
+
+```html
+text:white pd:d4 bg-color:indigo shadow:soft
+```
+
+## Why Wouldn't I Just Use Tailwind?
+
+Tailwind is a toolkit. Elevate is a system.
+
+Tailwind gives you a massive preset. Elevate gives you a system-shaped default that you can own. Keep it, replace it, or shrink it to match your brand. Either way, the output stays limited to the tokens you actually use.
+
+Elevate compiles only what you actually write. No giant prebuilt output, no unused utilities, no drift. The output is as small as your system, and the rules are as strict as your standards.
+
+If you want a giant ecosystem of plugins, Tailwind is the obvious choice. If you want CSS that cannot drift from your system, Elevate is the better choice.
+
+## Who Elevate Is For
+
+- Teams with a design system or token library.
+- Products that need consistent semantics across many contributors.
+- UI work that needs speed without CSS sprawl.
+
+If your team values clarity, composability, and a system that enforces design intent, Elevate is built for you. This is CSS that enforces the system instead of negotiating with it.
