@@ -14,7 +14,7 @@ description: Elevate's native token types, affording specific capabilities.
    - No build-time validation, for dynamic or flexible values.
    - Used for CSS rules that require special syntax (e.g., URLs or complex values such as transforms).
    - Supports any value that can be passed through to a CSS declaration.
-   - Spaces are supported in pass-through values by using an underscore (_) to replace spaces. Inside `@state:[...]` blocks, spaces are allowed directly.
+   - Spaces are supported in pass-through values by using an underscore (_) to replace spaces. Inside `@state:[...]` blocks, use underscores as well (state blocks must be a single class token).
    <br/>
 
    **Example:**
@@ -35,7 +35,7 @@ description: Elevate's native token types, affording specific capabilities.
 import { Aside } from '@astrojs/starlight/components';
 
 <Aside title="'Pass Through' Means Literally">
-When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens allow spaces via underscores (for example, `auto-flow:(row_dense)`), while state blocks allow spaces directly.
+When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens allow spaces via underscores (for example, `auto-flow:(row_dense)`), and state blocks require underscores to stay a single class token.
 </Aside>
 
 

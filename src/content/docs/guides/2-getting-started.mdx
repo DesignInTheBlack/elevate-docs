@@ -65,8 +65,10 @@ Unlike traditional utility frameworks which come packed with pre-defined utility
 
 **The Utility String Format**:
 
+Format: `property:modifier`
+
 ```html
-<div class = "property:modifier">
+<div class="text:grey-2">
 ```
 
 <br/>
@@ -134,7 +136,7 @@ Elevate affords and enforces a mobile-first, organized syntax for responsive des
 
 
 ```html
-<div class="text:purple pd:d1 /md/ pd:d2 /lg/ @hover:[text:green text:right]"> 
+<div class="text:purple pd:d1 /md/ pd:d2 /lg/ @hover:[text:green_text:right]"> 
 ```
 
 <br/>
@@ -161,13 +163,13 @@ In order to allow for greater flexibility, Elevate supports a series of flags to
 Allows complex, conditional styling for states, conditions, and other pseudo-classes or pseudo-elements:
 
 ```html
-<div class="@hover:[text:green text:right pd:d1]">  <!-- Hover state changes text and adds padding. -->
+<div class="@hover:[text:green_text:right_pd:d1]">  <!-- Hover state changes text and adds padding. -->
 ```
 <br/>
 
-You can chain property modifier combinations inside the contextual flag's brackets using spaces. Underscores are still accepted for backwards compatibility. This allows more concise expression of design intent. No more pseudo-class spam or unnecessary nesting!
+Inside `@state:[...]`, use underscores instead of spaces. HTML class attributes split on spaces, so state blocks must be a single token (for example, `@hover:[text:green_text:right_pd:d1]`).
 
-State chains use `+`, for example: `@hover+focus-visible:[bg-color:indigo text:white]`.
+State chains use `+`, for example: `@hover+focus-visible:[bg-color:indigo_text:white]`.
 
 <br/>
 
@@ -201,7 +203,7 @@ This keeps scanning predictable and makes overrides easy to reason about. Proper
 ### Combined Example (All Features Together)
 
 ```html
-<div class="ctx:card env:card /md/ @hover+focus-visible:[bg-color:indigo text:white] pd:d4 bg-color:indigo-3 text:white shadow:soft">
+<div class="ctx:card env:card /md/ @hover+focus-visible:[bg-color:indigo_text:white] pd:d4 bg-color:indigo-3 text:white shadow:soft">
   Card
 </div>
 ```
@@ -325,7 +327,7 @@ Elevate's systems are driven by three distinct elements:
 
    <br/>
 
-4. **This Is Elevate CSS**:
+4. **This Is Elevate CSS** (after defining the custom `brand` property + tokens above):
 
    ```html
    <div class="brand:bg-popgreen:copy-popwhite"></div>

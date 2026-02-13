@@ -63,7 +63,7 @@ Remove `:open` and save to condense back to a single class:
 This shows breakpoints and states captured inside an envelope:
 
 ```html
-<div class="env:card pd:d4 bg-color:indigo-3 text:white /sm/ pd:d6 /lg/ bg-color:indigo @hover:[bg-color:indigo-2 text:white]">
+<div class="env:card pd:d4 bg-color:indigo-3 text:white /sm/ pd:d6 /lg/ bg-color:indigo @hover:[bg-color:indigo-2_text:white]">
   Card
 </div>
 ```
@@ -79,7 +79,7 @@ On save, this becomes:
 - Prefer one envelope per class list. Multiple env definitions skip auto-condense.
 - Names allow letters, numbers, and dashes.
 - Breakpoints and state blocks are captured as part of the envelope.
-- Combinator directives are not allowed inside envelopes.
+- Combinator directives are allowed; they target relatives of the env element (implicit env scope).
 - Auto rewrite only runs on static class strings. Dynamic className expressions are skipped.
 - `env:open` expansion only runs when the class list contains only env tokens (plus optional ctx or breakpoint markers).
 

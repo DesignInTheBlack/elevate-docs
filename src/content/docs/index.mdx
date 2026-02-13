@@ -91,7 +91,7 @@ Contain, Stack, Cluster, Split, Center, and Grid-Auto let you build real layouts
 ```html
 <section class="contain">
   <div class="stack:gap-d6">
-    <div class="cluster:gap-d3 just-between">
+    <div class="cluster:gap-d3:just-between">
       <h2 class="text:white">Affordances</h2>
       <button class="bg-color:indigo text:white pd-x:d3 pd-y:d2">Action</button>
     </div>
@@ -162,14 +162,14 @@ For more information, refer to [https://elevate-docs.pages.dev](https://elevate-
 
 ## States Without The Mess
 
-Grouped state changes keep interactions coherent: `@hover:[bg-color:indigo text:white]` ties related changes together.
+Grouped state changes keep interactions coherent: `@hover:[bg-color:indigo_text:white]` ties related changes together.
 
 <br/>
 <br/>
 
 ```html
 <div class="pd-x:d6 pd-y:d3 row:x-center:y-center">
-  <div class="w:full bg-color:green @hover:[bg-color:red font:semibold text:white]">
+  <div class="w:full bg-color:green @hover:[bg-color:red_font:semibold_text:white]">
     <p>What happens on hover?</p>
   </div>
 </div>

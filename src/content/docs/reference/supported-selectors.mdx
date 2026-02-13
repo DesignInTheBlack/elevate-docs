@@ -3,14 +3,14 @@ title: "Supported Selectors"
 description: Pseudo-classes, pseudo-elements, and state chains supported by Elevate.
 ---
 
-Elevate uses the `@state:[...]` flag to generate pseudo-classes and pseudo-elements directly from your class list.
+Elevate uses the `@state:[...]` flag to generate pseudo-classes and pseudo-elements directly from your class list. Inside the brackets, use underscores instead of spaces so the state block remains a single class token.
 
 ## Pseudo-classes
 
 Any pseudo-class token you place in the state chain is passed through without validation. Examples include `hover`, `focus`, `focus-visible`, `active`, `disabled`, `checked`, `first-child`, `last-child`, and `empty`.
 
 ```html
-<div class="@hover+focus-visible:[bg-color:indigo text:white]"></div>
+<div class="@hover+focus-visible:[bg-color:indigo_text:white]"></div>
 ```
 
 ## Pseudo-elements
@@ -29,20 +29,38 @@ Only one pseudo-element is allowed per chain.
 Use `+` to chain states in a single block.
 
 ```html
-<button class="@hover+active:[bg-color:indigo text:white]"></button>
+<button class="@hover+active:[bg-color:indigo_text:white]"></button>
 ```
 
 ## Combinator Directives
 
-Elevate supports selector combinators through directives that must come first in the chain:
-`@desc`, `@child`, `@sibling`, `@general-sibling`, `@ancestor`.
+Elevate supports selector combinators through directives:
+`@desc` (alias: `@descendants`), `@child` (alias: `@children`), `@sibling` (adjacent), `@general-sibling` (alias: `@siblings`), `@ancestor`.
 
-Only one combinator directive is allowed per chain, and it must be first. Combinator directives require an active `ctx` scope so they can target a specific boundary.
+Only one combinator directive is allowed per chain. Combinator directives require an active scope (either a `ctx:` boundary or an implicit env alias scope) so they can target a specific boundary, and the combinator can appear anywhere in the chain.
+
+Notes:
+- `@children` and `@descendants` target *all* matching elements inside the ctx scope (direct children or any depth).
+- `@siblings` targets all following siblings of the ctx anchor (general sibling `~` behavior).
+- `@ancestor` styles the ctx element when it contains the target (uses `:has(...)`, so modern browser support is required).
 
 ```html
 <div class="ctx:card">
-  <button class="@child+hover:[bg-color:indigo text:white] ctx:end:card">Hover me</button>
+  <button class="@child+hover:[bg-color:indigo_text:white] ctx:end:card">Hover me</button>
 </div>
+```
+
+```html
+<div class="ctx:card @children:[bg-color:grey-2_text:white] pd:d3">
+  <div>Child A</div>
+  <div>Child B</div>
+</div>
+<div class="ctx:end:card"></div>
+
+<div class="ctx:sibs @siblings:[text:orange]">Anchor</div>
+<div>Sibling A</div>
+<div>Sibling B</div>
+<div class="ctx:end:sibs"></div>
 ```
 
 ## Not Supported
