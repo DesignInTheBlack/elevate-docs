@@ -1,15 +1,16 @@
 ---
 /*
   FlexLab — the class name is the control.
-  Click any part of the token to change it; the tiles glide to their new
-  places, and the compiled CSS line that changed lights up.
+  The class reads as a sentence underneath, each part lights the axis it moves
+  on the stage, and the compiled CSS line that changed lights up.
+  On first view it plays a short tour; any click hands control to the reader.
   Mappings mirror the compiler (declarationMap.ts + rules/flex.ts).
 */
 ---
-<figure class="lab" data-dir="row" data-x="start" data-y="start" data-armed="false">
+<figure class="lab" data-dir="row" data-x="start" data-y="start">
 	<div class="stage" aria-hidden="true">
-		<div class="guide guide-x"><span>x</span></div>
-		<div class="guide guide-y"><span>y</span></div>
+		<div class="rail rail-x"><i class="track"></i><i class="bar"></i><span class="axis">x</span></div>
+		<div class="rail rail-y"><i class="track"></i><i class="bar"></i><span class="axis">y</span></div>
 		<div class="tiles">
 			<div class="tile" style="--a:#6b77ff; --b:#4350d8; --g:88 101 239; --h:5rem"></div>
 			<div class="tile" style="--a:#ff7ac0; --b:#d6338a; --g:228 72 155; --h:9rem"></div>
@@ -17,36 +18,69 @@
 		</div>
 	</div>
 
-	<div class="token" role="group" aria-label="Elevate class. Activate a part to change it.">
-		<button type="button" class="part el-prop" data-part="dir"></button><span class="colon">:</span><button type="button" class="part el-mod" data-part="x"></button><span class="colon">:</span><button type="button" class="part el-mod" data-part="y"></button>
+	<div class="read">
+		<div class="token" role="group" aria-label="Elevate class. Activate a part to change it.">
+			<button type="button" class="part el-prop" data-part="dir"></button><span class="colon">:</span><button type="button" class="part el-mod" data-part="x"></button><span class="colon">:</span><button type="button" class="part el-mod" data-part="y"></button>
+		</div>
+		<p class="say" aria-live="polite"><span class="phrase" data-part="dir"></span>, <span class="phrase" data-part="x"></span> and <span class="phrase" data-part="y"></span>.</p>
 	</div>
 
 	<figcaption class="detail">
-		<p class="hint">Click any part of the class to change it.</p>
-		<pre class="css" aria-live="polite"></pre>
+		<div class="aside">
+			<p class="hint">Click any part of the class to change it.</p>
+			<p class="note"></p>
+		</div>
+		<pre class="css"></pre>
 	</figcaption>
 </figure>
 
 <script>
 	const VALUE: Record<string, string> = { start: 'flex-start', center: 'center', end: 'flex-end', between: 'space-between' };
+	const SAY: Record<string, Record<string, string>> = {
+		dir: { row: 'Side by side in a row', col: 'Stacked in a column' },
+		x: { start: 'pushed left', center: 'centered horizontally', end: 'pushed right', between: 'spread across the width' },
+		y: { start: 'pinned to the top', center: 'centered vertically', end: 'sitting on the bottom', between: 'spread down the height' },
+	};
+	const NOTE = {
+		row: 'x is always horizontal and y is always vertical. Flip the direction and see what CSS does.',
+		col: 'In a column, CSS swaps justify-content and align-items. Elevate doesn’t: x is still horizontal, y still vertical.',
+	};
 	// Space distribution only works along the main axis, so `between` is offered there only.
 	const optionsFor = (dir: string, axis: string) =>
 		(dir === 'row') === (axis === 'x') ? ['start', 'center', 'end', 'between'] : ['start', 'center', 'end'];
 	const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const SPRING = 'cubic-bezier(.3, 1.35, .45, 1)';
 
 	document.querySelectorAll<HTMLElement>('.lab').forEach((lab) => {
+		const stage = lab.querySelector<HTMLElement>('.stage')!;
 		const tiles = lab.querySelector<HTMLElement>('.tiles')!;
 		const tileEls = [...lab.querySelectorAll<HTMLElement>('.tile')];
 		const css = lab.querySelector<HTMLElement>('.css')!;
-		const parts = Object.fromEntries(
-			[...lab.querySelectorAll<HTMLButtonElement>('.part')].map((b) => [b.dataset.part!, b]),
-		);
+		const note = lab.querySelector<HTMLElement>('.note')!;
+		const barX = lab.querySelector<HTMLElement>('.rail-x .bar')!;
+		const barY = lab.querySelector<HTMLElement>('.rail-y .bar')!;
+		const byPart = (sel: string) =>
+			Object.fromEntries([...lab.querySelectorAll<HTMLElement>(sel)].map((b) => [b.dataset.part!, b]));
+		const parts = byPart('.part') as Record<string, HTMLButtonElement>;
+		const phrases = byPart('.phrase');
 
 		const state = () => ({ dir: lab.dataset.dir!, x: lab.dataset.x!, y: lab.dataset.y! });
 
-		// Which CSS property each part controls in the current direction
-		const propFor = (dir: string, part: string) =>
-			part === 'dir' ? 'flex-direction' : (dir === 'row') === (part === 'x') ? 'justify-content' : 'align-items';
+		// The rails show how far the tiles reach on each axis. Layout boxes, not
+		// transformed ones, so the bars head straight for where the tiles will land.
+		const measure = () => {
+			const s = stage.getBoundingClientRect();
+			const t = tiles.getBoundingClientRect();
+			const l = Math.min(...tileEls.map((e) => e.offsetLeft));
+			const r = Math.max(...tileEls.map((e) => e.offsetLeft + e.offsetWidth));
+			const top = Math.min(...tileEls.map((e) => e.offsetTop));
+			const bot = Math.max(...tileEls.map((e) => e.offsetTop + e.offsetHeight));
+			const ox = t.left - s.left, oy = t.top - s.top;
+			barX.style.left = `${ox + l}px`;
+			barX.style.width = `${r - l}px`;
+			barY.style.top = `${oy + top}px`;
+			barY.style.height = `${bot - top}px`;
+		};
 
 		const paint = (changed?: string) => {
 			const { dir, x, y } = state();
@@ -56,17 +90,37 @@
 			parts.dir.setAttribute('aria-label', `Direction: ${dir}. Change`);
 			parts.x.setAttribute('aria-label', `Horizontal: ${x}. Change`);
 			parts.y.setAttribute('aria-label', `Vertical: ${y}. Change`);
+			phrases.dir.textContent = SAY.dir[dir];
+			phrases.x.textContent = SAY.x[x];
+			phrases.y.textContent = SAY.y[y];
+			note.textContent = NOTE[dir as 'row' | 'col'];
+
+			if (changed && !reduced) {
+				const swap = changed === 'dir' ? ['dir', 'x', 'y'] : [changed];
+				swap.forEach((k) => {
+					phrases[k].animate(
+						[{ opacity: 0, transform: 'translateY(0.35em)', filter: 'blur(4px)' }, { opacity: 1, transform: 'none', filter: 'none' }],
+						{ duration: 420, easing: 'cubic-bezier(.2, .8, .2, 1)' },
+					);
+				});
+				parts[changed].animate([{ transform: 'scale(0.94)' }, { transform: 'none' }], { duration: 380, easing: SPRING });
+			}
 
 			const decl: [string, string, string][] = [
 				['display', 'flex', ''],
 				['flex-direction', dir === 'row' ? 'row' : 'column', 'dir'],
 				...(dir === 'row'
 					? ([['justify-content', VALUE[x], 'x'], ['align-items', VALUE[y], 'y']] as [string, string, string][])
-					: ([['align-items', VALUE[x], 'x'], ['justify-content', VALUE[y], 'y']] as [string, string, string][])),
+					: ([['justify-content', VALUE[y], 'y'], ['align-items', VALUE[x], 'x']] as [string, string, string][])),
 			];
 			css.innerHTML =
 				`<span class="sel">.${dir}\\:x-${x}\\:y-${y}</span> {\n` +
-				decl.map(([p, v, k]) => `<span class="line" data-k="${k}"${k && k === changed ? ' data-hot' : ''}>  ${p}: <b>${v}</b>;</span>`).join('\n') +
+				decl
+					.map(([p, v, k]) => {
+						const hot = k && (k === changed || (changed === 'dir' && k !== 'dir')) ? ' data-hot' : '';
+						return `<span class="line" data-k="${k}"${hot}>  ${p}: <b>${v}</b>;</span>`;
+					})
+					.join('\n') +
 				`\n}`;
 
 			// FLIP: measure, change layout, then glide from the old spot to the new one
@@ -75,62 +129,103 @@
 			tiles.style.justifyContent = dir === 'row' ? VALUE[x] : VALUE[y];
 			tiles.style.alignItems = dir === 'row' ? VALUE[y] : VALUE[x];
 			lab.toggleAttribute('data-col', dir === 'col');
+			measure();
 			if (reduced) return;
 			tileEls.forEach((t, i) => {
 				const a = before[i], b = t.getBoundingClientRect();
 				const dx = a.left - b.left, dy = a.top - b.top, sx = a.width / b.width, sy = a.height / b.height;
 				if (!dx && !dy && sx === 1 && sy === 1) return;
 				t.animate(
-					[
-						{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` },
-						{ transform: 'none' },
-					],
-					{ duration: 720, delay: i * 45, easing: 'cubic-bezier(.3, 1.35, .45, 1)', fill: 'backwards' },
+					[{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` }, { transform: 'none' }],
+					{ duration: 720, delay: i * 45, easing: SPRING, fill: 'backwards' },
 				);
 			});
 		};
 
-		const cycle = (part: string) => {
+		const set = (part: string, value?: string) => {
 			const s = state();
 			if (part === 'dir') {
-				lab.dataset.dir = s.dir === 'row' ? 'col' : 'row';
+				lab.dataset.dir = value ?? (s.dir === 'row' ? 'col' : 'row');
 				(['x', 'y'] as const).forEach((a) => {
 					if (!optionsFor(lab.dataset.dir!, a).includes(lab.dataset[a]!)) lab.dataset[a] = 'center';
 				});
 			} else {
 				const opts = optionsFor(s.dir, part);
-				lab.dataset[part] = opts[(opts.indexOf(s[part as 'x' | 'y']) + 1) % opts.length];
+				lab.dataset[part] = value ?? opts[(opts.indexOf(s[part as 'x' | 'y']) + 1) % opts.length];
 			}
 			paint(part);
 		};
 
-		// Hover or focus a part: light up its axis and its CSS line
+		// Light one part everywhere it shows: the token, the sentence, the rail, the CSS
 		const focusPart = (part: string | null) => {
 			lab.dataset.focus = part ?? '';
-			css.querySelectorAll<HTMLElement>('.line').forEach((l) => l.toggleAttribute('data-lit', !!part && l.dataset.k === part));
+			css.querySelectorAll<HTMLElement>('.line').forEach((l) =>
+				l.toggleAttribute('data-lit', !!part && (l.dataset.k === part || (part === 'dir' && l.dataset.k !== ''))),
+			);
+		};
+
+		// ---------- The opening tour ----------
+		const TOUR: [string, string][] = [
+			['x', 'center'], ['x', 'end'], ['x', 'between'], ['x', 'center'],
+			['y', 'center'], ['y', 'end'], ['y', 'center'],
+			['dir', 'col'], ['x', 'start'], ['x', 'end'], ['x', 'center'],
+			['dir', 'row'],
+		];
+		let timer = 0;
+		let touring = false;
+		const stopTour = () => {
+			if (!touring) return;
+			touring = false;
+			clearTimeout(timer);
+			lab.removeAttribute('data-touring');
+		};
+		const startTour = () => {
+			touring = true;
+			lab.setAttribute('data-touring', '');
+			let i = 0;
+			const step = () => {
+				if (!touring) return;
+				if (i === TOUR.length) {
+					focusPart(null);
+					stopTour();
+					return;
+				}
+				const [part, value] = TOUR[i++];
+				set(part, value);
+				focusPart(part);
+				const next = TOUR[i]?.[0];
+				timer = window.setTimeout(step, part === next ? 1050 : 1500);
+			};
+			timer = window.setTimeout(step, 500);
 		};
 
 		Object.entries(parts).forEach(([key, btn]) => {
-			btn.addEventListener('click', () => { cycle(key); focusPart(key); });
-			btn.addEventListener('pointerenter', () => focusPart(key));
-			btn.addEventListener('pointerleave', () => focusPart(null));
-			btn.addEventListener('focus', () => focusPart(key));
+			btn.addEventListener('click', () => { stopTour(); set(key); focusPart(key); });
+			btn.addEventListener('pointerenter', () => !touring && focusPart(key));
+			btn.addEventListener('pointerleave', () => !touring && focusPart(null));
+			btn.addEventListener('focus', () => { stopTour(); focusPart(key); });
 			btn.addEventListener('blur', () => focusPart(null));
 		});
+		Object.entries(phrases).forEach(([key, el]) => {
+			el.addEventListener('pointerenter', () => !touring && focusPart(key));
+			el.addEventListener('pointerleave', () => !touring && focusPart(null));
+		});
+		lab.addEventListener('pointerdown', stopTour);
 
 		paint();
+		new ResizeObserver(() => measure()).observe(stage);
 
-		// One opening move: when the lab first comes into view, the tiles glide to center
 		const io = new IntersectionObserver((entries) => {
 			if (!entries.some((e) => e.isIntersecting)) return;
 			io.disconnect();
-			setTimeout(() => {
+			if (reduced) {
 				lab.dataset.x = 'center';
 				lab.dataset.y = 'center';
 				paint();
-				lab.dataset.armed = 'true';
-			}, 350);
-		}, { threshold: 0.5 });
+			} else {
+				startTour();
+			}
+		}, { threshold: 0.6 });
 		io.observe(lab);
 	});
 </script>
@@ -138,6 +233,7 @@
 <style>
 	.lab {
 		--ink: #1d1d1f;
+		--hl: var(--g-mod);
 		display: grid;
 		gap: var(--s-6);
 	}
@@ -159,9 +255,10 @@
 	}
 	.tiles {
 		position: absolute;
-		inset: clamp(var(--s-5), 3vw, var(--s-6));
+		inset: clamp(var(--s-6), 4vw, var(--s-8));
 		display: flex;
 		gap: var(--s-4);
+		transition: none;
 	}
 	.tile {
 		flex: none;
@@ -174,48 +271,75 @@
 			inset 0 -1px 0 rgb(0 0 0 / 0.2),
 			0 24px 60px -12px rgb(var(--g) / 0.7);
 		will-change: transform;
+		transition: none; /* the page reset animates everything; tiles move by FLIP only */
 	}
 	.lab[data-col] .tile {
-		height: clamp(2.75rem, 5vw, 3.75rem);
+		height: clamp(2.5rem, 4.5vw, 3.5rem);
 		width: calc(var(--h) * 1.7);
 	}
 
-	.guide {
+	/* Rails: x along the bottom, y up the left. The bright bar is the tiles' reach. */
+	.rail {
 		position: absolute;
+		inset: 0;
 		pointer-events: none;
-		opacity: 0;
-		transition: opacity 0.25s ease;
+		--glow: rgb(255 255 255 / 0.55);
+		--tone: rgb(255 255 255 / 0.32);
 	}
-	.guide span {
+	.track, .bar {
+		position: absolute;
+		display: block;
+		border-radius: 2px;
+	}
+	.rail-x .track { left: var(--s-4); right: var(--s-4); bottom: var(--s-3); height: 1px; background: rgb(255 255 255 / 0.12); }
+	.rail-y .track { top: var(--s-4); bottom: var(--s-4); left: var(--s-3); width: 1px; background: rgb(255 255 255 / 0.12); }
+	.rail-x .bar { bottom: calc(var(--s-3) - 1px); height: 3px; }
+	.rail-y .bar { left: calc(var(--s-3) - 1px); width: 3px; }
+	.bar {
+		background: var(--tone);
+		transition:
+			left 0.72s cubic-bezier(.3, 1.35, .45, 1),
+			width 0.72s cubic-bezier(.3, 1.35, .45, 1),
+			top 0.72s cubic-bezier(.3, 1.35, .45, 1),
+			height 0.72s cubic-bezier(.3, 1.35, .45, 1),
+			background-color 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+	.axis {
 		position: absolute;
 		font: 500 var(--t-xs)/1 var(--sl-font-mono);
-		color: rgb(255 255 255 / 0.7);
+		color: rgb(255 255 255 / 0.4);
+		transition: color 0.3s ease;
 	}
-	.guide-x {
-		left: var(--s-5);
-		right: var(--s-5);
-		top: 50%;
-		border-top: 1px dashed rgb(255 255 255 / 0.35);
+	.rail-x .axis { right: var(--s-4); bottom: var(--s-4); }
+	.rail-y .axis { left: var(--s-4); top: var(--s-4); }
+
+	.lab[data-focus='x'] .rail-x,
+	.lab[data-focus='y'] .rail-y,
+	.lab[data-focus='dir'] .rail {
+		--tone: #ff5fae;
 	}
-	.guide-x span { right: 0; top: var(--s-2); }
-	.guide-y {
-		top: var(--s-5);
-		bottom: var(--s-5);
-		left: 50%;
-		border-left: 1px dashed rgb(255 255 255 / 0.35);
+	.lab[data-focus='x'] .rail-x .bar,
+	.lab[data-focus='y'] .rail-y .bar,
+	.lab[data-focus='dir'] .bar {
+		box-shadow: 0 0 12px 1px rgb(255 95 174 / 0.8);
 	}
-	.guide-y span { left: var(--s-2); top: 0; }
-	.lab[data-focus='x'] .guide-x,
-	.lab[data-focus='y'] .guide-y {
-		opacity: 1;
+	.lab[data-focus='x'] .rail-x .axis,
+	.lab[data-focus='y'] .rail-y .axis,
+	.lab[data-focus='dir'] .axis {
+		color: #fff;
 	}
 
-	/* ---------- The token is the control ---------- */
+	/* ---------- The token is the control, and it reads as a sentence ---------- */
+	.read {
+		display: grid;
+		gap: var(--s-3);
+	}
 	.token {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: baseline;
-		font: 500 clamp(1.75rem, 1rem + 3.4vw, 3.5rem) / 1.1 var(--sl-font-mono);
+		font: 500 clamp(1.5rem, 0.9rem + 3.4vw, 3.5rem) / 1.1 var(--sl-font-mono);
 		letter-spacing: -0.04em;
 	}
 	.colon {
@@ -239,13 +363,42 @@
 	.part.el-prop { color: var(--g-prop); }
 	.part.el-mod { color: var(--g-mod); }
 	.part:hover,
-	.part:focus-visible {
+	.part:focus-visible,
+	.lab[data-focus='dir'] .part[data-part='dir'],
+	.lab[data-focus='x'] .part[data-part='x'],
+	.lab[data-focus='y'] .part[data-part='y'] {
 		background-color: color-mix(in srgb, currentColor 10%, transparent);
 		background-size: 100% 0.1em;
 	}
 	.part:focus-visible {
 		outline: 2px solid currentColor;
 		outline-offset: 0.08em;
+	}
+
+	.say {
+		font-size: var(--t-lead);
+		line-height: 1.4;
+		letter-spacing: -0.01em;
+		color: var(--slate);
+	}
+	.phrase {
+		display: inline-block;
+		color: var(--ink);
+		font-weight: 560;
+		background: linear-gradient(currentColor, currentColor) 0 100% / 100% 2px no-repeat;
+		background-image: linear-gradient(var(--c), var(--c));
+		padding-bottom: 0.05em;
+		transition: background-color 0.25s ease, box-shadow 0.25s ease;
+		border-radius: 0.15em;
+	}
+	.phrase[data-part='dir'] { --c: color-mix(in srgb, var(--g-prop) 45%, transparent); }
+	.phrase[data-part='x'],
+	.phrase[data-part='y'] { --c: color-mix(in srgb, var(--g-mod) 45%, transparent); }
+	.lab[data-focus='dir'] .phrase[data-part='dir'],
+	.lab[data-focus='x'] .phrase[data-part='x'],
+	.lab[data-focus='y'] .phrase[data-part='y'] {
+		background-color: color-mix(in srgb, var(--c) 30%, transparent);
+		box-shadow: 0 0 0 0.12em color-mix(in srgb, var(--c) 30%, transparent);
 	}
 
 	/* ---------- Detail ---------- */
@@ -255,10 +408,23 @@
 		gap: var(--s-5);
 		align-items: start;
 	}
-	.hint {
+	.aside {
+		display: grid;
+		gap: var(--s-3);
+	}
+	.hint,
+	.note {
 		font-size: var(--t-s);
 		color: var(--slate);
 		line-height: 1.5;
+	}
+	.hint {
+		color: var(--ink);
+		font-weight: 560;
+		transition: opacity 0.3s ease;
+	}
+	.lab[data-touring] .hint {
+		opacity: 0.45;
 	}
 	.css {
 		margin: 0;
@@ -279,10 +445,10 @@
 		border-radius: var(--r-xs);
 		transition: background-color 0.3s ease;
 	}
-	.css :global(.line[data-lit]) { background: rgb(67 80 216 / 0.1); }
+	.css :global(.line[data-lit]) { background: rgb(192 42 120 / 0.09); }
 	.css :global(.line[data-hot]) { animation: hot 1.1s ease-out; }
 	@keyframes hot {
-		from { background: rgb(192 42 120 / 0.18); }
+		from { background: rgb(192 42 120 / 0.2); }
 		to { background: transparent; }
 	}
 
@@ -291,5 +457,6 @@
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.css :global(.line[data-hot]) { animation: none; }
+		.bar { transition: none; }
 	}
 </style>

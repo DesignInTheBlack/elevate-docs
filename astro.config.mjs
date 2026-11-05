@@ -54,7 +54,6 @@ export default defineConfig({
 				},
 			},
 			social: {
-				discord: 'https://discord.gg/T3X2vBYA',
 				github: 'https://github.com/DesignInTheBlack/Elevate',
 			},
 			sidebar: [

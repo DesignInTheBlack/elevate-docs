@@ -1,76 +1,217 @@
 ---
-/* Token on the left, the exact CSS it compiles to on the right (compiler output). */
-const rows = [
-	{ token: ['pd', 'd6'], css: [['padding', '1.5rem']], note: 'four sides' },
-	{ token: ['bg-color', 'indigo'], css: [['background-color', '#5560F5']], swatch: '#5560F5' },
-	{ token: ['font', 'h5'], css: [['font-size', '1.375rem']] },
-	{ token: ['bd', 'width-px'], css: [['border-width', '1px']] },
-];
+/*
+  Four tokens, each shown doing its job: the class, the exact CSS the compiler
+  writes for it, and a small picture of that value at its real size.
+*/
 ---
-<div class="map">
-	{rows.map((r) => (
-		<div class="row">
-			<code class="tok">
-				<span class="el-prop">{r.token[0]}</span><span class="el-sep">:</span><span class="el-mod">{r.token[1]}</span>
-			</code>
-			<span class="css">
-				{r.swatch && <i class="swatch" style={`background:${r.swatch}`} />}
-				{r.css.map(([p, v]) => <span><span class="p">{p}:</span> {v};</span>)}
-				{r.note && <span class="note">{r.note}</span>}
-			</span>
+<div class="bento">
+	<article class="cell">
+		<div class="viz">
+			<div class="pad" title="padding: 1.5rem">
+				<div class="pad-inner"></div>
+				<span class="dim dim-t">1.5rem</span>
+			</div>
 		</div>
-	))}
+		<code class="tok"><span class="el-prop">pd</span><span class="el-sep">:</span><span class="el-mod">d6</span></code>
+		<p class="out"><span>padding:</span> 1.5rem;</p>
+	</article>
+
+	<article class="cell">
+		<div class="viz viz-color">
+			<div class="swatch"><span>#5560F5</span></div>
+		</div>
+		<code class="tok"><span class="el-prop">bg-color</span><span class="el-sep">:</span><span class="el-mod">indigo</span></code>
+		<p class="out"><span>background-color:</span> #5560F5;</p>
+	</article>
+
+	<article class="cell">
+		<div class="viz">
+			<div class="mini">
+				<strong>Card title</strong>
+				<i></i><i></i>
+			</div>
+		</div>
+		<code class="tok"><span class="el-prop">font</span><span class="el-sep">:</span><span class="el-mod">h5</span></code>
+		<p class="out"><span>font-size:</span> 1.375rem;</p>
+	</article>
+
+	<article class="cell">
+		<div class="viz">
+			<div class="edge">
+				<div class="loupe"><i></i></div>
+			</div>
+		</div>
+		<code class="tok"><span class="el-prop">bd</span><span class="el-sep">:</span><span class="el-mod">width-px</span></code>
+		<p class="out"><span>border-width:</span> 1px;</p>
+	</article>
 </div>
 
 <style>
-	.map {
+	.bento {
 		display: grid;
-		margin-top: 0 !important;
-		border-top: 1px solid var(--ink);
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--s-4);
 	}
-	.map :global(*) {
+	.bento :global(*) {
 		margin-top: 0 !important;
 	}
-	.row {
+	.cell {
 		display: grid;
-		grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-		align-items: center;
-		gap: var(--s-5);
-		padding-block: clamp(var(--s-4), 2.4vw, var(--s-6));
-		border-bottom: 1px solid var(--hair);
+		align-content: start;
+		gap: var(--s-2);
+		padding: var(--s-3) var(--s-3) var(--s-5);
+		background: var(--mist);
+		border-radius: var(--r-l);
+	}
+	.viz {
+		display: grid;
+		place-items: center;
+		height: 9.5rem;
+		margin-bottom: var(--s-3);
+		background: #fff;
+		border-radius: calc(var(--r-l) - var(--s-3));
+		overflow: hidden;
+	}
+	.tok,
+	.out {
+		padding-inline: var(--s-3);
 	}
 	.tok {
 		background: none !important;
-		padding: 0 !important;
-		font: 500 clamp(1.5rem, 0.9rem + 2.6vw, 3rem) / 1 var(--sl-font-mono) !important;
+		font: 500 clamp(1.25rem, 0.95rem + 0.9vw, 1.625rem) / 1.1 var(--sl-font-mono) !important;
+		letter-spacing: -0.03em;
 		white-space: nowrap;
-		letter-spacing: -0.04em;
 	}
-	.css {
-		display: flex;
-		align-items: center;
-		gap: var(--s-3);
-		font: var(--t-s)/1.4 var(--sl-font-mono);
+	.out {
+		font: var(--t-s) / 1.4 var(--sl-font-mono);
 		color: var(--ink);
 	}
-	.p {
+	.out span {
 		color: var(--slate);
+	}
+
+	/* pd:d6 — the padding drawn as hatching, at its real 1.5rem */
+	.pad {
+		position: relative;
+		width: 11rem;
+		height: 6.5rem;
+		padding: 1.5rem;
+		border-radius: var(--r-m);
+		background: repeating-linear-gradient(-45deg, rgb(67 80 216 / 0.16) 0 2px, transparent 2px 7px);
+		box-shadow: inset 0 0 0 1px rgb(67 80 216 / 0.35);
+	}
+	.pad-inner {
+		height: 100%;
+		border-radius: var(--r-xs);
+		background: #fff;
+		box-shadow: 0 0 0 1px rgb(67 80 216 / 0.35), 0 6px 16px -6px rgb(29 29 31 / 0.25);
+	}
+	.dim {
+		position: absolute;
+		font: 500 0.6875rem/1 var(--sl-font-mono);
+		color: var(--g-prop);
+	}
+	.dim-t {
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 1.5rem;
+		display: grid;
+		place-items: center;
+	}
+
+	/* bg-color:indigo */
+	.viz-color {
+		padding: var(--s-3);
+		place-items: stretch;
 	}
 	.swatch {
-		width: 1rem;
-		height: 1rem;
-		border-radius: var(--r-xs);
-		flex: none;
+		display: flex;
+		align-items: end;
+		padding: var(--s-3) var(--s-4);
+		border-radius: calc(var(--r-l) - var(--s-5));
+		background: #5560f5;
+		box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25);
 	}
-	.note {
-		font-family: var(--sl-font);
+	.swatch span {
+		font: 500 var(--t-xs)/1 var(--sl-font-mono);
+		color: rgb(255 255 255 / 0.9);
+	}
+
+	/* font:h5 — a card title at its real size */
+	.mini {
+		display: grid;
+		gap: 0.5rem;
+		width: 12rem;
+		padding: 1rem 1.125rem 1.125rem;
+		border-radius: var(--r-m);
+		background: #fff;
+		box-shadow: 0 0 0 1px var(--hair), 0 10px 28px -12px rgb(29 29 31 / 0.25);
+	}
+	.mini strong {
+		font-size: 1.375rem;
+		line-height: 1.2;
+		font-weight: 620;
+		letter-spacing: -0.02em;
+		color: var(--ink);
+	}
+	.mini i {
+		display: block;
+		height: 0.4375rem;
+		border-radius: 1rem;
+		background: var(--mist-deep);
+	}
+	.mini i + i {
+		width: 70%;
+	}
+
+	/* bd:width-px — a real 1px edge, with a loupe on it */
+	.edge {
+		position: relative;
+		width: 11rem;
+		height: 6rem;
+		border: 1px solid var(--ink);
+		border-radius: var(--r-m);
+		background: #fff;
+	}
+	/* the loupe sits on the top edge and shows it four times bigger */
+	.loupe {
+		position: absolute;
+		left: 50%;
+		top: -1.875rem;
+		width: 3.75rem;
+		height: 3.75rem;
+		margin-left: -1.875rem;
+		border-radius: 50%;
+		background: #fff;
+		box-shadow: 0 0 0 1px var(--hair), 0 12px 24px -8px rgb(29 29 31 / 0.35);
+		overflow: hidden;
+	}
+	.loupe i {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: calc(50% - 2px);
+		height: 4px;
+		background: var(--ink);
+	}
+	.loupe::after {
+		content: '1px';
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: calc(50% + 0.375rem);
+		text-align: center;
+		font: 500 0.625rem/1 var(--sl-font-mono);
 		color: var(--slate);
-		font-size: var(--t-s);
 	}
-	@media (max-width: 40rem) {
-		.row {
+	.edge {
+		margin-top: 1.25rem;
+	}
+
+	@media (max-width: 34rem) {
+		.bento {
 			grid-template-columns: 1fr;
-			gap: var(--s-2);
 		}
 	}
 </style>
