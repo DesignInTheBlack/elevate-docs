@@ -13,14 +13,13 @@ export default defineConfig({
 			components: {
 				ThemeProvider: './src/components/AlwaysLightThemeProvider.astro',
 				ThemeSelect: './src/components/NoThemeSelect.astro',
+				Hero: './src/components/HomeHero.astro',
 			  },
-			title: 'Utility First, Design Driven',
-			favicon: './src/assets/dark.svg',
+			title: 'Elevate',
+			favicon: '/favicon.svg',
 			logo: {
-				light: './src/assets/light.svg',
-				dark: './src/assets/dark.svg',
-				replacesTitle: true,
-			  },
+				src: './src/assets/mark.svg',
+			},
 			customCss: [
 				// Relative path to your custom CSS file
 				'@fontsource-variable/instrument-sans/standard.css',

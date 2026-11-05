@@ -148,219 +148,219 @@ textarea:not([rows]) {
     }
 }
 
-.font\:h1,  .font\:h1 {
+.font\:h1 {
 font-size: 7.594rem;
 }
 
-.font\:h2,  .font\:h2 {
+.font\:h2 {
 font-size: 5.062rem;
 }
 
-.font\:h3,  .font\:h3 {
+.font\:h3 {
 font-size: 3.375rem;
 }
 
-.font\:h4,  .font\:h4 {
+.font\:h4 {
 font-size: 2.25rem;
 }
 
-.font\:h5,  .font\:h5 {
+.font\:h5 {
 font-size: 1.5rem;
 }
 
-.font\:h6,  .font\:h6 {
+.font\:h6 {
 font-size: 1.125rem;
 }
 
-.font\:base,  .font\:base {
+.font\:base {
 font-size: 1rem;
 }
 
-.font\:small,  .font\:small {
+.font\:small {
 font-size: 0.711rem;
 }
 
-.font\:eyebrow,  .font\:eyebrow {
+.font\:eyebrow {
 font-size: 0.583rem;
 }
 
-.font\:tiny,  .font\:tiny {
+.font\:tiny {
 font-size: 0.533rem;
 }
 
-.mg-b\:d4,  .mg-b\:d4 {
+.mg-b\:d4 {
 margin-bottom: 1rem;
 }
 
-.mg-t\:d4,  .mg-t\:d4 {
+.mg-t\:d4 {
 margin-top: 1rem;
 }
 
-.pattern\:prism,  .pattern\:prism {
+.pattern\:prism {
 background: linear-gradient(90deg, hsla(194,74%,56%,0.2), hsla(266,74%,56%,0.2), hsla(338,74%,56%,0.2), hsla(50,74%,56%,0.2), hsla(122,74%,56%,0.2));
 }
 
-.h\:c4,  .h\:c4 {
+.h\:c4 {
 height: 5.5rem;
 }
 
-.w\:full,  .w\:full {
+.w\:full {
 width: 100%;
 }
 
-.pattern\:finish,  .pattern\:finish {
+.pattern\:finish {
 background: repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 4px), linear-gradient(90deg, currentColor, currentColor);
 }
 
-.pattern\:carbon,  .pattern\:carbon {
+.pattern\:carbon {
 background: radial-gradient(circle at center center, transparent, rgba(0,0,0,0.2)), repeating-linear-gradient(135deg, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 1px, transparent 1px, transparent 4px), repeating-linear-gradient(45deg, rgba(0,0,0,0.4) 0px, rgba(0,0,0,0.4) 5px, transparent 5px, transparent 6px), linear-gradient(90deg, currentColor, currentColor);
 }
 
-.pattern\:wheat,  .pattern\:wheat {
+.pattern\:wheat {
 background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05), transparent 80%), repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 6px), repeating-linear-gradient(44deg, currentColor 0 1px, transparent 1px 6px);
 }
 
-.pattern\:headshot,  .pattern\:headshot {
+.pattern\:headshot {
 background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05), transparent 80%), linear-gradient(to bottom right, transparent 30%, currentColor 70%);
 }
 
-.pattern\:changeling,  .pattern\:changeling {
+.pattern\:changeling {
 background: repeating-linear-gradient(0deg, currentColor 0 20px, transparent 20px 40px), repeating-linear-gradient(60deg, currentColor 0 20px, transparent 20px 40px), repeating-linear-gradient(120deg, currentColor 0 20px, transparent 20px 40px);
 }
 
-.pattern\:curtains,  .pattern\:curtains {
+.pattern\:curtains {
 background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 2px), repeating-linear-gradient(44deg, currentColor 0 1px, transparent 1px 2px);
 }
 
-.pattern\:glow,  .pattern\:glow {
+.pattern\:glow {
 background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.2), transparent), radial-gradient(circle at 65% 65%, rgba(255,255,255,0.15), transparent), currentColor;
 }
 
-.pattern\:plastic,  .pattern\:plastic {
+.pattern\:plastic {
 background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 40%), radial-gradient(circle at 50% 8%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%);
 }
 
-.pattern\:lattice,  .pattern\:lattice {
+.pattern\:lattice {
 background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 15px), repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 15px);
 }
 
-.pattern\:speckled,  .pattern\:speckled {
+.pattern\:speckled {
 background: repeating-linear-gradient(to right, currentColor 0 4px, transparent 4px 8px), repeating-linear-gradient(to bottom, currentColor 0 4px, transparent 4px 8px);
 }
 
-.pattern\:herringbone,  .pattern\:herringbone {
+.pattern\:herringbone {
 background: repeating-linear-gradient(135deg, currentColor 0 10px, transparent 10px 20px), repeating-linear-gradient(225deg, currentColor 0 10px, transparent 10px 20px);
 }
 
-.pattern\:pointgrid,  .pattern\:pointgrid {
+.pattern\:pointgrid {
 background: radial-gradient(circle, currentColor 1px, transparent 1px) 0 0 / 10px 10px, radial-gradient(circle, currentColor 2px, transparent 2px) 5px 5px / 10px 10px;
 }
 
-.pattern\:halftone,  .pattern\:halftone {
+.pattern\:halftone {
 background: radial-gradient(circle, currentColor 1px, transparent 1px) 0 0 / 6px 6px, radial-gradient(circle, transparent 3px, currentColor 3px) 3px 3px / 6px 6px;
 }
 
-.pattern\:shimmer,  .pattern\:shimmer {
+.pattern\:shimmer {
 background: linear-gradient(to bottom, transparent, currentColor 50%, transparent);
 }
 
-.pattern\:tape,  .pattern\:tape {
+.pattern\:tape {
 background: repeating-linear-gradient(45deg, currentColor 0 25px, transparent 25px 50px);
 }
 
-.pattern\:grid,  .pattern\:grid {
+.pattern\:grid {
 background: repeating-linear-gradient(currentColor 0 1px, transparent 1px 20px), repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 20px);
 }
 
-.pattern\:velvet,  .pattern\:velvet {
+.pattern\:velvet {
 background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 6px);
 }
 
-.pattern\:bubbles,  .pattern\:bubbles {
+.pattern\:bubbles {
 background: radial-gradient(circle, transparent 4px, currentColor 5px, transparent 6px) 0 0 / 20px 20px, radial-gradient(circle, transparent 4px, currentColor 5px, transparent 6px) 10px 10px / 20px 20px;
 }
 
-.pattern\:microfiber,  .pattern\:microfiber {
+.pattern\:microfiber {
 background: radial-gradient(circle, currentColor 1px, transparent 2px) 2px 2px / 6px 6px;
 }
 
-.pattern\:honeycomb,  .pattern\:honeycomb {
+.pattern\:honeycomb {
 background: repeating-linear-gradient(60deg, currentColor 0 2px, transparent 2px 20px), repeating-linear-gradient(120deg, currentColor 0 2px, transparent 2px 20px);
 }
 
-.pattern\:hatching,  .pattern\:hatching {
+.pattern\:hatching {
 background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 10px), repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 10px);
 }
 
-.pattern\:cotton,  .pattern\:cotton {
+.pattern\:cotton {
 background: radial-gradient(circle, currentColor 2px, transparent 2px) 0 0 / 10px 10px, radial-gradient(circle, currentColor 2px, transparent 2px) 5px 5px / 10px 10px;
 }
 
-.pattern\:zigzag,  .pattern\:zigzag {
+.pattern\:zigzag {
 background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 4px, currentColor 4px 6px, transparent 6px 8px);
 }
 
-.pattern\:thickstripes,  .pattern\:thickstripes {
+.pattern\:thickstripes {
 background: repeating-linear-gradient(45deg, currentColor 0 15px, transparent 15px 30px);
 }
 
-.pattern\:thinstripes,  .pattern\:thinstripes {
+.pattern\:thinstripes {
 background: repeating-linear-gradient(45deg, currentColor 0 5px, transparent 5px 10px);
 }
 
-.w\:d12,  .w\:d12 {
+.w\:d12 {
 width: 3rem;
 }
 
-.font\:small\:bold,  .font\:small\:bold {
+.font\:small\:bold {
 font-size: 0.711rem;
 font-weight: 700;
 }
 
-.h\:d8,  .h\:d8 {
+.h\:d8 {
 height: 2rem;
 }
 
-.text\:black,  .text\:black {
+.text\:black {
 color: #0B0B0C;
 }
 
-.bg-color\:white,  .bg-color\:white {
+.bg-color\:white {
 background-color: #FCFCFD;
 }
 
-.row\:x-center\:y-center,  .row\:x-center\:y-center {
+.row\:x-center\:y-center {
 display:flex;
 flex-direction:row;
 justify-content: center;
 align-items: center;
 }
 
-.bd\:round-d2,  .bd\:round-d2 {
+.bd\:round-d2 {
 border-radius: 0.5rem;
 }
 
-.child\:grow,  .child\:grow {
+.child\:grow {
 flex-grow: 1;
 }
 
-.text\:white,  .text\:white {
+.text\:white {
 color: #FCFCFD;
 }
 
-.bg-color\:black,  .bg-color\:black {
+.bg-color\:black {
 background-color: #0B0B0C;
 }
 
-.child\:end,  .child\:end {
+.child\:end {
 align-self: flex-end;
 }
 
-.child\:start,  .child\:start {
+.child\:start {
 align-self: flex-start;
 }
 
-.row,  .row {
+.row {
 display:flex;
 flex-direction:row;
 justify-content: x;
@@ -368,344 +368,344 @@ align-items: y;
 flex-wrap: FlexWrapRule;
 }
 
-.w\:d8,  .w\:d8 {
+.w\:d8 {
 width: 2rem;
 }
 
-.bg-color\:grey\+4,  .bg-color\:grey\+4 {
+.bg-color\:grey\+4 {
 background-color: #E9EBEE;
 }
 
-.bg-color\:grey\+3,  .bg-color\:grey\+3 {
+.bg-color\:grey\+3 {
 background-color: #C6C9CE;
 }
 
-.bg-color\:grey\+2,  .bg-color\:grey\+2 {
+.bg-color\:grey\+2 {
 background-color: #9DA1A7;
 }
 
-.bg-color\:grey\+1,  .bg-color\:grey\+1 {
+.bg-color\:grey\+1 {
 background-color: #777A80;
 }
 
-.bg-color\:grey,  .bg-color\:grey {
+.bg-color\:grey {
 background-color: #575A60;
 }
 
-.bg-color\:grey-1,  .bg-color\:grey-1 {
+.bg-color\:grey-1 {
 background-color: #35363B;
 }
 
-.bg-color\:grey-2,  .bg-color\:grey-2 {
+.bg-color\:grey-2 {
 background-color: #25262A;
 }
 
-.bg-color\:grey-3,  .bg-color\:grey-3 {
+.bg-color\:grey-3 {
 background-color: #17171A;
 }
 
-.bg-color\:grey-4,  .bg-color\:grey-4 {
+.bg-color\:grey-4 {
 background-color: #0F0F11;
 }
 
-.bg-color\:yellow\+4,  .bg-color\:yellow\+4 {
+.bg-color\:yellow\+4 {
 background-color: #FFFAD6;
 }
 
-.bg-color\:yellow\+3,  .bg-color\:yellow\+3 {
+.bg-color\:yellow\+3 {
 background-color: #FFF5B0;
 }
 
-.bg-color\:yellow\+2,  .bg-color\:yellow\+2 {
+.bg-color\:yellow\+2 {
 background-color: #FFED80;
 }
 
-.bg-color\:yellow\+1,  .bg-color\:yellow\+1 {
+.bg-color\:yellow\+1 {
 background-color: #FFE34D;
 }
 
-.bg-color\:yellow,  .bg-color\:yellow {
+.bg-color\:yellow {
 background-color: #FFD500;
 }
 
-.bg-color\:yellow-1,  .bg-color\:yellow-1 {
+.bg-color\:yellow-1 {
 background-color: #8A8000;
 }
 
-.bg-color\:yellow-2,  .bg-color\:yellow-2 {
+.bg-color\:yellow-2 {
 background-color: #5B5400;
 }
 
-.bg-color\:yellow-3,  .bg-color\:yellow-3 {
+.bg-color\:yellow-3 {
 background-color: #3A3600;
 }
 
-.bg-color\:yellow-4,  .bg-color\:yellow-4 {
+.bg-color\:yellow-4 {
 background-color: #221F00;
 }
 
-.bg-color\:pink\+4,  .bg-color\:pink\+4 {
+.bg-color\:pink\+4 {
 background-color: #FFE2F2;
 }
 
-.bg-color\:pink\+3,  .bg-color\:pink\+3 {
+.bg-color\:pink\+3 {
 background-color: #FAC0E0;
 }
 
-.bg-color\:pink\+2,  .bg-color\:pink\+2 {
+.bg-color\:pink\+2 {
 background-color: #F692C9;
 }
 
-.bg-color\:pink\+1,  .bg-color\:pink\+1 {
+.bg-color\:pink\+1 {
 background-color: #F067B0;
 }
 
-.bg-color\:pink,  .bg-color\:pink {
+.bg-color\:pink {
 background-color: #E4489B;
 }
 
-.bg-color\:pink-1,  .bg-color\:pink-1 {
+.bg-color\:pink-1 {
 background-color: #75254F;
 }
 
-.bg-color\:pink-2,  .bg-color\:pink-2 {
+.bg-color\:pink-2 {
 background-color: #4C1532;
 }
 
-.bg-color\:pink-3,  .bg-color\:pink-3 {
+.bg-color\:pink-3 {
 background-color: #330B1F;
 }
 
-.bg-color\:pink-4,  .bg-color\:pink-4 {
+.bg-color\:pink-4 {
 background-color: #230714;
 }
 
-.bg-color\:blue\+4,  .bg-color\:blue\+4 {
+.bg-color\:blue\+4 {
 background-color: #D6EAFF;
 }
 
-.bg-color\:blue\+3,  .bg-color\:blue\+3 {
+.bg-color\:blue\+3 {
 background-color: #A9D4FF;
 }
 
-.bg-color\:blue\+2,  .bg-color\:blue\+2 {
+.bg-color\:blue\+2 {
 background-color: #79BAFF;
 }
 
-.bg-color\:blue\+1,  .bg-color\:blue\+1 {
+.bg-color\:blue\+1 {
 background-color: #4A9CF5;
 }
 
-.bg-color\:blue,  .bg-color\:blue {
+.bg-color\:blue {
 background-color: #2B82E6;
 }
 
-.bg-color\:blue-1,  .bg-color\:blue-1 {
+.bg-color\:blue-1 {
 background-color: #184E79;
 }
 
-.bg-color\:blue-2,  .bg-color\:blue-2 {
+.bg-color\:blue-2 {
 background-color: #10324A;
 }
 
-.bg-color\:blue-3,  .bg-color\:blue-3 {
+.bg-color\:blue-3 {
 background-color: #0B2233;
 }
 
-.bg-color\:blue-4,  .bg-color\:blue-4 {
+.bg-color\:blue-4 {
 background-color: #071724;
 }
 
-.bg-color\:green\+4,  .bg-color\:green\+4 {
+.bg-color\:green\+4 {
 background-color: #D2FAE6;
 }
 
-.bg-color\:green\+3,  .bg-color\:green\+3 {
+.bg-color\:green\+3 {
 background-color: #A5EBC9;
 }
 
-.bg-color\:green\+2,  .bg-color\:green\+2 {
+.bg-color\:green\+2 {
 background-color: #75D4AA;
 }
 
-.bg-color\:green\+1,  .bg-color\:green\+1 {
+.bg-color\:green\+1 {
 background-color: #4DB88B;
 }
 
-.bg-color\:green,  .bg-color\:green {
+.bg-color\:green {
 background-color: #2E9B6E;
 }
 
-.bg-color\:green-1,  .bg-color\:green-1 {
+.bg-color\:green-1 {
 background-color: #1B513D;
 }
 
-.bg-color\:green-2,  .bg-color\:green-2 {
+.bg-color\:green-2 {
 background-color: #123427;
 }
 
-.bg-color\:green-3,  .bg-color\:green-3 {
+.bg-color\:green-3 {
 background-color: #0B2418;
 }
 
-.bg-color\:green-4,  .bg-color\:green-4 {
+.bg-color\:green-4 {
 background-color: #061911;
 }
 
-.bg-color\:orange\+4,  .bg-color\:orange\+4 {
+.bg-color\:orange\+4 {
 background-color: #FFE1C6;
 }
 
-.bg-color\:orange\+3,  .bg-color\:orange\+3 {
+.bg-color\:orange\+3 {
 background-color: #FBC89C;
 }
 
-.bg-color\:orange\+2,  .bg-color\:orange\+2 {
+.bg-color\:orange\+2 {
 background-color: #F6A76F;
 }
 
-.bg-color\:orange\+1,  .bg-color\:orange\+1 {
+.bg-color\:orange\+1 {
 background-color: #F08B46;
 }
 
-.bg-color\:orange,  .bg-color\:orange {
+.bg-color\:orange {
 background-color: #E06F2A;
 }
 
-.bg-color\:orange-1,  .bg-color\:orange-1 {
+.bg-color\:orange-1 {
 background-color: #753817;
 }
 
-.bg-color\:orange-2,  .bg-color\:orange-2 {
+.bg-color\:orange-2 {
 background-color: #4A250F;
 }
 
-.bg-color\:orange-3,  .bg-color\:orange-3 {
+.bg-color\:orange-3 {
 background-color: #32190A;
 }
 
-.bg-color\:orange-4,  .bg-color\:orange-4 {
+.bg-color\:orange-4 {
 background-color: #221107;
 }
 
-.bg-color\:red\+4,  .bg-color\:red\+4 {
+.bg-color\:red\+4 {
 background-color: #FFE0E8;
 }
 
-.bg-color\:red\+3,  .bg-color\:red\+3 {
+.bg-color\:red\+3 {
 background-color: #FBB8C7;
 }
 
-.bg-color\:red\+2,  .bg-color\:red\+2 {
+.bg-color\:red\+2 {
 background-color: #F68D9F;
 }
 
-.bg-color\:red\+1,  .bg-color\:red\+1 {
+.bg-color\:red\+1 {
 background-color: #E75F72;
 }
 
-.bg-color\:red,  .bg-color\:red {
+.bg-color\:red {
 background-color: #D33A52;
 }
 
-.bg-color\:red-1,  .bg-color\:red-1 {
+.bg-color\:red-1 {
 background-color: #7A2231;
 }
 
-.bg-color\:red-2,  .bg-color\:red-2 {
+.bg-color\:red-2 {
 background-color: #4E1620;
 }
 
-.bg-color\:red-3,  .bg-color\:red-3 {
+.bg-color\:red-3 {
 background-color: #330D12;
 }
 
-.bg-color\:red-4,  .bg-color\:red-4 {
+.bg-color\:red-4 {
 background-color: #24070A;
 }
 
-.bg-color\:purple\+4,  .bg-color\:purple\+4 {
+.bg-color\:purple\+4 {
 background-color: #EBDDFF;
 }
 
-.bg-color\:purple\+3,  .bg-color\:purple\+3 {
+.bg-color\:purple\+3 {
 background-color: #D8B3FF;
 }
 
-.bg-color\:purple\+2,  .bg-color\:purple\+2 {
+.bg-color\:purple\+2 {
 background-color: #BE86F8;
 }
 
-.bg-color\:purple\+1,  .bg-color\:purple\+1 {
+.bg-color\:purple\+1 {
 background-color: #9F5AEE;
 }
 
-.bg-color\:purple,  .bg-color\:purple {
+.bg-color\:purple {
 background-color: #7C2FE0;
 }
 
-.bg-color\:purple-1,  .bg-color\:purple-1 {
+.bg-color\:purple-1 {
 background-color: #411C6B;
 }
 
-.bg-color\:purple-2,  .bg-color\:purple-2 {
+.bg-color\:purple-2 {
 background-color: #2A1240;
 }
 
-.bg-color\:purple-3,  .bg-color\:purple-3 {
+.bg-color\:purple-3 {
 background-color: #1C0C29;
 }
 
-.bg-color\:purple-4,  .bg-color\:purple-4 {
+.bg-color\:purple-4 {
 background-color: #12071C;
 }
 
-.bg-color\:indigo\+4,  .bg-color\:indigo\+4 {
+.bg-color\:indigo\+4 {
 background-color: #E2E8FF;
 }
 
-.bg-color\:indigo\+3,  .bg-color\:indigo\+3 {
+.bg-color\:indigo\+3 {
 background-color: #C6CEFF;
 }
 
-.bg-color\:indigo\+2,  .bg-color\:indigo\+2 {
+.bg-color\:indigo\+2 {
 background-color: #A3ADFF;
 }
 
-.bg-color\:indigo\+1,  .bg-color\:indigo\+1 {
+.bg-color\:indigo\+1 {
 background-color: #7E8BFB;
 }
 
-.bg-color\:indigo,  .bg-color\:indigo {
+.bg-color\:indigo {
 background-color: #5865EF;
 }
 
-.bg-color\:indigo-1,  .bg-color\:indigo-1 {
+.bg-color\:indigo-1 {
 background-color: #37408B;
 }
 
-.bg-color\:indigo-2,  .bg-color\:indigo-2 {
+.bg-color\:indigo-2 {
 background-color: #222B57;
 }
 
-.bg-color\:indigo-3,  .bg-color\:indigo-3 {
+.bg-color\:indigo-3 {
 background-color: #151C3A;
 }
 
-.bg-color\:indigo-4,  .bg-color\:indigo-4 {
+.bg-color\:indigo-4 {
 background-color: #0B1026;
 }
 
 @media only screen and (min-width:64rem) {
-.h\:c2,  .h\:c2 {
+.h\:c2 {
 height: 4.5rem;
 }
 
-.w\:auto,  .w\:auto {
+.w\:auto {
 width: auto;
 }
 
-.max-w\:c2,  .max-w\:c2 {
+.max-w\:c2 {
 max-width: 4.5rem;
 }
 

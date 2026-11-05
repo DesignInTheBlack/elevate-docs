@@ -5,13 +5,9 @@ description: Learn how to get started with Elevate CSS.
 
 This quick start guide is included to give you an opportunity to dive right into the world of Elevate CSS. With that said, however, it is **highly recommended** that you familiarize yourself with the **configuration** and **specificity** pages as well as they provide a deeper understanding of Elevate's capabilities, functionality, and best practices as well as how to best leverage the framework for your specific needs.
 
-<br/>
-
 ### Installation and Usage
 import { Steps } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
-
-<br/>
 
 <Steps>
 
@@ -22,8 +18,6 @@ import { Code } from '@astrojs/starlight/components';
 3. Watch Files for Changes and Convert Elevate's Syntax to CSS <Code code={`npm run elevate`} title={`Terminal`}/>
 
 </Steps>
-
-<br/>
 
 ### Basic Configuration
 
@@ -49,19 +43,14 @@ const options = {
 
 export const config = options
 ```
-<br/>
 
 ### What Are 'Utility Strings'?
-
-<br/>
 
 **Basic Usage:**  
 
 At the heart of Elevate's syntax is what are called "utility strings", which are used to describe styling and serve as the basis for CSS generation while simultaneously doubling as the actual CSS classes. This convention means that, by default, your CSS files only ever contain classes that are actually being used in your markup.
 
 Unlike traditional utility frameworks which come packed with pre-defined utility classes, you are effectively writing CSS as you write utility strings in Elevate through the expression of property and modifier combinations - which are validated against your design system and a series of built-in conventions as well as your own custom syntax rules at build-time to ensure consistency.
-
-<br/>
 
 **The Utility String Format**:
 
@@ -71,8 +60,6 @@ Format: `property:modifier`
 <div class="text:grey-2">
 ```
 
-<br/>
-
 **Direct Properties:**  
 
 Direct properties are properties that do not require any modifier and that define a single CSS declaration. Generally used for layout and positioning.
@@ -80,8 +67,6 @@ Direct properties are properties that do not require any modifier and that defin
 ```html
 <div class="block"> <!-- display: block -->
 ```
-
-<br/>
 
 **Compound Properties:** 
 
@@ -101,8 +86,6 @@ text-align: left;
 
 ```
 
-<br/>
-
 **Practical Examples:**
 
 Bringing it all together, here are some examples of Elevate's syntax in action:
@@ -114,49 +97,29 @@ Bringing it all together, here are some examples of Elevate's syntax in action:
 <div class="absolute left:d12 z:10">  <!-- Absolute positioning, d12 from the left, and z-index of 10  -->
 ```
 
-<br/>
-<br/>
-
 import { Aside } from '@astrojs/starlight/components';
 
 <Aside title="Modifiers are Order Agnostic">
 You can write `text:grey-2:left:snug` or `text:snug:grey-2:left` and the order doesn't matter. We'll get to the how and why later, but for now, just know that you can use any order you want.
 </Aside>
 
-<br/>
-
 ### Breakpoints and Responsive Design
 
-<br/>
-
 Elevate affords and enforces a mobile-first, organized syntax for responsive design:
-
-<br/>
-
-
 
 ```html
 <div class="text:purple pd:d1 /md/ pd:d2 /lg/ @hover:[text:green_text:right]"> 
 ```
 
-<br/>
-
 Universal classes are applied on the far-left and apply to all breakpoints by default unless overridden at a breakpoint. Breakpoints are specified using the `/breakpoint/` syntax, allowing you to discern the responsive behavior of an element at a glance and keeping things organized by default.
-
-<br/>
-<br/>
 
 <Aside type = "caution" title="Scratching Your Head?">
 At this point, you're probably wondering what the "@" is for, right? Don't worry, we'll get to that explanation next.
 </Aside>
 
-<br/>
-
 ### Operator Flags
 
 In order to allow for greater flexibility, Elevate supports a series of flags to further refine styling choices and to support more complex and dynamic behaviors while preserving semantic clarity.
-
-<br/>
 
 **The Contextual Flag [@]:**  
 
@@ -165,30 +128,20 @@ Allows complex, conditional styling for states, conditions, and other pseudo-cla
 ```html
 <div class="@hover:[text:green_text:right_pd:d1]">  <!-- Hover state changes text and adds padding. -->
 ```
-<br/>
 
 Inside `@state:[...]`, use underscores instead of spaces. HTML class attributes split on spaces, so state blocks must be a single token (for example, `@hover:[text:green_text:right_pd:d1]`).
 
 State chains use `+`, for example: `@hover+focus-visible:[bg-color:indigo_text:white]`.
 
-<br/>
-
-
 import { LinkCard } from '@astrojs/starlight/components';
 
 <LinkCard title="See Currently Supported Selectors" href="/reference/supported-selectors/" />
-
-<br/>
 
 ### Envelopes
 
 Condense a full utility string into a single reusable class with `env:name`, then reopen it later with `env:name:open` to edit. Envelopes are a first-class way to create meaningful, reusable classes without leaving your HTML.
 
-<br/>
-
 <LinkCard title="Learn Envelopes" href="/guides/4-env-aliases/" />
-
-<br/>
 
 ### Recommended Ordering
 
@@ -197,8 +150,6 @@ When multiple features are used together, keep your class list in this order:
 `ctx -> env -> /breakpoint/ -> @state -> utilities`
 
 This keeps scanning predictable and makes overrides easy to reason about. Property modifier order remains agnostic within a utility.
-
-<br/>
 
 ### Combined Example (All Features Together)
 
@@ -210,8 +161,6 @@ This keeps scanning predictable and makes overrides easy to reason about. Proper
 
 If you need to edit the envelope, swap `env:card` for `env:card:open`, make your changes, then remove `:open` to close it again.
 
-<br/>
-
 **The Extends Flag [-]:**  
 
 Exempt certain classes from CSS generation (e.g. for JavaScript interactions, labelling, or applying non-compiled CSS classes):
@@ -219,9 +168,6 @@ Exempt certain classes from CSS generation (e.g. for JavaScript interactions, la
 ```html
 <div class="-mySelector">
 ```
-
-<br/>
-<br/>
 
 <Aside title="Or Just Safelist Your Classes">
 You can also just add the classes you want to ignore to the safelist in `elevate/config/elevate.ts`. This is useful for integrating
@@ -242,16 +188,9 @@ Elevate with other tools that require classes of their own:
 
 </Aside>
 
-<br/>
-
-
 ### The Elements of Elevate
 
-<br/>
-
 Elevate's systems are driven by three distinct elements:
-
-<br/>
 
 1. **Design Tokens**  
    - **Purpose:** Global, immutable design constraints.  
@@ -266,19 +205,17 @@ Elevate's systems are driven by three distinct elements:
 
       //Define New Token Categories
 
-      BrandBackgroundTokens: {
+      BrandBackgroundToken: {
       'popgreen':'#39FF14'
       },
 
-      BrandCopyTokens: {
+      BrandTextToken: {
       'popwhite': '#FFFFFF',
       }
 
    } 
 
    ```
-
-<br/>
 
 2. **Syntactic Rules**  
    - **Purpose:** Property-specific structural validation and syntax construction or extension.  
@@ -293,7 +230,7 @@ Elevate's systems are driven by three distinct elements:
    export const Brand = {
 
       BrandBackgroundRule: {
-      "bg-": "BrandBackgroundToken"
+      "fill-": "BrandBackgroundToken"
       },
 
       BrandCopyRule: {
@@ -303,8 +240,6 @@ Elevate's systems are driven by three distinct elements:
    }
 
    ```
-
-<br/>
 
 3. **Property Declarations**  
    - **Purpose:** Mapping design system tokens and/or syntax rule mappings to CSS declarations.  
@@ -325,20 +260,13 @@ Elevate's systems are driven by three distinct elements:
 
    ```
 
-   <br/>
-
 4. **This Is Elevate CSS** (after defining the custom `brand` property + tokens above):
 
    ```html
-   <div class="brand:bg-popgreen:copy-popwhite"></div>
+   <div class="brand:fill-popgreen:copy-popwhite"></div>
    ```
 
-
-<br/>
-
 ### Isolating Elevate's Runtime
-
-<br/>
 
 In certain circumstances, you may want to run Elevate in a separate process to avoid conflicts with your project's dependencies. This is particularly useful when using Elevate alongside frameworks like Next.js, where dependency conflicts or module resolution issues may occur.
 This can be done by creating a separate package.json file in the `elevate` directory and then running `npm start` from within that directory. Note that you can change your preferred command in the Elevate specific json file if you so choose.
@@ -353,9 +281,4 @@ This can be done by creating a separate package.json file in the `elevate` direc
 ```
 
 If you encounter module resolution errors in the main setup while using Elevate with a framework like Next.js, try the isolated runtime approach first before further debugging dependency conflicts.
-
-<br/>
-
-
-
 

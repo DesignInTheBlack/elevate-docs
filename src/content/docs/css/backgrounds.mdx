@@ -5,8 +5,6 @@ description: A guide to backgrounds in Elevate CSS.
 
 Elevate CSS features three compound properties for setting or configuring the background of an element: `bg-img`, `bg-color`, and `bg-attr`. `bg-img` and `bg-color` are fairly self explainatory while `bg-attr` is a more advanced property that can be used to configure the characteristics of the background of an element.
 
-<br/>
-
 ## Setting Backgrounds
 
 | Property   | Expected Values | Example     |
@@ -15,22 +13,11 @@ Elevate CSS features three compound properties for setting or configuring the ba
 | `bg-color`  | ColorToken (e.g., `purple+1`)      |  `bg-color:purple+1`  |
 | `bg-exact`  | PassThroughToken (e.g., `(50%_auto)` )      |  `bg-exact:(50%_auto)`  |
 
-<br/>
-<br/>
-<br/>
-
 import { Aside } from '@astrojs/starlight/components';
-
 
 <Aside title="'Pass Through' Means Literally">
 When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens also allow you to write spaces in your utility strings by placing an underscore (_) in place of the space.
 </Aside>
-
-
-
-<br/>
-<br/>
-
 
 ## Configuring Background Attributes
 
@@ -44,14 +31,4 @@ Use `bg-attr` with one of the following modifiers:
 | Attachment|`scroll`, `fixed`, `local` | `bg-attr:fixed` |
 | Clip|`border`, `content`, `padding`, `text` | `bg-attr:content`|
 | Origin| `border`, `content`, `padding` | `bg-attr:border`|
-
-
-
-
-
-
-
-
-
-
 

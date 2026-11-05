@@ -1,292 +1,82 @@
 ﻿---
 title: "Elevate CSS"
-description: Let's Reimagine The Utility First CSS Framework.
+description: A compile-first, token-driven utility framework. Elevate turns your design system into the CSS vocabulary itself, and stops the build when something is off-system.
 template: splash
 hero:
-  tagline: "CSS That Speaks Your Design Language"
+  title: CSS that speaks your design language.
+  tagline: Elevate compiles utility classes straight from your design tokens, and stops the build the moment something is off-system.
   actions:
-    - text: Learn More
+    - text: Get started
       link: /guides/2-getting-started/
-      icon: right-arrow
-    - text: View On Github
+    - text: View on GitHub
       link: https://github.com/DesignInTheBlack/Elevate
       variant: minimal
-head:
-  - tag: link
-    attrs:
-      rel: stylesheet
-      href: /canvasFix.css
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
-import { Aside } from '@astrojs/starlight/components';
-import { Icon } from '@astrojs/starlight/components';
+import FlexLab from '../../components/FlexLab.astro';
+import TokenMap from '../../components/TokenMap.astro';
 
-<script is:inline>
-  document.documentElement.dataset.theme = 'dark'
-</script>
+<div class="home">
 
-## The System Knows the Way
-
-"Use large spacing here."
-Six months later, "large" is 20px.
-
-Elevate locks CSS to your design system so meaning never drifts.
-
-<br/>
-<br/>
-
-<div id="starfield">
-</div>
-<div id="fluid-bg">
-  <canvas id="MarqueeCanvas"></canvas>
-</div>
-<script src="/fluid.js" defer></script>
-
-<Aside type="caution" title="Please Excuse Our Progress">
-In its current iteration (v1.05 - Beta), Elevate CSS is in active development and subject to change. Your feedback is invaluable as this project evolves into a fully realized utility framework.
-</Aside>
-
-## Write What You Mean
-
-`pd:d6` compiles to your exact spacing token.
-`bg-color:indigo` outputs your actual brand color.
-`font:h3` maps to your typography scale.
-
-No guessing. No approximations. When the design system changes, your CSS updates automatically.
-
-<br/>
-<br/>
-
-```html
-/* In your design system */
-spacing: { d6: "1.5rem" }
-colors: { indigo: "#5865EF" }
-
-/* In your code */
-pd:d6 bg-color:indigo
-
-/* Compiles to exactly */
-.pd\:d6 {
-  padding: 1.5rem;
-}
-.bg-color\:indigo {
-  background-color: #5865EF;
-}
-```
-
-<br/>
-<br/>
-<br/>
-
-## Layout In One Class
-
-Elevate adds layout affordances: single-class primitives that encode common layout intent.
-
-Contain, Stack, Cluster, Split, Center, and Grid-Auto let you build real layouts without wrapper spam.
-
-<br/>
-<br/>
-
-```html
-<section class="contain">
-  <div class="stack:gap-d6">
-    <div class="cluster:gap-d3:just-between">
-      <h2 class="text:white">Affordances</h2>
-      <button class="bg-color:indigo text:white pd-x:d3 pd-y:d2">Action</button>
-    </div>
-    <div class="split:ratio-2-1:gap-d6 /lg/ split:ratio-3-1">
-      <div class="bg-color:indigo-2 pd:d4">Main</div>
-      <div class="bg-color:indigo-1 pd:d4">Side</div>
-    </div>
-    <div class="grid-auto:min-c10:gap-d4">
-      <div class="bg-color:indigo-2 pd:d4">Card</div>
-      <div class="bg-color:indigo-2 pd:d4">Card</div>
-      <div class="bg-color:indigo-2 pd:d4">Card</div>
-    </div>
-  </div>
+<section class="home-section">
+<h2>Write what you mean.</h2>
+<p class="home-sub">Every class names a token from your design system. Elevate looks up the value and writes exactly that CSS. Change the token, and every class that uses it follows.</p>
+<TokenMap />
 </section>
+
+<section class="home-section">
+<h2>A whole layout, in one class.</h2>
+<p class="home-sub">Direction, alignment and wrapping live in a single class, on axes you can see: <code>x</code> is always horizontal, <code>y</code> is always vertical. Try it.</p>
+<FlexLab />
+</section>
+
+<section class="home-section">
+<h2>Everything else stays in your HTML.</h2>
+<p class="home-sub">The things that usually send you back to a stylesheet have a place in the class list.</p>
+
+<div class="home-features">
+<div>
+<h3>Envelopes</h3>
+<p>Name a list of classes once with <code>env:card</code>, reuse it anywhere, and reopen it with <code>env:card:open</code> when you need to edit.</p>
+<a href="/guides/4-env-aliases/">How envelopes work</a>
+</div>
+<div>
+<h3>Context scopes</h3>
+<p>Draw a boundary with <code>ctx:card</code> and end it with <code>ctx:end:card</code>. Styles inside it can't leak into the rest of the page.</p>
+<a href="/guides/3-specificity/">Scoping and specificity</a>
+</div>
+<div>
+<h3>Relational selectors</h3>
+<p>Style children, descendants, siblings or the parent from inside a scope with <code>@child</code>, <code>@descendants</code>, <code>@siblings</code> and <code>@ancestor</code>.</p>
+<a href="/reference/supported-selectors/">Supported selectors</a>
+</div>
+<div>
+<h3>Grouped states</h3>
+<p>Change several things on one state, together: <code>@hover:[bg-color:indigo_text:white]</code>.</p>
+<a href="/reference/supported-selectors/">States and pseudo-elements</a>
+</div>
+</div>
+</section>
+
+<section class="home-section home-close">
+<h2>Ship only what you use.</h2>
+<p class="home-sub">Nothing is prebuilt. Elevate watches your files and compiles CSS for the classes you actually write, mobile-first, with errors that point to the exact file and line.</p>
+
+```bash title="Start in three commands"
+npm install elevate-framework
+npx elevate-framework prepare
+npm run elevate
 ```
 
-<br/>
-<br/>
-<br/>
-
-## Envelopes: Meta-Classes Without CSS Files
-
-Collapse any utility list into a named class and reopen it later when you need to edit.
-You get reusable, bespoke classes without leaving your HTML.
-
-<br/>
-<br/>
-
-```html
-<div class="env:card pd-x:d4 bg-color:indigo text:white shadow:soft">
-  Card
+<div class="home-actions">
+<a class="home-primary" href="/guides/2-getting-started/">Read the guide</a>
+<a class="home-quiet" href="https://discord.gg/T3X2vBYA">Join the Discord</a>
 </div>
 
-<!-- On save -->
-<div class="env:card"></div>
+<blockquote class="home-quote">
+<p>“When I am working on a problem, I never think about beauty, but when I have finished, if the solution is not beautiful, I know it is wrong.”</p>
+<cite>R. Buckminster Fuller</cite>
+</blockquote>
+</section>
 
-<!-- Reopen to edit -->
-<div class="env:card:open"></div>
-```
-
-<br/>
-<br/>
-<br/>
-
-## Context Scoping, Not Specificity Wars
-
-Use `ctx:` to isolate a component so utilities never collide across the page.
-Everything between `ctx:name` and `ctx:end` is scoped to that boundary.
-
-<br/>
-<br/>
-
-```html
-<div class="ctx:card">
-  <h3 class="text:white">Card</h3>
-  <button class="@child+hover:[bg-color:indigo_text:white]">Hover me</button>
 </div>
-<div class="ctx:end:card"></div>
-```
-
-<br/>
-<br/>
-<br/>
-
-## Relational Selectors, Not Custom CSS
-
-Target children, descendants, siblings, and ancestors directly inside utilities.
-
-<br/>
-<br/>
-
-```html
-<div class="ctx:panel @children:[bg-color:grey-2_text:white] pd:d3">
-  <div>Child A</div>
-  <div>Child B</div>
-</div>
-<div class="ctx:end:panel"></div>
-```
-
-<br/>
-<br/>
-<br/>
-
-## Build-time Validation Protects Your Vision
-
-Type `pd:d99` when only `pd:d6` exists? Build fails with exact file location.
-Use a color token that doesn't exist? The compiler catches it before users see it.
-Your design system becomes enforceable, not just aspirational.
-
-<br/>
-<br/>
-
-```html
-Error: Invalid Prefixed Value: Unable to determine spacing value "d99"
-   in src/components/Button.tsx on line 23
-
-Troubleshooting Tips:
-   1. Examine your prefixed value and ensure it matches the expected token type.
-   2. If this is a custom modifier, ensure that you are using the correct syntax.
-
-For more information, refer to [https://elevate-docs.pages.dev](https://elevate-docs.pages.dev)
-```
-
-<br/>
-<br/>
-<br/>
-
-## States Without The Mess
-
-Grouped state changes keep interactions coherent: `@hover:[bg-color:indigo_text:white]` ties related changes together.
-
-<br/>
-<br/>
-
-```html
-<div class="pd-x:d6 pd-y:d3 row:x-center:y-center">
-  <div class="w:full bg-color:green @hover:[bg-color:red_font:semibold_text:white]">
-    <p>What happens on hover?</p>
-  </div>
-</div>
-```
-
-<br/>
-<br/>
-<br/>
-
-## Simple Setup, Powerful Results
-
-Install package. Configure design tokens. Write utilities.
-Built-in file watching, automatic compilation, and detailed error messages with line numbers. No webpack configuration. No build script modifications. Mobile-first by default.
-
-<br/>
-<br/>
-
-<CardGrid stagger>
-  <Card title="Generated on Demand" icon="rocket">
-    Zero pre-built utilities. CSS gets compiled from your design tokens exactly when you write it. Ship what you use - not 100kb new in the box.
-  </Card>
-  <Card title="Build-Time Validation" icon="approve-check-circle">
-    Type `pd:d99` instead of `pd:d6` and your build fails immediately. Typos become compiler errors.
-  </Card>
-  <Card title="Design System Driven" icon="seti:css">
-    Your tokens define your utilities. Change the system and every component updates automatically.
-  </Card>
-  <Card title="Consistency, Enforced" icon="open-book">
-    Your utilities compile from design tokens. No approximations, no drift, no guessing which blue to use.
-  </Card>
-  <Card title="Layout" icon="list-format">
-    Contain, Stack, Cluster, Split, Center, and Grid-Auto turn layout intent into single classes.
-  </Card>
-  <Card title="Envelopes" icon="document">
-    Collapse full utility lists into reusable classes you can reopen and edit anytime.
-  </Card>
-  <Card title="Contexts" icon="puzzle">
-    Scope any section with ctx:... so utilities never collide across components.
-  </Card>
-  <Card title="Relational Selectors" icon="random">
-    Use @child, @descendants, @siblings, and @ancestor without writing custom CSS.
-  </Card>
-</CardGrid>
-
-<br/>
-<br/>
-
-## For Teams Who Ship Consistently
-
-Your design system defines spacing and color, but the code still drifts into guesses, hex codes, and magic numbers. Elevate bridges that gap so the system becomes the CSS vocabulary itself.
-
-Your designers work in systems. Your developers should too.
-
-<br/>
-<br/>
-<br/>
-<br/>
-
-> "When I am working on a problem, I never think about beauty. But when I have finished, if the solution is not beautiful?"
->
-> "... I know it is wrong."
->
-> **R. Buckminster Fuller**
-
-<br/>
-<br/>
-
-## Join The Adventure.
-
-Let's Build Something Great, Together.
-
-<div style="display: flex; align-items: center; gap: 0.5rem;">
-  <Icon name="discord" />
-  <a href="https://discord.gg/T3X2vBYA" style="text-decoration: none;">Join The Discord</a>
-</div>
-<div style="display: flex; align-items: center; gap: 0.5rem;">
-  <Icon name="github" />
-  <a href="https://github.com/DesignInTheBlack/Elevate" style="text-decoration: none;">Explore The Repository</a>
-</div>
-
-

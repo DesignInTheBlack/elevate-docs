@@ -1,24 +1,24 @@
 ---
 title: Shadows
-description: A guide to shadows in Elevate CSS.
+description: Shadow tokens in Elevate, for elements and for text.
 ---
-
-Elevate CSS features a shared compound property for applying shadows to both elements as well as text:
-
-<br/>
-
-### The `shadow` Property
-
-| Modifier  | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `shadow` |  ShadowToken (e.g., `soft`, `physical`) |  `shadow:soft`  |
-
-
-<br/>
-<br/>
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="Effects are Token Driven">
-As with all other effects in Elevate CSS, shadows are considered to be a "design decision" and as such are treated as design system tokens. This means you can override the preset options, bring your own, etc
+One property, `shadow`, handles both box shadows and text shadows. Elevate picks the right CSS property from the token you give it.
+
+| Token | Applies | Example |
+|---|---|---|
+| `soft` | `box-shadow`, five stacked layers for a gentle lift | `shadow:soft` |
+| `physical` | `box-shadow`, a firmer drop with an inset edge, like a pressable key | `shadow:physical` |
+| `soft-text` | `text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3)` | `shadow:soft-text` |
+
+```html title="A card that floats, with a heading that stays legible over an image"
+<article class="shadow:soft pd:d6">
+  <h2 class="shadow:soft-text">…</h2>
+</article>
+```
+
+<Aside title="Shadows are design tokens">
+Like every effect in Elevate, shadows are design decisions, so they live in your token files. Change a value in `elevate/core/system/design/effects.ts`, or add your own, and every `shadow:` class picks it up on the next build.
 </Aside>

@@ -5,8 +5,6 @@ description: A guide to the grid shorthand in Elevate CSS.
 
 Elevate CSS simplifies CSS Grid layouts by introducing a series of concise shorthands for defining grid properties. This guide explains how to use the `grid` property with modifiers for rows, columns, and gaps as well as setting row and column spans with the `row-spans` and `col-spans` properties.
 
-<br/>
-
 ## `grid` Property Modifiers
 Elevate supports the following modifiers for the `grid` property:
 
@@ -18,8 +16,6 @@ Elevate supports the following modifiers for the `grid` property:
 | ColGap         | SpacingToken (e.g., `d3`)      | `grid:colgap-d3`                     |
 | RowGap         | SpacingToken (e.g., `d3`)      | `grid:rowgap-d3`                     |
 
-<br/>
-
 ## Grid Areas
 
 Use pass-through values to define template areas and assign areas to items:
@@ -28,8 +24,6 @@ Use pass-through values to define template areas and assign areas to items:
 |------------|------------------|---------|
 | `grid-template-areas` | PassThroughToken (e.g., `("header_header"_"sidebar_main")`) | `grid-template-areas:("header_header"_"sidebar_main")` |
 | `grid-area` | PassThroughToken (e.g., `(header)`) | `grid-area:(header)` |
-
-<br/>
 
 ## `row-spans` and `col-spans` Property Modifiers
 The `row-spans` and `col-spans` properties can be used to specify the number of rows or columns a cell should span across. These properties accept the following syntax:
@@ -40,10 +34,6 @@ The `row-spans` and `col-spans` properties can be used to specify the number of 
 | To          | NumericToken (e.g., `3`, up to 12)         | `row-spans:from-2:to-4`                         |
 | All          | None (direct property)         | `col-spans-all`                         |
 | All          | None (direct property)         | `row-spans-all`                         |
-
-<br/>
-<br/>
-<br/>
 
 import { Aside } from '@astrojs/starlight/components';
 
@@ -57,9 +47,6 @@ Note that you can also add `fr` to the end of the `rows` and `cols` modifiers to
 
 </Aside>
 
-<br/>
-<br/>
-
 ## `auto` Property Modifiers
 The `auto` properties utilize the passthrough token to allow for more traditionally robust control over the layout of grid items. These properties accept the following syntax:
 
@@ -68,10 +55,6 @@ The `auto` properties utilize the passthrough token to allow for more traditiona
 | 'auto-col'    | PassThroughToken (e.g.,  `(minmax(100px,_auto))` )          | `auto-col:(minmax(100px,_auto))`                         |
 | 'auto-row'        | PassThroughToken (e.g.,  `(minmax(20%,_80vmax))` )         | `auto-row:(minmax(20%,_80vmax))`                         |
 | 'auto-flow'    | PassThroughToken (e.g.,  `(row_dense)` )         | `auto-flow:(row_dense)`                         |
-
-<br/>
-<br/>
-<br/>
 
 <Aside title="'Pass Through' Means Literally">
 When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens also allow you to write spaces in your utility strings by placing an underscore (_) in place of the space.

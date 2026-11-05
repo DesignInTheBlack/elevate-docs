@@ -1,0 +1,415 @@
+---
+/*
+  Home hero. A class list types itself onto a black stage and the card beside it
+  takes shape token by token. Then an off-system value is typed, the build fails
+  with Elevate's real error, the value is removed, and it compiles.
+  Every declaration shown here is the compiler's actual output.
+*/
+const PAGE_TITLE_ID = '_top';
+
+const { data } = Astro.props.entry;
+const { title = data.title, tagline, actions = [] } = data.hero || {};
+---
+<section class="hero">
+	<div class="intro">
+		<h1 id={PAGE_TITLE_ID} set:html={title} />
+		{tagline && <p class="tagline" set:html={tagline} />}
+		{actions.length > 0 && (
+			<div class="actions">
+				{actions.map(({ text, link, variant }) => (
+					<a href={link} class:list={['action', variant === 'minimal' ? 'action-quiet' : 'action-primary']}>{text}</a>
+				))}
+			</div>
+		)}
+	</div>
+
+	<figure class="stage" data-phase="idle">
+		<div class="editor">
+			<div class="file">Card.astro</div>
+			<pre class="markup" aria-hidden="true"><span class="tag">&lt;article</span> <span class="attr">class</span>=<span class="q">"</span><span class="classes"></span><span class="caret"></span><span class="q">"</span><span class="tag">&gt;</span></pre>
+			<pre class="rule" aria-hidden="true"></pre>
+			<p class="status" role="status"></p>
+		</div>
+
+		<div class="preview">
+			<article class="card">
+				<div class="icon"></div>
+				<div class="copy">
+					<strong>Spacing tokens synced</strong>
+					<span>Every class now reads from your design system.</span>
+				</div>
+				<span class="pill">Review</span>
+			</article>
+		</div>
+
+		<button type="button" class="replay" hidden>Replay</button>
+	</figure>
+</section>
+
+<script>
+	type Step = { token: string; style: Record<string, string>; rule: string[] };
+
+	// Values copied from the compiler's output for each token
+	const STEPS: Step[] = [
+		{ token: 'row:x-between:y-center', style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+		  rule: ['display: flex;', 'flex-direction: row;', 'justify-content: space-between;', 'align-items: center;'] },
+		{ token: 'gap:d4', style: { gap: '1rem' }, rule: ['gap: 1rem;'] },
+		{ token: 'pd:d6', style: { padding: '1.5rem' },
+		  rule: ['padding-top: 1.5rem;', 'padding-left: 1.5rem;', 'padding-right: 1.5rem;', 'padding-bottom: 1.5rem;'] },
+		{ token: 'bg-color:white', style: { backgroundColor: '#FCFCFD' }, rule: ['background-color: #FCFCFD;'] },
+		{ token: 'text:grey-3', style: { color: '#17171A' }, rule: ['color: #17171A;'] },
+		{ token: 'bd:round-d4', style: { borderRadius: '1rem' }, rule: ['border-radius: 1rem;'] },
+	];
+	const BAD = 'pd:d99';
+	const ERROR = 'Modifier Validation Failed: Unable to determine modifier type for "d99" in src/components/Card.astro on line 12';
+
+	const esc = (s: string) => s.replace(/:/g, '\\:');
+	const colorize = (t: string) => {
+		const [p, ...m] = t.split(':');
+		return `<span class="el-prop">${p}</span>` + m.map((x) => `<span class="el-sep">:</span><span class="el-mod">${x}</span>`).join('');
+	};
+
+	document.querySelectorAll<HTMLElement>('.hero .stage').forEach((stage) => {
+		const classes = stage.querySelector<HTMLElement>('.classes')!;
+		const rule = stage.querySelector<HTMLElement>('.rule')!;
+		const status = stage.querySelector<HTMLElement>('.status')!;
+		const card = stage.querySelector<HTMLElement>('.card')!;
+		const replay = stage.querySelector<HTMLButtonElement>('.replay')!;
+		const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let run = 0;
+
+		const wait = (ms: number, id: number) =>
+			new Promise<void>((res, rej) => setTimeout(() => (id === run ? res() : rej()), reduced ? 0 : ms));
+
+		const paint = (done: string[], typing = '', bad = false) => {
+			classes.innerHTML =
+				done.map(colorize).join(' ') +
+				(typing ? `${done.length ? ' ' : ''}<span class="${bad ? 'bad' : ''}">${bad ? typing : colorize(typing)}</span>` : '');
+		};
+		const showRule = (s: Step) => {
+			rule.innerHTML = `<span class="sel">.${esc(s.token)}</span> {\n${s.rule.map((l) => '  ' + l).join('\n')}\n}`;
+			rule.classList.remove('flash');
+			void rule.offsetWidth;
+			rule.classList.add('flash');
+		};
+
+		const reset = () => {
+			card.removeAttribute('style');
+			rule.textContent = '';
+			status.textContent = '';
+			stage.dataset.phase = 'typing';
+			paint([]);
+		};
+
+		const play = async () => {
+			const id = ++run;
+			replay.hidden = true;
+			reset();
+			const done: string[] = [];
+			try {
+				await wait(700, id);
+				for (const s of STEPS) {
+					for (let i = 1; i <= s.token.length; i++) {
+						paint(done, s.token.slice(0, i));
+						await wait(38, id);
+					}
+					done.push(s.token);
+					paint(done);
+					Object.assign(card.style, s.style);
+					showRule(s);
+					await wait(520, id);
+				}
+				// The off-system value
+				for (let i = 1; i <= BAD.length; i++) {
+					paint(done, BAD.slice(0, i), true);
+					await wait(60, id);
+				}
+				stage.dataset.phase = 'error';
+				rule.textContent = '';
+				status.textContent = ERROR;
+				await wait(2600, id);
+				for (let i = BAD.length - 1; i >= 0; i--) {
+					paint(done, BAD.slice(0, i), true);
+					await wait(45, id);
+				}
+				paint(done);
+				stage.dataset.phase = 'ok';
+				status.textContent = `Compiled ${done.length} classes. No off-system values.`;
+				replay.hidden = false;
+			} catch {
+				/* a newer run took over */
+			}
+		};
+
+		replay.addEventListener('click', play);
+
+		if (reduced) {
+			// Show the finished state without animation
+			STEPS.forEach((s) => Object.assign(card.style, s.style));
+			paint(STEPS.map((s) => s.token));
+			showRule(STEPS[STEPS.length - 1]);
+			stage.dataset.phase = 'ok';
+			status.textContent = `Compiled ${STEPS.length} classes. No off-system values.`;
+			return;
+		}
+		const io = new IntersectionObserver((e) => {
+			if (e.some((x) => x.isIntersecting)) { io.disconnect(); play(); }
+		}, { threshold: 0.35 });
+		io.observe(stage);
+	});
+</script>
+
+<style>
+	.hero {
+		display: grid;
+		gap: clamp(2.5rem, 5vw, 4rem);
+		padding-block: clamp(2rem, 6vw, 5rem) 1rem;
+	}
+	.hero :global(*) {
+		margin-top: 0;
+	}
+
+	/* ---------- Intro ---------- */
+	.intro {
+		display: grid;
+		gap: 1.5rem;
+		justify-items: center;
+		text-align: center;
+	}
+	h1 {
+		margin: 0;
+		max-width: 14ch;
+		font-size: clamp(3rem, 1.6rem + 6.4vw, 6.5rem);
+		font-weight: 660;
+		font-stretch: 88%;
+		line-height: 0.95;
+		letter-spacing: -0.05em;
+		color: var(--ink);
+		text-wrap: balance;
+	}
+	.tagline {
+		margin: 0;
+		max-width: 34ch;
+		font-size: clamp(1.25rem, 1rem + 1vw, 1.625rem);
+		line-height: 1.35;
+		letter-spacing: -0.015em;
+		color: var(--slate);
+		text-wrap: balance;
+	}
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 0.75rem 1.75rem;
+		margin-top: 0.5rem;
+	}
+	.action {
+		font-size: 1.0625rem;
+		font-weight: 560;
+		text-decoration: none;
+		letter-spacing: -0.01em;
+	}
+	.action-primary {
+		background: var(--ink);
+		color: #fff;
+		padding: 0.8rem 1.5rem;
+		border-radius: 999px;
+		transition: background-color 0.15s ease;
+	}
+	.action-primary:hover {
+		background: #3a3a3c;
+		color: #fff;
+	}
+	.action-quiet {
+		color: var(--ink);
+		text-decoration: underline;
+		text-decoration-color: #c7c7cc;
+		text-underline-offset: 0.25em;
+	}
+	.action-quiet:hover {
+		text-decoration-color: var(--ink);
+	}
+
+	/* ---------- Stage ---------- */
+	.stage {
+		position: relative;
+		margin: 0;
+		display: grid;
+		grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+		min-height: 30rem;
+		border-radius: 32px;
+		overflow: hidden;
+		background:
+			radial-gradient(ellipse 50% 60% at 78% 50%, rgb(88 101 239 / 0.22), transparent 70%),
+			radial-gradient(ellipse 40% 50% at 90% 85%, rgb(228 72 155 / 0.14), transparent 70%),
+			#000;
+		color: #f5f5f7;
+	}
+
+	.editor {
+		display: grid;
+		grid-template-rows: auto auto 1fr auto;
+		gap: 1.25rem;
+		padding: clamp(1.5rem, 3vw, 2.5rem);
+		border-right: 1px solid rgb(255 255 255 / 0.08);
+		font-family: var(--sl-font-mono);
+	}
+	.file {
+		font-size: 0.8125rem;
+		color: rgb(255 255 255 / 0.45);
+	}
+	.markup {
+		margin: 0;
+		padding: 0;
+		background: none;
+		border: none;
+		font: 500 clamp(1rem, 0.8rem + 0.7vw, 1.25rem) / 1.6 var(--sl-font-mono);
+		white-space: pre-wrap;
+		overflow-wrap: break-word;
+		color: #f5f5f7;
+		min-height: 6.5em;
+	}
+	.markup .tag { color: rgb(255 255 255 / 0.5); }
+	.markup .attr { color: rgb(255 255 255 / 0.7); }
+	.markup .q { color: rgb(255 255 255 / 0.5); }
+	.markup :global(.el-prop) { color: #8f99ff; }
+	.markup :global(.el-mod) { color: #ff7dbd; }
+	.markup :global(.el-sep) { color: rgb(255 255 255 / 0.35); }
+	.markup :global(.bad) {
+		color: #ff6b6b;
+		text-decoration: underline wavy #ff6b6b;
+		text-decoration-skip-ink: none;
+		text-underline-offset: 0.25em;
+	}
+	.caret {
+		display: inline-block;
+		width: 2px;
+		height: 1.15em;
+		margin-left: 1px;
+		vertical-align: -0.2em;
+		background: #f5f5f7;
+		animation: blink 1s steps(1) infinite;
+	}
+	@keyframes blink { 50% { opacity: 0; } }
+
+	.rule {
+		margin: 0;
+		padding: 0;
+		background: none;
+		border: none;
+		font: 0.875rem/1.7 var(--sl-font-mono);
+		color: rgb(255 255 255 / 0.6);
+		white-space: pre;
+		overflow: hidden;
+		align-self: end;
+	}
+	.rule :global(.sel) { color: #f5f5f7; }
+	.rule.flash { animation: rise 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+	@keyframes rise {
+		from { opacity: 0; transform: translateY(6px); }
+	}
+
+	.status {
+		margin: 0;
+		min-height: 1.5em;
+		font: 500 0.875rem/1.5 var(--sl-font-mono);
+		color: rgb(255 255 255 / 0.55);
+	}
+	.stage[data-phase='error'] .status {
+		color: #ff8a8a;
+	}
+	.stage[data-phase='ok'] .status {
+		color: #6ee7b0;
+	}
+	.stage[data-phase='error'] {
+		box-shadow: inset 0 0 0 1px rgb(255 107 107 / 0.35);
+	}
+
+	.preview {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: clamp(1.5rem, 4vw, 3rem);
+	}
+	.card {
+		width: 100%;
+		max-width: 25rem;
+		font-family: var(--sl-font);
+		color: rgb(255 255 255 / 0.8);
+		transition:
+			padding 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+			gap 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+			background-color 0.5s ease,
+			color 0.5s ease,
+			border-radius 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+	.icon {
+		flex: none;
+		width: 3rem;
+		height: 3rem;
+		border-radius: 0.875rem;
+		background: linear-gradient(150deg, #6b77ff, #e4489b 70%, #ffa060);
+		box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35);
+	}
+	.copy {
+		display: grid;
+		gap: 0.15rem;
+		min-width: 0;
+		flex: 1;
+	}
+	.copy strong {
+		font-size: 1.0625rem;
+		font-weight: 620;
+		letter-spacing: -0.015em;
+	}
+	.copy span {
+		font-size: 0.875rem;
+		line-height: 1.4;
+		opacity: 0.7;
+	}
+	.pill {
+		flex: none;
+		font-size: 0.875rem;
+		font-weight: 560;
+		padding: 0.45rem 0.9rem;
+		border-radius: 999px;
+		background: #1d1d1f;
+		color: #fff;
+	}
+
+	.replay {
+		position: absolute;
+		right: 1.25rem;
+		bottom: 1.25rem;
+		appearance: none;
+		border: 1px solid rgb(255 255 255 / 0.2);
+		background: rgb(255 255 255 / 0.06);
+		color: #f5f5f7;
+		font: 500 0.8125rem/1 var(--sl-font);
+		padding: 0.55rem 0.9rem;
+		border-radius: 999px;
+		cursor: pointer;
+	}
+	.replay:hover {
+		background: rgb(255 255 255 / 0.12);
+	}
+
+	@media (max-width: 52rem) {
+		.stage {
+			grid-template-columns: 1fr;
+			min-height: 0;
+		}
+		.editor {
+			border-right: none;
+			border-bottom: 1px solid rgb(255 255 255 / 0.08);
+		}
+		.preview {
+			min-height: 15rem;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.caret { animation: none; }
+		.card { transition: none; }
+	}
+</style>

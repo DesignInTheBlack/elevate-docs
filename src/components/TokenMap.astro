@@ -1,0 +1,76 @@
+---
+/* Token on the left, the exact CSS it compiles to on the right (compiler output). */
+const rows = [
+	{ token: ['pd', 'd6'], css: [['padding', '1.5rem']], note: 'four sides' },
+	{ token: ['bg-color', 'indigo'], css: [['background-color', '#5865EF']], swatch: '#5865EF' },
+	{ token: ['font', 'h3'], css: [['font-size', '3.375rem']] },
+	{ token: ['bd', 'round-d4'], css: [['border-radius', '1rem']] },
+];
+---
+<div class="map">
+	{rows.map((r) => (
+		<div class="row">
+			<code class="tok">
+				<span class="el-prop">{r.token[0]}</span><span class="el-sep">:</span><span class="el-mod">{r.token[1]}</span>
+			</code>
+			<span class="css">
+				{r.swatch && <i class="swatch" style={`background:${r.swatch}`} />}
+				{r.css.map(([p, v]) => <span><span class="p">{p}:</span> {v};</span>)}
+				{r.note && <span class="note">{r.note}</span>}
+			</span>
+		</div>
+	))}
+</div>
+
+<style>
+	.map {
+		display: grid;
+		margin-top: 3rem !important;
+		border-top: 1px solid var(--ink);
+	}
+	.map :global(*) {
+		margin-top: 0 !important;
+	}
+	.row {
+		display: grid;
+		grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+		align-items: center;
+		gap: 1.5rem;
+		padding-block: clamp(1rem, 2.4vw, 1.75rem);
+		border-bottom: 1px solid var(--hair);
+	}
+	.tok {
+		background: none !important;
+		padding: 0 !important;
+		font: 500 clamp(1.5rem, 0.9rem + 2.6vw, 3rem) / 1 var(--sl-font-mono) !important;
+		white-space: nowrap;
+		letter-spacing: -0.04em;
+	}
+	.css {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font: 0.9375rem/1.4 var(--sl-font-mono);
+		color: var(--ink);
+	}
+	.p {
+		color: var(--slate);
+	}
+	.swatch {
+		width: 1rem;
+		height: 1rem;
+		border-radius: 5px;
+		flex: none;
+	}
+	.note {
+		font-family: var(--sl-font);
+		color: var(--slate);
+		font-size: 0.875rem;
+	}
+	@media (max-width: 40rem) {
+		.row {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+		}
+	}
+</style>

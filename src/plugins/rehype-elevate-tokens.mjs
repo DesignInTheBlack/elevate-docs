@@ -3,6 +3,12 @@
 //   @state    →  .el-state    /bp/      →  .el-bp      separators → .el-sep
 // Only inline `code` is touched; fenced code blocks are left to Expressive Code.
 
+import { readFileSync } from 'node:fs';
+
+// Real Elevate property names (generated from elevate/core/system/declarationMap.ts),
+// so plain CSS like `display:flex` in prose isn't dressed up as an Elevate token.
+const PROPERTIES = new Set(JSON.parse(readFileSync(new URL('./elevate-properties.json', import.meta.url), 'utf8')));
+
 const BREAKPOINT = /^\/[a-z0-9]{1,5}\/$/i;
 const UTILITY = /^-?[a-z][a-z0-9-]*(?::[^\s:]+)+$/i;
 const STATE = /^@([a-z0-9+_-]+):\[(.*)\]$/i;
@@ -30,12 +36,12 @@ function tokenize(text) {
 		const out = [span('el-state', `@${state[1]}`), sep(':[')];
 		inner.forEach((t, i) => {
 			if (i) out.push(sep('_'));
-			out.push(...(UTILITY.test(t) ? utility(t) : [{ type: 'text', value: t }]));
+			out.push(...(UTILITY.test(t) && PROPERTIES.has(t.split(':')[0]) ? utility(t) : [{ type: 'text', value: t }]));
 		});
 		out.push(sep(']'));
 		return out;
 	}
-	if (UTILITY.test(text) && !text.includes('{') && !/^https?:/.test(text)) return utility(text);
+	if (UTILITY.test(text) && !text.includes('{') && PROPERTIES.has(text.split(':')[0])) return utility(text);
 	return null;
 }
 

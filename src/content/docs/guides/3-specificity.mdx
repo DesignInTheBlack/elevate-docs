@@ -17,11 +17,7 @@ To prevent conflicts, Elevate provides a **context utility**. It creates a tempo
 | `ctx:end`| None (closes the most recent scope) | `ctx:end` |
 | `ctx:end:Name`| None (closes a specific scope) | `ctx:end:card` |
 
-<br/>
-
 Although the modifier accepts any string, use a name that clearly relates to the component you are styling. It keeps your markup self-documenting, and `ctx:end:Name` helps prevent mismatched nesting.
-
-<br/>
 
 ```html
 <div class="ctx:card w:full grid:cols-5-fr:rows-1:gap-d6 /lg/ grid:cols-12-fr">
@@ -35,9 +31,6 @@ Although the modifier accepts any string, use a name that clearly relates to the
   </div>
 </div>
 ```
-<br/>
 Place `ctx:Name` at the start of the section you want to isolate, then add `ctx:end` (or `ctx:end:Name`) where that section finishes. Every class between these two markers inherits the context, giving you a clean, conflict-free way to manage specificity.
-
-<br/>
 
 Combinator directives (for example, `@child+hover:[...]`) require an active scope so they can target a specific boundary. In normal usage that means an active `ctx:` scope; inside env aliases they scope to the env element itself.

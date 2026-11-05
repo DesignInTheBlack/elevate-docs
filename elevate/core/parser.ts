@@ -11,7 +11,7 @@ import type { CstNode } from "chevrotain";
 // ║                 2. TOKEN DEFINITIONS                               ║
 // ║ Define core tokens using Chevrotain's `createToken`.               ║
 // ╚════════════════════════════════════════════════════════════════════╝
-const State = createToken({ name: "stateFlag", pattern: /@[a-zA-Z0-9-]+:/ });
+const State = createToken({ name: "stateFlag", pattern: /@[a-zA-Z0-9_-]+(?:\+[a-zA-Z0-9_-]+)*:/ });
 const openState = createToken({ name: "openState", pattern: /\[/ });
 const DirectProperty = createToken({ 
     name: "DirectProperty", 
@@ -46,9 +46,7 @@ const tokens = [State, openState, Property, Modifier, WhiteSpace, DirectProperty
 // ║                   4. LEXER INITIALIZATION                          ║
 // ║ Initialize the Lexer with the vocabulary.                          ║
 // ╚════════════════════════════════════════════════════════════════════╝
-const lexer = new Lexer(tokens, {
-    positionTracking: "onlyOffset" // Disable line and column tracking
-});
+
 
 // ╔════════════════════════════════════════════════════════════════════╗
 // ║                   5. PARSER DEFINITION                             ║
@@ -136,32 +134,67 @@ class ElevateParser extends CstParser {
 // ║                   6. COMPILER FUNCTION                            ║
 // ║ Define the `elevateCompiler` function to process input classes.   ║
 // ╚════════════════════════════════════════════════════════════════════╝
-export const elevateCompiler = (className: string,context?: { fileName: string, lineNumber: number }): any => {
-    const parser = new ElevateParser();
-    const result = lexer.tokenize(className);
 
-    // Lexing Error Handling
+
+class ParserManager {
+    private static parser: ElevateParser | null = null;
+    private static lexerInstance: Lexer | null = null;
+    
+    static getParser(): ElevateParser {
+        if (!ParserManager.parser) {
+            ParserManager.parser = new ElevateParser();
+        }
+        return ParserManager.parser;
+    }
+    
+    static getLexer(): Lexer {
+        if (!ParserManager.lexerInstance) {
+            ParserManager.lexerInstance = new Lexer(tokens, {
+                positionTracking: "onlyOffset"
+            });
+        }
+        return ParserManager.lexerInstance;
+    }
+    
+    static resetParser(parser: ElevateParser): void {
+        // Clear parsing errors and input
+        parser.errors = [];
+        parser.input = [];
+    }
+}
+
+export const elevateCompiler = (className: string, context?: { fileName: string, lineNumber: number }): any => {
+    const parser = ParserManager.getParser();
+    const lexer = ParserManager.getLexer(); // Changed this line
+    const normalizeStateBlockSpaces = (input: string) => {
+        if (!input.includes('@') || !input.includes('[') || !input.includes(']')) return input;
+        return input.replace(
+            /@([a-zA-Z0-9_-]+(?:\+[a-zA-Z0-9_-]+)*)\:\[([\s\S]*?)\]/g,
+            (_match, state, body) => {
+                const normalizedBody = body.replace(/\s+/g, '_');
+                return `@${state}:[${normalizedBody}]`;
+            }
+        );
+    };
+    const parseInput = normalizeStateBlockSpaces(className);
+    const result = lexer.tokenize(parseInput);
+
     if (result.errors.length > 0) {
-        console.error("Lexing errors detected:", result.errors);
-        return;
+        const first = result.errors[0];
+        throw new Error(`Lexing error: ${first.message}`);
     }
 
-    // Set tokens for parser input
+    ParserManager.resetParser(parser);
     parser.input = result.tokens;
 
-    // Parse input using the primary rule
     const cst = parser.PropertyDefinition();
     (cst as any).className = className;
 
-    // Parsing Error Handling 
     if (parser.errors.length > 0) {
-        console.error("Parsing errors detected:", parser.errors);
-        return;
+        const first = parser.errors[0];
+        throw new Error(`Parsing error: ${first.message}`);
     }
 
-    // Generate AST from CST using `toAst`
-    const ast = toAst(cst,context);
-    
-    // Return the AST
+    const ast = toAst(cst, context);
     return ast;
 };

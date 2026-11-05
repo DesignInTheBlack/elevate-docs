@@ -8,13 +8,9 @@ The contain class in Elevate is a utility for centering elements with consistent
 
 import { Aside } from '@astrojs/starlight/components';
 
-<br/>
-<br/>
-
 <Aside title="You've Gotta Start Somewhere, Right?">
 Elevate includes a set of sensible defaults for most things, but you can always extend them or override them as you see fit. For more information, check out the [Configuration & Extension](/guides/3-configuration/) guide.
 </Aside>
-
 
 ## Why Use Contain?
 
@@ -23,8 +19,6 @@ In traditional web development, creating centered containers often requires extr
 The contain class resolves these issues by:
 1. **Consistency Across Breakpoints**: Padding values are managed via a central file and applied via a single class, ensuring a unified layout regardless of screen size.
 2. **Simplicity**: The class generates all necessary CSS automatically, reducing boilerplate and making your codebase cleaner.
-
-
 
 ## How It Works
 
@@ -47,12 +41,12 @@ export const contain = {
 
 ### Example
 For the `lg` breakpoint:
-- Breakpoint: `lg` (`min-width: 1024px`).
+- Breakpoint: `lg` (`min-width: 64rem`, which is 1024px).
 - Spacing: `d8` (`2rem`).
 
 Generated CSS:
 ```css
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 64rem) {
   .contain {
     margin:auto;
     padding-left: 2rem;
@@ -64,7 +58,6 @@ Generated CSS:
 This automation ensures:
 - **No Manual CSS Rules**: The system creates all responsive styles for you.
 - **Consistency**: All containers adhere to a unified padding scale, ensuring that content is visually balanced across screen sizes.
-
 
 ## Simplified, Evenly Distributed Layouts
 

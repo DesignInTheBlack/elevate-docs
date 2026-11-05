@@ -3,55 +3,35 @@ title: "Colors"
 description: Elevate's Default Color System.
 ---
 
-Elevate CSS comes with a thoughtfully designed default color scheme built into the framework. This system provides a comprehensive set of colors for designing consistent, accessible, and visually appealing user interfaces. Each color family includes a range of shades for flexibility across various design needs.
+Elevate ships with nine color families, each on a nine-step ramp, plus `black`, `white` and `transparent`. Use any of them anywhere a property takes a color.
 
 import { Aside } from '@astrojs/starlight/components';
 
-<br/>
-<br/>
+## Writing a color
 
-<Aside title="You've Gotta Start Somewhere, Right?">
-Elevate includes a set of sensible defaults for most things, but you can always extend them or override them as you see fit. For more information, check out the [Configuration & Extension](/guides/3-configuration/) guide.
+Name the family, then add a step if you want something other than the base: `text:purple`, `bg-color:red-1`, `bd:indigo+2`.
+
+| Step | Tone | Good for |
+|---|---|---|
+| `-4` | Darkest | High-contrast text, strong emphasis |
+| `-3` | Very deep | Text on light backgrounds, bold accents |
+| `-2` | Deep | Strong accents, outlines |
+| `-1` | Moderately dark | Borders, icons, subtle emphasis |
+| *(none)* | Base | Brand elements, primary highlights |
+| `+1` | Lighter | Hover states, gentle highlights |
+| `+2` | Soft | Secondary backgrounds, quiet UI |
+| `+3` | Pastel | Large backgrounds |
+| `+4` | Lightest | Near-white surfaces, dividers |
+
+`black` and `white` have no steps. `transparent` works with every color property, for example `bg-color:transparent` or `bd:transparent`.
+
+<Aside title="Make the palette yours">
+These are starting values. Override them or add your own families in `elevate/core/system/design/colors.ts`. The [Configuration](/guides/3-configuration/) guide shows how.
 </Aside>
 
-## Color Structure
-
-Below is an **expanded** explanation of our **9-step color ramp**, spanning from **-4** to **+4**. This extended structure offers more granular control over color usage, from **deepest** shades for text or accents to **lightest** tints for subtle backgrounds or highlights.
-
-### 9-Step Ramp
-
-**-4**: The **darkest** shade. Ideal for high-contrast text or very strong emphasis. <br/>
-
-**-3**: A **very deep** tone, still excellent for text on light backgrounds or bold accents. <br/>
-
-**-2**: A **deep** shade, suitable for stronger accents, outlines, or text on lighter backgrounds. <br/>
-
-**-1**: A **moderately dark** shade, providing subtle emphasis for text, borders, or icons. <br/>
-
-**Base Color**: The **core shade**  -  often used for brand elements or primary highlights. <br/>
-
-**+1**: A **lighter** tint - useful for backgrounds, hover states, or gentle highlights. <br/>
-
-**+2**: A **soft** tint for low-contrast elements, such as secondary backgrounds or UI components. <br/>
-
-**+3**: An **even lighter** tint approaching a pastel range, suitable for large backgrounds or subdued highlights. <br/>
-
-**+4**: The **lightest** tint - close to a near-white variant, perfect for minimal backgrounds, subtle overlays, or dividing elements. <br/>
-
-<br/>
-<br/>
-
-
-These colors can be passed as a modifier in the following format: basecolor-shade, e.g. `text:purple` or `bg-color:red-1`.
-
-You can utilize shades by adding a number to the base color, e.g. `bg-color:red-1` or `bg-color:red+2`.
-
-<br/>
-<br/>
-
+## The palette
 
 Below is an overview of the default colors with their respective shades:
-<br/>
 
 <div>
 
@@ -169,7 +149,4 @@ Below is an overview of the default colors with their respective shades:
 </div>
 
 </div>
-
-
-
 
