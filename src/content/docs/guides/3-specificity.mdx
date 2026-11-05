@@ -1,36 +1,41 @@
 ---
 title: "Scopes and specificity"
-description: "How Elevate orders CSS, and how ctx scopes keep components from colliding."
+description: "How ctx scopes make a component's classes stronger and keep them to that component."
 ---
 
-### Addressing specificity issues
+Every Elevate class is a single class selector, so they all carry the same weight, and an outside stylesheet can override them. A scope fixes that for one component: classes inside it compile with the scope's class in front, which makes them stronger and keeps them to that component.
 
-Elevate CSS encourages concise, semantic class names by combining properties with modifiers. In some situations, this flexibility can lower selector specificity, which may let other styles override your intent.
+## Open and close a scope
 
-To prevent conflicts, Elevate provides a **context utility**. It creates a temporary, named scope so that everything inside it gains higher, predictable specificity.
+| Marker | What it does |
+|---|---|
+| `ctx:name` | Opens a scope called `name` |
+| `ctx:end:name` | Closes the scope called `name` |
+| `ctx:end` | Closes the most recently opened scope |
 
-### The `context` property
+Put `ctx:name` on the component's outer element, and `ctx:end:name` on the last element that belongs to it. Scopes follow the order of class lists in the file, not the HTML nesting, so everything written between the two markers is in the scope. Name the scope after the component. Naming the end marker catches mistakes: Elevate warns if `ctx:end:name` doesn't match the scope that's open, or if a scope is never closed.
 
-| Property | Expected Values | Example |
-|----------|-----------------|---------|
-| `ctx`    | PassThroughToken (for example, `card`) | `ctx:card` |
-| `ctx:end`| None (closes the most recent scope) | `ctx:end` |
-| `ctx:end:Name`| None (closes a specific scope) | `ctx:end:card` |
-
-Although the modifier accepts any string, use a name that clearly relates to the component you are styling. It keeps your markup self-documenting, and `ctx:end:Name` helps prevent mismatched nesting.
-
-```html
-<div class="ctx:card w:full grid:cols-5-fr:rows-1:gap-d6 /lg/ grid:cols-12-fr">
-  <div class="h:full bd:round-d4 col:x-start:y-between /lg/ col-spans:from-1:to-6">
-    <h2 class="font:h5:regular:sans text:white mg-b:d4">
-      Declaring Contexts Is Fun
-    </h2>
-    <p class="font:base:sans:regular text:grey+2:brief:snug mg-b:d4 /lg/ mg-b:0 ctx:end:card">
-      Any class between ctx:card and ctx:end:card is now scoped to the card context and will not collide with styles elsewhere.
-    </p>
-  </div>
+```html title="Card.astro"
+<div class="ctx:card pd:d4">
+  <h2 class="font:h5 ctx:end:card">Title</h2>
 </div>
+<p class="font:h5">Outside the card</p>
 ```
-Place `ctx:Name` at the start of the section you want to isolate, then add `ctx:end` (or `ctx:end:Name`) where that section finishes. Every class between these two markers inherits the context, giving you a clean, conflict-free way to manage specificity.
 
-Combinator directives (for example, `@child+hover:[...]`) require an active scope so they can target a specific boundary. In normal usage that means an active `ctx:` scope; inside env aliases they scope to the env element itself.
+```css title="What Elevate writes"
+.font\:h5 {
+  font-size: 1.5rem;
+}
+.ctx\:card.font\:h5, .ctx\:card .font\:h5 {
+  font-size: 1.5rem;
+}
+.ctx\:card.pd\:d4, .ctx\:card .pd\:d4 {
+  padding: 1rem; /* written as four sides */
+}
+```
+
+Inside the card, `font:h5` matches through `.ctx\:card`, with two classes of specificity. Outside it, the plain one-class rule applies.
+
+## Scopes and relational selectors
+
+Combinator directives such as `@child:[…]` and `@siblings:[…]` style elements relative to a boundary, so they need an open scope. See [States and selectors](/reference/supported-selectors/). Inside an [envelope](/guides/4-env-aliases/), the envelope's own element is the boundary, so no `ctx:` is needed.

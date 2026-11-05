@@ -400,12 +400,22 @@ const { title = data.title, tagline, actions = [] } = data.hero || {};
 			grid-template-columns: 1fr;
 			min-height: 0;
 		}
+		/* On narrow screens the result leads, so the card is visible as it builds */
+		.preview {
+			order: -1;
+			min-height: 13rem;
+			padding-bottom: 0.5rem;
+		}
 		.editor {
 			border-right: none;
-			border-bottom: 1px solid rgb(255 255 255 / 0.08);
+			border-top: 1px solid rgb(255 255 255 / 0.08);
+			gap: 0.9rem;
 		}
-		.preview {
-			min-height: 15rem;
+		.markup {
+			min-height: 5.5em;
+		}
+		.rule {
+			display: none;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {

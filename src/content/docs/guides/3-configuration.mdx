@@ -5,7 +5,7 @@ description: "Point Elevate at your files, then extend it with your own tokens a
 
 import { Aside } from '@astrojs/starlight/components';
 
-Elevate offers a powerful and flexible configuration system that's easy to adapt to your project's design and architectural goals. **However, with great power comes great responsibility** - be sure to review each configuration option carefully to ensure it aligns with your project's needs.
+Three files in `elevate/config/` control Elevate: `elevate.ts` says which files to read and where to write, `design.ts` holds your design tokens, and `syntax.ts` holds your own rules and properties.
 
 ## Basic configuration
 
@@ -31,6 +31,17 @@ const options = {
 
 export const config = options
 ```
+
+| Option | What it does |
+|---|---|
+| `Watch` | The folder Elevate scans, including every folder inside it except `node_modules` and hidden folders. Relative to where you run Elevate |
+| `FileTypes` | Which file extensions to read |
+| `Output` | The folder `elevate.css` is written to |
+| `Extend` | Paths to CSS files appended to the end of `elevate.css` |
+| `ClassRegex` | Patterns that find class lists in your files. Add one if your framework writes classes another way |
+| `SafeList` | Class names Elevate should skip, such as ones your JavaScript relies on |
+
+`elevate.css` also starts with a small CSS reset and the [`contain`](/default/containers/) class. Elevate skips class lists inside comments and fenced code blocks.
 
 Next up, you can import and distribute design system tokens in `elevate/config/design.ts`:
 
@@ -111,23 +122,7 @@ B. **Expand Upon Elevate's Syntax**
    - Define new properties in the `relationships` object in `config/syntax.ts`, mapping tokens and rules to CSS declarations according to your needs.
 
 <Aside type="caution" title="Token categories and compatibility">
-  In `config/design.ts`, you can spread your design token imports into the following existing token categories and they will be immediately compatible with Elevate's existing properties:
-
-    ColorToken<br/>
-    BreakPointToken<br/>
-    SpacingToken<br/>
-    FontSizeToken<br/>
-    FontFamilyToken<br/>
-    LineHeightToken<br/>
-    LetterSpacingToken<br/>
-    MeasureToken<br/>
-    FontWeightToken<br/>
-    ShadowToken<br/>
-    GradientToken<br/>
-    TextShadowToken<br/>
-    TransitionToken<br/>
-    PatternToken<br/>
-
+  In `config/design.ts`, spread your tokens into any of these existing categories and every built-in property that uses that category accepts them: `ColorToken`, `BreakPointToken`, `SpacingToken`, `FontSizeToken`, `FontFamilyToken`, `LineHeightToken`, `LetterSpacingToken`, `MeasureToken`, `FontWeightToken`, `ShadowToken`, `GradientToken`, `TextShadowToken`, `TransitionToken`, `PatternToken`.
 </Aside>
 
 ## Design system integration

@@ -3,30 +3,25 @@ title: Transform
 description: "Move, scale and rotate elements."
 ---
 
-Elevate CSS features two compound properties for setting the transform behavior of an element:
-
-### `transform` property modifiers
-
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `transform` | PassThroughToken (e.g.,  `(translateX(10px))` ) |  `transform:(translateX(10px))`  |
-| `origin` | PassThroughToken (e.g.,  `(top_left)` ) |  `origin:(top_left)`  |
-
-### Structured transform helpers (pass-through)
-
-These properties forward the value you provide directly into the CSS property:
-
-| Property   | Expected Values | Example     |
-|------------|------------------|-------------|
-| `translate` | PassThroughToken (e.g., `(10px,_20px)` ) | `translate:(10px,_20px)` |
-| `scale` | PassThroughToken (e.g., `(1.1)` ) | `scale:(1.1)` |
-| `rotate` | PassThroughToken (e.g., `(45deg)` ) | `rotate:(45deg)` |
-| `skew` | PassThroughToken (e.g., `(skew(10deg))` ) | `skew:(skew(10deg))` |
-
-Note: `skew` forwards its value into the `transform` property.
-
 import { Aside } from '@astrojs/starlight/components';
 
+Transforms take literal CSS, so their values are pass-through: wrap them in parentheses and use `_` for spaces.
+
+| Property | Compiles to | Example |
+|---|---|---|
+| `transform` | `transform` | `transform:(translateY(-4px)_scale(1.02))` |
+| `origin` | `transform-origin` | `origin:(top_left)` |
+| `translate` | `translate` | `translate:(10px_20px)` |
+| `scale` | `scale` | `scale:(1.1)` |
+| `rotate` | `rotate` | `rotate:(45deg)` |
+| `skew` | `transform` | `skew:(skew(10deg))` |
+
+`translate`, `scale` and `rotate` are the individual CSS properties, so they combine with each other and with `transform` instead of replacing it. Separate `translate` values with `_`, not commas. `skew` has no CSS property of its own, so it writes `transform` and needs the full `skew()` function.
+
+```html title="Lift a card on hover"
+<article class="transition:snappy @hover:[transform:(translateY(-4px))]">…</article>
+```
+
 <Aside title="Pass-through means literally">
-When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens also allow you to write spaces in your utility strings by placing an underscore (_) in place of the space.
+The value in parentheses is written into the CSS exactly as you type it, with each `_` turned into a space. Elevate doesn't check it, so a typo there won't fail the build.
 </Aside>

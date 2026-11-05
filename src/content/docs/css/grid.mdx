@@ -3,71 +3,59 @@ title: Grid
 description: "Columns, rows and gaps, set in one class."
 ---
 
-Elevate CSS simplifies CSS Grid layouts by introducing a series of concise shorthands for defining grid properties. This guide explains how to use the `grid` property with modifiers for rows, columns, and gaps as well as setting row and column spans with the `row-spans` and `col-spans` properties.
+`grid` makes an element a grid container. Add modifiers for columns, rows and gaps.
 
-## `grid` property modifiers
-Elevate supports the following modifiers for the `grid` property:
+| Modifier | Values | Compiles to | Example |
+|---|---|---|---|
+| Columns | `cols-1` to `cols-12`, or `cols-1-fr` to `cols-12-fr` | `grid-template-columns` | `grid:cols-3` |
+| Rows | `rows-1` to `rows-12`, or `rows-1-fr` to `rows-12-fr` | `grid-template-rows` | `grid:rows-2` |
+| Gap | `gap-` plus a [spacing token](/default/spacing/) | `gap` | `grid:gap-d4` |
+| Column gap | `colgap-` plus a spacing token | `column-gap` | `grid:colgap-d6` |
+| Row gap | `rowgap-` plus a spacing token | `row-gap` | `grid:rowgap-d2` |
 
-| **Modifier**             | **Expected Values**              | **Example**                          |
-|--------------------------|----------------------------------|--------------------------------------|
-| Rows           | `rows-2` or `rows-2-fr` (up to 12)         | `grid:rows-2`                         |
-| Cols            | `cols-4` or `cols-4-fr` (up to 12)         | `grid:cols-4-fr`                      |
-| Gap            | SpacingToken (e.g., `d3`)      | `grid:gap-d3`                        |
-| ColGap         | SpacingToken (e.g., `d3`)      | `grid:colgap-d3`                     |
-| RowGap         | SpacingToken (e.g., `d3`)      | `grid:rowgap-d3`                     |
+`cols-3` compiles to `repeat(3,auto)`, which sizes columns by their content, so wider content gets a wider column. `cols-3-fr` compiles to `repeat(3,1fr)`: equal columns that share the space.
 
-## Grid areas
-
-Use pass-through values to define template areas and assign areas to items:
-
-| Property   | Expected Values | Example |
-|------------|------------------|---------|
-| `grid-template-areas` | PassThroughToken (e.g., `("header_header"_"sidebar_main")`) | `grid-template-areas:("header_header"_"sidebar_main")` |
-| `grid-area` | PassThroughToken (e.g., `(header)`) | `grid-area:(header)` |
-
-## `row-spans` and `col-spans` property modifiers
-The `row-spans` and `col-spans` properties can be used to specify the number of rows or columns a cell should span across. These properties accept the following syntax:
-
-| **Modifier**             | **Expected Values**              | **Example**                          |
-|--------------------------|----------------------------------|--------------------------------------|
-| From     | NumericToken (e.g., `1`, up to 12)         | `col-spans:from-1:to-3`                         |
-| To          | NumericToken (e.g., `3`, up to 12)         | `row-spans:from-2:to-4`                         |
-| All          | None (direct property)         | `col-spans-all`                         |
-| All          | None (direct property)         | `row-spans-all`                         |
-
-import { Aside } from '@astrojs/starlight/components';
-
-<Aside title="Evenly distributing space">
-Note that you can also add `fr` to the end of the `rows` and `cols` modifiers to indicate fractional rows or columns. That is, evenly distribute the available space among the specified number of rows or columns.
-
-```html
-<!-- Four Columns of Evenly Distributed Space -->
-<div class="grid:cols-4-fr">
+```html title="Three equal columns"
+<div class="grid:cols-3-fr:gap-d4">…</div>
 ```
 
-</Aside>
+For card grids that reflow on their own, see [`grid-auto`](/guides/layout/#grid-auto).
 
-## `auto` property modifiers
-The `auto` properties utilize the passthrough token to allow for more traditionally robust control over the layout of grid items. These properties accept the following syntax:
+## Spanning
 
-| **Modifier**             | **Expected Values**              | **Example**                          |
-|--------------------------|----------------------------------|--------------------------------------|
-| 'auto-col'    | PassThroughToken (e.g.,  `(minmax(100px,_auto))` )          | `auto-col:(minmax(100px,_auto))`                         |
-| 'auto-row'        | PassThroughToken (e.g.,  `(minmax(20%,_80vmax))` )         | `auto-row:(minmax(20%,_80vmax))`                         |
-| 'auto-flow'    | PassThroughToken (e.g.,  `(row_dense)` )         | `auto-flow:(row_dense)`                         |
+`col-spans` and `row-spans` place an item between two grid lines. Lines are numbered from 1, and the end line isn't included, so `from-1:to-3` covers two columns.
 
-<Aside title="Pass-through means literally">
-When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens also allow you to write spaces in your utility strings by placing an underscore (_) in place of the space.
-</Aside>
+| Property | Modifiers | Compiles to | Example |
+|---|---|---|---|
+| `col-spans` | `from-` and `to-` plus a number | `grid-column-start`, `grid-column-end` | `col-spans:from-1:to-3` |
+| `row-spans` | `from-` and `to-` plus a number | `grid-row-start`, `grid-row-end` | `row-spans:from-2:to-4` |
+| `col-spans-all` | none (standalone) | `grid-column: 1 / -1` | `col-spans-all` |
+| `row-spans-all` | none (standalone) | `grid-row: 1 / -1` | `row-spans-all` |
 
-## Examples of grid layouts
-
-Elevate CSS ensures creating grid layouts is intuitive and concise, enabling dynamic design with minimal effort while simultaneously preserving the power and flexibility of CSS Grid.
-
-```html
-<!-- Declaring a Grid Layout -->
-<div class="grid:gap-d3:rows-2:cols-4">
-    <div class = "col-spans:from-1:to-3"></div>
+```html title="A header across all columns"
+<div class="grid:cols-3-fr:gap-d4">
+  <header class="col-spans-all">…</header>
+  <main class="col-spans:from-1:to-3">…</main>
+  <aside>…</aside>
 </div>
 ```
 
+## Named areas and auto tracks
+
+These take literal CSS in parentheses, with `_` for spaces.
+
+| Property | Compiles to | Example |
+|---|---|---|
+| `grid-template-areas` | `grid-template-areas` | `grid-template-areas:('head_head'_'side_main')` |
+| `grid-area` | `grid-area` | `grid-area:(head)` |
+| `auto-col` | `grid-auto-columns` | `auto-col:(minmax(100px,_auto))` |
+| `auto-row` | `grid-auto-rows` | `auto-row:(minmax(20%,_80vmax))` |
+| `auto-flow` | `grid-auto-flow` | `auto-flow:(row_dense)` |
+
+```html title="A layout drawn with named areas"
+<div class="grid:cols-2-fr:gap-d4 grid-template-areas:('head_head'_'side_main')">
+  <header class="grid-area:(head)">…</header>
+  <nav class="grid-area:(side)">…</nav>
+  <main class="grid-area:(main)">…</main>
+</div>
+```

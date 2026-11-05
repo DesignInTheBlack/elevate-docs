@@ -3,16 +3,18 @@ title: Outline
 description: "Focus rings and outlines that don't affect layout."
 ---
 
-Elevate CSS features a compound property for setting outline color, width, style, and offset:
+Outlines draw outside the border and don't change layout, which makes them right for focus rings. Combine any of these modifiers on one `outline` class.
 
-### `outline` property modifiers
+| Modifier | Values | Compiles to | Example |
+|---|---|---|---|
+| Color | Any [color token](/default/colors/) | `outline-color` | `outline:indigo` |
+| Width | Any [spacing token](/default/spacing/) | `outline-width` | `outline:d0` |
+| Style | `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset`, `outset`, `none`, `hidden` | `outline-style` | `outline:solid` |
+| Offset | `off-` plus a spacing token | `outline-offset` | `outline:off-d1` |
+| Radius | `round-` plus a spacing token | `border-radius` | `outline:round-d2` |
 
-| Modifier  | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `color` |  ColorToken (e.g., `purple+1`) |  `outline:purple+1`  |
-| `width` |  SpacingToken (e.g., `d4`) |  `outline:d4`  |
-| `style` |  `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset`, `outset`, `none`, `hidden`|  `outline:dotted`  |
-| `offset` |  SpacingToken (e.g., `d4`) |  `outline:off-d4`  |
-| `radius` |  SpacingToken (e.g., `d4`) |  `outline:round-d4`  |
+There's no CSS `outline-radius`, so `round-` sets the element's `border-radius`, which outlines follow in current browsers.
 
-Note: `outline:round-*` sets `border-radius` on the element (there is no native `outline-radius` property).
+```html title="A clear focus ring"
+<button class="@focus-visible:[outline:solid:d0:indigo:off-d1]">Save</button>
+```

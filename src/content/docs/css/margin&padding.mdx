@@ -3,64 +3,40 @@ title: "Margin and padding"
 description: "Space around and inside elements, on every side or just the ones you name."
 ---
 
-## Margin and padding
+`mg` sets margin and `pd` sets padding. Both take [spacing tokens](/default/spacing/), plus sizing keywords like `auto` and `0`.
 
-The `margin` (abbreviated as `mg`) and `padding` (abbreviated as `pd`) properties support various spacing configurations. You can use **spacing tokens** to define the values, with the following syntax:
+| Values | Applies to | Example |
+|---|---|---|
+| One | All four sides | `pd:d4` |
+| Two | First: left and right. Second: top and bottom | `pd:d6:d3` |
+| Four | Top, left, right, bottom, in that order | `mg:d2:d4:d4:d8` |
 
-### `mg` property modifiers
+The four-value order is Elevate's own: top, left, right, bottom. It isn't CSS's clockwise order. Use one, two or four values. With three, the bottom side is left unset.
 
-| **Modifier**         | **Expected Values**                | **Example** |
-|---------------------------|---------------------------|-------------|
-| Margin Values (All Sides)        | SpacingToken (e.g., `d3`)         | `mg:d2`       |
-|  (X/Y) | SpacingToken (e.g., `d3`)  | `mg:d2:d3` (First value applies to the X axis and second value applies to the Y axis) |
-|  (Individual Sides) | SpacingToken (e.g., `d3`)  | `mg:d2:d3:d4:d5` |
-| Y Axis Margins | SpacingToken (e.g., `d3`)  | `mg-y:d2` (Applies to the Y axis only) |
-| X Axis Margins | SpacingToken (e.g., `d3`)  | `mg-x:d2` (Applies to the X axis only) |
+```html title="A button with more room at the sides"
+<button class="pd:d4:d2">Continue</button>
+```
 
-### `pd` property modifiers
+## One axis or one side
 
-| **Modifier**         | **Expected Values**                | **Example** |
-|---------------------------|---------------------------|-------------|
-| Padding Values (All Sides)       | SpacingToken (e.g., `d3`)        | `pd:d2`       |
-| (X/Y) | SpacingToken (e.g., `d3`)  | `pd:d2:d3` (First value applies to the X axis and second value applies to the Y axis) |
-| (Individual Sides)| SpacingToken (e.g., `d3`)  | `pd:d2:d3:d4:d5`|
-| Y Axis Padding | SpacingToken (e.g., `d3`)  | `pd-y:d2` (Applies to the Y axis only) |
-| X Axis Padding | SpacingToken (e.g., `d3`)  | `pd-x:d2` (Applies to the X axis only) |
+| Property | Sets | Example |
+|---|---|---|
+| `pd-x`, `mg-x` | Left and right | `mg-x:auto` |
+| `pd-y`, `mg-y` | Top and bottom | `pd-y:c1` |
+| `pd-t`, `pd-r`, `pd-b`, `pd-l` | One side of padding | `pd-t:d2` |
+| `mg-t`, `mg-r`, `mg-b`, `mg-l` | One side of margin | `mg-b:d6` |
 
-Elevate also supports single directional variations for the `mg` and `pd` properties such as:  
+`mg-x:auto` centers a block that has a width, the same as the [`center`](/guides/layout/) layout class.
 
-| **Single Directional Properties**         | **Expected Values**                | **Example** |
-|---------------------------|---------------------------|-------------|
-| `pd-t`   | SpacingToken (e.g., `d3`)  | `pd-t:d2` |
-| `pd-b`   | SpacingToken (e.g., `d3`)  | `pd-b:d2` |
-| `pd-l`   | SpacingToken (e.g., `d3`)  | `pd-l:d2` |
-| `pd-r`   | SpacingToken (e.g., `d3`)  | `pd-r:d2` |
-| `mg-t`   | SpacingToken (e.g., `d3`)  | `mg-t:d2` |
-| `mg-b`   | SpacingToken (e.g., `d3`)  | `mg-b:d2` |
-| `mg-l`   | SpacingToken (e.g., `d3`)  | `mg-l:d2` |
-| `mg-r`   | SpacingToken (e.g., `d3`)  | `mg-r:d2` |
+## Logical sides
 
-## Logical spacing (inline and block)
+For layouts that should flip in right-to-left languages, use the logical properties. Each takes one spacing token.
 
-Elevate also supports logical spacing properties for inline and block directions:
+| Margin | Padding |
+|---|---|
+| `margin-inline`, `margin-inline-start`, `margin-inline-end` | `padding-inline`, `padding-inline-start`, `padding-inline-end` |
+| `margin-block`, `margin-block-start`, `margin-block-end` | `padding-block`, `padding-block-start`, `padding-block-end` |
 
-| Property   | Expected Values | Example |
-|------------|------------------|---------|
-| `margin-inline` | SpacingToken | `margin-inline:d3` |
-| `margin-inline-start` | SpacingToken | `margin-inline-start:d2` |
-| `margin-inline-end` | SpacingToken | `margin-inline-end:d2` |
-| `margin-block` | SpacingToken | `margin-block:d3` |
-| `margin-block-start` | SpacingToken | `margin-block-start:d2` |
-| `margin-block-end` | SpacingToken | `margin-block-end:d2` |
-| `padding-inline` | SpacingToken | `padding-inline:d3` |
-| `padding-inline-start` | SpacingToken | `padding-inline-start:d2` |
-| `padding-inline-end` | SpacingToken | `padding-inline-end:d2` |
-| `padding-block` | SpacingToken | `padding-block:d3` |
-| `padding-block-start` | SpacingToken | `padding-block-start:d2` |
-| `padding-block-end` | SpacingToken | `padding-block-end:d2` |
-| `inset-inline` | SpacingToken | `inset-inline:d3` |
-| `inset-inline-start` | SpacingToken | `inset-inline-start:d2` |
-| `inset-inline-end` | SpacingToken | `inset-inline-end:d2` |
-| `inset-block` | SpacingToken | `inset-block:d3` |
-| `inset-block-start` | SpacingToken | `inset-block-start:d2` |
-| `inset-block-end` | SpacingToken | `inset-block-end:d2` |
+```html
+<li class="padding-inline-start:d4">…</li>
+```

@@ -3,16 +3,15 @@ title: "Object fit"
 description: "Decide how images and video fill their box."
 ---
 
-Elevate CSS features a compound property for setting how a replaced element should fit its container:
+Images and video keep their own proportions by default and can stretch or overflow their box. `fit` decides how they fill it.
 
-### `fit` property modifiers
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `fit` | `fill`, `contain`, `cover`, `none`, `scale-down` | `object-fit` | `fit:cover` |
+| `object-position` | A pass-through value | `object-position` | `object-position:(center_top)` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `fit` |  `fill`, `contain`, `cover`, `none`, `scale-down` |  `fit:cover`  |
+`cover` fills the box and crops the overflow. `contain` shows the whole image and leaves space around it. Use `object-position` to choose which part stays in view, with `_` in place of spaces.
 
-### Object position
-
-| Property   | Expected Values | Example |
-|------------|------------------|---------|
-| `object-position` | PassThroughToken (e.g., `(center_top)` ) | `object-position:(center_top)` |
+```html title="A square avatar that keeps faces in frame"
+<img class="aspect:square w:d12 fit:cover object-position:(center_top) bd:round-d8" src="…" alt="">
+```

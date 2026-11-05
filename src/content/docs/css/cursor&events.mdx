@@ -3,17 +3,26 @@ title: "Cursor and pointer events"
 description: "Set the cursor, and decide whether an element responds to the pointer."
 ---
 
-Elevate CSS features two distinct compound properties for customizing the user's cursor as well as pointer events. These properties include:
+## `cursor`
 
-### `cursor` property modifiers
+| Values | Compiles to | Example |
+|---|---|---|
+| `default`, `pointer`, `text`, `crosshair`, `not-allowed`, `progress`, `wait`, `help`, `context-menu`, `move`, `grab`, `grabbing` | `cursor` | `cursor:pointer` |
+| `col-resize`, `row-resize`, `n-resize`, `e-resize`, `s-resize`, `w-resize`, `ne-resize`, `nw-resize`, `se-resize`, `sw-resize` | `cursor` | `cursor:col-resize` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `cursor`   |    `default`, `pointer`, `text`, `crosshair`, `not-allowed`, `progress`, `wait`, `help`, `context-menu`, `col-resize`, `row-resize`, `n-resize`, `e-resize`, `s-resize`, `w-resize`, `ne-resize`, `nw-resize`, `se-resize`, `sw-resize`, `grab`, `grabbing`, `move`    |  `cursor:grabbing`  |
+```html title="A draggable card"
+<li class="cursor:grab @active:[cursor:grabbing]">…</li>
+```
 
-### `events` property modifiers
+## `events`
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `events`   |`auto`, `none`, `visible-paint`, `visible-fill`, `visible-stroke`, `visible`, `fill`, `stroke`, `all`    | `events:none`  |
+`events:none` makes an element ignore the pointer, so clicks pass through to whatever is underneath. The SVG values control which painted parts of a shape respond.
 
+| Values | Compiles to | Example |
+|---|---|---|
+| `auto`, `none`, `all` | `pointer-events` | `events:none` |
+| `visible`, `visible-paint`, `visible-fill`, `visible-stroke`, `fill`, `stroke` | `pointer-events` (`visiblePainted`, `visibleFill`, `visibleStroke`, …) | `events:visible-fill` |
+
+```html title="A decorative overlay that doesn't block clicks"
+<div class="absolute inset:d0 events:none">…</div>
+```

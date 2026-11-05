@@ -3,20 +3,22 @@ title: Filter
 description: "Blur, blend and adjust elements and what's behind them."
 ---
 
-Elevate CSS features a single compound property for setting the filter behavior of an element:
+Filters and blend modes take literal CSS, so most values are pass-through: put them in parentheses, with `_` in place of spaces.
 
-### `filter` property modifiers
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `filter` | A pass-through value | `filter` | `filter:(blur(5px))` |
+| `backdrop-filter` | A pass-through value | `backdrop-filter` | `backdrop-filter:(blur(8px))` |
+| `mix-blend-mode` | `normal`, `multiply`, `screen`, `overlay`, `darken`, `lighten`, `color-dodge`, `color-burn`, `hard-light`, `soft-light`, `difference`, `exclusion`, `hue`, `saturation`, `color`, `luminosity`, `plus-lighter` | `mix-blend-mode` | `mix-blend-mode:multiply` |
+| `background-blend-mode` | Same as `mix-blend-mode` | `background-blend-mode` | `background-blend-mode:overlay` |
+| `isolation` | `auto`, `isolate` | `isolation` | `isolation:isolate` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `filter` | PassThroughToken (e.g.,  `(blur(5px))` ) |  `filter:(blur(5px))`  |
+```html title="A frosted header"
+<header class="sticky top:d0 backdrop-filter:(saturate(180%)_blur(20px)) bg-color:white">…</header>
+```
 
-### Effects & compositing
+```html title="Several filters at once"
+<img class="filter:(grayscale(1)_contrast(1.2))" src="…" alt="">
+```
 
-| Property   | Expected Values | Example     |
-|------------|------------------|-------------|
-| `backdrop-filter` | PassThroughToken (e.g., `(blur(8px))` ) | `backdrop-filter:(blur(8px))` |
-| `mix-blend-mode` | `normal`, `multiply`, `screen`, `overlay`, `darken`, `lighten`, `color-dodge`, `color-burn`, `hard-light`, `soft-light`, `difference`, `exclusion`, `hue`, `saturation`, `color`, `luminosity`, `plus-lighter` | `mix-blend-mode:multiply` |
-| `background-blend-mode` | Same as `mix-blend-mode` | `background-blend-mode:overlay` |
-| `isolation` | `auto`, `isolate` | `isolation:isolate` |
-
+`isolation:isolate` starts a new stacking context, which keeps a child's blend mode from mixing with the page behind the parent.

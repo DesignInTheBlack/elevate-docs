@@ -3,30 +3,26 @@ title: "Breakpoints"
 description: "Ten mobile-first breakpoints, from small phones to 4K displays."
 ---
 
-Elevate CSS comes with a set of thoughtfully designed default breakpoints to simplify responsive design. These breakpoints cover a wide range of devices, ensuring seamless adaptability across screens of all sizes.
-
 import { Aside } from '@astrojs/starlight/components';
 
+Each breakpoint is a minimum width. Classes after `/md/` apply from 768px up, so you write the phone layout first and add changes as the screen grows.
+
+| Breakpoint | Min width | Pixels | Typical screen |
+|---|---|---|---|
+| `2xs` | `20rem` | 320px | Small phones |
+| `xs` | `30rem` | 480px | Large phones |
+| `sm` | `40rem` | 640px | Phones in landscape |
+| `md` | `48rem` | 768px | Tablets in portrait |
+| `lg` | `64rem` | 1024px | Tablets in landscape, small laptops |
+| `xl` | `80rem` | 1280px | Laptops |
+| `2xl` | `96rem` | 1536px | Large laptops and monitors |
+| `3xl` | `120rem` | 1920px | Full HD displays |
+| `4xl` | `160rem` | 2560px | QHD displays |
+| `5xl` | `240rem` | 3840px | 4K displays |
+
 <Aside title="Make it yours">
-These are starting values. Override them or add your own in the [Configuration](/guides/3-configuration/) guide.
+Change these values in `elevate/core/system/design/breakpoints.ts`. Keep them in ascending order, since Elevate writes media queries in the order they're listed, and keep names to three letters or numbers: the compiler only recognizes `/name/` markers up to three characters long.
 </Aside>
-
-## Breakpoints overview
-
-The following table outlines the default breakpoints provided by Elevate CSS, along with their corresponding pixel and rem values:
-
-| **Breakpoint** | **Key**  | **Min Width** | **Description**                                   |
-|----------------|----------|---------------|---------------------------------------------------|
-| `2xs`          | `20rem`  | `320px`       | Small phone (iPhone SE 2nd gen)                   |
-| `xs`           | `30rem`  | `480px`       | Standard phone (iPhone 14, Pixel 7)               |
-| `sm`           | `40rem`  | `640px`       | Large phone or phone landscape (iPhone 14 Pro Max)|
-| `md`           | `48rem`  | `768px`       | Small tablet (iPad Mini portrait)                 |
-| `lg`           | `64rem`  | `1024px`      | Tablet landscape or netbook (iPad Air landscape)  |
-| `xl`           | `80rem`  | `1280px`      | Everyday laptop (13-inch MacBook Air)             |
-| `2xl`          | `96rem`  | `1536px`      | Wide laptop or large monitor (16-inch MacBook Pro)|
-| `3xl`          | `120rem` | `1920px`      | Full HD desktop display (24-inch 1080p)          |
-| `4xl`          | `160rem` | `2560px`      | Quad HD monitor (27-inch QHD)                     |
-| `5xl`          | `240rem` | `3840px`      | Ultra HD display (32-inch 4 K)                    |
 
 ## How to use breakpoints
 

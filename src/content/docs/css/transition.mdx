@@ -3,16 +3,29 @@ title: Transition
 description: "Animate changes between states with timing tokens."
 ---
 
-Elevate CSS features a compound property for setting transitions:
-
-### `transition` property modifiers
-
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `transition` | `ultra-fast` (all 0.05s ease-in-out)<br/>`fast` (all 0.1s ease-in-out)<br/>`medium` (all 0.2s ease-in-out)<br/>`slow` (all 0.3s ease-in-out)<br/>`ultra-slow` (all 0.5s ease-in-out)<br/>`ease` (all 0.3s ease)<br/>`ease-in` (all 0.3s ease-in)<br/>`ease-out` (all 0.3s ease-out)<br/>`linear` (all 0.3s linear)<br/>`snappy` (all 0.2s cubic-bezier(0.4, 0, 0.6, 1))<br/>`fluid` (all 0.4s cubic-bezier(0.25, 1, 0.5, 1))<br/>`relaxed` (all 0.6s ease-in-out) |  `transition:snappy`  |
-
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="Effects are design tokens">
-As with all other effects in Elevate CSS, transitions are considered to be a "design decision" and as such are treated as design system tokens. This means you can override the preset options, bring your own, etc
+Transitions are design tokens, so the same speeds and curves are used everywhere. Each token animates `all` properties.
+
+| Token | Compiles to |
+|---|---|
+| `ultra-fast` | `all 0.05s ease-in-out` |
+| `fast` | `all 0.1s ease-in-out` |
+| `medium` | `all 0.2s ease-in-out` |
+| `slow` | `all 0.3s ease-in-out` |
+| `ultra-slow` | `all 0.5s ease-in-out` |
+| `ease` | `all 0.3s ease` |
+| `ease-in` | `all 0.3s ease-in` |
+| `ease-out` | `all 0.3s ease-out` |
+| `linear` | `all 0.3s linear` |
+| `snappy` | `all 0.2s cubic-bezier(0.4, 0, 0.6, 1)` |
+| `fluid` | `all 0.4s cubic-bezier(0.25, 1, 0.5, 1)` |
+| `relaxed` | `all 0.6s ease-in-out` |
+
+```html title="A button that eases into its hover color"
+<button class="bg-color:grey+4 transition:snappy @hover:[bg-color:indigo_text:white]">Continue</button>
+```
+
+<Aside title="Transitions are design tokens">
+Change these values, or add your own, in `elevate/core/system/design/effects.ts`.
 </Aside>

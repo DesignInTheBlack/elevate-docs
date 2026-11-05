@@ -3,16 +3,21 @@ title: Gradients
 description: "Gradients are design tokens, applied in one class."
 ---
 
-Elevate CSS features a compound property for setting gradients:
-
-### `gradient` property modifiers
-
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `gradient` |  GradientToken (e.g., `fadetoblack`) |  `gradient:fadetoblack`  |
-
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="Effects are design tokens">
-As with all other effects in Elevate CSS, gradients are considered to be a "design decision" and as such are treated as design system tokens. This means you can override the preset options, bring your own, etc
+Gradients are design tokens, so a brand gradient is defined once and used by name.
+
+| Token | Compiles to |
+|---|---|
+| `fadetoblack` | `background: linear-gradient(0deg, rgba(0,0,0,0.5032387955182073) 0%, rgba(255,255,255,0) 100%)` |
+
+```html title="Darken the bottom of an image so a caption stays readable"
+<figure class="relative">
+  <img src="…" alt="">
+  <figcaption class="absolute inset:d0 gradient:fadetoblack text:white">…</figcaption>
+</figure>
+```
+
+<Aside title="Add your own">
+Elevate ships with one gradient. Add yours to `gradients` in `elevate/core/system/design/effects.ts` and use it as `gradient:yourname`.
 </Aside>

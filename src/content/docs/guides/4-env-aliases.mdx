@@ -3,7 +3,7 @@ title: "Envelopes"
 description: Condense a utility list into a single class and reopen it later.
 ---
 
-Envelopes let you collapse a full utility string into one named class and reopen it when you need to edit. They are stored in `elevate.env.json` and applied anywhere you use `env:name`.
+An envelope turns a long class list into one named class, like `env:card`, that you can reuse anywhere and reopen to edit. Elevate keeps the class lists in `elevate.env.json` at your project root and rewrites your file for you when you save.
 
 ## Create an envelope
 
@@ -77,7 +77,8 @@ On save, this becomes:
 ## Rules and notes
 
 - Prefer one envelope per class list. Multiple env definitions skip auto-condense.
-- Names allow letters, numbers, and dashes.
+- Names use letters, numbers and dashes.
+- Defining the same name twice with different classes stops the build with an Env Conflict. Reopen the envelope with `:open` to change it.
 - Breakpoints and state blocks are captured as part of the envelope.
 - Combinator directives are allowed; they target relatives of the env element (implicit env scope).
 - Auto rewrite only runs on static class strings. Dynamic className expressions are skipped.

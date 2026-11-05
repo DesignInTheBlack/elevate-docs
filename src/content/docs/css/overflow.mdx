@@ -3,18 +3,18 @@ title: Overflow
 description: "Clip, scroll or show content that doesn't fit."
 ---
 
-Elevate CSS features compound property for specifying the overflow of an element:
+Decide what happens to content that doesn't fit its box.
 
-### `overflow` property modifiers
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `overflow` | `visible`, `hidden`, `scroll`, `auto` | `overflow` | `overflow:hidden` |
+| `overflow-x` | Same | `overflow-x` | `overflow-x:auto` |
+| `overflow-y` | Same | `overflow-y` | `overflow-y:auto` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `overflow` |  `visible`, `hidden`, `scroll`, `auto`  |  `overflow:hidden`  |
+`auto` shows a scrollbar only when it's needed. `scroll` always shows one. `hidden` clips the content.
 
-### Axis-specific overflow
-
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `overflow-x` |  `visible`, `hidden`, `scroll`, `auto`  |  `overflow-x:scroll`  |
-| `overflow-y` |  `visible`, `hidden`, `scroll`, `auto`  |  `overflow-y:auto`  |
-
+```html title="A wide table that scrolls sideways on small screens"
+<div class="overflow-x:auto">
+  <table>…</table>
+</div>
+```

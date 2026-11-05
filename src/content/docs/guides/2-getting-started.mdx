@@ -3,282 +3,131 @@ title: "Getting started"
 description: "Install Elevate, run the compiler, and write your first classes."
 ---
 
-This quick start guide is included to give you an opportunity to dive right into the world of Elevate CSS. With that said, however, it is **highly recommended** that you familiarize yourself with the **configuration** and **specificity** pages as well as they provide a deeper understanding of Elevate's capabilities, functionality, and best practices as well as how to best leverage the framework for your specific needs.
-
-### Installation and usage
 import { Steps } from '@astrojs/starlight/components';
-import { Code } from '@astrojs/starlight/components';
+
+## Install
+
+Elevate needs Node.js 18 or later.
 
 <Steps>
 
-1. Use NPM to Install Elevate <Code code={`npm install elevate-framework`} title={`Terminal`}/>
+1. Add Elevate to your project.
 
-2. Run the Elevate setup script <Code code={`npx elevate-framework prepare`} title={`Terminal`}/>
+   ```bash
+   npm install elevate-framework
+   ```
 
-3. Watch Files for Changes and Convert Elevate's Syntax to CSS <Code code={`npm run elevate`} title={`Terminal`}/>
+2. Set it up. This copies an `elevate/` folder into your project and adds an `elevate` script to your `package.json`.
+
+   ```bash
+   npx elevate-framework prepare
+   ```
+
+3. Start the compiler. It watches your files and rewrites `elevate.css` every time you save.
+
+   ```bash
+   npm run elevate
+   ```
+
+4. Link `elevate.css` in your page, and start writing classes.
 
 </Steps>
 
-### Basic configuration
+By default Elevate watches `elevate/templates` and writes `elevate.css` to your project root. Point it at your own source folder in [Configuration](/guides/3-configuration/).
 
-Elevate's general settings are defined in `elevate/config/elevate.ts`:
+## How a class is built
 
-```typescript
-const options = {
-    Watch:'./elevate/templates', // Folder to watch for changes
-    FileTypes:['html', 'jsx', 'tsx', 'astro'], // Valid filetypes to watch for changes
-    Output:'./', // Where to put the compiled CSS
-    Extend:[], // CSS files to include as well
-    ClassRegex: [
-      /\bclass\s*=\s*"([^"]*)"/g,                // class="..."
-      /\bclass\s*=\s*'([^']*)'/g,                // class='...'
-      /\bclassName\s*=\s*"([^"]*)"/g,            // className="..."
-      /\bclassName\s*=\s*'([^']*)'/g,            // className='...'
-      /\bclassName\s*=\s*{\s*`([\s\S]*?)`\s*}/g,  // className={`...`}
-      /\bclassName\s*=\s*{\s*"([^"]*)"\s*}/g,    // className={"..."}
-      /\bclassName\s*=\s*{\s*'([^']*)'\s*}/g,    // className={'...'}
-      ],
-    SafeList:[]
-}
-
-export const config = options
-```
-
-### What are utility strings?
-
-**Basic Usage:**  
-
-At the heart of Elevate's syntax is what are called "utility strings", which are used to describe styling and serve as the basis for CSS generation while simultaneously doubling as the actual CSS classes. This convention means that, by default, your CSS files only ever contain classes that are actually being used in your markup.
-
-Unlike traditional utility frameworks which come packed with pre-defined utility classes, you are effectively writing CSS as you write utility strings in Elevate through the expression of property and modifier combinations - which are validated against your design system and a series of built-in conventions as well as your own custom syntax rules at build-time to ensure consistency.
-
-**The Utility String Format**:
-
-Format: `property:modifier`
+Every class names a property, then one or more values, separated by colons.
 
 ```html
-<div class="text:grey-2">
+<p class="text:grey-2">…</p>
 ```
 
-**Direct Properties:**  
+Some properties stand on their own, like `block` (`display: block`) or `relative` (`position: relative`).
 
-Direct properties are properties that do not require any modifier and that define a single CSS declaration. Generally used for layout and positioning.
+Most take values, and one class can carry several:
 
 ```html
-<div class="block"> <!-- display: block -->
+<p class="text:grey-2:snug:left">…</p>
 ```
 
-**Compound Properties:** 
-
-Compound properties are properties that require one or more modifiers to be applied. These properties are used to create more complex CSS declarations.
-
-```html
-
-<div class="text:grey-2:snug:left">     
-
-<!--
+```css title="What Elevate writes"
 .text\:grey-2\:snug\:left {
-color: #25262A;
-line-height: 1.3;
-text-align: left;
+  color: #25262A;
+  line-height: 1.3;
+  text-align: left;
 }
--->
-
 ```
 
-**Practical Examples:**
+Elevate works out which value is which, so order doesn't matter: `text:left:snug:grey-2` compiles to the same declarations. The one exception is spacing. In `pd:d6:d3` or `mg:d2:d4:d4:d8`, position decides the side. See [Margin and padding](/css/marginpadding/).
 
-Bringing it all together, here are some examples of Elevate's syntax in action:
+Every value is checked against your design tokens. A value that isn't in the system, like `pd:d99`, stops the build and names the file and line. Try it in the [playground](/playground/).
+
+## Responsive classes
+
+Elevate is mobile-first. Classes at the start of the list apply at every width. A breakpoint marker like `/md/` means "from this width up", and applies to every class after it until the next marker.
 
 ```html
-<div class="text:purple font:bold">      <!-- Bold text with purple color -->
-<div class="bg-color:purple">          <!-- Background color set to purple -->
-<div class="row:x-center:y-start">  <!-- Row layout with specific alignment -->
-<div class="absolute left:d12 z:10">  <!-- Absolute positioning, d12 from the left, and z-index of 10  -->
+<div class="col gap:d3 pd:d4 /md/ row gap:d6 /lg/ pd:d8">…</div>
 ```
 
-import { Aside } from '@astrojs/starlight/components';
+This is a column on phones, a row from `md` (768px) up, with more padding from `lg` (1024px) up. The [breakpoints](/default/breakpoints/) page lists every width.
 
-<Aside title="Modifier order doesn't matter">
-You can write `text:grey-2:left:snug` or `text:snug:grey-2:left` and the order doesn't matter. We'll get to the how and why later, but for now, just know that you can use any order you want.
-</Aside>
+## States
 
-### Breakpoints and responsive design
-
-Elevate affords and enforces a mobile-first, organized syntax for responsive design:
+A state block applies a group of classes only in a certain state. Join the classes with `_` so the block stays one class.
 
 ```html
-<div class="text:purple pd:d1 /md/ pd:d2 /lg/ @hover:[text:green_text:right]"> 
+<button class="bg-color:grey+4 @hover:[bg-color:indigo_text:white]">Continue</button>
 ```
 
-Universal classes are applied on the far-left and apply to all breakpoints by default unless overridden at a breakpoint. Breakpoints are specified using the `/breakpoint/` syntax, allowing you to discern the responsive behavior of an element at a glance and keeping things organized by default.
+Chain states with `+`, for example `@hover+focus-visible:[…]`. [States and selectors](/reference/supported-selectors/) covers pseudo-elements and styling related elements.
 
-<Aside type = "caution" title="Scratching your head?">
-At this point, you're probably wondering what the "@" is for, right? Don't worry, we'll get to that explanation next.
-</Aside>
+## Plain CSS classes
 
-### Operator flags
-
-In order to allow for greater flexibility, Elevate supports a series of flags to further refine styling choices and to support more complex and dynamic behaviors while preserving semantic clarity.
-
-**The Contextual Flag [@]:**  
-
-Allows complex, conditional styling for states, conditions, and other pseudo-classes or pseudo-elements:
+Elevate checks every class in the attribute. To keep a regular class next to Elevate's, start it with a dash, or list it in `SafeList` in `elevate/config/elevate.ts`. Either way, Elevate leaves it alone.
 
 ```html
-<div class="@hover:[text:green_text:right_pd:d1]">  <!-- Hover state changes text and adds padding. -->
+<div class="-js-menu row gap:d4">…</div>
 ```
 
-Inside `@state:[...]`, use underscores instead of spaces. HTML class attributes split on spaces, so state blocks must be a single token (for example, `@hover:[text:green_text:right_pd:d1]`).
+## Putting it together
 
-State chains use `+`, for example: `@hover+focus-visible:[bg-color:indigo_text:white]`.
+Write the classes in this order, and a long list stays easy to read:
 
-import { LinkCard } from '@astrojs/starlight/components';
-
-<LinkCard title="See Currently Supported Selectors" href="/reference/supported-selectors/" />
-
-### Envelopes
-
-Condense a full utility string into a single reusable class with `env:name`, then reopen it later with `env:name:open` to edit. Envelopes are a first-class way to create meaningful, reusable classes without leaving your HTML.
-
-<LinkCard title="Learn Envelopes" href="/guides/4-env-aliases/" />
-
-### Recommended ordering
-
-When multiple features are used together, keep your class list in this order:
-
-`ctx -> env -> /breakpoint/ -> @state -> utilities`
-
-This keeps scanning predictable and makes overrides easy to reason about. Property modifier order remains agnostic within a utility.
-
-### Combined example (all features together)
+1. `ctx:` scopes, if any
+2. Classes for every width, including states
+3. Each `/breakpoint/`, followed by what changes there
 
 ```html
-<div class="ctx:card env:card /md/ @hover+focus-visible:[bg-color:indigo_text:white] pd:d4 bg-color:indigo-3 text:white shadow:soft">
-  Card
-</div>
+<article class="col gap:d3 pd:d4 bg-color:white bd:round-d4 @hover:[shadow:soft] /md/ row pd:d6">…</article>
 ```
 
-If you need to edit the envelope, swap `env:card` for `env:card:open`, make your changes, then remove `:open` to close it again.
+To reuse a list like this, turn it into an [envelope](/guides/4-env-aliases/).
 
-**The Extends Flag [-]:**  
+## The parts of Elevate
 
-Exempt certain classes from CSS generation (e.g. for JavaScript interactions, labelling, or applying non-compiled CSS classes):
+Three kinds of files decide what a class can say. You'll usually only touch them to add your own brand.
 
-```html
-<div class="-mySelector">
-```
+| Part | What it holds | Where |
+|---|---|---|
+| Design tokens | The values: colors, spacing, type, effects | `elevate/design/`, registered in `elevate/config/design.ts` |
+| Rules | Prefixes and value lists, like `fill-` for a brand color | `elevate/rules/`, registered in `elevate/config/syntax.ts` |
+| Properties | Which CSS each property writes | `relationships` in `elevate/config/syntax.ts` |
 
-<Aside title="Or safelist your classes">
-You can also just add the classes you want to ignore to the safelist in `elevate/config/elevate.ts`. This is useful for integrating
-Elevate with other tools that require classes of their own:
+[Configuration](/guides/3-configuration/) walks through adding a custom `brand` property that compiles `brand:fill-popgreen:copy-popwhite`.
 
-```html
- ClassRegex: [
-      /\bclass\s*=\s*"([^"]*)"/g,                // class="..."
-      /\bclass\s*=\s*'([^']*)'/g,                // class='...'
-      /\bclassName\s*=\s*"([^"]*)"/g,            // className="..."
-      /\bclassName\s*=\s*'([^']*)'/g,            // className='...'
-      /\bclassName\s*=\s*{\s*`([\s\S]*?)`\s*}/g,  // className={`...`}
-      /\bclassName\s*=\s*{\s*"([^"]*)"\s*}/g,    // className={"..."}
-      /\bclassName\s*=\s*{\s*'([^']*)'\s*}/g,    // className={'...'}
-    ],
-    SafeList:[]
-```
+## Running Elevate in its own process
 
-</Aside>
+If your framework's dependencies clash with Elevate's, as can happen with Next.js, give the `elevate/` folder its own `package.json` and run it from there:
 
-### The elements of Elevate
-
-Elevate's systems are driven by three distinct elements:
-
-1. **Design Tokens**  
-   - **Purpose:** Global, immutable design constraints.  
-   - **Location:** `design/` directory  
-   - **Configuration:** `elevate/config/design.ts` and `elevate/design`
-   - **Characteristics:** Centralized values, enforce system-wide consistency.
-
-   **Example:**
-   ```typescript
-   // design/example-brandTokens.ts
-   export const BrandColors = {
-
-      //Define New Token Categories
-
-      BrandBackgroundToken: {
-      'popgreen':'#39FF14'
-      },
-
-      BrandTextToken: {
-      'popwhite': '#FFFFFF',
-      }
-
-   } 
-
-   ```
-
-2. **Syntactic Rules**  
-   - **Purpose:** Property-specific structural validation and syntax construction or extension.  
-   - **Location:** `rules/` directory  
-   - **Configuration:**  `elevate/config/syntax.ts` and `elevate/rules`
-   - **Characteristics:** Validate property values, provide transformations, and structure or extend syntax.
-
-   **Example:**
-   ```typescript
-   // rules/example-brandRules.ts
-
-   export const Brand = {
-
-      BrandBackgroundRule: {
-      "fill-": "BrandBackgroundToken"
-      },
-
-      BrandCopyRule: {
-      "copy-": "BrandTextToken"
-      }
-
-   }
-
-   ```
-
-3. **Property Declarations**  
-   - **Purpose:** Mapping design system tokens and/or syntax rule mappings to CSS declarations.  
-   - **Location:** `config/` directory  
-   - **Configuration:**  `elevate/config/syntax.ts` 
-   - **Characteristics:** Validate property values, provide transformations, and structure or extend syntax.
-
-   **Example:**
-   ```typescript
-
-   //Define Custom Property and CSS Declaration Relationship
-    export const relationships = {
-    //Example Custom Property Definition
-    brand: 
-    { "background-color": "BrandBackgroundRule", 
-      "color": "BrandCopyRule" },
-    };
-
-   ```
-
-4. **This Is Elevate CSS** (after defining the custom `brand` property + tokens above):
-
-   ```html
-   <div class="brand:fill-popgreen:copy-popwhite"></div>
-   ```
-
-### Isolating Elevate's runtime
-
-In certain circumstances, you may want to run Elevate in a separate process to avoid conflicts with your project's dependencies. This is particularly useful when using Elevate alongside frameworks like Next.js, where dependency conflicts or module resolution issues may occur.
-This can be done by creating a separate package.json file in the `elevate` directory and then running `npm start` from within that directory. Note that you can change your preferred command in the Elevate specific json file if you so choose.
-
-```json
+```json title="elevate/package.json"
 {
-    "type": "module",
-    "scripts": {
-      "start": "set NODE_PATH=../node_modules && tsx core/index.ts"
-    }
+  "type": "module",
+  "scripts": {
+    "start": "NODE_PATH=../node_modules tsx core/index.ts"
   }
+}
 ```
 
-If you encounter module resolution errors in the main setup while using Elevate with a framework like Next.js, try the isolated runtime approach first before further debugging dependency conflicts.
-
+On Windows, use `set NODE_PATH=../node_modules && tsx core/index.ts`. Elevate resolves `Watch` and `Output` from the folder it runs in, so update those paths in `elevate/config/elevate.ts` to point back at your project, for example `../src`.

@@ -56,15 +56,15 @@ On save, that becomes:
 <div class="env:card"></div>
 ```
 
-Later, reopen the same envelope anywhere to evolve the class without hunting down every instance:
+Later, reopen it with `env:card:open`. Elevate expands the full list back into the file so you can edit it:
 
 ```html
-<div class="env:card bg-color:indigo-2 text:white pd:d5 bd:round-d2 shadow:soft">
+<div class="env:card:open pd:d4 bg-color:indigo text:white shadow:soft">
   Card
 </div>
 ```
 
-That updates the shared `env:card` definition while keeping usage clean everywhere else.
+Save your changes, remove `:open`, and every `env:card` on the site uses the new version.
 
 ## Relational styling, first class
 
@@ -95,7 +95,7 @@ Layout primitives encode intent in a single class. That means fewer wrappers, le
 
 ## Guardrails that save time
 
-Tokens are order-agnostic and validated at build time. Elevate catches typos, unknown tokens, and invalid combinations early so you get fast feedback instead of silent layout bugs. The compiler is the gatekeeper, so your UI stays clean.
+Modifiers can go in any order, and every one is validated at build time. Elevate catches typos, unknown tokens, and invalid combinations early so you get fast feedback instead of silent layout bugs. The compiler is the gatekeeper, so your UI stays clean.
 
 ```html
 text:white pd:d4 bg-color:indigo shadow:soft
@@ -103,13 +103,13 @@ text:white pd:d4 bg-color:indigo shadow:soft
 
 ## Why wouldn't I just use Tailwind?
 
-Tailwind is a toolkit. Elevate is a system.
+Both generate CSS only for the classes you use. The difference is what they let through.
 
-Tailwind gives you a massive preset. Elevate gives you a system-shaped default that you can own. Keep it, replace it, or shrink it to match your brand. Either way, the output stays limited to the tokens you actually use.
+Tailwind is a toolkit. It ships a large default vocabulary and lets you step outside it with arbitrary values like `p-[23px]`, so drift is always one bracket away.
 
-Elevate compiles only what you actually write. No giant prebuilt output, no unused utilities, no drift. The output is as small as your system, and the rules are as strict as your standards.
+Elevate is a system. Every class has to resolve to one of your tokens, or the build fails with the file and line. You can keep Elevate's defaults, replace them, or shrink them to your brand, and either way nothing off-system reaches production.
 
-If you want a giant ecosystem of plugins, Tailwind is the obvious choice. If you want CSS that cannot drift from your system, Elevate is the better choice.
+If you want a huge ecosystem of plugins and components, Tailwind is the obvious choice. If you want CSS that can't drift from your design system, Elevate is built for that.
 
 ## Who Elevate is for
 

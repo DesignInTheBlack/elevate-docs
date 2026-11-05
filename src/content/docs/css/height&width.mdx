@@ -3,30 +3,34 @@ title: "Height and width"
 description: "Size elements with tokens, percentages and content keywords."
 ---
 
-## Height & width properties
+Every sizing property takes a [spacing token](/default/spacing/) or one of the keywords below.
 
-Elevate CSS features a number of height and width properties. These properties include:
+| Property | Compiles to | Example |
+|---|---|---|
+| `w` | `width` | `w:c10` |
+| `h` | `height` | `h:d12` |
+| `min-w` | `min-width` | `min-w:c4` |
+| `max-w` | `max-width` | `max-w:s4` |
+| `min-h` | `min-height` | `min-h:hScreen` |
+| `max-h` | `max-height` | `max-h:c11` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `min-w`   | SpacingToken (e.g., `d3`)      |  `min-w:d4`  |
-| `min-h`   | SpacingToken (e.g., `d3`)      |  `min-h:d4`  |
-| `max-w`  | SpacingToken (e.g., `d3`)      |  `max-w:d4`  |
-| `max-h`   | SpacingToken (e.g., `d3`)      |  `max-h:d4`  |
-| `w`   | SpacingToken (e.g., `d3`)      |  `w:d4`  |
-| `h`   | SpacingToken (e.g., `d3`)      |  `h:d4`  |
+## Keywords
 
-## Other modifier values
+| Value | Compiles to |
+|---|---|
+| `0` | `0` |
+| `full` | `100%` |
+| `wScreen` | `100vw` |
+| `hScreen` | `100vh` |
+| `auto` | `auto` |
+| `min-content` | `min-content` |
+| `max-content` | `max-content` |
+| `fit-content` | `fit-content` |
 
-Note that the height and width properties above also accept the following modifier values: 
+These keywords live in the spacing token set, so they work anywhere a spacing token does, for example `mg-x:auto` or `gap:0`.
 
-| Value | Description | Example |
-| --- | --- | --- |
-| `0` | Sets the dimension to 0 | `w:0` |
-| `full` | Sets the dimension to 100% | `w:full` |
-| `wScreen` | Sets the dimension to 100vw | `w:wScreen` |
-| `hScreen` | Sets the dimension to 100vh | `h:hScreen` |
-| `min-content` | Sets the dimension to min-content | `w:min-content` |
-| `max-content` | Sets the dimension to max-content | `w:max-content` |
-| `fit-content` | Sets the dimension to fit-content | `w:fit-content` |
-| `auto` | Sets the dimension to auto | `w:auto` |
+```html title="A full-height hero, and a readable column inside it"
+<section class="min-h:hScreen col:x-center:y-center">
+  <div class="w:full max-w:s4">…</div>
+</section>
+```

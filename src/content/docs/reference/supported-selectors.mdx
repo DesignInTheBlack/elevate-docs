@@ -3,7 +3,7 @@ title: "States and selectors"
 description: "Hover, focus, pseudo-elements and relational selectors, from inside the class list."
 ---
 
-Elevate uses the `@state:[...]` flag to generate pseudo-classes and pseudo-elements directly from your class list. Inside the brackets, use underscores instead of spaces so the state block remains a single class token.
+A state block applies a group of classes only in a certain state: `@hover:[bg-color:indigo_text:white]` changes both on hover. Inside the brackets, separate classes with `_` so the whole block stays one class. Pass-through values work inside state blocks too, for example `@hover:[transform:(translateY(-2px))]`.
 
 ## Pseudo-classes
 
@@ -65,4 +65,6 @@ Notes:
 
 ## Not supported
 
-Nested state blocks like `@child:[@hover:[...]]` and raw CSS selector strings are not supported. State tokens that require parentheses (for example, `nth-child(2)`) are not currently supported.
+- Nested state blocks, like `@child:[@hover:[...]]`. Chain the states instead: `@child+hover:[...]`.
+- States that take an argument, like `nth-child(2)`.
+- Raw CSS selector strings.

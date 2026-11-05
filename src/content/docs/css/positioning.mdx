@@ -5,50 +5,56 @@ description: "Take elements out of the flow and place them precisely."
 
 ## Position
 
-Direct properties for specifying the positioning of an element:
+Each position value is a standalone class.
 
-| Property   | Description |
-|------------|-------------|
-| `relative` | relative to its normal position. |
-| `absolute` | relative to its nearest positioned ancestor. |
-| `fixed`    | relative to the viewport. |
-| `sticky`   | relative to the viewport, but only when it is within the viewport. |
-| `static`   | according to the normal flow of the document. |
-| `initial`  | Sets the property to its default value. |
-| `inherit`  | Inherit the position from the parent element. |
+| Class | Compiles to | Positions the element relative to |
+|---|---|---|
+| `static` | `position: static` | Nothing. It stays in the normal flow (the default) |
+| `relative` | `position: relative` | Its own normal spot |
+| `absolute` | `position: absolute` | The nearest positioned ancestor |
+| `fixed` | `position: fixed` | The viewport |
+| `sticky` | `position: sticky` | Its scroll container, once it reaches the offset you set |
+| `initial` | `position: initial` | Resets to the default |
+| `inherit` | `position: inherit` | Copies the parent's position |
 
-## Float & clear
+## Offsets
 
-Direct properties for floating elements and clearing floats:
+| Property | Compiles to | Example |
+|---|---|---|
+| `top`, `right`, `bottom`, `left` | That side | `top:d4` |
+| `inset` | All four sides | `inset:d0` |
+| `inset-inline`, `inset-inline-start`, `inset-inline-end` | Logical inline sides | `inset-inline:d4` |
+| `inset-block`, `inset-block-start`, `inset-block-end` | Logical block sides | `inset-block-start:d2` |
 
-| Property   | Expected Values | Example     |
-|------------|------------------|-------------|
-| `float`    | `left`, `right`, `none`, `inline-start`, `inline-end` | `float:left` |
-| `clear`    | `none`, `left`, `right`, `both`, `inline-start`, `inline-end` | `clear:both` |
+All of them take a [spacing token](/default/spacing/) or a sizing keyword like `0` or `auto`. `inset` also takes two values: `inset:d2:d4` sets left and right to `d2`, top and bottom to `d4`.
 
-## Direction
+```html title="A badge pinned to a card's corner"
+<div class="relative">
+  <span class="absolute top:d2 right:d2">New</span>
+</div>
+```
 
-Compound properties for specifying the final horizontal or vertical position of an element:
+```html title="A header that sticks to the top"
+<header class="sticky top:0 z:10">…</header>
+```
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `left`    | SpacingToken (e.g., `d3`)      |  `left:d4`  |
-| `right`   | SpacingToken (e.g., `d3`)      |  `right:d4`  |
-| `top`     | SpacingToken (e.g., `d3`)      |  `top:d4`   |
-| `bottom`  | SpacingToken (e.g., `d3`)      |  `bottom:d4`   |
+## Stacking
 
-## Z-Index
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `z` | Any number | `z-index` | `z:10` |
 
-Compound property for specifying the z-index of an element:
+## Float and clear
 
-| Property   | Expected Values |  Example        |
-|------------|--------------------|-----------------------|
-| `z`       | NumericToken  (e.g., `30`)      | `z:30` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `float` | `left`, `right`, `none`, `inline-start`, `inline-end` | `float` | `float:inline-start` |
+| `clear` | `none`, `left`, `right`, `both`, `inline-start`, `inline-end` | `clear` | `clear:both` |
 
 ## Empty content
 
-Pseudo-elements require a declared content value in order to be rendered if empty. As such, Elevate provides a direct property to do so:
+`::before` and `::after` only render when they have `content`. The `empty` class sets `content: ''`, so a state block can draw a purely decorative pseudo-element.
 
-| Property   | Description |
-|------------|-------------|
-| `empty` |equivalent to `content: ""`|
+```html
+<span class="relative @after:[empty_absolute_inset:0_bg-color:indigo]">…</span>
+```

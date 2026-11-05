@@ -7,30 +7,27 @@ sidebar:
 description: "Background patterns in your colors, applied in one class."
 ---
 
-Elevate CSS features an experimental compound property for setting the pattern as well as the colors of a background pattern and includes a number of attractive and flexible default patterns to be used for the background of elements:
-
 import { Aside } from '@astrojs/starlight/components';
 
+`pattern` paints a repeating background. The pattern draws in the element's text color, so `fg-` sets the pattern's color and `bg-` the color behind it.
+
+| Modifier | Values | Compiles to | Example |
+|---|---|---|---|
+| Pattern | `thinstripes`, `thickstripes`, `zigzag`, `cotton`, `hatching`, `honeycomb`, `microfiber`, `bubbles`, `velvet`, `grid`, `tape`, `shimmer`, `halftone`, `pointgrid`, `herringbone`, `speckled`, `lattice`, `plastic`, `glow`, `curtains`, `changeling`, `headshot`, `wheat`, `carbon`, `finish`, `prism` | `background` | `pattern:carbon` |
+| Pattern color | `fg-` plus a [color token](/default/colors/) | `color` | `pattern:carbon:fg-indigo+2` |
+| Background color | `bg-` plus a color token | `background-color` | `pattern:carbon:bg-indigo-2` |
+
+```html
+<section class="pattern:hatching:fg-grey+3:bg-white">…</section>
+```
+
 <Aside type="caution" title="Experimental">
-This feature is experimental and may not be appropriate for a production environment. The feature is fully functional in Google Chrome, but may not be supported in other browsers. This will be revised in future updates.
+Patterns are built from layered CSS gradients. They render best in Chrome and may look different in other browsers. Since `fg-` sets `color`, text inside a patterned element takes the pattern color too.
 </Aside>
 
-### `pattern` property
+## Every pattern
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `pattern` | `thinstripes`, `thickstripes`, `zigzag`, `cotton`, `hatching`, `honeycomb`, `microfiber`, `bubbles`, `velvet`, `grid`, `tape`, `shimmer`, `halftone`, `pointgrid`, `herringbone`, `speckled`, `lattice`, `plastic`, `glow`, `curtains`, `changeling`, `headshot`, `wheat`, `carbon`, `finish`, `prism`  |  `pattern:carbon`  |
-
-### `pattern` modifiers
-
-| Modifier  | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `fg` |  ColorToken (e.g., `indigo+2`) |  `pattern:carbon:fg-indigo+2`  |
-| `bg` |  ColorToken (e.g., `indigo-1`) |  `pattern:carbon:bg-indigo-2`  |
-
-Elevate recommends mixing and matching patterns with different colors to create a unique and visually appealing background for your elements
-
-  <div class="w:full h:c4 pattern:thinstripes mg-t:d4 mg-b:d4"></div>
+<div class="w:full h:c4 pattern:thinstripes mg-t:d4 mg-b:d4"></div>
   <div class="w:full h:c4 pattern:thickstripes mg-t:d4 mg-b:d4"></div>
   <div class="w:full h:c4 pattern:zigzag mg-t:d4 mg-b:d4"></div>
   <div class="w:full h:c4 pattern:cotton mg-t:d4 mg-b:d4"></div>

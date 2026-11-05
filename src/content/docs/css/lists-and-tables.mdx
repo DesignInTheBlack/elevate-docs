@@ -3,17 +3,29 @@ title: "Lists and tables"
 description: "Markers for lists, and layout rules for tables."
 ---
 
-## List style
+## Lists
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `list-style-type` | `none`, `disc`, `circle`, `square`, `decimal`, `decimal-leading-zero`, `lower-roman`, `upper-roman`, `lower-alpha`, `upper-alpha`, `lower-greek` | `list-style-type:disc` |
-| `list-style-position` | `inside`, `outside` | `list-style-position:inside` |
-| `list-style-image` | PassThroughToken (e.g., `(url(icon.png))`) | `list-style-image:(url(icon.png))` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `list-style-type` | `none`, `disc`, `circle`, `square`, `decimal`, `decimal-leading-zero`, `lower-roman`, `upper-roman`, `lower-alpha`, `upper-alpha`, `lower-greek` | `list-style-type` | `list-style-type:decimal` |
+| `list-style-position` | `inside`, `outside` | `list-style-position` | `list-style-position:inside` |
+| `list-style-image` | A pass-through value | `list-style-image` | `list-style-image:(url(icon.png))` |
 
-## Table utilities
+```html title="A plain list for navigation"
+<ul class="list-style-type:none row gap:d4">…</ul>
+```
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `table-layout` | `auto`, `fixed` | `table-layout:fixed` |
-| `caption-side` | `top`, `bottom` | `caption-side:bottom` |
+## Tables
+
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `table-layout` | `auto`, `fixed` | `table-layout` | `table-layout:fixed` |
+| `caption-side` | `top`, `bottom` | `caption-side` | `caption-side:bottom` |
+| `border-collapse` | `collapse`, `separate` | `border-collapse` | `border-collapse:collapse` |
+| `border-spacing` | Any [spacing token](/default/spacing/) | `border-spacing` | `border-spacing:d1` |
+
+`table-layout:fixed` sizes columns from the first row instead of every cell, which is faster for big tables and keeps column widths steady.
+
+```html
+<table class="w:full table-layout:fixed border-collapse:collapse">…</table>
+```

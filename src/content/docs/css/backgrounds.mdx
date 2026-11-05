@@ -3,32 +3,33 @@ title: Backgrounds
 description: "Color, size, position and repeat backgrounds."
 ---
 
-Elevate CSS features three compound properties for setting or configuring the background of an element: `bg-img`, `bg-color`, and `bg-attr`. `bg-img` and `bg-color` are fairly self explainatory while `bg-attr` is a more advanced property that can be used to configure the characteristics of the background of an element.
+## Color and image
 
-## Setting backgrounds
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `bg-color` | Any [color token](/default/colors/) | `background-color` | `bg-color:indigo+4` |
+| `bg-img` | A pass-through value | `background-image` | `bg-img:(url(hero.jpg))` |
+| `bg-exact` | A pass-through size | `background-size` | `bg-exact:(50%_auto)` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `bg-img`   | PassThroughToken (e.g.,  `(url(https://example.com/image.jpg))` )      |  `bg-img:(url(https://example.com/image.jpg))`  |
-| `bg-color`  | ColorToken (e.g., `purple+1`)      |  `bg-color:purple+1`  |
-| `bg-exact`  | PassThroughToken (e.g., `(50%_auto)` )      |  `bg-exact:(50%_auto)`  |
+For a [gradient](/default/gradient/) or a [pattern](/default/pattern/), use those properties instead.
 
-import { Aside } from '@astrojs/starlight/components';
+## Fitting the background
 
-<Aside title="Pass-through means literally">
-When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens also allow you to write spaces in your utility strings by placing an underscore (_) in place of the space.
-</Aside>
+`bg-attr` takes any mix of these modifiers.
 
-## Configuring background attributes
+| Modifier | Values | Compiles to |
+|---|---|---|
+| Size | `cover`, `contain` | `background-size` |
+| Position | `center`, `center-top`, `center-bottom`, `left-top`, `left-center`, `left-bottom`, `right-top`, `right-center`, `right-bottom` | `background-position` |
+| Repeat | `no-repeat`, `repeat`, `repeat-x`, `repeat-y`, `space`, `round`, `initial`, `revert`, `revert-layer`, `unset` | `background-repeat` |
+| Attachment | `scroll`, `fixed`, `local` | `background-attachment` |
+| Clip | `border`, `padding`, `content`, `text` | `background-clip` (`border-box`, …, `text`) |
+| Origin | `origin-border`, `origin-padding`, `origin-content` | `background-origin` |
 
-Use `bg-attr` with one of the following modifiers:
+```html title="A full-bleed photo"
+<section class="bg-img:(url(hero.jpg)) bg-attr:cover:center:no-repeat min-h:c11">…</section>
+```
 
-| Modifier   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| Size  |  `cover`,`contain`   |  `bg-attr:cover`  |
-| Repeat| `no-repeat`, `repeat-x`, `repeat-y`, `repeat`, `space`, `round`, `initial`, `revert`, `unset`, `revert-layer` |  `bg-attr:no-repeat`  |  
-| Position| `left-top`, `left-center`, `left-bottom`, `center-top`, `center`, `center-bottom`, `right-top`, `right-center`, `right-bottom` |  `bg-attr:center`  |
-| Attachment|`scroll`, `fixed`, `local` | `bg-attr:fixed` |
-| Clip|`border`, `content`, `padding`, `text` | `bg-attr:content`|
-| Origin| `border`, `content`, `padding` | `bg-attr:border`|
-
+```html title="Gradient text"
+<h1 class="gradient:fadetoblack bg-attr:text text:transparent">…</h1>
+```

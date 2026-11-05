@@ -3,42 +3,45 @@ title: Borders
 description: "Width, style, color and radius, on every side or just one."
 ---
 
-## `bd` property modifiers
+## `bd`
 
-Elevate supports the following modifiers for the `border` (abbreviated as `bd`) property:
+One class sets any mix of width, style, color and radius on all four sides.
 
-| **Modifier**   | **Expected Values**                                                | **Example** |
-|---------------------|-----------------------------------------------------------|------------|
-| Width         |  SpacingToken (e.g., `d3`)      | `bd:width-d4` |
-| Style       | `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset`, `outset`                        | `bd:dashed` |
-| Radius       |   SpacingToken (e.g., `d3`)   | `bd:round-d4` |
-| Top Left Radius       |   SpacingToken (e.g., `d3`)   | `bd:roundtl-d4` |
-| Top Right Radius       |   SpacingToken (e.g., `d3`)   | `bd:roundtr-d4` |
-| Bottom Left Radius       |   SpacingToken (e.g., `d3`)   | `bd:roundbl-d4` |
-| Bottom Right Radius       |   SpacingToken (e.g., `d3`)   | `bd:roundbr-d4` |
-| Color       |   ColorToken (e.g., `purple+1`)   | `bd:purple+1` |
+| Modifier | Values | Compiles to | Example |
+|---|---|---|---|
+| Width | `width-` plus a [spacing token](/default/spacing/) | `border-width` | `bd:width-d0` |
+| Style | `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset`, `outset`, `none`, `hidden` | `border-style` | `bd:solid` |
+| Color | Any [color token](/default/colors/) | `border-color` | `bd:grey+3` |
+| Radius | `round-` plus a spacing token | `border-radius` | `bd:round-d3` |
+| One corner | `roundtl-`, `roundtr-`, `roundbl-`, `roundbr-` plus a spacing token | `border-top-left-radius`, … | `bd:roundtl-d4` |
 
-Elevate also supports single directional variations for the `bd` property such as: 
+```html title="A hairline card"
+<div class="bd:width-d0:solid:grey+3:round-d4 pd:d6">…</div>
+```
 
-| **Single Directional Properties**         | **Expected Values**                | **Example** |
-|---------------------------|---------------------------|-------------|
-| `bd-t`  | See Modifiers Above  | `bd-t:width-d4:purple+1` |
-| `bd-b`   | See Modifiers Above  | `bd-b:width-d2:dashed` |
-| `bd-l`   | See Modifiers Above  | `bd-l:width-d2:solid` |
-| `bd-r`  | See Modifiers Above  | `bd-r:width-d6:solid:indigo` |
+## One side
 
-## Border extras
+`bd-t`, `bd-r`, `bd-b` and `bd-l` take width, style and color for that side. Radius belongs to `bd`, since corners are shared by two sides.
 
-Additional border-related utilities:
+| Property | Example |
+|---|---|
+| `bd-t` | `bd-t:width-d0:solid:grey+3` |
+| `bd-r` | `bd-r:width-d0:solid:grey+3` |
+| `bd-b` | `bd-b:width-d1:dashed:indigo` |
+| `bd-l` | `bd-l:width-d1:solid:indigo` |
 
-| Property   | Expected Values | Example |
-|------------|------------------|---------|
-| `border-x` | PassThroughToken (e.g., `(1px_solid_currentColor)`) | `border-x:(1px_solid_currentColor)` |
-| `border-y` | PassThroughToken (e.g., `(1px_solid_currentColor)`) | `border-y:(1px_solid_currentColor)` |
-| `border-collapse` | `collapse`, `separate` | `border-collapse:collapse` |
-| `border-spacing` | SpacingToken | `border-spacing:d2` |
-| `border-image-source` | PassThroughToken (e.g., `(url(example.png))`) | `border-image-source:(url(example.png))` |
-| `border-image-slice` | PassThroughToken (e.g., `(30)`) | `border-image-slice:(30)` |
-| `border-image-width` | PassThroughToken (e.g., `(10px)`) | `border-image-width:(10px)` |
-| `border-image-outset` | PassThroughToken (e.g., `(5)`) | `border-image-outset:(5)` |
-| `border-image-repeat` | PassThroughToken (e.g., `(stretch)`) | `border-image-repeat:(stretch)` |
+## Shorthands and border images
+
+These take literal CSS in parentheses, with `_` for spaces.
+
+| Property | Compiles to | Example |
+|---|---|---|
+| `border-x` | `border-inline` | `border-x:(1px_solid_currentColor)` |
+| `border-y` | `border-block` | `border-y:(1px_solid_currentColor)` |
+| `border-image-source` | `border-image-source` | `border-image-source:(url(frame.png))` |
+| `border-image-slice` | `border-image-slice` | `border-image-slice:(30)` |
+| `border-image-width` | `border-image-width` | `border-image-width:(10px)` |
+| `border-image-outset` | `border-image-outset` | `border-image-outset:(5px)` |
+| `border-image-repeat` | `border-image-repeat` | `border-image-repeat:(stretch)` |
+
+Table borders, `border-collapse` and `border-spacing`, are on [Lists and tables](/css/lists-and-tables/).

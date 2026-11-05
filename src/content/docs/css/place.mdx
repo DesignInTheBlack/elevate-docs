@@ -3,19 +3,32 @@ title: Place
 description: "Align items and content on both axes at once."
 ---
 
-Elevate CSS features a single compound property for setting the placement of an element:
-`place` is an alias for `place-content`.
+`place` sets both axes of `place-content` in one modifier: the first word is the block axis (`align-content`), the second the inline axis (`justify-content`). `place:center` centers on both.
 
-### `place` property modifiers
+| Property | Compiles to | Example |
+|---|---|---|
+| `place` | `place-content` | `place:center` |
+| `place-self` | `place-self` | `place-self:end-start` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `place` |  `center`, `center-start`, `center-end`, `center-stretch`, `start-center`, `start`, `start-end`, `start-stretch`, `end-center`, `end-start`, `end`, `end-stretch`, `stretch-center`, `stretch-start`, `stretch-end`, `stretch-stretch`, `baseline-center`, `baseline-stretch`, `first-baseline-center`, `first-baseline-stretch`, `last-baseline-center`, `last-baseline-stretch`, `space-between-center`, `space-between-start`, `space-between-end`, `space-between-stretch`, `space-around-center`, `space-around-start`, `space-around-end`, `space-around-stretch`, `space-evenly-center`, `space-evenly-start`, `space-evenly-end`, `space-evenly-stretch`, `stretch-space-between`, `stretch-space-around`, `stretch-space-evenly`, `inherit`, `initial`, `revert`, `revert-layer`, `unset` |  `place:space-between-start`  |
+Both take the same values:
 
-### Self alignment
+| Group | Values |
+|---|---|
+| Single word, both axes | `center`, `start`, `end`, `stretch-stretch` |
+| Two positions | `center-start`, `center-end`, `center-stretch`, `start-center`, `start-end`, `start-stretch`, `end-center`, `end-start`, `end-stretch`, `stretch-center`, `stretch-start`, `stretch-end` |
+| Baselines | `baseline-center`, `baseline-stretch`, `first-baseline-center`, `first-baseline-stretch`, `last-baseline-center`, `last-baseline-stretch` |
+| Distribution | `space-between-center`, `space-between-start`, `space-between-end`, `space-between-stretch`, `space-around-center`, `space-around-start`, `space-around-end`, `space-around-stretch`, `space-evenly-center`, `space-evenly-start`, `space-evenly-end`, `space-evenly-stretch`, `stretch-space-between`, `stretch-space-around`, `stretch-space-evenly` |
+| Global | `inherit`, `initial`, `revert`, `revert-layer`, `unset` |
 
-| Property   | Expected Values | Example |
-|------------|------------------|---------|
-| `align-self` | `align-start`, `align-end`, `align-center`, `align-stretch`, `align-baseline`, `align-self-start`, `align-self-end` | `align-self:align-center` |
-| `justify-self` | `just-start`, `just-end`, `just-center`, `just-stretch`, `just-baseline`, `just-self-start`, `just-self-end` | `justify-self:just-center` |
-| `place-self` | Same values as `place` | `place-self:center-start` |
+```html title="Center one thing in a grid cell"
+<div class="grid place:center h:c11">…</div>
+```
+
+## One axis at a time
+
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `align-self` | `align-start`, `align-end`, `align-center`, `align-stretch`, `align-baseline`, `align-self-start`, `align-self-end` | `align-self` | `align-self:align-center` |
+| `justify-self` | `just-start`, `just-end`, `just-center`, `just-stretch`, `just-baseline`, `just-self-start`, `just-self-end` | `justify-self` | `justify-self:just-end` |
+
+Inside a flex row or column, [`child`](/css/flex/#flex-children) is the shorter way to align one item.
