@@ -1,12 +1,14 @@
 ---
-title: Opacity
-description: A guide to opacity in Elevate CSS.
+title: "Opacity"
+description: "Make an element see-through."
 ---
 
-Elevate CSS features a compound property for setting the opacity of an element:
+`opacity` takes a number from `0` (invisible) to `1` (solid).
 
-### `opacity` Property Modifiers
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `opacity` | A number, for example `0.2` or `0.65` | `opacity` | `opacity:0.65` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `opacity` |  NumericToken (e.g., `0.2`) |  `opacity:0.2`  |
+```html title="Dim a card, and bring it back on hover"
+<div class="opacity:0.65 @hover:[opacity:1]">…</div>
+```

@@ -1,10 +1,14 @@
 ---
-title: Content Visibility
-description: A guide to content-visibility in Elevate CSS.
+title: "Content visibility"
+description: "Let the browser skip rendering content until it's needed."
 ---
 
-## Content Visibility
+`content-visibility:auto` tells the browser it can skip layout and paint for content that's off screen, which can make long pages load faster.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `content-visibility` | `auto`, `visible`, `hidden` | `content-visibility:auto` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `content-visibility` | `auto`, `visible`, `hidden` | `content-visibility` | `content-visibility:auto` |
+
+```html title="Defer rendering of long sections below the fold"
+<section class="content-visibility:auto">…</section>
+```

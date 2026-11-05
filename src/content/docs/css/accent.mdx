@@ -1,10 +1,15 @@
 ---
-title: Accent Color
-description: A guide to accent-color utilities in Elevate CSS.
+title: "Accent color"
+description: "Tint checkboxes, radio buttons, range sliders and progress bars with a color token."
 ---
 
-## Accent Color
+Browsers draw form controls in their own colors. `accent` swaps the highlight for any color from your palette.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `accent` | ColorToken (e.g., `indigo+2`) | `accent:indigo+2` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `accent` | Any [color token](/default/colors/) | `accent-color` | `accent:indigo` |
+
+```html title="Checkboxes and sliders in your brand color"
+<input type="checkbox" class="accent:indigo">
+<input type="range" class="accent:pink-1 w:full">
+```

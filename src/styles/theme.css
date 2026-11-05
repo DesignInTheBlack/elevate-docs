@@ -140,15 +140,6 @@ nav.sidebar a[aria-current='page']:hover {
 	border-top: none;
 }
 
-h1#_top {
-	font-size: clamp(2.5rem, 2rem + 2.4vw, 3.5rem);
-	font-weight: 640;
-	font-stretch: 92%;
-	letter-spacing: -0.035em;
-	line-height: 1.05;
-	color: var(--ink);
-}
-
 .sl-markdown-content :is(h2, h3, h4) {
 	color: var(--ink);
 	font-stretch: 94%;
@@ -173,16 +164,6 @@ h1#_top {
 	background: none;
 	padding: 0;
 	font-weight: 500;
-}
-
-.sl-markdown-content > p:first-child {
-	font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
-	font-weight: 500;
-	font-stretch: 94%;
-	line-height: 1.3;
-	color: var(--slate);
-	letter-spacing: -0.02em;
-	margin-top: -0.5rem;
 }
 
 .sl-markdown-content p,
@@ -263,10 +244,10 @@ h1#_top {
 	border-radius: 14px;
 	padding: 1rem 1.25rem;
 }
-.starlight-aside--note { background: #f0f2ff; --sl-color-asides-text-accent: var(--g-prop); }
-.starlight-aside--tip { background: #ecf7f1; --sl-color-asides-text-accent: var(--g-bp); }
+.starlight-aside--note,
+.starlight-aside--tip { background: var(--mist); --sl-color-asides-text-accent: var(--ink); --sl-color-asides-border: transparent; }
 .starlight-aside--caution { background: #fff5eb; --sl-color-asides-text-accent: var(--g-state); }
-.starlight-aside--danger { background: #fff0f6; --sl-color-asides-text-accent: var(--g-mod); }
+.starlight-aside--danger { background: #fff0f3; --sl-color-asides-text-accent: #c4314b; }
 .starlight-aside__title {
 	font-weight: 600;
 	letter-spacing: -0.01em;
@@ -466,4 +447,33 @@ starlight-toc a[aria-current='true'] {
 	.home-features {
 		grid-template-columns: 1fr;
 	}
+}
+
+/* Keep Elevate tokens on one line */
+.sl-markdown-content code.el-token {
+	white-space: nowrap;
+}
+
+/* Sidebar badges: quiet pills */
+nav.sidebar .sl-badge,
+.sl-badge {
+	font-family: var(--sl-font);
+	font-size: 0.6875rem;
+	font-weight: 560;
+	letter-spacing: 0;
+	border: none;
+	border-radius: 999px;
+	padding: 0.1rem 0.5rem;
+	background: var(--mist);
+	color: var(--slate);
+}
+nav.sidebar a[aria-current='page'] .sl-badge {
+	background: var(--paper);
+}
+
+/* Code inside headings reads as part of the heading */
+.sl-markdown-content :is(h2, h3, h4) > code {
+	background: none !important;
+	padding: 0 !important;
+	font-size: 0.9em !important;
 }

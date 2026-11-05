@@ -1,17 +1,19 @@
 ---
 title: "Typography"
-description: A guide to font sizes in Elevate's typography system
+description: "A modular type scale, from footnotes to display headlines."
 ---
 
 Elevate's typography system offers a flexible and consistent way to manage text sizes across your application. It defines a set of font sizes tailored for various use cases, from subtle footnotes to bold, prominent headings.
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="You've Gotta Start Somewhere, Right?">
-Elevate includes a set of sensible defaults for most things, but you can always extend them or override them as you see fit. For more information, check out the [Configuration & Extension](/guides/3-configuration/) guide.
+<Aside title="Make it yours">
+These are starting values. Override them or add your own in the [Configuration](/guides/3-configuration/) guide.
 </Aside>
 
-## How It Works
+Weights, families, line height and letter spacing are on the [Text](/css/text/) page.
+
+## How it works
 
 The font sizes are defined in `elevate/core/system/design/typography.ts` as part of the `size` property:
 
@@ -32,7 +34,7 @@ export const typography = {
 };
 ```
 
-## Font Sizes
+## Font sizes
 
 | Name      | Description                                | Value     | Example |
 |------|--------------------------------------------|-----------|-------|
@@ -47,7 +49,7 @@ export const typography = {
 | h2  | Extra-large headings for important areas.  | 5.062rem  | <p class = "font:h2"> Aa </p> |
 | h1  | Largest size for main titles.              | 7.594rem  | <p class = "font:h1"> Aa </p> |
 
-## Simplified, Hierarchical Text Styling
+## Simplified, hierarchical text styling
 
 The font sizes in Elevate help create:
 1. **Clear Text Hierarchy**: Sizes are designed to visually guide the reader.

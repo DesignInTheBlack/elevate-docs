@@ -1,10 +1,14 @@
 ---
-title: Appearance
-description: A guide to appearance utilities in Elevate CSS.
+title: "Appearance"
+description: "Remove the browser's built-in styling from form controls."
 ---
 
-## Appearance
+Use `appearance:none` to strip a control back to a plain box, then style it with your own tokens.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `appearance` | `none`, `auto` | `appearance:none` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `appearance` | `none`, `auto` | `appearance` | `appearance:none` |
+
+```html title="A select you can fully restyle"
+<select class="appearance:none pd:d3 bd:width-d0:solid:grey+3:round-d2">…</select>
+```

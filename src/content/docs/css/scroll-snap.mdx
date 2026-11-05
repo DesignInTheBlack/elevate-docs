@@ -1,11 +1,19 @@
 ---
-title: Scroll Snap
-description: A guide to scroll snapping in Elevate CSS.
+title: "Scroll snap"
+description: "Make a scroll area settle on items, like a carousel."
 ---
 
-## Scroll Snap
+Set the snap type on the scroller and the alignment on each item.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `scroll-snap-type` | `none`, `x`, `y`, `block`, `inline`, `both`, `x-mandatory`, `y-mandatory`, `block-mandatory`, `inline-mandatory`, `both-mandatory`, `x-proximity`, `y-proximity`, `block-proximity`, `inline-proximity`, `both-proximity` | `scroll-snap-type:x-mandatory` |
-| `scroll-snap-align` | `none`, `start`, `end`, `center` | `scroll-snap-align:center` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `scroll-snap-type` | `none`, `x`, `y`, `block`, `inline`, `both`, each also with `-mandatory` or `-proximity` | `scroll-snap-type` | `scroll-snap-type:x-mandatory` |
+| `scroll-snap-align` | `none`, `start`, `end`, `center` | `scroll-snap-align` | `scroll-snap-align:start` |
+
+`x-mandatory` compiles to `scroll-snap-type: x mandatory`.
+
+```html title="A horizontal carousel"
+<ul class="row gap:d4 overflow-x:auto scroll-snap-type:x-mandatory">
+  <li class="scroll-snap-align:start">…</li>
+</ul>
+```

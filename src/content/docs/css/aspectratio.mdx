@@ -1,13 +1,21 @@
 ---
-title: Aspect Ratios
-description: A guide to aspect ratios in Elevate CSS.
+title: "Aspect ratios"
+description: "Lock an element to a named shape."
 ---
 
-Elevate CSS features a singular compound property with a wide range of modifiers for setting aspect ratios:
+Give images, videos and cards a fixed shape that holds as the width changes. Use them as `aspect:video`, `aspect:square` and so on.
 
-### `aspect` Property Modifiers
+| Value | Ratio | Value | Ratio |
+|---|---|---|---|
+| `auto` | auto | `pano` | 2 / 1 |
+| `square` | 1 / 1 | `instagram` | 4 / 5 |
+| `video` | 16 / 9 | `thumbnail` | 4 / 3 |
+| `widescreen` | 21 / 9 | `card` | 7 / 5 |
+| `banner` | 3 / 1 | `gallery` | 1.5 / 1 |
+| `section` | 4 / 3 | `feature` | 5 / 4 |
+| `landscape` | 16 / 10 | `facebook` | 1.91 / 1 |
+| `portrait` | 3 / 4 | `wide-banner` | 5 / 1 |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `aspect` |  `auto` (auto)<br/> `square` (1/1)<br/> `video` (16/9)<br/> `widescreen` (21/9)<br/> `banner` (3/1)<br/> `section` (4/3)<br/> `landscape` (16/10)<br/> `portrait` (3/4)<br/> `pano` (2/1)<br/> `instagram` (4/5)<br/> `thumbnail` (4/3)<br/> `card` (7/5)<br/> `gallery` (1.5/1)<br/> `feature` (5/4)<br/> `facebook` (1.91/1)<br/> `wide-banner` (5/1)   |  `aspect:video`  |
-
+```html title="A responsive video frame"
+<div class="aspect:video w:full">…</div>
+```

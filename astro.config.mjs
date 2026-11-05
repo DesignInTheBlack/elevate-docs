@@ -14,6 +14,7 @@ export default defineConfig({
 				ThemeProvider: './src/components/AlwaysLightThemeProvider.astro',
 				ThemeSelect: './src/components/NoThemeSelect.astro',
 				Hero: './src/components/HomeHero.astro',
+				PageTitle: './src/components/PageTitle.astro',
 			  },
 			title: 'Elevate',
 			favicon: '/favicon.svg',
@@ -56,28 +57,36 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
-					label: 'Learning Elevate',
+					label: 'Start here',
 					items: [
-						// Each item here is one entry in the navigation menu.
-					{ label: 'Getting Started', slug: 'guides/2-getting-started' },
-					{ label: 'Why Elevate?', slug: 'guides/2-why-elevate' },
-					{ label: 'Configuration', slug: 'guides/3-configuration' },
-					{ label: 'Specificity', slug: 'guides/3-specificity' },
-					{ label: 'Layout', slug: 'guides/layout' },
-					{ label: 'Envelopes', slug: 'guides/4-env-aliases' },
-				],
-			},
+						{ label: 'Getting started', slug: 'guides/2-getting-started' },
+						{ label: 'Why Elevate', slug: 'guides/2-why-elevate' },
+						{ label: 'Configuration', slug: 'guides/3-configuration' },
+					],
+				},
 				{
-					label: `Designed Defaults`,
+					label: 'Core ideas',
+					items: [
+						{ label: 'Layout', slug: 'guides/layout' },
+						{ label: 'States and selectors', slug: 'reference/supported-selectors' },
+						{ label: 'Scopes and specificity', slug: 'guides/3-specificity' },
+						{ label: 'Envelopes', slug: 'guides/4-env-aliases' },
+					],
+				},
+				{
+					label: 'Design tokens',
 					autogenerate: { directory: 'default' },
 				},
 				{
-					label: 'Writing Elevate',
+					label: 'Properties',
 					autogenerate: { directory: 'css' },
 				},
 				{
-					label: 'Further Reading',
-					autogenerate: { directory: 'reference' },
+					label: 'Reference',
+					items: [
+						{ label: 'Token types', slug: 'reference/system-token-types' },
+						{ label: 'Troubleshooting', slug: 'reference/troubleshooting' },
+					],
 				},
 			],
 		}),

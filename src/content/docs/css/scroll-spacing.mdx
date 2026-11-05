@@ -1,13 +1,17 @@
 ---
-title: Scroll Spacing
-description: A guide to scroll margin and scroll padding in Elevate CSS.
+title: "Scroll spacing"
+description: "Leave room when the page scrolls to an anchor or snap point."
 ---
 
-## Scroll Margin & Padding
+With a sticky header, jumping to `#pricing` hides the heading under the header. `scroll-margin` on the target, or `scroll-padding` on the scroller, leaves room for it.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `scroll-margin` | SpacingToken | `scroll-margin:d3` |
-| `scroll-padding` | SpacingToken | `scroll-padding:d2` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `scroll-margin` | One [spacing token](/default/spacing/) | `scroll-margin` | `scroll-margin:c1` |
+| `scroll-padding` | One spacing token | `scroll-padding` | `scroll-padding:d4` |
 
-Note: `scroll-margin` and `scroll-padding` currently accept a single value.
+Both currently take a single value that applies to all sides.
+
+```html title="Headings that land below a 4rem sticky header"
+<h2 id="pricing" class="scroll-margin:c1">Pricing</h2>
+```

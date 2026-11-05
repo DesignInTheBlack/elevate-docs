@@ -1,10 +1,14 @@
 ---
-title: Scroll Behavior
-description: A guide to scroll behavior in Elevate CSS.
+title: "Scroll behavior"
+description: "Animate jumps to anchors and programmatic scrolling."
 ---
 
-## Scroll Behavior
+Put `scroll-behavior:smooth` on the scrolling element, often `<html>`, and in-page links glide instead of jumping.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `scroll-behavior` | `auto`, `smooth` | `scroll-behavior:smooth` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `scroll-behavior` | `auto`, `smooth` | `scroll-behavior` | `scroll-behavior:smooth` |
+
+```html
+<html class="scroll-behavior:smooth">
+```

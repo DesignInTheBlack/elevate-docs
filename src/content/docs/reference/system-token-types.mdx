@@ -1,13 +1,13 @@
 ---
-title: "System Token Types"
-description: Elevate's native token types, affording specific capabilities.
+title: "Token types"
+description: "The kinds of values Elevate understands, and where each comes from."
 ---
 
-## Special Tokens
+## Special tokens
 
  Elevate includes a number of "helper" token types that provide additional capabilities beyond the core functionality for specific situations. These can be used to extend the framework's capabilities, but they should be used with caution. 
 
-### Pass-Through Tokens 
+### Pass-through tokens
    - Unrestricted value entry.  
    - No build-time validation, for dynamic or flexible values.
    - Used for CSS rules that require special syntax (e.g., URLs or complex values such as transforms).
@@ -29,11 +29,11 @@ description: Elevate's native token types, affording specific capabilities.
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="'Pass Through' Means Literally">
+<Aside title="Pass-through means literally">
 When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens allow spaces via underscores (for example, `auto-flow:(row_dense)`), and state blocks require underscores to stay a single class token.
 </Aside>
 
-### Numeric Tokens 
+### Numeric tokens
    - For numeric values.  
    - Build-time validation ensures that the value is a valid number.
    - Primarily used for CSS rules that require numeric values.

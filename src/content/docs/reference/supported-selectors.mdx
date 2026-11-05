@@ -1,6 +1,6 @@
 ---
-title: "Supported Selectors"
-description: Pseudo-classes, pseudo-elements, and state chains supported by Elevate.
+title: "States and selectors"
+description: "Hover, focus, pseudo-elements and relational selectors, from inside the class list."
 ---
 
 Elevate uses the `@state:[...]` flag to generate pseudo-classes and pseudo-elements directly from your class list. Inside the brackets, use underscores instead of spaces so the state block remains a single class token.
@@ -24,7 +24,7 @@ Only one pseudo-element is allowed per chain.
 <div class="@hover+before:[bg-color:indigo]"></div>
 ```
 
-## State Chaining
+## State chaining
 
 Use `+` to chain states in a single block.
 
@@ -32,7 +32,7 @@ Use `+` to chain states in a single block.
 <button class="@hover+active:[bg-color:indigo_text:white]"></button>
 ```
 
-## Combinator Directives
+## Combinator directives
 
 Elevate supports selector combinators through directives:
 `@desc` (alias: `@descendants`), `@child` (alias: `@children`), `@sibling` (adjacent), `@general-sibling` (alias: `@siblings`), `@ancestor`.
@@ -63,6 +63,6 @@ Notes:
 <div class="ctx:end:sibs"></div>
 ```
 
-## Not Supported
+## Not supported
 
 Nested state blocks like `@child:[@hover:[...]]` and raw CSS selector strings are not supported. State tokens that require parentheses (for example, `nth-child(2)`) are not currently supported.

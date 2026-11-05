@@ -1,13 +1,16 @@
 ---
-title: Visibility
-description: A guide to visibility in Elevate CSS.
+title: "Visibility"
+description: "Hide an element while keeping its space."
 ---
 
-Elevate CSS features a number of direct properties for setting the visibility of an element:
+These are standalone classes. Unlike `hidden`, which removes the element from the layout, `invisible` keeps the space it takes up.
 
-| Property  |  Example     |
-|--------------|---------------------|
-| `visible` |  `visible`  |
-| `invisible` |  `hidden`  |
-| `collapse` |  `collapse`  |
+| Class | Compiles to |
+|---|---|
+| `visible` | `visibility: visible` |
+| `invisible` | `visibility: hidden` |
+| `collapse` | `visibility: collapse` |
 
+```html
+<span class="invisible">Placeholder that still takes up room</span>
+```

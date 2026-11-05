@@ -1,15 +1,18 @@
 ---
-title: Box Sizing
-description: A guide to box sizing in Elevate CSS.
+title: "Box sizing"
+description: "Decide whether padding and borders count toward an element's size."
 ---
 
-Elevate CSS features two direct properties for setting box-sizing, plus a compound property for `box-decoration-break`:
+With `border-box`, a `w:c10` element stays exactly that wide no matter its padding.
 
-| Property  |  Example     |
-|--------------|---------------------|
-| `border-box` |  `border-box`  |
-| `content-box` |  `content-box`  |
-| `box-decoration-break` |  `box-decoration-break:slice`  |
+| Class or property | Values | Compiles to |
+|---|---|---|
+| `border-box` | none (standalone) | `box-sizing: border-box` |
+| `content-box` | none (standalone) | `box-sizing: content-box` |
+| `box-decoration-break` | `slice`, `clone` | `box-decoration-break` |
 
-`box-decoration-break` accepts `slice` or `clone`.
+`box-decoration-break:clone` gives each line of wrapped inline text its own padding and rounded corners.
 
+```html
+<span class="box-decoration-break:clone bg-color:yellow+3 pd-x:d1">A highlight that wraps cleanly</span>
+```

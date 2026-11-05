@@ -1,18 +1,18 @@
 ---
 title: Transform
-description: A guide to transform in Elevate CSS.
+description: "Move, scale and rotate elements."
 ---
 
 Elevate CSS features two compound properties for setting the transform behavior of an element:
 
-### `transform` Property Modifiers
+### `transform` property modifiers
 
 | Property   | Expected Values | Example     |
 |------------|--------------------|-----------------------|
 | `transform` | PassThroughToken (e.g.,  `(translateX(10px))` ) |  `transform:(translateX(10px))`  |
 | `origin` | PassThroughToken (e.g.,  `(top_left)` ) |  `origin:(top_left)`  |
 
-### Structured Transform Helpers (Pass Through)
+### Structured transform helpers (pass-through)
 
 These properties forward the value you provide directly into the CSS property:
 
@@ -27,6 +27,6 @@ Note: `skew` forwards its value into the `transform` property.
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="'Pass Through' Means Literally">
+<Aside title="Pass-through means literally">
 When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens also allow you to write spaces in your utility strings by placing an underscore (_) in place of the space.
 </Aside>

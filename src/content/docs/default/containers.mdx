@@ -1,18 +1,18 @@
 
 ---
 title: "Containers"
-description: How Elevate's 'Contain' Class Simplifies Layouts
+description: "One class for centered content with padding that grows with the screen."
 ---
 
 The contain class in Elevate is a utility for centering elements with consistent, responsive padding. It simplifies layouts by removing the need for bulky wrappers or custom styles, providing an elegant way to maintain evenly distributed containers across screen sizes.
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="You've Gotta Start Somewhere, Right?">
-Elevate includes a set of sensible defaults for most things, but you can always extend them or override them as you see fit. For more information, check out the [Configuration & Extension](/guides/3-configuration/) guide.
+<Aside title="Make it yours">
+These are starting values. Override them or add your own in the [Configuration](/guides/3-configuration/) guide.
 </Aside>
 
-## Why Use Contain?
+## Why use contain?
 
 In traditional web development, creating centered containers often requires extra wrapper elements, manual padding adjustments, or repeated CSS rules for different screen sizes. These methods can become messy and hard to maintain.
 
@@ -20,7 +20,7 @@ The contain class resolves these issues by:
 1. **Consistency Across Breakpoints**: Padding values are managed via a central file and applied via a single class, ensuring a unified layout regardless of screen size.
 2. **Simplicity**: The class generates all necessary CSS automatically, reducing boilerplate and making your codebase cleaner.
 
-## How It Works
+## How it works
 
 The contain class is defined in `elevate/core/system/etc/contain.ts`, where breakpoints map to spacing tokens:
 
@@ -59,7 +59,7 @@ This automation ensures:
 - **No Manual CSS Rules**: The system creates all responsive styles for you.
 - **Consistency**: All containers adhere to a unified padding scale, ensuring that content is visually balanced across screen sizes.
 
-## Simplified, Evenly Distributed Layouts
+## Simplified, evenly distributed layouts
 
 The contain class is especially useful for:
 1. **Centering Content**: Perfect for layouts like headers, footers, or sections that need consistent horizontal padding.

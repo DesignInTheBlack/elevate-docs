@@ -1,14 +1,16 @@
 ---
-title: Scrollbar
-description: A guide to scrollbar utilities in Elevate CSS.
+title: "Scrollbar"
+description: "Thin, hide, recolor, or reserve space for scrollbars."
 ---
 
-## Scrollbar
+These map to the standard scrollbar properties. Elevate doesn't generate `::-webkit-scrollbar` rules.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `scrollbar-width` | `auto`, `thin`, `none` | `scrollbar-width:thin` |
-| `scrollbar-color` | PassThroughToken (e.g., `(rebeccapurple_lightgray)`) | `scrollbar-color:(rebeccapurple_lightgray)` |
-| `scrollbar-gutter` | `auto`, `stable`, `stable-both-edges` | `scrollbar-gutter:stable` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `scrollbar-width` | `auto`, `thin`, `none` | `scrollbar-width` | `scrollbar-width:thin` |
+| `scrollbar-color` | A pass-through value: thumb color, then track color, joined with `_` | `scrollbar-color` | `scrollbar-color:(rebeccapurple_lightgray)` |
+| `scrollbar-gutter` | `auto`, `stable`, `stable-both-edges` | `scrollbar-gutter` | `scrollbar-gutter:stable` |
 
-Note: These map to standard scrollbar properties. Pseudo-element styling (e.g., `::-webkit-scrollbar`) is not generated.
+```html title="A side panel whose layout doesn't shift when it starts scrolling"
+<aside class="overflow-y:auto scrollbar-width:thin scrollbar-gutter:stable">…</aside>
+```

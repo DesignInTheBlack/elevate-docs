@@ -1,11 +1,11 @@
 ---
-title: "Getting Started with Elevate CSS"
-description: Learn how to get started with Elevate CSS.
+title: "Getting started"
+description: "Install Elevate, run the compiler, and write your first classes."
 ---
 
 This quick start guide is included to give you an opportunity to dive right into the world of Elevate CSS. With that said, however, it is **highly recommended** that you familiarize yourself with the **configuration** and **specificity** pages as well as they provide a deeper understanding of Elevate's capabilities, functionality, and best practices as well as how to best leverage the framework for your specific needs.
 
-### Installation and Usage
+### Installation and usage
 import { Steps } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
 
@@ -19,7 +19,7 @@ import { Code } from '@astrojs/starlight/components';
 
 </Steps>
 
-### Basic Configuration
+### Basic configuration
 
 Elevate's general settings are defined in `elevate/config/elevate.ts`:
 
@@ -44,7 +44,7 @@ const options = {
 export const config = options
 ```
 
-### What Are 'Utility Strings'?
+### What are utility strings?
 
 **Basic Usage:**  
 
@@ -99,11 +99,11 @@ Bringing it all together, here are some examples of Elevate's syntax in action:
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="Modifiers are Order Agnostic">
+<Aside title="Modifier order doesn't matter">
 You can write `text:grey-2:left:snug` or `text:snug:grey-2:left` and the order doesn't matter. We'll get to the how and why later, but for now, just know that you can use any order you want.
 </Aside>
 
-### Breakpoints and Responsive Design
+### Breakpoints and responsive design
 
 Elevate affords and enforces a mobile-first, organized syntax for responsive design:
 
@@ -113,11 +113,11 @@ Elevate affords and enforces a mobile-first, organized syntax for responsive des
 
 Universal classes are applied on the far-left and apply to all breakpoints by default unless overridden at a breakpoint. Breakpoints are specified using the `/breakpoint/` syntax, allowing you to discern the responsive behavior of an element at a glance and keeping things organized by default.
 
-<Aside type = "caution" title="Scratching Your Head?">
+<Aside type = "caution" title="Scratching your head?">
 At this point, you're probably wondering what the "@" is for, right? Don't worry, we'll get to that explanation next.
 </Aside>
 
-### Operator Flags
+### Operator flags
 
 In order to allow for greater flexibility, Elevate supports a series of flags to further refine styling choices and to support more complex and dynamic behaviors while preserving semantic clarity.
 
@@ -143,7 +143,7 @@ Condense a full utility string into a single reusable class with `env:name`, the
 
 <LinkCard title="Learn Envelopes" href="/guides/4-env-aliases/" />
 
-### Recommended Ordering
+### Recommended ordering
 
 When multiple features are used together, keep your class list in this order:
 
@@ -151,7 +151,7 @@ When multiple features are used together, keep your class list in this order:
 
 This keeps scanning predictable and makes overrides easy to reason about. Property modifier order remains agnostic within a utility.
 
-### Combined Example (All Features Together)
+### Combined example (all features together)
 
 ```html
 <div class="ctx:card env:card /md/ @hover+focus-visible:[bg-color:indigo_text:white] pd:d4 bg-color:indigo-3 text:white shadow:soft">
@@ -169,7 +169,7 @@ Exempt certain classes from CSS generation (e.g. for JavaScript interactions, la
 <div class="-mySelector">
 ```
 
-<Aside title="Or Just Safelist Your Classes">
+<Aside title="Or safelist your classes">
 You can also just add the classes you want to ignore to the safelist in `elevate/config/elevate.ts`. This is useful for integrating
 Elevate with other tools that require classes of their own:
 
@@ -188,7 +188,7 @@ Elevate with other tools that require classes of their own:
 
 </Aside>
 
-### The Elements of Elevate
+### The elements of Elevate
 
 Elevate's systems are driven by three distinct elements:
 
@@ -266,7 +266,7 @@ Elevate's systems are driven by three distinct elements:
    <div class="brand:fill-popgreen:copy-popwhite"></div>
    ```
 
-### Isolating Elevate's Runtime
+### Isolating Elevate's runtime
 
 In certain circumstances, you may want to run Elevate in a separate process to avoid conflicts with your project's dependencies. This is particularly useful when using Elevate alongside frameworks like Next.js, where dependency conflicts or module resolution issues may occur.
 This can be done by creating a separate package.json file in the `elevate` directory and then running `npm start` from within that directory. Note that you can change your preferred command in the Elevate specific json file if you so choose.

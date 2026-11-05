@@ -5,7 +5,7 @@ description: Condense a utility list into a single class and reopen it later.
 
 Envelopes let you collapse a full utility string into one named class and reopen it when you need to edit. They are stored in `elevate.env.json` and applied anywhere you use `env:name`.
 
-## Create An Envelope
+## Create an envelope
 
 Add `env:name` alongside your utilities. On save, Elevate captures the utilities and condenses the class list to just `env:name`.
 
@@ -21,7 +21,7 @@ After save, the class list becomes:
 <div class="env:card"></div>
 ```
 
-## Open An Envelope
+## Open an envelope
 
 To edit an envelope, use `env:name:open`. On save, Elevate expands the class list and keeps the `:open` marker so it stays open until you close it. While open, edits update the registry on save.
 
@@ -35,7 +35,7 @@ Expands to:
 <div class="env:card:open pd-x:d4 bg-color:red mg-t:d1 @hover:[bg-color:blue]"></div>
 ```
 
-## Close An Envelope
+## Close an envelope
 
 Remove `:open` and save to condense back to a single class:
 
@@ -43,7 +43,7 @@ Remove `:open` and save to condense back to a single class:
 <div class="env:card"></div>
 ```
 
-## Envelope Lifecycle (What Changes In The File)
+## Envelope lifecycle (what changes in the file)
 
 1. **Define**
    - You write `env:card` alongside utilities.
@@ -58,7 +58,7 @@ Remove `:open` and save to condense back to a single class:
    - You remove `:open`.
    - On save, Elevate collapses the class list back to `env:card` and the registry keeps the latest version.
 
-## Combined Example
+## Combined example
 
 This shows breakpoints and states captured inside an envelope:
 
@@ -74,7 +74,7 @@ On save, this becomes:
 <div class="env:card"></div>
 ```
 
-## Rules And Notes
+## Rules and notes
 
 - Prefer one envelope per class list. Multiple env definitions skip auto-condense.
 - Names allow letters, numbers, and dashes.

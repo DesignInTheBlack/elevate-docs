@@ -1,11 +1,11 @@
 ---
 title: Grid
-description: A guide to the grid shorthand in Elevate CSS.
+description: "Columns, rows and gaps, set in one class."
 ---
 
 Elevate CSS simplifies CSS Grid layouts by introducing a series of concise shorthands for defining grid properties. This guide explains how to use the `grid` property with modifiers for rows, columns, and gaps as well as setting row and column spans with the `row-spans` and `col-spans` properties.
 
-## `grid` Property Modifiers
+## `grid` property modifiers
 Elevate supports the following modifiers for the `grid` property:
 
 | **Modifier**             | **Expected Values**              | **Example**                          |
@@ -16,7 +16,7 @@ Elevate supports the following modifiers for the `grid` property:
 | ColGap         | SpacingToken (e.g., `d3`)      | `grid:colgap-d3`                     |
 | RowGap         | SpacingToken (e.g., `d3`)      | `grid:rowgap-d3`                     |
 
-## Grid Areas
+## Grid areas
 
 Use pass-through values to define template areas and assign areas to items:
 
@@ -25,7 +25,7 @@ Use pass-through values to define template areas and assign areas to items:
 | `grid-template-areas` | PassThroughToken (e.g., `("header_header"_"sidebar_main")`) | `grid-template-areas:("header_header"_"sidebar_main")` |
 | `grid-area` | PassThroughToken (e.g., `(header)`) | `grid-area:(header)` |
 
-## `row-spans` and `col-spans` Property Modifiers
+## `row-spans` and `col-spans` property modifiers
 The `row-spans` and `col-spans` properties can be used to specify the number of rows or columns a cell should span across. These properties accept the following syntax:
 
 | **Modifier**             | **Expected Values**              | **Example**                          |
@@ -37,7 +37,7 @@ The `row-spans` and `col-spans` properties can be used to specify the number of 
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside title="Evenly Distributing Space">
+<Aside title="Evenly distributing space">
 Note that you can also add `fr` to the end of the `rows` and `cols` modifiers to indicate fractional rows or columns. That is, evenly distribute the available space among the specified number of rows or columns.
 
 ```html
@@ -47,7 +47,7 @@ Note that you can also add `fr` to the end of the `rows` and `cols` modifiers to
 
 </Aside>
 
-## `auto` Property Modifiers
+## `auto` property modifiers
 The `auto` properties utilize the passthrough token to allow for more traditionally robust control over the layout of grid items. These properties accept the following syntax:
 
 | **Modifier**             | **Expected Values**              | **Example**                          |
@@ -56,11 +56,11 @@ The `auto` properties utilize the passthrough token to allow for more traditiona
 | 'auto-row'        | PassThroughToken (e.g.,  `(minmax(20%,_80vmax))` )         | `auto-row:(minmax(20%,_80vmax))`                         |
 | 'auto-flow'    | PassThroughToken (e.g.,  `(row_dense)` )         | `auto-flow:(row_dense)`                         |
 
-<Aside title="'Pass Through' Means Literally">
+<Aside title="Pass-through means literally">
 When using PassThroughToken based properties or using it in your own custom syntax, remember that the actual CSS value is whatever you pass through. So, if you're using a PassThroughToken for a background image, for example, you must use the `url()` syntax just as you would in a CSS declaration. PassThroughTokens also allow you to write spaces in your utility strings by placing an underscore (_) in place of the space.
 </Aside>
 
-## Examples of Grid Layouts
+## Examples of grid layouts
 
 Elevate CSS ensures creating grid layouts is intuitive and concise, enabling dynamic design with minimal effort while simultaneously preserving the power and flexibility of CSS Grid.
 

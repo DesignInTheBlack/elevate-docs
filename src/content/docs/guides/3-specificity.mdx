@@ -1,15 +1,15 @@
 ---
-title: "Specificity"
-description: Learn how to avoid specificity issues in Elevate CSS.
+title: "Scopes and specificity"
+description: "How Elevate orders CSS, and how ctx scopes keep components from colliding."
 ---
 
-### Addressing Specificity Issues
+### Addressing specificity issues
 
 Elevate CSS encourages concise, semantic class names by combining properties with modifiers. In some situations, this flexibility can lower selector specificity, which may let other styles override your intent.
 
 To prevent conflicts, Elevate provides a **context utility**. It creates a temporary, named scope so that everything inside it gains higher, predictable specificity.
 
-### The `context` Property
+### The `context` property
 
 | Property | Expected Values | Example |
 |----------|-----------------|---------|

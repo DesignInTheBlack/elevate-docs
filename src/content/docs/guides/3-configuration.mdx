@@ -1,13 +1,13 @@
 ---
-title: "Configuration & Extension"
-description: "Learn how to configure and extend Elevate CSS."
+title: "Configuration and extension"
+description: "Point Elevate at your files, then extend it with your own tokens and syntax."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
 Elevate offers a powerful and flexible configuration system that's easy to adapt to your project's design and architectural goals. **However, with great power comes great responsibility** - be sure to review each configuration option carefully to ensure it aligns with your project's needs.
 
-## Basic Configuration
+## Basic configuration
 
 Elevate's general settings are defined in `elevate/config/elevate.ts`:
 
@@ -97,7 +97,7 @@ export const relationships = {
 };
 ```
 
-## Customization Tasks Cheat Sheet
+## Customization tasks cheat sheet
 
 In the majority of cases, you'll only ever need to either:
 A. **Integrate Design System Tokens**  
@@ -110,7 +110,7 @@ B. **Expand Upon Elevate's Syntax**
    - Import and spread these new rules into the `rules` object in `config/syntax.ts`.  
    - Define new properties in the `relationships` object in `config/syntax.ts`, mapping tokens and rules to CSS declarations according to your needs.
 
-<Aside type="caution" title="Token Categories and Compatibility">
+<Aside type="caution" title="Token categories and compatibility">
   In `config/design.ts`, you can spread your design token imports into the following existing token categories and they will be immediately compatible with Elevate's existing properties:
 
     ColorToken<br/>
@@ -130,7 +130,7 @@ B. **Expand Upon Elevate's Syntax**
 
 </Aside>
 
-## Design System Integration
+## Design system integration
 
 If your goal is to integrate your design system tokens into Elevate:
 
@@ -174,7 +174,7 @@ To use a brand color with properties that already exist, such as `bg-color`, spr
 
 You can now reference these tokens in your utility strings as you would any of the existing Elevate tokens.
 
-## Extending Elevate's Syntax
+## Extending Elevate's syntax
 
 To create product-specific or project-specific syntax rules, follow these steps:
 1. **Create a new file** in the `elevate/rules` directory.
@@ -191,7 +191,7 @@ export const Brand = {
 };
 ```
 
-<Aside type="caution" title="Rule Files vs. Properties">
+<Aside type="caution" title="Rule files vs. properties">
   When creating a new rule file, remember you're defining the <strong>modifier syntax</strong> (e.g., <code>fill-</code>, <code>copy-</code>), not the property itself. You'll establish a <strong>new property</strong> (e.g., <code>brand</code>) in <code>elevate/config/syntax.ts</code> to map these modifiers to the appropriate CSS declarations.
 </Aside>
 
@@ -234,15 +234,15 @@ import { LinkCard } from '@astrojs/starlight/components';
 
 <LinkCard title="See System Token Types" href="/reference/system-token-types/" />
 
-<Aside type="danger" title="Token Collisions & How to Avoid Them">
+<Aside type="danger" title="Token collisions, and how to avoid them">
   Elevate supports an order-agnostic syntax structure. It applies a "first match wins" strategy whereby the first CSS declaration expecting a token or rule claims it. However, <strong>token collisions</strong> can occur if two declarations under a single property share the same token type.
 
   <strong>Example:</strong> A single property defines both <code>color: ColorToken</code> and <code>border-color: ColorToken</code>. If you pass a color token, Elevate applies it to the first matching declaration. To avoid collisions, create new rules in <code>elevate/rules</code> to differentiate them, and reference those rules in the property definition rather than referencing the token type directly.
 </Aside>
 
-## Troubleshooting & Helpful Tips
+## Troubleshooting & helpful tips
 
-### Common Issues
+### Common issues
 1. **Token not mapping correctly?**  
    - Check if the design token is **exported** from its file.  
    - Ensure the token is properly **imported** and **spread** in `config/design.ts`.  
@@ -255,7 +255,7 @@ import { LinkCard } from '@astrojs/starlight/components';
    - Avoid overly generic names that can cause collisions.  
    - Prefix them to indicate their purpose, especially if you have many tokens.
 
-## Want To Go Deeper?
+## Want to go deeper?
 
 Elevate's configurability makes it easy to integrate any design system or add custom features. Familiarize yourself with the existing rules in `core/system` to understand how Elevate maps tokens and rules to CSS declarations. Leverage this knowledge to create robust, maintainable utility-based styles that reflect your unique design system-while also ensuring **maximum compatibility** with Elevate's defaults whenever possible.
 

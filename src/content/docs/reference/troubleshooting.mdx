@@ -1,0 +1,69 @@
+---
+title: Troubleshooting
+description: What each Elevate build error means, and how to fix it.
+---
+
+When a class doesn't fit your design system, Elevate stops the build and tells you the file and line. Find the first line of the message below.
+
+## Modifier Validation Failed
+
+```text
+Modifier Validation Failed: Unable to determine modifier type for "d99"
+in src/components/Card.astro on line 12
+```
+
+Elevate couldn't find the value in any token set or rule. Usually it's a typo (`text:indgo`) or a step that doesn't exist (`pd:d99`). Check the value against the [spacing](/default/spacing/), [color](/default/colors/) or [typography](/default/text/) tokens, or the modifier table on the property's page.
+
+## Invalid Property/Modifier Relationship
+
+```text
+Invalid Property/Modifier Relationship: Property "bd-b" does not accept
+modifiers of type "BorderRadiusRule,RoundRule"
+```
+
+The value is real, but this property can't use it. Here, single-side borders like `bd-b` don't take a radius. Move the modifier to a property that accepts it, such as `bd:round-d2`.
+
+## Invalid Prefixed Value
+
+```text
+Invalid Prefixed Value: Unable to determine spacingtoken value "d99"
+```
+
+The prefix is right but the token after it isn't. In `bd:width-d99`, `width-` expects a spacing token and `d99` isn't one.
+
+## Unrecognized property
+
+```text
+Invalid: Unrecognized property "pading"
+Direct Property Unrecognized: Unrecognized property "shadw"
+```
+
+The part before the first colon, or a standalone class, isn't an Elevate property. Check the spelling against the [property pages](/css/flex/). To keep a regular CSS class in the same `class` attribute, start it with a dash, for example `-mySelector`. Elevate skips it.
+
+## Invalid State Chain
+
+```text
+Invalid State Chain: Only one combinator directive is allowed
+```
+
+A state chain can hold one combinator: `@child`, `@descendants`, `@sibling`, `@siblings` or `@ancestor`. Pseudo-classes can be chained freely with `+`, but only one pseudo-element (like `before`) is allowed per chain. See [States and selectors](/reference/supported-selectors/).
+
+## Combinator directive requires an active ctx scope
+
+A combinator like `@child` needs a boundary to work from. Open one with `ctx:name` on the parent and close it with `ctx:end:name`, or use the class inside an envelope.
+
+## Env Conflict
+
+```text
+Env Conflict: env:card is defined with different tokens.
+```
+
+The same envelope name was defined twice with different classes. Rename one, or reopen the original with `env:card:open` to edit it. See [Envelopes](/guides/4-env-aliases/).
+
+## Lexing error
+
+```text
+Lexing error: unexpected character: ->;<- at offset: 5
+```
+
+The class contains a character Elevate's grammar doesn't allow, often a stray `;` or `,` copied from CSS. Remove it. For raw values that need parentheses or special characters, use a pass-through value such as `backdrop-filter:(blur(8px))`.

@@ -1,12 +1,15 @@
 ---
-title: Select
-description: A guide to select in Elevate CSS.
+title: "Select"
+description: "Control whether people can select text."
 ---
 
-Elevate CSS features a single compound property for setting the selection behavior of an element:
+Use `select:none` on interface chrome like buttons and tabs, and `select:all` when one click should grab the whole value, such as a code or an ID.
 
-### `select` Property Modifiers
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `select` | `none`, `auto`, `text`, `contain`, `all` | `user-select` | `select:none` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `select` |  `none`, `auto`, `text`, `contain`, `all` |  `select:auto`  |
+```html
+<button class="select:none">Next</button>
+<code class="select:all">ELV-2026-0042</code>
+```

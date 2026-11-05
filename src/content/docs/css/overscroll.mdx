@@ -1,12 +1,16 @@
 ---
-title: Overscroll
-description: A guide to overscroll behavior in Elevate CSS.
+title: "Overscroll"
+description: "Control what happens when a scroll area hits its edge."
 ---
 
-## Overscroll Behavior
+By default, scrolling past the end of a panel carries on into the page behind it. `overscroll:contain` keeps the scroll inside the panel.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `overscroll` | `auto`, `contain`, `none` | `overscroll:contain` |
-| `overscroll-x` | `auto`, `contain`, `none` | `overscroll-x:none` |
-| `overscroll-y` | `auto`, `contain`, `none` | `overscroll-y:contain` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `overscroll` | `auto`, `contain`, `none` | `overscroll-behavior` | `overscroll:contain` |
+| `overscroll-x` | `auto`, `contain`, `none` | `overscroll-behavior-x` | `overscroll-x:none` |
+| `overscroll-y` | `auto`, `contain`, `none` | `overscroll-behavior-y` | `overscroll-y:contain` |
+
+```html title="A chat panel that doesn't scroll the page behind it"
+<div class="overflow-y:auto overscroll-y:contain">…</div>
+```

@@ -1,12 +1,14 @@
 ---
-title: Resize
-description: A guide to resize in Elevate CSS.
+title: "Resize"
+description: "Let people drag to resize an element."
 ---
 
-Elevate CSS features a single compound property for setting the resize behavior of an element:
+Text areas are resizable in both directions by default. Limit it to one direction, or turn it off.
 
-### `resize` Property Modifiers
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `resize` | `none`, `both`, `block`, `inline`, `horizontal`, `vertical` | `resize` | `resize:vertical` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `resize` |  `none`, `both`, `block`, `inline`, `horizontal`, `vertical` |  `resize:horizontal`  |
+```html
+<textarea class="resize:vertical w:full"></textarea>
+```

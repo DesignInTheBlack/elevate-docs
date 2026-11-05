@@ -1,12 +1,16 @@
 ---
-title: SVG & Media
-description: A guide to SVG-related properties in Elevate CSS.
+title: "SVG and media"
+description: "Color and stroke SVG icons with your tokens."
 ---
 
-## SVG Properties
+Style inline SVGs with the same tokens as everything else.
 
-| Property | Expected Values | Example |
-|----------|------------------|---------|
-| `fill` | ColorToken (e.g., `purple+1`) | `fill:purple+1` |
-| `stroke` | ColorToken (e.g., `indigo+2`) | `stroke:indigo+2` |
-| `stroke-width` | SpacingToken (e.g., `d1`) | `stroke-width:d1` |
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `fill` | Any [color token](/default/colors/) | `fill` | `fill:indigo` |
+| `stroke` | Any color token | `stroke` | `stroke:grey-2` |
+| `stroke-width` | Any [spacing token](/default/spacing/) | `stroke-width` | `stroke-width:d0` |
+
+```html title="A line icon in your palette"
+<svg class="stroke:grey-2 stroke-width:d0 fill:transparent" viewBox="0 0 24 24">…</svg>
+```

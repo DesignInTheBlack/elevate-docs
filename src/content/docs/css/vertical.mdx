@@ -1,12 +1,14 @@
 ---
-title: Vertical Alignment
-description: A guide to vertical alignment in Elevate CSS.
+title: "Vertical alignment"
+description: "Line up inline elements and table cells."
 ---
 
-Elevate CSS features a compound property for setting the vertical alignment of an element:
+`vertical` sets `vertical-align`. It affects inline content, like an icon next to text, and table cells. It doesn't move block elements. For those, use [flex alignment](/css/flex/).
 
-### `vertical` Property Modifiers
+| Property | Values | Compiles to | Example |
+|---|---|---|---|
+| `vertical` | `baseline`, `sub`, `super`, `top`, `text-top`, `middle`, `bottom`, `text-bottom` | `vertical-align` | `vertical:middle` |
 
-| Property   | Expected Values | Example     |
-|------------|--------------------|-----------------------|
-| `vertical` |  `baseline`, `sub`, `super`, `top`, `text-top`, `middle`, `bottom`, `text-bottom`  |  `vertical:middle`  |
+```html title="An icon that sits centered on the line"
+<p>Saved <svg class="vertical:middle">…</svg></p>
+```
