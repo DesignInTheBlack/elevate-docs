@@ -1,0 +1,421 @@
+---
+/*
+  Elevate playground. Type a class list; the real compiler (elevate/core) runs
+  in the browser on every keystroke. The preview applies the compiled CSS to
+  one element with three children, at phone, tablet or desktop width.
+*/
+const presets = [
+	{ name: 'Card', classes: 'row:x-between:y-center gap:d4 pd:d6 bg-color:white text:grey-3 bd:round-d4 shadow:soft' },
+	{ name: 'Responsive', classes: 'col:x-center gap:d3 pd:d4 bg-color:indigo+4 /md/ row:x-between:y-center pd:d8' },
+	{ name: 'Grid', classes: 'grid-auto:min-c4:gap-d3 pd:d4 bg-color:grey+4 bd:round-d3' },
+	{ name: 'Hover', classes: 'row:x-center:y-center gap:d2 pd:d6 bg-color:grey+4 bd:round-d4 @hover:[bg-color:indigo_text:white]' },
+	{ name: 'Mistake', classes: 'row:x-center gap:d4 pd:d99 text:indgo' },
+];
+---
+<section class="pg" data-device="fit">
+	<div class="pg-presets" role="group" aria-label="Examples">
+		{presets.map((p, i) => (
+			<button type="button" data-classes={p.classes} aria-pressed={i === 0 ? 'true' : 'false'}>{p.name}</button>
+		))}
+	</div>
+
+	<div class="pg-stage">
+		<div class="pg-editor">
+			<label for="pg-input" class="pg-label">class</label>
+			<div class="pg-field">
+				<pre class="pg-hl" aria-hidden="true"></pre>
+				<textarea id="pg-input" spellcheck="false" autocapitalize="off" autocomplete="off" rows="4"></textarea>
+			</div>
+			<p class="pg-status" role="status" aria-live="polite"></p>
+			<ul class="pg-problems"></ul>
+		</div>
+
+		<div class="pg-preview">
+			<div class="pg-devices" role="group" aria-label="Preview width">
+				<button type="button" data-device="fit" aria-pressed="true">Fit</button>
+				<button type="button" data-device="phone">Phone</button>
+				<button type="button" data-device="tablet">Tablet</button>
+				<button type="button" data-device="desktop">Desktop</button>
+			</div>
+			<div class="pg-viewport">
+				<iframe title="Preview of the compiled classes" class="pg-frame" sandbox="allow-same-origin"></iframe>
+			</div>
+			<p class="pg-width"></p>
+		</div>
+	</div>
+
+	<div class="pg-output">
+		<div class="pg-output-head">
+			<span>Compiled CSS</span>
+			<button type="button" class="pg-copy">Copy</button>
+		</div>
+		<pre class="pg-css"></pre>
+	</div>
+</section>
+
+<script>
+	import { compile, breakpointWidth } from '../playground/compile';
+
+	const WIDTHS: Record<string, number> = { phone: 390, tablet: 768, desktop: 1280 };
+
+	const root = document.querySelector<HTMLElement>('.pg')!;
+	const input = root.querySelector<HTMLTextAreaElement>('#pg-input')!;
+	const hl = root.querySelector<HTMLElement>('.pg-hl')!;
+	const status = root.querySelector<HTMLElement>('.pg-status')!;
+	const problemsEl = root.querySelector<HTMLElement>('.pg-problems')!;
+	const cssEl = root.querySelector<HTMLElement>('.pg-css')!;
+	const frame = root.querySelector<HTMLIFrameElement>('.pg-frame')!;
+	const viewport = root.querySelector<HTMLElement>('.pg-viewport')!;
+	const widthEl = root.querySelector<HTMLElement>('.pg-width')!;
+	const copy = root.querySelector<HTMLButtonElement>('.pg-copy')!;
+
+	const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+	const colorToken = (t: string, bad: boolean) => {
+		if (bad) return `<span class="bad">${esc(t)}</span>`;
+		if (/^\/[a-z0-9]+\/$/i.test(t)) return `<span class="el-bp">${esc(t)}</span>`;
+		if (t.startsWith('@')) return `<span class="el-state">${esc(t)}</span>`;
+		if (t.startsWith('-')) return `<span class="plain">${esc(t)}</span>`;
+		const [p, ...m] = t.split(':');
+		return `<span class="el-prop">${esc(p)}</span>` + m.map((x) => `<span class="el-sep">:</span><span class="el-mod">${esc(x)}</span>`).join('');
+	};
+
+	const frameDoc = (classes: string, css: string) => `<!doctype html><html><head><meta charset="utf-8"><style>
+		html,body{margin:0;height:100%;font-family:'Instrument Sans Variable',system-ui,sans-serif;background:#000;color:#f5f5f7}
+		body{display:grid;place-items:center;padding:clamp(12px,5vw,32px);box-sizing:border-box}
+		.target{width:100%;max-width:640px;box-sizing:border-box;transition:all .35s cubic-bezier(.2,.8,.2,1)}
+		.t{display:block;min-width:64px;padding:14px 18px;border-radius:14px;font-weight:600;font-size:15px;color:#fff;box-sizing:border-box}
+		.a{background:linear-gradient(160deg,#6b77ff,#4350d8)}.b{background:linear-gradient(160deg,#ff7ac0,#d6338a)}.c{background:linear-gradient(160deg,#ffa060,#d9611c)}
+	</style><style>${css.replace(/<\/style/gi, '')}</style></head><body><div class="target ${esc(classes)}"><span class="t a">One</span><span class="t b">Two</span><span class="t c">Three</span></div></body></html>`;
+
+	let current = '';
+	const run = () => {
+		const value = input.value;
+		const result = compile(value);
+		const badTokens = new Set(result.problems.map((p) => p.token));
+		const tokens = value.split(/(\s+)/);
+		hl.innerHTML = tokens.map((t) => (/^\s+$/.test(t) || !t ? esc(t) : colorToken(t, badTokens.has(t)))).join('') + '\n';
+
+		problemsEl.innerHTML =
+			result.problems.map((p) => `<li class="err"><code>${esc(p.token)}</code>${esc(p.message)}</li>`).join('') +
+			result.notes.map((n) => `<li class="note">${esc(n)}</li>`).join('');
+
+		const count = result.rules.length;
+		if (result.problems.length) {
+			root.dataset.state = 'error';
+			status.textContent = `Build would fail: ${result.problems.length} off-system ${result.problems.length === 1 ? 'value' : 'values'}.`;
+		} else if (!value.trim()) {
+			root.dataset.state = '';
+			status.textContent = 'Type Elevate classes to compile them.';
+		} else {
+			root.dataset.state = 'ok';
+			status.textContent = `Compiled ${count} ${count === 1 ? 'class' : 'classes'}.`;
+		}
+
+		cssEl.textContent = result.css || '/* Nothing compiled yet */';
+		current = result.css;
+		frame.srcdoc = frameDoc(value, result.css);
+		try { history.replaceState(null, '', '#' + encodeURIComponent(value)); } catch {}
+	};
+
+	const fit = () => {
+		const device = root.dataset.device || 'fit';
+		const avail = viewport.clientWidth;
+		const w = device === 'fit' ? avail : WIDTHS[device];
+		const scale = Math.min(1, avail / w);
+		frame.style.width = `${w}px`;
+		frame.style.height = `${Math.round(viewport.clientHeight / scale)}px`;
+		frame.style.transform = `scale(${scale})`;
+		const active = Object.entries({ '2xs': '', xs: '', sm: '', md: '', lg: '', xl: '' })
+			.filter(([bp]) => {
+				const rem = breakpointWidth(bp);
+				return rem && parseFloat(rem) * 16 <= w;
+			})
+			.map(([bp]) => bp);
+		widthEl.textContent = `${w}px wide. Active breakpoints: ${active.length ? active.join(', ') : 'none'}.`;
+	};
+
+	let timer = 0;
+	input.addEventListener('input', () => {
+		clearTimeout(timer);
+		timer = window.setTimeout(run, 60);
+		root.querySelectorAll('.pg-presets button').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+	});
+	input.addEventListener('scroll', () => { hl.scrollTop = input.scrollTop; });
+
+	root.querySelectorAll<HTMLButtonElement>('.pg-presets button').forEach((b) =>
+		b.addEventListener('click', () => {
+			input.value = b.dataset.classes!;
+			root.querySelectorAll('.pg-presets button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+			run();
+		}),
+	);
+	root.querySelectorAll<HTMLButtonElement>('.pg-devices button').forEach((b) =>
+		b.addEventListener('click', () => {
+			root.dataset.device = b.dataset.device!;
+			root.querySelectorAll('.pg-devices button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+			fit();
+		}),
+	);
+	copy.addEventListener('click', async () => {
+		try {
+			await navigator.clipboard.writeText(current);
+			copy.textContent = 'Copied';
+			setTimeout(() => (copy.textContent = 'Copy'), 1400);
+		} catch {
+			copy.textContent = 'Copy failed';
+		}
+	});
+
+	const fromHash = (() => { try { return decodeURIComponent(location.hash.slice(1)); } catch { return ''; } })();
+	input.value = fromHash || root.querySelector<HTMLButtonElement>('.pg-presets button')!.dataset.classes!;
+	if (fromHash) root.querySelectorAll('.pg-presets button').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+	run();
+	fit();
+	new ResizeObserver(fit).observe(viewport);
+</script>
+
+<style>
+	.pg {
+		display: grid;
+		gap: 1.25rem;
+		margin-top: 2rem;
+	}
+	.pg :global(*) {
+		margin-top: 0 !important;
+	}
+
+	/* Segmented controls */
+	.pg-presets,
+	.pg-devices {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 2px;
+		padding: 3px;
+		border-radius: 12px;
+		background: var(--mist);
+		justify-self: start;
+	}
+	.pg-devices {
+		background: rgb(255 255 255 / 0.08);
+	}
+	.pg-presets button,
+	.pg-devices button {
+		appearance: none;
+		border: none;
+		background: transparent;
+		font: 520 0.875rem/1 var(--sl-font);
+		color: var(--slate);
+		padding: 0.55rem 0.85rem;
+		border-radius: 9px;
+		cursor: pointer;
+	}
+	.pg-devices button {
+		color: rgb(255 255 255 / 0.6);
+		font-size: 0.8125rem;
+		padding: 0.45rem 0.75rem;
+	}
+	.pg-presets button:hover { color: var(--ink); }
+	.pg-devices button:hover { color: #fff; }
+	.pg-presets button[aria-pressed='true'] {
+		background: var(--paper);
+		color: var(--ink);
+		box-shadow: 0 1px 3px rgb(0 0 0 / 0.12), 0 0 0 0.5px rgb(0 0 0 / 0.06);
+	}
+	.pg-devices button[aria-pressed='true'] {
+		background: rgb(255 255 255 / 0.16);
+		color: #fff;
+	}
+
+	/* Stage */
+	.pg-stage {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+		min-height: 32rem;
+		border-radius: 28px;
+		overflow: hidden;
+		background:
+			radial-gradient(ellipse 50% 60% at 75% 50%, rgb(88 101 239 / 0.18), transparent 70%),
+			#000;
+		color: #f5f5f7;
+	}
+	.pg[data-state='error'] .pg-stage {
+		box-shadow: inset 0 0 0 1px rgb(255 107 107 / 0.4);
+	}
+
+	.pg-editor {
+		display: grid;
+		grid-template-rows: auto auto auto 1fr;
+		gap: 0.9rem;
+		padding: clamp(1.25rem, 3vw, 2rem);
+		border-right: 1px solid rgb(255 255 255 / 0.08);
+	}
+	.pg-label {
+		font: 0.8125rem/1 var(--sl-font-mono);
+		color: rgb(255 255 255 / 0.45);
+	}
+	.pg-field {
+		position: relative;
+		font: 500 clamp(1rem, 0.85rem + 0.5vw, 1.1875rem) / 1.65 var(--sl-font-mono);
+	}
+	.pg-hl,
+	.pg-field textarea {
+		margin: 0;
+		padding: 0.9rem 1rem;
+		border: 1px solid rgb(255 255 255 / 0.12);
+		border-radius: 14px;
+		font: inherit;
+		letter-spacing: 0;
+		white-space: pre-wrap;
+		overflow-wrap: break-word;
+		box-sizing: border-box;
+		min-height: 9rem;
+		width: 100%;
+	}
+	.pg-hl {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		background: rgb(255 255 255 / 0.04);
+		color: #f5f5f7;
+		pointer-events: none;
+	}
+	.pg-field textarea {
+		position: relative;
+		display: block;
+		resize: vertical;
+		background: transparent;
+		color: transparent;
+		caret-color: #fff;
+		outline: none;
+	}
+	.pg-field textarea:focus {
+		border-color: rgb(255 255 255 / 0.4);
+	}
+	.pg-field textarea::selection {
+		background: rgb(143 153 255 / 0.35);
+		color: transparent;
+	}
+	.pg-hl :global(.el-prop) { color: #8f99ff; }
+	.pg-hl :global(.el-mod) { color: #ff7dbd; }
+	.pg-hl :global(.el-state) { color: #ffa060; }
+	.pg-hl :global(.el-bp) { color: #6ee7b0; }
+	.pg-hl :global(.el-sep) { color: rgb(255 255 255 / 0.35); }
+	.pg-hl :global(.plain) { color: rgb(255 255 255 / 0.55); }
+	.pg-hl :global(.bad) {
+		color: #ff6b6b;
+		text-decoration: underline wavy #ff6b6b;
+		text-decoration-skip-ink: none;
+		text-underline-offset: 0.25em;
+	}
+
+	.pg-status {
+		font: 500 0.875rem/1.5 var(--sl-font-mono);
+		color: rgb(255 255 255 / 0.55);
+	}
+	.pg[data-state='ok'] .pg-status { color: #6ee7b0; }
+	.pg[data-state='error'] .pg-status { color: #ff8a8a; }
+
+	.pg-problems {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.6rem;
+		align-content: start;
+		font-size: 0.875rem;
+		line-height: 1.45;
+	}
+	.pg-problems :global(li) {
+		padding: 0.7rem 0.85rem;
+		border-radius: 12px;
+		background: rgb(255 255 255 / 0.05);
+		color: rgb(255 255 255 / 0.75);
+	}
+	.pg-problems :global(li.err) {
+		background: rgb(255 107 107 / 0.1);
+		color: #ffc2c2;
+	}
+	.pg-problems :global(li code) {
+		display: block;
+		margin-bottom: 0.25rem;
+		background: none !important;
+		padding: 0 !important;
+		color: #ff8a8a !important;
+		font-size: 0.8125rem !important;
+	}
+
+	.pg-preview {
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		gap: 0.9rem;
+		padding: clamp(1.25rem, 3vw, 2rem);
+		min-width: 0;
+	}
+	.pg-viewport {
+		position: relative;
+		min-height: 20rem;
+		overflow: hidden;
+		border-radius: 16px;
+		background: #000;
+		box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1);
+	}
+	.pg-frame {
+		position: absolute;
+		top: 0;
+		left: 0;
+		border: none;
+		transform-origin: 0 0;
+		background: #000;
+	}
+	.pg-width {
+		font: 0.8125rem/1.4 var(--sl-font-mono);
+		color: rgb(255 255 255 / 0.45);
+	}
+
+	/* Output */
+	.pg-output {
+		border-radius: 20px;
+		background: var(--mist);
+		overflow: hidden;
+	}
+	.pg-output-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.8rem 1.1rem;
+		border-bottom: 1px solid var(--hair);
+		font-size: 0.875rem;
+		font-weight: 560;
+		color: var(--ink);
+	}
+	.pg-copy {
+		appearance: none;
+		border: 1px solid var(--hair);
+		background: var(--paper);
+		color: var(--ink);
+		font: 520 0.8125rem/1 var(--sl-font);
+		padding: 0.45rem 0.8rem;
+		border-radius: 999px;
+		cursor: pointer;
+	}
+	.pg-css {
+		margin: 0;
+		padding: 1.1rem 1.25rem;
+		max-height: 26rem;
+		overflow: auto;
+		background: none;
+		border: none;
+		font: 0.875rem/1.7 var(--sl-font-mono);
+		color: var(--body);
+		white-space: pre;
+	}
+
+	@media (max-width: 56rem) {
+		.pg-stage { grid-template-columns: 1fr; }
+		.pg-editor {
+			border-right: none;
+			border-bottom: 1px solid rgb(255 255 255 / 0.08);
+		}
+	}
+</style>

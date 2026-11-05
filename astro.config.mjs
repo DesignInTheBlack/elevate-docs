@@ -60,6 +60,7 @@ export default defineConfig({
 					label: 'Start here',
 					items: [
 						{ label: 'Getting started', slug: 'guides/2-getting-started' },
+						{ label: 'Playground', slug: 'playground' },
 						{ label: 'Why Elevate', slug: 'guides/2-why-elevate' },
 						{ label: 'Configuration', slug: 'guides/3-configuration' },
 					],

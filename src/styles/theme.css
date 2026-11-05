@@ -477,3 +477,8 @@ nav.sidebar a[aria-current='page'] .sl-badge {
 	padding: 0 !important;
 	font-size: 0.9em !important;
 }
+
+/* Playground gets a wider column */
+:root[data-theme]:has(.pg) {
+	--sl-content-width: 64rem;
+}

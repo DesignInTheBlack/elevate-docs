@@ -41,6 +41,8 @@ Add an `x-` or `y-` modifier to place children along that axis. Elevate works ou
 
 `between`, `around` and `evenly` distribute space, so they only work on the axis the container runs along: `x` for `row`, `y` for `col`.
 
+In `row-r` and `col-r`, `start` and `end` follow the reversed flow: `row-r:x-start` packs children against the right edge, where a reversed row begins.
+
 ## Wrapping
 
 Children stay on one line by default. Add a wrap modifier to let them flow onto more lines.
@@ -61,7 +63,7 @@ Use `child` on an element inside a flex container to control how it grows, shrin
 |---|---|---|---|
 | Grow | `grow`, `no-grow` | `flex-grow: 1` or `0` | `child:grow` |
 | Shrink | `shrink`, `no-shrink` | `flex-shrink: 1` or `0` | `child:no-shrink` |
-| Self alignment | `start`, `center`, `end`, `stretch` | `align-self` | `child:center` |
+| Self alignment | `start`, `center`, `end`, `stretch`, `auto` | `align-self` | `child:center` |
 | Order | `order-` plus any number | `order` | `child:order-2` |
 | Basis | `basis-` plus a [spacing token](/default/spacing/) | `flex-basis` | `child:basis-c4` |
 
