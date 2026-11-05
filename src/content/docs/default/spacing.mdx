@@ -3,7 +3,7 @@ title: "Spacing"
 description: "A 4-point spacing system in three scales: detail, content and space."
 ---
 
-Every spacing value comes from one of three scales: `d` for details inside components, `c` for gaps and sections, and `s` for page-sized widths. Use them anywhere a property takes a spacing token: padding, margin, gap, width, height and offsets.
+Every spacing value comes from one of three scales: `d` for details inside components, `c` for gaps and sections, and `s` for page-sized widths. `px` adds a one-pixel hairline for borders and dividers. Use them anywhere a property takes a spacing token: padding, margin, gap, width, height and offsets.
 
 import { Aside } from '@astrojs/starlight/components';
 
@@ -19,6 +19,7 @@ The **detail scale** is for fine-grained adjustments in small components, such a
 
 | **Token** | **Value** | **Description**       |
 |-----------|-----------|-----------------------|
+| `px`      | `1px`     | Hairline: borders and dividers |
 | `d0`      | `0.125rem`    | 2pt                   |
 | `d1`      | `0.25rem` | 4pt  |
 | `d2`      | `0.5rem`  | 8pt                   |

@@ -5,19 +5,29 @@ description: "Gradients are design tokens, applied in one class."
 
 import { Aside } from '@astrojs/starlight/components';
 
-Gradients are design tokens, so a brand gradient is defined once and used by name.
+Gradients are design tokens, so a brand gradient is defined once and used by name. The colorful ones are built from the [default palette](/default/colors/).
 
-| Token | Compiles to |
-|---|---|
-| `fadetoblack` | `background: linear-gradient(0deg, rgba(0,0,0,0.5032387955182073) 0%, rgba(255,255,255,0) 100%)` |
+| Token | Colors | Sample |
+|---|---|---|
+| `aurora` | `indigo`, `purple`, `pink` | <div class="gradient:aurora bd:round-d3 h:d12 w:c4"></div> |
+| `sunset` | `orange+1`, `pink`, `purple` | <div class="gradient:sunset bd:round-d3 h:d12 w:c4"></div> |
+| `ocean` | `teal+1`, `blue`, `indigo` | <div class="gradient:ocean bd:round-d3 h:d12 w:c4"></div> |
+| `mint` | `green+2`, `teal+1` | <div class="gradient:mint bd:round-d3 h:d12 w:c4"></div> |
+| `dusk` | `indigo-4`, `purple-2` | <div class="gradient:dusk bd:round-d3 h:d12 w:c4"></div> |
+| `fadetoblack` | Transparent to 50% black, bottom up | <div class="gradient:fadetoblack bd:round-d3 h:d12 w:c4"></div> |
+| `fadetowhite` | Transparent to 90% white, bottom up | <div class="bg-color:indigo bd:round-d3 h:d12 w:c4"><div class="gradient:fadetowhite bd:round-d3 h:full"></div></div> |
+
+```html title="A hero with an aurora background and readable white text"
+<section class="gradient:aurora text:white pd:c2 bd:round-d8">…</section>
+```
 
 ```html title="Darken the bottom of an image so a caption stays readable"
 <figure class="relative">
   <img src="…" alt="">
-  <figcaption class="absolute inset:d0 gradient:fadetoblack text:white">…</figcaption>
+  <figcaption class="absolute inset:0 gradient:fadetoblack text:white">…</figcaption>
 </figure>
 ```
 
 <Aside title="Add your own">
-Elevate ships with one gradient. Add yours to `gradients` in `elevate/core/system/design/effects.ts` and use it as `gradient:yourname`.
+Add gradients to `gradients` in `elevate/core/system/design/effects.ts` and use them as `gradient:yourname`.
 </Aside>

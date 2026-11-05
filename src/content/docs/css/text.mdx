@@ -14,12 +14,12 @@ Type is styled with three properties. `font` sets the typeface: size, family, we
 
 | Modifier | Values | Compiles to |
 |---|---|---|
-| Size | `tiny`, `eyebrow`, `small`, `base`, `h6`, `h5`, `h4`, `h3`, `h2`, `h1` ([type scale](/default/text/)) | `font-size` |
-| Family | `sans` (Raleway), `serif` (Merriweather, serif), `mono` (Space Mono, monospace) | `font-family` |
+| Size | `tiny`, `eyebrow`, `small`, `base`, `h6`, `h5`, `h4`, `h3`, `h2`, `h1`, `display` ([type scale](/default/text/)) | `font-size` |
+| Family | `sans`, `serif`, `mono`, `rounded`: each the operating system's own font, with fallbacks | `font-family` |
 | Weight | `thin` 100, `extra-light` 200, `light` 300, `regular` 400, `medium` 500, `semibold` 600, `bold` 700, `extra-bold` 800, `black` 900 | `font-weight` |
-| Letter spacing | `extra-tight` -0.02rem, `tight` -0.01rem, `normal` 0, `wide` 0.01rem, `wider` 0.02rem, `widest` 0.04rem | `letter-spacing` |
+| Letter spacing | `extra-tight` -0.04em, `tight` -0.02em, `normal` 0, `wide` 0.02em, `wider` 0.05em, `widest` 0.1em | `letter-spacing` |
 
-The default families name fonts without loading them. Load the fonts yourself, or point the tokens at your own in `elevate/core/system/design/typography.ts`.
+The default families use the fonts already on each device, like San Francisco on Apple devices and Segoe UI on Windows, so they look native and load instantly. To use a brand font, load it in your CSS and point a family token at it in `elevate/core/system/design/typography.ts`. Letter spacing is in `em`, so it scales with the text: `tight` on a headline does as much as `tight` on body copy.
 
 ## `text`
 

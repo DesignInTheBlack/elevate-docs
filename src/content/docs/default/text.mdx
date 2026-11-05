@@ -1,67 +1,34 @@
 ---
 title: "Typography"
-description: "A modular type scale, from footnotes to display headlines."
+description: "A type scale with readable small sizes and headlines that grow with the screen."
 ---
-
-Elevate's typography system offers a flexible and consistent way to manage text sizes across your application. It defines a set of font sizes tailored for various use cases, from subtle footnotes to bold, prominent headings.
 
 import { Aside } from '@astrojs/starlight/components';
 
+Small sizes stay readable, and from `h4` up every heading is fluid: it grows smoothly between a phone and a wide screen, so a page looks designed at every width without breakpoints. Weights, families, line height and letter spacing are on the [Text](/css/text/) page.
+
+## Sizes
+
+| Token | Size | Use it for | Sample |
+|---|---|---|---|
+| `tiny` | 0.75rem | Legal text, fine print | <span class="font:tiny">Aa</span> |
+| `eyebrow` | 0.8125rem | Labels above headings | <span class="font:eyebrow">Aa</span> |
+| `small` | 0.875rem | Captions, secondary text | <span class="font:small">Aa</span> |
+| `base` | 1rem | Body text | <span class="font:base">Aa</span> |
+| `h6` | 1.125rem | Small headings | <span class="font:h6">Aa</span> |
+| `h5` | 1.375rem | Card titles | <span class="font:h5">Aa</span> |
+| `h4` | 1.625rem to 2rem | Subsection headings | <span class="font:h4">Aa</span> |
+| `h3` | 2rem to 2.75rem | Section headings | <span class="font:h3">Aa</span> |
+| `h2` | 2.5rem to 3.75rem | Page headings | <span class="font:h2">Aa</span> |
+| `h1` | 3rem to 5rem | Page titles | <span class="font:h1">Aa</span> |
+| `display` | 3.5rem to 7rem | Hero headlines | <span class="font:display">Aa</span> |
+
+The fluid sizes are CSS `clamp()` values. `h1`, for example, is `clamp(3rem, 2rem + 4vw, 5rem)`.
+
+```html title="A hero headline, tight and bold"
+<h1 class="font:display:bold:extra-tight text:grey-4:none">…</h1>
+```
+
 <Aside title="Make it yours">
-These are starting values. Override them or add your own in the [Configuration](/guides/3-configuration/) guide.
+Change any size in `elevate/core/system/design/typography.ts`. Fixed values and `clamp()` both work.
 </Aside>
-
-Weights, families, line height and letter spacing are on the [Text](/css/text/) page.
-
-## How it works
-
-The font sizes are defined in `elevate/core/system/design/typography.ts` as part of the `size` property:
-
-```typescript
-export const typography = {
-  size: {
-    tiny: '0.533rem',
-    small: '0.711rem',
-    base: '1rem',
-    h6: '1.125rem',
-    h5: '1.5rem',
-    h4: '2.25rem',
-    h3: '3.375rem',
-    h2: '5.062rem',
-    h1: '7.594rem',
-    eyebrow: '0.583rem'
-  }
-};
-```
-
-## Font sizes
-
-| Name      | Description                                | Value     | Example |
-|------|--------------------------------------------|-----------|-------|
-| tiny  | Smallest size for subtle or legal text.    | 0.533rem  | <p class = "font:tiny "> Aa </p> |
-| eyebrow   | Decorative text for overlines or tags.     | 0.583rem  | <p class = "font:eyebrow"> Aa </p> |
-| small   | Slightly larger text for captions.         | 0.711rem  | <p class = "font:small"> Aa </p> |
-| base      | Standard body text size.                   | 1rem      | <p class = "font:base"> Aa </p> |
-| h6  | Smallest heading size.                     | 1.125rem  | <p class = "font:h6"> Aa </p> |
-| h5  | Slightly larger heading for subsections.   | 1.5rem    | <p class = "font:h5"> Aa </p> |
-| h4  | Medium headings for section titles.        | 2.25rem   | <p class = "font:h4"> Aa </p> |
-| h3  | Large headings for standout content.       | 3.375rem  | <p class = "font:h3"> Aa </p> |
-| h2  | Extra-large headings for important areas.  | 5.062rem  | <p class = "font:h2"> Aa </p> |
-| h1  | Largest size for main titles.              | 7.594rem  | <p class = "font:h1"> Aa </p> |
-
-## Simplified, hierarchical text styling
-
-The font sizes in Elevate help create:
-1. **Clear Text Hierarchy**: Sizes are designed to visually guide the reader.
-2. **Readability**: Well-balanced text scales ensure optimal legibility across devices.
-3. **Clean Markup**: Developers can use size tokens directly without the need for additional styling.
-
-For example:
-```html
-<div class="font:h1:sans text:red+1:blog">Welcome to Elevate</div>
-<p class="font:base text:indigo:loose">This is the body text styled with the base size.</p>
-<div class="font:tiny text:grey">Disclaimer: Tiny text for subtle information.</div>
-```
-
-This approach ensures a consistent and readable typography system.
-
