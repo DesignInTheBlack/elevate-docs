@@ -12,6 +12,10 @@ const { title = data.title, tagline, actions = [] } = data.hero || {};
 ---
 <section class="hero">
 	<div class="intro">
+		<a class="beta" href="https://github.com/DesignInTheBlack/Elevate/issues">
+			<span class="beta-tag">Beta</span>
+			<span>Still taking shape. Tell us what breaks.</span>
+		</a>
 		<h1 id={PAGE_TITLE_ID} set:html={title} />
 		{tagline && <p class="tagline" set:html={tagline} />}
 		{actions.length > 0 && (
@@ -170,6 +174,30 @@ const { title = data.title, tagline, actions = [] } = data.hero || {};
 	}
 
 	/* ---------- Intro ---------- */
+	.beta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.3rem 0.9rem 0.3rem 0.3rem;
+		border-radius: 999px;
+		background: var(--mist);
+		color: var(--slate);
+		font-size: 0.875rem;
+		text-decoration: none;
+		transition: background-color 0.15s ease, color 0.15s ease;
+	}
+	.beta:hover {
+		background: var(--mist-deep);
+		color: var(--ink);
+	}
+	.beta-tag {
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+		background: var(--ink);
+		color: #fff;
+		font-size: 0.75rem;
+		font-weight: 600;
+	}
 	.intro {
 		display: grid;
 		gap: 1.5rem;
