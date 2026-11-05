@@ -1,210 +1,297 @@
 ---
 /*
-  Interactive flex demo. Pick a direction and alignment; the token,
-  the compiled CSS, and the live layout update together.
+  FlexLab — the class name is the control.
+  Click any part of the token to change it; the tiles glide to their new
+  places, and the compiled CSS line that changed lights up.
   Mappings mirror the compiler (declarationMap.ts + rules/flex.ts).
 */
 ---
-<figure class="flexlab" data-dir="row" data-x="center" data-y="center">
-	<div class="flexlab-stage" aria-hidden="true">
-		<div class="flexlab-box" style="--h:3.5rem; --c:#5865ef"></div>
-		<div class="flexlab-box" style="--h:6rem; --c:#e4489b"></div>
-		<div class="flexlab-box" style="--h:4.5rem; --c:#e06f2a"></div>
-	</div>
-
-	<div class="flexlab-controls">
-		<div class="flexlab-group" role="group">
-			<span class="flexlab-label">Direction</span>
-			<div class="seg" data-key="dir">
-				<button type="button" data-v="row" aria-pressed="true">row</button>
-				<button type="button" data-v="col" aria-pressed="false">col</button>
-			</div>
-		</div>
-		<div class="flexlab-group" role="group">
-			<span class="flexlab-label">Horizontal (x)</span>
-			<div class="seg" data-key="x"></div>
-		</div>
-		<div class="flexlab-group" role="group">
-			<span class="flexlab-label">Vertical (y)</span>
-			<div class="seg" data-key="y"></div>
+<figure class="lab" data-dir="row" data-x="start" data-y="start" data-armed="false">
+	<div class="stage" aria-hidden="true">
+		<div class="guide guide-x"><span>x</span></div>
+		<div class="guide guide-y"><span>y</span></div>
+		<div class="tiles">
+			<div class="tile" style="--a:#6b77ff; --b:#4350d8; --g:88 101 239; --h:5rem"></div>
+			<div class="tile" style="--a:#ff7ac0; --b:#d6338a; --g:228 72 155; --h:9rem"></div>
+			<div class="tile" style="--a:#ffa060; --b:#d9611c; --g:224 111 42; --h:6.5rem"></div>
 		</div>
 	</div>
 
-	<figcaption class="flexlab-out">
-		<code class="flexlab-token" aria-live="polite"></code>
-		<pre class="flexlab-css"></pre>
+	<div class="token" role="group" aria-label="Elevate class. Activate a part to change it.">
+		<button type="button" class="part el-prop" data-part="dir"></button><span class="colon">:</span><button type="button" class="part el-mod" data-part="x"></button><span class="colon">:</span><button type="button" class="part el-mod" data-part="y"></button>
+	</div>
+
+	<figcaption class="detail">
+		<p class="hint">Click any part of the class to change it.</p>
+		<pre class="css" aria-live="polite"></pre>
 	</figcaption>
 </figure>
 
 <script>
-	const VALUES: Record<string, string> = {
-		start: 'flex-start', center: 'center', end: 'flex-end', between: 'space-between',
-	};
-	// "between" only makes sense on the main axis (justify-content), so offer it there only.
-	const options = (dir: string, axis: string) =>
+	const VALUE: Record<string, string> = { start: 'flex-start', center: 'center', end: 'flex-end', between: 'space-between' };
+	// Space distribution only works along the main axis, so `between` is offered there only.
+	const optionsFor = (dir: string, axis: string) =>
 		(dir === 'row') === (axis === 'x') ? ['start', 'center', 'end', 'between'] : ['start', 'center', 'end'];
+	const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-	document.querySelectorAll<HTMLElement>('.flexlab').forEach((lab) => {
-		const stage = lab.querySelector<HTMLElement>('.flexlab-stage')!;
-		const tokenEl = lab.querySelector<HTMLElement>('.flexlab-token')!;
-		const cssEl = lab.querySelector<HTMLElement>('.flexlab-css')!;
+	document.querySelectorAll<HTMLElement>('.lab').forEach((lab) => {
+		const tiles = lab.querySelector<HTMLElement>('.tiles')!;
+		const tileEls = [...lab.querySelectorAll<HTMLElement>('.tile')];
+		const css = lab.querySelector<HTMLElement>('.css')!;
+		const parts = Object.fromEntries(
+			[...lab.querySelectorAll<HTMLButtonElement>('.part')].map((b) => [b.dataset.part!, b]),
+		);
 
-		const render = () => {
-			const { dir = 'row', x = 'center', y = 'center' } = lab.dataset;
-			const justify = VALUES[dir === 'row' ? x : y];
-			const align = VALUES[dir === 'row' ? y : x];
+		const state = () => ({ dir: lab.dataset.dir!, x: lab.dataset.x!, y: lab.dataset.y! });
 
-			// Rebuild alignment buttons for the current direction
-			(['x', 'y'] as const).forEach((axis) => {
-				const seg = lab.querySelector<HTMLElement>(`.seg[data-key="${axis}"]`)!;
-				const opts = options(dir, axis);
-				if (!opts.includes(lab.dataset[axis]!)) lab.dataset[axis] = 'center';
-				seg.innerHTML = opts
-					.map((o) => `<button type="button" data-v="${o}" aria-pressed="${o === lab.dataset[axis]}">${o}</button>`)
-					.join('');
+		// Which CSS property each part controls in the current direction
+		const propFor = (dir: string, part: string) =>
+			part === 'dir' ? 'flex-direction' : (dir === 'row') === (part === 'x') ? 'justify-content' : 'align-items';
+
+		const paint = (changed?: string) => {
+			const { dir, x, y } = state();
+			parts.dir.textContent = dir;
+			parts.x.textContent = `x-${x}`;
+			parts.y.textContent = `y-${y}`;
+			parts.dir.setAttribute('aria-label', `Direction: ${dir}. Change`);
+			parts.x.setAttribute('aria-label', `Horizontal: ${x}. Change`);
+			parts.y.setAttribute('aria-label', `Vertical: ${y}. Change`);
+
+			const decl: [string, string, string][] = [
+				['display', 'flex', ''],
+				['flex-direction', dir === 'row' ? 'row' : 'column', 'dir'],
+				...(dir === 'row'
+					? ([['justify-content', VALUE[x], 'x'], ['align-items', VALUE[y], 'y']] as [string, string, string][])
+					: ([['align-items', VALUE[x], 'x'], ['justify-content', VALUE[y], 'y']] as [string, string, string][])),
+			];
+			css.innerHTML =
+				`<span class="sel">.${dir}\\:x-${x}\\:y-${y}</span> {\n` +
+				decl.map(([p, v, k]) => `<span class="line" data-k="${k}"${k && k === changed ? ' data-hot' : ''}>  ${p}: <b>${v}</b>;</span>`).join('\n') +
+				`\n}`;
+
+			// FLIP: measure, change layout, then glide from the old spot to the new one
+			const before = tileEls.map((t) => t.getBoundingClientRect());
+			tiles.style.flexDirection = dir === 'row' ? 'row' : 'column';
+			tiles.style.justifyContent = dir === 'row' ? VALUE[x] : VALUE[y];
+			tiles.style.alignItems = dir === 'row' ? VALUE[y] : VALUE[x];
+			lab.toggleAttribute('data-col', dir === 'col');
+			if (reduced) return;
+			tileEls.forEach((t, i) => {
+				const a = before[i], b = t.getBoundingClientRect();
+				const dx = a.left - b.left, dy = a.top - b.top, sx = a.width / b.width, sy = a.height / b.height;
+				if (!dx && !dy && sx === 1 && sy === 1) return;
+				t.animate(
+					[
+						{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` },
+						{ transform: 'none' },
+					],
+					{ duration: 720, delay: i * 45, easing: 'cubic-bezier(.3, 1.35, .45, 1)', fill: 'backwards' },
+				);
 			});
-			lab.querySelectorAll<HTMLButtonElement>('.seg[data-key="dir"] button').forEach((b) =>
-				b.setAttribute('aria-pressed', String(b.dataset.v === dir)));
-
-			stage.style.flexDirection = dir === 'row' ? 'row' : 'column';
-			stage.style.justifyContent = justify;
-			stage.style.alignItems = align;
-
-			const ax = lab.dataset.x, ay = lab.dataset.y;
-			tokenEl.innerHTML =
-				`<span class="el-prop">${dir}</span><span class="el-sep">:</span><span class="el-mod">x-${ax}</span>` +
-				`<span class="el-sep">:</span><span class="el-mod">y-${ay}</span>`;
-			const first = dir === 'row' ? ['justify-content', VALUES[ax!]] : ['align-items', VALUES[ax!]];
-			const second = dir === 'row' ? ['align-items', VALUES[ay!]] : ['justify-content', VALUES[ay!]];
-			cssEl.textContent =
-				`.${dir}\\:x-${ax}\\:y-${ay} {\n  display: flex;\n  flex-direction: ${dir === 'row' ? 'row' : 'column'};\n` +
-				`  ${first[0]}: ${first[1]};\n  ${second[0]}: ${second[1]};\n}`;
 		};
 
-		lab.addEventListener('click', (e) => {
-			const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.seg button');
-			if (!btn) return;
-			const key = btn.parentElement!.dataset.key!;
-			lab.dataset[key] = btn.dataset.v!;
-			render();
+		const cycle = (part: string) => {
+			const s = state();
+			if (part === 'dir') {
+				lab.dataset.dir = s.dir === 'row' ? 'col' : 'row';
+				(['x', 'y'] as const).forEach((a) => {
+					if (!optionsFor(lab.dataset.dir!, a).includes(lab.dataset[a]!)) lab.dataset[a] = 'center';
+				});
+			} else {
+				const opts = optionsFor(s.dir, part);
+				lab.dataset[part] = opts[(opts.indexOf(s[part as 'x' | 'y']) + 1) % opts.length];
+			}
+			paint(part);
+		};
+
+		// Hover or focus a part: light up its axis and its CSS line
+		const focusPart = (part: string | null) => {
+			lab.dataset.focus = part ?? '';
+			css.querySelectorAll<HTMLElement>('.line').forEach((l) => l.toggleAttribute('data-lit', !!part && l.dataset.k === part));
+		};
+
+		Object.entries(parts).forEach(([key, btn]) => {
+			btn.addEventListener('click', () => { cycle(key); focusPart(key); });
+			btn.addEventListener('pointerenter', () => focusPart(key));
+			btn.addEventListener('pointerleave', () => focusPart(null));
+			btn.addEventListener('focus', () => focusPart(key));
+			btn.addEventListener('blur', () => focusPart(null));
 		});
-		render();
+
+		paint();
+
+		// One opening move: when the lab first comes into view, the tiles glide to center
+		const io = new IntersectionObserver((entries) => {
+			if (!entries.some((e) => e.isIntersecting)) return;
+			io.disconnect();
+			setTimeout(() => {
+				lab.dataset.x = 'center';
+				lab.dataset.y = 'center';
+				paint();
+				lab.dataset.armed = 'true';
+			}, 350);
+		}, { threshold: 0.5 });
+		io.observe(lab);
 	});
 </script>
 
 <style>
-	.flexlab {
-		margin: 2.5rem 0 1rem;
+	.lab {
+		--ink: #1d1d1f;
+		margin: 2.5rem 0 3rem;
 		display: grid;
-		gap: 1.25rem;
+		gap: 2rem;
 	}
-	.flexlab-stage {
-		display: flex;
-		gap: 0.75rem;
-		height: 15rem;
-		padding: 1.25rem;
+	.lab :global(*) {
+		margin-top: 0 !important; /* opt out of Starlight's prose rhythm */
+	}
+
+	/* ---------- Stage ---------- */
+	.stage {
+		position: relative;
+		height: clamp(18rem, 36vw, 28rem);
+		border-radius: 28px;
 		background:
-			radial-gradient(circle at 1px 1px, #d9d9e0 1px, transparent 0) 0 0 / 16px 16px,
-			var(--mist);
-		border-radius: 20px;
-		transition: none;
+			radial-gradient(ellipse 60% 70% at 50% 55%, rgb(88 101 239 / 0.16), transparent 70%),
+			radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.07) 1px, transparent 0) 0 0 / 22px 22px,
+			#000;
+		overflow: hidden;
+		isolation: isolate;
 	}
-	.flexlab-box {
-		width: 4rem;
-		min-height: 3rem;
-		height: var(--h);
+	.tiles {
+		position: absolute;
+		inset: clamp(1.25rem, 3vw, 2.25rem);
+		display: flex;
+		gap: 1rem;
+	}
+	.tile {
 		flex: none;
-		border-radius: 12px;
-		background: var(--c);
-		box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
-		transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+		width: clamp(3.5rem, 8vw, 6rem);
+		height: var(--h);
+		border-radius: 18px;
+		background: linear-gradient(160deg, var(--a), var(--b));
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.35),
+			inset 0 -1px 0 rgb(0 0 0 / 0.2),
+			0 24px 60px -12px rgb(var(--g) / 0.7);
+		will-change: transform;
 	}
-	.flexlab[data-dir='col'] .flexlab-box {
-		height: 2.5rem;
-		min-height: 0;
-		width: calc(var(--h) * 1.6);
+	.lab[data-col] .tile {
+		height: clamp(2.75rem, 5vw, 3.75rem);
+		width: calc(var(--h) * 1.7);
 	}
-	.flexlab-controls {
+
+	.guide {
+		position: absolute;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.25s ease;
+	}
+	.guide span {
+		position: absolute;
+		font: 500 0.8125rem/1 var(--sl-font-mono);
+		color: rgb(255 255 255 / 0.7);
+	}
+	.guide-x {
+		left: 1.25rem;
+		right: 1.25rem;
+		top: 50%;
+		border-top: 1px dashed rgb(255 255 255 / 0.35);
+	}
+	.guide-x span { right: 0; top: 0.5rem; }
+	.guide-y {
+		top: 1.25rem;
+		bottom: 1.25rem;
+		left: 50%;
+		border-left: 1px dashed rgb(255 255 255 / 0.35);
+	}
+	.guide-y span { left: 0.5rem; top: 0; }
+	.lab[data-focus='x'] .guide-x,
+	.lab[data-focus='y'] .guide-y {
+		opacity: 1;
+	}
+
+	/* ---------- The token is the control ---------- */
+	.token {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 1rem 1.5rem;
+		align-items: baseline;
+		font: 500 clamp(1.75rem, 1rem + 3.4vw, 3.5rem) / 1.1 var(--sl-font-mono);
+		letter-spacing: -0.04em;
 	}
-	/* Starlight spaces every sibling in prose; the demo controls opt out. */
-	.flexlab :global(*) {
-		margin-top: 0 !important;
+	.colon {
+		color: #c7c7cc;
 	}
-	.flexlab-group {
-		display: grid;
-		gap: 0.4rem;
-		align-content: start;
-	}
-	.flexlab-label {
-		font-size: 0.8125rem;
-		color: var(--slate);
-	}
-	.seg {
-		display: inline-flex;
-		background: var(--mist);
-		border-radius: 10px;
-		padding: 3px;
-		gap: 2px;
-	}
-	.seg :global(button) {
+	.part {
 		appearance: none;
+		background: none;
 		border: none;
-		background: transparent;
-		font: 500 0.875rem/1 var(--sl-font-mono);
-		color: var(--slate);
-		padding: 0.5rem 0.75rem;
-		border-radius: 8px;
+		padding: 0 0.04em;
+		font: inherit;
+		letter-spacing: inherit;
 		cursor: pointer;
-		transition: background-color 0.15s ease, color 0.15s ease;
+		border-radius: 0.18em;
+		background-image: linear-gradient(color-mix(in srgb, currentColor 28%, transparent), color-mix(in srgb, currentColor 28%, transparent));
+		background-size: 100% 0.05em;
+		background-position: 0 92%;
+		background-repeat: no-repeat;
+		transition: background-color 0.2s ease, background-size 0.2s ease;
 	}
-	.seg :global(button:hover) {
-		color: var(--ink);
+	.part.el-prop { color: var(--g-prop); }
+	.part.el-mod { color: var(--g-mod); }
+	.part:hover,
+	.part:focus-visible {
+		background-color: color-mix(in srgb, currentColor 10%, transparent);
+		background-size: 100% 0.1em;
 	}
-	.seg :global(button[aria-pressed='true']) {
-		background: var(--paper);
-		color: var(--ink);
-		box-shadow: 0 1px 3px rgb(0 0 0 / 0.12), 0 0 0 0.5px rgb(0 0 0 / 0.06);
+	.part:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 0.08em;
 	}
-	.flexlab-out {
+
+	/* ---------- Detail ---------- */
+	.detail {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
-		gap: 1rem;
-		align-items: stretch;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+		gap: 1.5rem;
+		align-items: start;
 	}
-	.flexlab .flexlab-token.flexlab-token {
-		display: flex;
-		align-items: center;
-		font: 500 1.375rem/1.2 var(--sl-font-mono);
-		color: var(--ink);
-		letter-spacing: -0.02em;
-		background: none !important;
-		padding: 0 !important;
-		overflow-wrap: anywhere;
+	.hint {
+		font-size: 0.9375rem;
+		color: var(--slate);
+		line-height: 1.5;
 	}
-	.flexlab-css {
+	.css {
 		margin: 0;
-		padding: 1rem 1.125rem;
+		padding: 1.125rem 1.25rem;
 		background: var(--mist);
-		border-radius: 14px;
-		font: 0.8125rem/1.6 var(--sl-font-mono);
-		color: var(--body);
+		border: none;
+		border-radius: 16px;
+		font: 0.875rem/1.75 var(--sl-font-mono);
+		color: var(--slate);
 		white-space: pre;
 		overflow-x: auto;
 	}
+	.css :global(.sel) { color: var(--ink); }
+	.css :global(b) { font-weight: 500; color: var(--ink); }
+	.css :global(.line) {
+		display: inline-block;
+		width: 100%;
+		border-radius: 6px;
+		transition: background-color 0.3s ease;
+	}
+	.css :global(.line[data-lit]) { background: rgb(67 80 216 / 0.1); }
+	.css :global(.line[data-hot]) { animation: hot 1.1s ease-out; }
+	@keyframes hot {
+		from { background: rgb(192 42 120 / 0.18); }
+		to { background: transparent; }
+	}
+
 	@media (max-width: 40rem) {
-		.flexlab-out {
-			grid-template-columns: 1fr;
-		}
-		.flexlab-stage {
-			height: 13rem;
-		}
+		.detail { grid-template-columns: 1fr; gap: 1rem; }
+		.stage { border-radius: 22px; }
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.flexlab-box {
-			transition: none;
-		}
+		.css :global(.line[data-hot]) { animation: none; }
 	}
 </style>
