@@ -1,0 +1,11 @@
+---
+/* Locks Starlight to light mode before any CSS applies. */
+---
+<script is:inline>
+	try { localStorage.setItem('starlight-theme', 'light'); } catch {}
+	document.documentElement.dataset.theme = 'light';
+	const meta = document.createElement('meta');
+	meta.name = 'color-scheme';
+	meta.content = 'light';
+	document.head.appendChild(meta);
+</script>

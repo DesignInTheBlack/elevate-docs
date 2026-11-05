@@ -1,0 +1,210 @@
+---
+/*
+  Interactive flex demo. Pick a direction and alignment; the token,
+  the compiled CSS, and the live layout update together.
+  Mappings mirror the compiler (declarationMap.ts + rules/flex.ts).
+*/
+---
+<figure class="flexlab" data-dir="row" data-x="center" data-y="center">
+	<div class="flexlab-stage" aria-hidden="true">
+		<div class="flexlab-box" style="--h:3.5rem; --c:#5865ef"></div>
+		<div class="flexlab-box" style="--h:6rem; --c:#e4489b"></div>
+		<div class="flexlab-box" style="--h:4.5rem; --c:#e06f2a"></div>
+	</div>
+
+	<div class="flexlab-controls">
+		<div class="flexlab-group" role="group">
+			<span class="flexlab-label">Direction</span>
+			<div class="seg" data-key="dir">
+				<button type="button" data-v="row" aria-pressed="true">row</button>
+				<button type="button" data-v="col" aria-pressed="false">col</button>
+			</div>
+		</div>
+		<div class="flexlab-group" role="group">
+			<span class="flexlab-label">Horizontal (x)</span>
+			<div class="seg" data-key="x"></div>
+		</div>
+		<div class="flexlab-group" role="group">
+			<span class="flexlab-label">Vertical (y)</span>
+			<div class="seg" data-key="y"></div>
+		</div>
+	</div>
+
+	<figcaption class="flexlab-out">
+		<code class="flexlab-token" aria-live="polite"></code>
+		<pre class="flexlab-css"></pre>
+	</figcaption>
+</figure>
+
+<script>
+	const VALUES: Record<string, string> = {
+		start: 'flex-start', center: 'center', end: 'flex-end', between: 'space-between',
+	};
+	// "between" only makes sense on the main axis (justify-content), so offer it there only.
+	const options = (dir: string, axis: string) =>
+		(dir === 'row') === (axis === 'x') ? ['start', 'center', 'end', 'between'] : ['start', 'center', 'end'];
+
+	document.querySelectorAll<HTMLElement>('.flexlab').forEach((lab) => {
+		const stage = lab.querySelector<HTMLElement>('.flexlab-stage')!;
+		const tokenEl = lab.querySelector<HTMLElement>('.flexlab-token')!;
+		const cssEl = lab.querySelector<HTMLElement>('.flexlab-css')!;
+
+		const render = () => {
+			const { dir = 'row', x = 'center', y = 'center' } = lab.dataset;
+			const justify = VALUES[dir === 'row' ? x : y];
+			const align = VALUES[dir === 'row' ? y : x];
+
+			// Rebuild alignment buttons for the current direction
+			(['x', 'y'] as const).forEach((axis) => {
+				const seg = lab.querySelector<HTMLElement>(`.seg[data-key="${axis}"]`)!;
+				const opts = options(dir, axis);
+				if (!opts.includes(lab.dataset[axis]!)) lab.dataset[axis] = 'center';
+				seg.innerHTML = opts
+					.map((o) => `<button type="button" data-v="${o}" aria-pressed="${o === lab.dataset[axis]}">${o}</button>`)
+					.join('');
+			});
+			lab.querySelectorAll<HTMLButtonElement>('.seg[data-key="dir"] button').forEach((b) =>
+				b.setAttribute('aria-pressed', String(b.dataset.v === dir)));
+
+			stage.style.flexDirection = dir === 'row' ? 'row' : 'column';
+			stage.style.justifyContent = justify;
+			stage.style.alignItems = align;
+
+			const ax = lab.dataset.x, ay = lab.dataset.y;
+			tokenEl.innerHTML =
+				`<span class="el-prop">${dir}</span><span class="el-sep">:</span><span class="el-mod">x-${ax}</span>` +
+				`<span class="el-sep">:</span><span class="el-mod">y-${ay}</span>`;
+			const first = dir === 'row' ? ['justify-content', VALUES[ax!]] : ['align-items', VALUES[ax!]];
+			const second = dir === 'row' ? ['align-items', VALUES[ay!]] : ['justify-content', VALUES[ay!]];
+			cssEl.textContent =
+				`.${dir}\\:x-${ax}\\:y-${ay} {\n  display: flex;\n  flex-direction: ${dir === 'row' ? 'row' : 'column'};\n` +
+				`  ${first[0]}: ${first[1]};\n  ${second[0]}: ${second[1]};\n}`;
+		};
+
+		lab.addEventListener('click', (e) => {
+			const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.seg button');
+			if (!btn) return;
+			const key = btn.parentElement!.dataset.key!;
+			lab.dataset[key] = btn.dataset.v!;
+			render();
+		});
+		render();
+	});
+</script>
+
+<style>
+	.flexlab {
+		margin: 2.5rem 0 1rem;
+		display: grid;
+		gap: 1.25rem;
+	}
+	.flexlab-stage {
+		display: flex;
+		gap: 0.75rem;
+		height: 15rem;
+		padding: 1.25rem;
+		background:
+			radial-gradient(circle at 1px 1px, #d9d9e0 1px, transparent 0) 0 0 / 16px 16px,
+			var(--mist);
+		border-radius: 20px;
+		transition: none;
+	}
+	.flexlab-box {
+		width: 4rem;
+		min-height: 3rem;
+		height: var(--h);
+		flex: none;
+		border-radius: 12px;
+		background: var(--c);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+		transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+	.flexlab[data-dir='col'] .flexlab-box {
+		height: 2.5rem;
+		min-height: 0;
+		width: calc(var(--h) * 1.6);
+	}
+	.flexlab-controls {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem 1.5rem;
+	}
+	/* Starlight spaces every sibling in prose; the demo controls opt out. */
+	.flexlab :global(*) {
+		margin-top: 0 !important;
+	}
+	.flexlab-group {
+		display: grid;
+		gap: 0.4rem;
+		align-content: start;
+	}
+	.flexlab-label {
+		font-size: 0.8125rem;
+		color: var(--slate);
+	}
+	.seg {
+		display: inline-flex;
+		background: var(--mist);
+		border-radius: 10px;
+		padding: 3px;
+		gap: 2px;
+	}
+	.seg :global(button) {
+		appearance: none;
+		border: none;
+		background: transparent;
+		font: 500 0.875rem/1 var(--sl-font-mono);
+		color: var(--slate);
+		padding: 0.5rem 0.75rem;
+		border-radius: 8px;
+		cursor: pointer;
+		transition: background-color 0.15s ease, color 0.15s ease;
+	}
+	.seg :global(button:hover) {
+		color: var(--ink);
+	}
+	.seg :global(button[aria-pressed='true']) {
+		background: var(--paper);
+		color: var(--ink);
+		box-shadow: 0 1px 3px rgb(0 0 0 / 0.12), 0 0 0 0.5px rgb(0 0 0 / 0.06);
+	}
+	.flexlab-out {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+		gap: 1rem;
+		align-items: stretch;
+	}
+	.flexlab .flexlab-token.flexlab-token {
+		display: flex;
+		align-items: center;
+		font: 500 1.375rem/1.2 var(--sl-font-mono);
+		color: var(--ink);
+		letter-spacing: -0.02em;
+		background: none !important;
+		padding: 0 !important;
+		overflow-wrap: anywhere;
+	}
+	.flexlab-css {
+		margin: 0;
+		padding: 1rem 1.125rem;
+		background: var(--mist);
+		border-radius: 14px;
+		font: 0.8125rem/1.6 var(--sl-font-mono);
+		color: var(--body);
+		white-space: pre;
+		overflow-x: auto;
+	}
+	@media (max-width: 40rem) {
+		.flexlab-out {
+			grid-template-columns: 1fr;
+		}
+		.flexlab-stage {
+			height: 13rem;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.flexlab-box {
+			transition: none;
+		}
+	}
+</style>

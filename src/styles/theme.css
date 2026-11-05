@@ -1,0 +1,299 @@
+/* =========================================================
+   Elevate docs — light theme
+   Quiet white page, precise type, color reserved for the
+   Elevate grammar itself (property / modifier / state / breakpoint).
+   ========================================================= */
+
+:root,
+:root[data-theme='light'] {
+	/* Base */
+	--paper: #ffffff;
+	--mist: #f5f5f7;
+	--mist-deep: #ebebf0;
+	--ink: #1d1d1f;
+	--body: #3a3a3c;
+	--slate: #6e6e73;
+	--hair: #e3e3e8;
+
+	/* Grammar colors, drawn from Elevate's own palette and darkened for text contrast */
+	--g-prop: #4350d8;    /* indigo */
+	--g-mod: #c02a78;     /* pink */
+	--g-state: #b3510f;   /* orange */
+	--g-bp: #1d7a54;      /* green */
+
+	/* Starlight mapping */
+	--sl-color-white: var(--ink);
+	--sl-color-gray-1: var(--ink);
+	--sl-color-gray-2: var(--body);
+	--sl-color-gray-3: var(--slate);
+	--sl-color-gray-4: #8e8e93;
+	--sl-color-gray-5: var(--hair);
+	--sl-color-gray-6: var(--mist);
+	--sl-color-gray-7: #fafafc;
+	--sl-color-black: var(--paper);
+
+	--sl-color-accent-low: #eef0ff;
+	--sl-color-accent: var(--g-prop);
+	--sl-color-accent-high: #2a339e;
+
+	--sl-color-text: var(--body);
+	--sl-color-text-accent: var(--g-prop);
+	--sl-color-text-invert: var(--paper);
+	--sl-color-bg: var(--paper);
+	--sl-color-bg-nav: rgb(255 255 255 / 0.82);
+	--sl-color-bg-sidebar: var(--paper);
+	--sl-color-bg-inline-code: var(--mist);
+	--sl-color-hairline: var(--hair);
+	--sl-color-hairline-light: var(--hair);
+	--sl-color-hairline-shade: var(--hair);
+
+	--sl-font: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+	--sl-font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+	--sl-content-width: 46rem;
+	--sl-text-body: 1rem;
+	--sl-line-height: 1.65;
+}
+
+html {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+body {
+	background: var(--paper);
+	color: var(--body);
+	font-feature-settings: 'ss01', 'cv11';
+	overflow-x: clip;
+}
+
+/* ---------- Header ---------- */
+
+header.header {
+	border-bottom: 1px solid var(--hair);
+	backdrop-filter: saturate(180%) blur(20px);
+	-webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+site-search button[data-open-modal] {
+	background: var(--mist);
+	border: 1px solid transparent;
+	border-radius: 10px;
+	color: var(--slate);
+}
+site-search button[data-open-modal]:hover {
+	border-color: var(--hair);
+	color: var(--ink);
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar-pane {
+	border-inline-end: 1px solid var(--hair);
+}
+
+nav.sidebar .group-label .large {
+	color: var(--ink);
+	font-size: 0.9375rem;
+	font-weight: 620;
+	letter-spacing: -0.01em;
+}
+
+nav.sidebar ul ul {
+	border-inline-start: none;
+	padding-inline-start: 0;
+	margin-inline-start: 0;
+}
+
+nav.sidebar ul ul li {
+	border-inline-start: none;
+	margin-inline-start: 0;
+	padding-inline-start: 0;
+}
+
+nav.sidebar a {
+	color: var(--slate);
+	font-size: 0.9063rem;
+	border-radius: 8px;
+	padding: 0.3rem 0.625rem;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+nav.sidebar a:hover {
+	color: var(--ink);
+	background: var(--mist);
+}
+nav.sidebar a[aria-current='page'],
+nav.sidebar a[aria-current='page']:hover {
+	background: var(--sl-color-accent-low);
+	color: var(--g-prop);
+	font-weight: 560;
+}
+
+/* ---------- Page title & headings ---------- */
+
+.content-panel:first-of-type {
+	border-top: none;
+}
+.content-panel + .content-panel {
+	border-top: none;
+}
+
+h1#_top {
+	font-size: clamp(2.5rem, 2rem + 2.4vw, 3.5rem);
+	font-weight: 640;
+	font-stretch: 92%;
+	letter-spacing: -0.035em;
+	line-height: 1.05;
+	color: var(--ink);
+}
+
+.sl-markdown-content :is(h2, h3, h4) {
+	color: var(--ink);
+	font-stretch: 94%;
+	letter-spacing: -0.02em;
+	line-height: 1.2;
+}
+.sl-markdown-content h2 {
+	font-size: 1.75rem;
+	font-weight: 620;
+	margin-top: 3.5rem;
+	padding-top: 2.5rem;
+	border-top: 1px solid var(--hair);
+}
+.sl-markdown-content h3 {
+	font-size: 1.25rem;
+	font-weight: 600;
+	margin-top: 2.25rem;
+}
+
+.sl-markdown-content :is(h2, h3) code {
+	font-size: 0.9em;
+	background: none;
+	padding: 0;
+	font-weight: 500;
+}
+
+.sl-markdown-content > p:first-child,
+.sl-markdown-content .lead {
+	font-size: 1.25rem;
+	line-height: 1.55;
+	color: var(--body);
+	letter-spacing: -0.005em;
+}
+
+.sl-markdown-content p,
+.sl-markdown-content li {
+	max-width: 68ch;
+}
+
+.sl-markdown-content a {
+	color: var(--g-prop);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+}
+
+/* ---------- Inline code & grammar colors ---------- */
+
+.sl-markdown-content :not(pre) > code {
+	background: var(--mist);
+	border: none;
+	border-radius: 6px;
+	padding: 0.12em 0.4em;
+	font-size: 0.875em;
+	color: var(--ink);
+	font-weight: 450;
+}
+
+.el-prop { color: var(--g-prop); }
+.el-mod { color: var(--g-mod); }
+.el-state { color: var(--g-state); }
+.el-bp { color: var(--g-bp); }
+.el-sep { color: #a1a1a6; }
+
+/* ---------- Tables ---------- */
+
+.sl-markdown-content table {
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9375rem;
+	margin-top: 1.5rem;
+}
+.sl-markdown-content :is(th, td) {
+	border: none;
+	border-bottom: 1px solid var(--hair);
+	padding: 0.8rem 1rem 0.8rem 0;
+	background: none;
+	vertical-align: top;
+	text-align: left;
+}
+.sl-markdown-content th {
+	color: var(--slate);
+	font-weight: 520;
+	font-size: 0.8125rem;
+	padding-top: 0;
+	border-bottom-color: var(--ink);
+}
+.sl-markdown-content tr:last-child td {
+	border-bottom: none;
+}
+.sl-markdown-content td code {
+	white-space: nowrap;
+}
+.sl-markdown-content td:first-child {
+	color: var(--ink);
+	font-weight: 520;
+}
+
+/* ---------- Asides ---------- */
+
+.starlight-aside {
+	border: none;
+	border-radius: 14px;
+	padding: 1rem 1.25rem;
+}
+.starlight-aside--note { background: #f0f2ff; --sl-color-asides-text-accent: var(--g-prop); }
+.starlight-aside--tip { background: #ecf7f1; --sl-color-asides-text-accent: var(--g-bp); }
+.starlight-aside--caution { background: #fff5eb; --sl-color-asides-text-accent: var(--g-state); }
+.starlight-aside--danger { background: #fff0f6; --sl-color-asides-text-accent: var(--g-mod); }
+.starlight-aside__title {
+	font-weight: 600;
+	letter-spacing: -0.01em;
+}
+.starlight-aside__content {
+	color: var(--body);
+}
+
+/* ---------- Table of contents ---------- */
+
+starlight-toc h2,
+mobile-starlight-toc h2 {
+	color: var(--ink);
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+starlight-toc a {
+	color: var(--slate);
+}
+starlight-toc a[aria-current='true'] {
+	color: var(--g-prop);
+}
+
+/* ---------- Pagination & footer ---------- */
+
+.pagination-links a {
+	border: 1px solid var(--hair);
+	border-radius: 14px;
+	box-shadow: none;
+}
+.pagination-links a:hover {
+	border-color: var(--g-prop);
+}
+
+/* ---------- Focus ---------- */
+
+:focus-visible {
+	outline: 2px solid var(--g-prop);
+	outline-offset: 2px;
+}

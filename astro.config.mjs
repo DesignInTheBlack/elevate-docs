@@ -1,13 +1,18 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import rehypeElevateTokens from './src/plugins/rehype-elevate-tokens.mjs';
 
 // https://astro.build/config
 export default defineConfig({
+	markdown: {
+		rehypePlugins: [rehypeElevateTokens],
+	},
 	integrations: [
 		starlight({
 			components: {
-				ThemeProvider: './src/components/AlwaysDarkThemeProvider.astro'
+				ThemeProvider: './src/components/AlwaysLightThemeProvider.astro',
+				ThemeSelect: './src/components/NoThemeSelect.astro',
 			  },
 			title: 'Utility First, Design Driven',
 			favicon: './src/assets/dark.svg',
@@ -18,11 +23,34 @@ export default defineConfig({
 			  },
 			customCss: [
 				// Relative path to your custom CSS file
-				'./src/styles/custom.css',
-				'@fontsource-variable/raleway/index.css',
+				'@fontsource-variable/instrument-sans/standard.css',
+				'@fontsource-variable/geist-mono/index.css',
 				'./src/styles/elevate.css',
+				'./src/styles/theme.css',
 
 			  ],
+			expressiveCode: {
+				themes: ['github-light'],
+				styleOverrides: {
+					borderRadius: '14px',
+					borderColor: 'transparent',
+					codeBackground: '#f5f5f7',
+					codeFontFamily: "'Geist Mono Variable', ui-monospace, monospace",
+					codeFontSize: '0.875rem',
+					codeLineHeight: '1.7',
+					uiFontFamily: "'Instrument Sans Variable', system-ui, sans-serif",
+					frames: {
+						frameBoxShadowCssValue: 'none',
+						editorTabBarBackground: '#ebebf0',
+						editorActiveTabBackground: '#f5f5f7',
+						editorActiveTabIndicatorTopColor: 'transparent',
+						editorActiveTabIndicatorBottomColor: 'transparent',
+						editorTabBarBorderBottomColor: 'transparent',
+						terminalTitlebarBackground: '#ebebf0',
+						terminalBackground: '#f5f5f7',
+					},
+				},
+			},
 			social: {
 				discord: 'https://discord.gg/T3X2vBYA',
 				github: 'https://github.com/DesignInTheBlack/Elevate',

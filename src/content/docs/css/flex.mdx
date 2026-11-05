@@ -1,71 +1,81 @@
 ---
 title: "Flex"
-description: A guide to the flex shorthand in Elevate CSS.
+description: Build flexbox layouts in Elevate with row and col, align them on screen axes, and tune each child.
 ---
 
-Elevate offers a streamlined flexbox experience, with defined properties
-for both row and column flexbox layouts as well as a large number of supported modifiers to describe
-flex layouts or adjust flex children as necessary.
+import FlexLab from '../../../components/FlexLab.astro';
 
-```html
-Declaring a Flexbox Row in Elevate
-<div class = "row">
+Flexbox in Elevate starts with a direction, `row` or `col`, and takes modifiers for alignment and wrapping. Alignment uses screen axes instead of flex axes: `x` is always horizontal and `y` is always vertical, whichever direction the container runs.
 
-Declaring a Flexbox Column in Elevate
-<div class = "col">
+<FlexLab />
+
+## Direction
+
+Each direction property turns the element into a flex container. Use it on its own, or add modifiers after a colon.
+
+| Property | Output |
+|---|---|
+| `row` | `display: flex; flex-direction: row;` |
+| `col` | `display: flex; flex-direction: column;` |
+| `row-r` | `display: flex; flex-direction: row-reverse;` |
+| `col-r` | `display: flex; flex-direction: column-reverse;` |
+
+```html title="A centered row"
+<nav class="row:x-center:y-center">…</nav>
 ```
 
-<br/>
-<br/>
+## Alignment
 
-For further convenience, Elevate introduces normalized axes - meaning that
-you can refer directly to the intended axis without the need to be considerate of flex orientation.
+Add an `x-` or `y-` modifier to place children along that axis. Elevate works out whether it means `justify-content` or `align-items`, so you never have to think about which one is the main axis.
 
-<br/>
+| Value | Compiles to | Example |
+|---|---|---|
+| `start` | `flex-start` | `row:x-start` |
+| `center` | `center` | `row:y-center` |
+| `end` | `flex-end` | `col:x-end` |
+| `between` | `space-between` | `row:x-between` |
+| `around` | `space-around` | `row:x-around` |
+| `evenly` | `space-evenly` | `col:y-evenly` |
+| `stretch` | `stretch` | `row:y-stretch` |
+| `baseline` | `baseline` | `row:y-baseline` |
 
-```html
-Normalized Axes In Elevate
-<div class = "row:x-center:y-start">
+`between`, `around` and `evenly` distribute space, so they only work on the axis the container runs along: `x` for `row`, `y` for `col`.
 
-X is always horizontal, Y is always vertical
+## Wrapping
+
+Children stay on one line by default. Add a wrap modifier to let them flow onto more lines.
+
+| Modifier | Compiles to | Example |
+|---|---|---|
+| `wrap` | `flex-wrap: wrap` | `row:x-start:wrap` |
+| `no-wrap` | `flex-wrap: nowrap` | `row:no-wrap` |
+| `reverse` | `flex-wrap: wrap-reverse` | `row:reverse` |
+
+Modifiers can come in any order, so `row:wrap:x-start` and `row:x-start:wrap` compile to the same CSS.
+
+## Flex children
+
+Use `child` on an element inside a flex container to control how it grows, shrinks, lines up, and orders itself.
+
+| Modifier | Values | Compiles to | Example |
+|---|---|---|---|
+| Grow | `grow`, `no-grow` | `flex-grow: 1` or `0` | `child:grow` |
+| Shrink | `shrink`, `no-shrink` | `flex-shrink: 1` or `0` | `child:no-shrink` |
+| Self alignment | `start`, `center`, `end`, `stretch` | `align-self` | `child:center` |
+| Order | `order-` plus any number | `order` | `child:order-2` |
+| Basis | `basis-` plus a [spacing token](/default/spacing/) | `flex-basis` | `child:basis-c4` |
+
+```html title="A sidebar that keeps its width while the main area fills the rest"
+<div class="row:y-stretch">
+  <aside class="child:no-shrink:basis-c11">…</aside>
+  <main class="child:grow">…</main>
+</div>
 ```
 
-<br/>
+## Spacing between children
 
+Flex properties don't take a gap modifier. Use the standalone `gap` property next to them, with any [spacing token](/default/spacing/).
 
-## `row` & `col` Property Modifiers
-
-The following table describes the supported modifiers for the `row` and `col` properties, along with the expected options.
-
-| **Modifier**   | **Expected Values**                                                | **Example** |
-|---------------------|-----------------------------------------------------------|-------------|
-| X-Axis              | `x-start`, `x-end`, `x-center`, `x-between`, `x-around`, `x-evenly`, `x-stretch`, `x-baseline`| `row:x-center` |
-| Y-Axis              | `y-start`, `y-end`, `y-center`, `y-between`, `y-around`, `y-evenly`, `y-stretch`, `y-baseline` | `col:y-start`|
-| Wrap                | `no-wrap`, `wrap`, `reverse`                            | `row:x-start:wrap`|
-
-<br/>
-
-## `row-r` & `col-r` Property Modifiers
-
-The following table describes the supported modifiers for the `row-r` and `col-r` (reverse) properties, along with the expected options.
-
-| **Modifier**   | **Expected Values**                                                | **Example** |
-|---------------------|-----------------------------------------------------------|-------------|
-| X-Axis              | `x-start`, `x-end`, `x-center`, `x-between`, `x-around`, `x-evenly`, `x-stretch`, `x-baseline`| `row-r:x-center` |
-| Y-Axis              | `y-start`, `y-end`, `y-center`, `y-between`, `y-around`, `y-evenly`, `y-stretch`, `y-baseline` | `col-r:y-start`|
-| Wrap                | `no-wrap`, `wrap`, `reverse`                            | `row-r:x-start:wrap`|
-
-<br/>
-
-## `child` Property Modifiers
-
-The following table describes the supported modifiers for the `child` property, along with the expected options.
-
-| **Modifier**   | **Expected Values**                                                | **Example** |
-|---------------------|-----------------------------------------------------------| ---------- |
-| Grow                | `no-grow`, `grow`, `auto`                                    | `child:grow`        |
-| Shrink              | `no-shrink`, `shrink`                                              | `child:shrink`        |
-| Self                | `start`, `end`, `center`, `stretch`, `auto` | `child:auto`  |
-| Order               | `order-{value}` (where `{value}` corresponds to a numeric token) | `child:order-5`   |
-| Basis               | `basis-{value}` (where `{value}` corresponds to a spacing token) | `child:basis-d5` |
-
+```html
+<ul class="row:x-start:wrap gap:d4">…</ul>
+```
