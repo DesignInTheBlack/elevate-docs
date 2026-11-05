@@ -25,7 +25,7 @@ const rows = [
 <style>
 	.map {
 		display: grid;
-		margin-top: 3rem !important;
+		margin-top: 0 !important;
 		border-top: 1px solid var(--ink);
 	}
 	.map :global(*) {
@@ -35,8 +35,8 @@ const rows = [
 		display: grid;
 		grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
 		align-items: center;
-		gap: 1.5rem;
-		padding-block: clamp(1rem, 2.4vw, 1.75rem);
+		gap: var(--s-5);
+		padding-block: clamp(var(--s-4), 2.4vw, var(--s-6));
 		border-bottom: 1px solid var(--hair);
 	}
 	.tok {
@@ -49,8 +49,8 @@ const rows = [
 	.css {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
-		font: 0.9375rem/1.4 var(--sl-font-mono);
+		gap: var(--s-3);
+		font: var(--t-s)/1.4 var(--sl-font-mono);
 		color: var(--ink);
 	}
 	.p {
@@ -59,18 +59,18 @@ const rows = [
 	.swatch {
 		width: 1rem;
 		height: 1rem;
-		border-radius: 5px;
+		border-radius: var(--r-xs);
 		flex: none;
 	}
 	.note {
 		font-family: var(--sl-font);
 		color: var(--slate);
-		font-size: 0.875rem;
+		font-size: var(--t-s);
 	}
 	@media (max-width: 40rem) {
 		.row {
 			grid-template-columns: 1fr;
-			gap: 0.5rem;
+			gap: var(--s-2);
 		}
 	}
 </style>

@@ -31,8 +31,10 @@ export default defineConfig({
 			  ],
 			expressiveCode: {
 				themes: ['github-light'],
+				// Shell snippets use the same plain frame as every other block
+				defaultProps: { overridesByLang: { 'bash,sh,shell': { frame: 'none' } } },
 				styleOverrides: {
-					borderRadius: '14px',
+					borderRadius: '16px',
 					borderColor: 'transparent',
 					codeBackground: '#f5f5f7',
 					codeFontFamily: "'Geist Mono Variable', ui-monospace, monospace",

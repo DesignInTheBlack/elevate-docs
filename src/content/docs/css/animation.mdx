@@ -3,19 +3,19 @@ title: Animation
 description: "Name, time and repeat CSS animations with classes."
 ---
 
-Elevate doesn't generate `@keyframes`. Define those in your CSS, then name and time them with these properties. Pass-through values go in parentheses, with `_` in place of spaces.
+Elevate doesn't generate `@keyframes`. Define those in your CSS, then name and time them with these properties. Each one compiles to the CSS property of the same name. Pass-through values go in parentheses, with `_` in place of spaces.
 
-| Property | Values | Compiles to | Example |
-|---|---|---|---|
-| `animation` | A pass-through shorthand | `animation` | `animation:(fade-in_200ms_ease)` |
-| `animation-name` | A pass-through value | `animation-name` | `animation-name:(fade-in)` |
-| `animation-duration` | A pass-through value | `animation-duration` | `animation-duration:(200ms)` |
-| `animation-timing-function` | A pass-through value | `animation-timing-function` | `animation-timing-function:(ease-in-out)` |
-| `animation-delay` | A pass-through value | `animation-delay` | `animation-delay:(150ms)` |
-| `animation-iteration-count` | A pass-through value | `animation-iteration-count` | `animation-iteration-count:(infinite)` |
-| `animation-direction` | `normal`, `reverse`, `alternate`, `alternate-reverse` | `animation-direction` | `animation-direction:alternate` |
-| `animation-fill-mode` | `none`, `forwards`, `backwards`, `both` | `animation-fill-mode` | `animation-fill-mode:both` |
-| `animation-play-state` | `running`, `paused` | `animation-play-state` | `animation-play-state:paused` |
+| Property | Values | Example |
+|---|---|---|
+| `animation` | A pass-through shorthand | `animation:(fade-in_200ms_ease)` |
+| `animation-name` | A pass-through value | `animation-name:(fade-in)` |
+| `animation-duration` | A pass-through value | `animation-duration:(200ms)` |
+| `animation-timing-function` | A pass-through value | `animation-timing-function:(ease-in-out)` |
+| `animation-delay` | A pass-through value | `animation-delay:(150ms)` |
+| `animation-iteration-count` | A pass-through value | `animation-iteration-count:(infinite)` |
+| `animation-direction` | `normal`, `reverse`, `alternate`, `alternate-reverse` | `animation-direction:alternate` |
+| `animation-fill-mode` | `none`, `forwards`, `backwards`, `both` | `animation-fill-mode:both` |
+| `animation-play-state` | `running`, `paused` | `animation-play-state:paused` |
 
 ```css title="styles.css"
 @keyframes fade-in {

@@ -17,9 +17,7 @@ Layout classes name a common arrangement in one class: a vertical stack, a wrapp
 </div>
 ```
 
-Notes:
-- Output includes `margin:auto` and responsive `padding-left/right`.
-- Values are configured in `elevate/core/system/etc/contain.ts`.
+It writes `margin:auto` and a `padding-left` and `padding-right` that grow with the screen. The values live in `elevate/core/system/etc/contain.ts`.
 
 
 ## Stack
@@ -41,9 +39,7 @@ Vertical flow with consistent spacing and optional alignment.
 | Justify | `just-start`, `just-end`, `just-center`, `just-stretch`, `just-between`, `just-around`, `just-evenly`, `just-left`, `just-right` | `stack:just-between` |
 | Direction | `reverse` | `stack:reverse` |
 
-Every `stack` starts with:
-- `display:flex`
-- `flex-direction:column`
+Every `stack` starts with `display:flex` and `flex-direction:column`.
 
 
 ## Cluster
@@ -67,10 +63,7 @@ Horizontal wrap with gap and alignment. Ideal for tags, toolbars, button rows.
 | Justify | `just-start`, `just-end`, `just-center`, `just-stretch`, `just-between`, `just-around`, `just-evenly`, `just-left`, `just-right` | `cluster:just-between` |
 | Wrap | `wrap`, `no-wrap`, `reverse` | `cluster:no-wrap` |
 
-Every `cluster` starts with:
-- `display:flex`
-- `flex-direction:row`
-- `flex-wrap:wrap`
+Every `cluster` starts with `display:flex`, `flex-direction:row` and `flex-wrap:wrap`.
 
 
 ## Split
@@ -89,9 +82,7 @@ Two-column layout with clean ratio control.
 | Ratio | `ratio-1-1`, `ratio-2-1`, `ratio-1-2`, `ratio-3-1`, `ratio-1-3`, `ratio-2-2`, `ratio-3-2`, `ratio-2-3` | `split:ratio-2-1` |
 | Gap | `gap-{spacing}` | `split:gap-d6` |
 
-Every `split` starts with:
-- `display:grid`
-- `grid-template-columns:1fr 1fr`
+Every `split` starts with `display:grid` and `grid-template-columns:1fr 1fr`.
 
 
 ## Center
@@ -110,9 +101,7 @@ Centers a block horizontally, with optional max width and text alignment.
 | Max width | `max-{spacing}` | `center:max-c12` |
 | Text align | `text` | `center:text` |
 
-Every `center` starts with:
-- `margin-left:auto`
-- `margin-right:auto`
+Every `center` starts with `margin-left:auto` and `margin-right:auto`.
 
 
 ## Grid-Auto
@@ -133,9 +122,7 @@ Responsive card grids without manual breakpoints. Uses `auto-fit` + `minmax`.
 | Gap | `gap-{spacing}` | `grid-auto:gap-d4` |
 | Fit mode | `fit` (default) or `fill`. `fit` stretches items to fill the row, `fill` keeps empty tracks | `grid-auto:fill` |
 
-Every `grid-auto` starts with:
-- `display:grid`
-- `grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr))`
+Every `grid-auto` starts with `display:grid` and `grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr))`.
 
 
 ## Breakpoints
