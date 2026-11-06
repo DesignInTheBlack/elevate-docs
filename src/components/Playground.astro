@@ -12,7 +12,7 @@ const presets = [
 	{ name: 'Mistake', classes: 'row:x-center gap:d4 pd:d99 text:indgo' },
 ];
 ---
-<section class="pg" data-device="fit">
+<section class="pg" data-pagefind-ignore data-device="fit">
 	<div class="pg-presets" role="group" aria-label="Examples">
 		{presets.map((p, i) => (
 			<button type="button" data-classes={p.classes} aria-pressed={i === 0 ? 'true' : 'false'}>{p.name}</button>
@@ -413,6 +413,14 @@ const presets = [
 		font: var(--t-s)/1.7 var(--sl-font-mono);
 		color: var(--body);
 		white-space: pre;
+	}
+	@media (max-width: 40rem) {
+		.pg-css {
+			padding: var(--s-4);
+			font-size: var(--t-xs);
+			white-space: pre-wrap;
+			overflow-wrap: anywhere;
+		}
 	}
 
 	@media (max-width: 56rem) {

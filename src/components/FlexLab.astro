@@ -7,7 +7,7 @@
   Mappings mirror the compiler (declarationMap.ts + rules/flex.ts).
 */
 ---
-<figure class="lab" data-dir="row" data-x="start" data-y="start">
+<figure class="lab" data-pagefind-ignore data-dir="row" data-x="start" data-y="start">
 	<div class="stage" aria-hidden="true">
 		<div class="rail rail-x"><i class="track"></i><i class="bar"></i><span class="axis">x</span></div>
 		<div class="rail rail-y"><i class="track"></i><i class="bar"></i><span class="axis">y</span></div>
@@ -212,6 +212,9 @@
 		});
 		lab.addEventListener('pointerdown', stopTour);
 
+		if (matchMedia('(hover: none)').matches) {
+			lab.querySelector('.hint')!.textContent = 'Tap any part of the class to change it.';
+		}
 		paint();
 		new ResizeObserver(() => measure()).observe(stage);
 

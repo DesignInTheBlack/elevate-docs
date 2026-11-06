@@ -4,7 +4,7 @@
   writes for it, and a small picture of that value at its real size.
 */
 ---
-<div class="bento">
+<div class="bento" data-pagefind-ignore>
 	<article class="cell">
 		<div class="viz">
 			<div class="pad" title="padding: 1.5rem">
@@ -209,9 +209,29 @@
 		margin-top: 1.25rem;
 	}
 
-	@media (max-width: 34rem) {
+	/* Phones: a swipeable row that runs edge to edge, with the next card peeking in */
+	@media (max-width: 40rem) {
 		.bento {
-			grid-template-columns: 1fr;
+			grid-template-columns: none;
+			grid-auto-flow: column;
+			grid-auto-columns: min(82%, 19rem);
+			gap: var(--s-3);
+			margin-inline: calc(var(--sl-content-pad-x) * -1);
+			padding-inline: var(--sl-content-pad-x);
+			scroll-padding-inline: var(--sl-content-pad-x);
+			overflow-x: auto;
+			overscroll-behavior-x: contain;
+			scroll-snap-type: x mandatory;
+			scrollbar-width: none;
+		}
+		.bento::-webkit-scrollbar {
+			display: none;
+		}
+		.cell {
+			scroll-snap-align: start;
+		}
+		.viz {
+			height: 8.5rem;
 		}
 	}
 </style>

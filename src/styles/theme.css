@@ -75,7 +75,7 @@
 	--sl-color-text-accent: var(--ink);
 	--sl-color-text-invert: var(--paper);
 	--sl-color-bg: var(--paper);
-	--sl-color-bg-nav: rgb(255 255 255 / 0.82);
+	--sl-color-bg-nav: rgb(255 255 255 / 0.9);
 	--sl-color-bg-sidebar: var(--paper);
 	--sl-color-bg-inline-code: var(--mist);
 	--sl-color-hairline: var(--hair);
@@ -576,15 +576,19 @@ starlight-toc a[aria-current='true'] {
 	.home-head-wide h2 {
 		max-width: 12ch;
 	}
-	.home-head-wide > div {
-		display: grid;
-		gap: var(--s-3);
-	}
+
 	.home-head-wide .home-sub {
 		padding-bottom: 0.4em;
 	}
 }
 
+.home-head-wide > div {
+	display: grid;
+	gap: var(--s-4);
+}
+.home-head-wide > div > .home-eyebrow {
+	margin-bottom: calc(var(--s-1) * -1) !important;
+}
 .home-head-center {
 	justify-items: center;
 	text-align: center;
@@ -790,4 +794,172 @@ starlight-toc a[aria-current='true'] {
 		justify-content: center;
 		border-radius: 50%;
 	}
+}
+
+/* ---------- Code copy button: a quiet icon, never on top of the code ---------- */
+:root .expressive-code .copy button {
+	width: 2rem;
+	height: 2rem;
+	margin: var(--s-2) var(--s-2) 0 0;
+	border-radius: var(--r-xs);
+	opacity: 0.6;
+}
+:root .expressive-code .copy button::before {
+	border: none;
+}
+:root .expressive-code .copy button::after {
+	margin: 0.5rem;
+}
+/* Phones: code wraps instead of scrolling sideways (the first line already leaves room for the copy button) */
+@media (max-width: 50rem) {
+	:root .expressive-code .ec-line .code {
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+	}
+	:root .expressive-code {
+		--ec-codeFontSize: 0.8125rem;
+	}
+	:root .expressive-code pre {
+		overflow-x: hidden;
+	}
+}
+
+/* Phones: wide tables become a stack of rows, each with its own labels */
+@media (max-width: 40rem) {
+	.sl-markdown-content table.stack {
+		display: block;
+		overflow: visible;
+	}
+	.sl-markdown-content table.stack thead {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+	.sl-markdown-content table.stack tbody {
+		display: block;
+		border-top: 1px solid var(--ink);
+	}
+	.sl-markdown-content table.stack tr {
+		display: grid;
+		gap: var(--s-1);
+		padding-block: var(--s-3) var(--s-4);
+		border-bottom: 1px solid var(--hair);
+	}
+	.sl-markdown-content table.stack tr:last-child {
+		border-bottom: none;
+	}
+	.sl-markdown-content table.stack td {
+		display: grid;
+		grid-template-columns: 6.25rem minmax(0, 1fr);
+		align-items: start;
+		gap: var(--s-3);
+		padding: 0;
+		border: none;
+	}
+	.sl-markdown-content table.stack td::before {
+		content: attr(data-label);
+		font-size: var(--t-xs);
+		line-height: calc(var(--t-s) * 1.5);
+		font-weight: 500;
+		color: var(--slate);
+	}
+	.sl-markdown-content table.stack td:first-child {
+		display: block;
+		margin-bottom: var(--s-2);
+		font-size: var(--t-m);
+	}
+	.sl-markdown-content table.stack td:first-child::before,
+	.sl-markdown-content table.stack td:empty {
+		display: none;
+	}
+}
+
+/* The narrowest phones: each label sits above its value */
+@media (max-width: 24rem) {
+	.sl-markdown-content table.stack td {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0;
+	}
+	.sl-markdown-content table.stack td + td {
+		margin-top: var(--s-1);
+	}
+}
+
+/* Palette chips sit in rows; Starlight's prose spacing must not push them down */
+.sl-markdown-content [class~='-colorSquare'] {
+	margin-top: 0 !important;
+}
+
+/* ---------- Home on phones ---------- */
+:root[data-theme]:has(.home) footer.sl-flex {
+	display: none;
+}
+@media (max-width: 40rem) {
+	.home-head {
+		gap: var(--s-3);
+		margin-bottom: var(--s-6);
+	}
+	.home .home-sub {
+		font-size: 1.1875rem;
+	}
+	.home-specs > a,
+	.home-specs > a + a {
+		gap: var(--s-2);
+		padding-block: var(--s-5);
+	}
+	.home-specs > a > code:first-child {
+		margin-bottom: var(--s-2) !important;
+		font-size: 1.375rem;
+	}
+	.home-specs h3 {
+		font-size: var(--t-m);
+	}
+	.home-panel {
+		gap: var(--s-3);
+		padding: var(--s-8) var(--s-5) var(--s-7);
+	}
+	.home-panel .home-sub {
+		font-size: var(--t-m);
+		line-height: 1.5;
+	}
+	.home-panel .expressive-code {
+		margin-top: var(--s-3) !important;
+	}
+	.home-panel .expressive-code pre {
+		font-size: 0.8125rem;
+	}
+	.home-actions {
+		display: grid;
+		justify-content: stretch;
+		width: 100%;
+		gap: var(--s-2);
+	}
+	.home-actions a.home-primary {
+		padding-block: 0.875rem;
+		text-align: center;
+	}
+	.home-actions a.home-quiet {
+		padding-block: var(--s-3);
+	}
+	.home-quote {
+		margin-block: var(--s-8) var(--s-4) !important;
+	}
+	.home-quote p {
+		font-size: var(--t-m);
+	}
+}
+
+/* ---------- Search dialog ---------- */
+#starlight__search {
+	--pagefind-ui-border-radius: var(--r-s);
+}
+:root #starlight__search input:focus {
+	--pagefind-ui-border: rgb(29 29 31 / 0.3);
+	outline: none;
+	box-shadow: 0 0 0 4px rgb(29 29 31 / 0.06);
+}
+:root #starlight__search {
+	--sl-search-corners: var(--r-s);
 }

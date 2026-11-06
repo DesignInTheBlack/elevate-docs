@@ -52,11 +52,11 @@ const BREAK_AFTER = /([:_,])/;
 const wbr = () => ({ type: 'element', tagName: 'wbr', properties: {}, children: [] });
 const seg = (value) => ({ type: 'element', tagName: 'span', properties: { className: ['nb'] }, children: [{ type: 'text', value }] });
 
-function breakable(children) {
+function breakable(children, at = BREAK_AFTER) {
 	const out = [];
 	for (const child of children) {
 		if (child.type === 'text') {
-			const pieces = child.value.split(BREAK_AFTER).reduce((acc, p, i) => {
+			const pieces = child.value.split(at).reduce((acc, p, i) => {
 				if (i % 2 === 1) acc[acc.length - 1] += p; else acc.push(p);
 				return acc;
 			}, []).filter(Boolean);
@@ -72,6 +72,33 @@ function breakable(children) {
 	return out;
 }
 
+const textOf = (n) => (n.type === 'text' ? n.value : (n.children || []).map(textOf).join(''));
+
+// Tables with three or more columns get `stack` and a data-label on every cell,
+// so on phones each row can become a small card: the first cell as its title,
+// the rest as label and value pairs.
+function labelTable(table) {
+	const find = (n, tag, out = []) => {
+		if (n.type === 'element' && n.tagName === tag) out.push(n);
+		(n.children || []).forEach((c) => find(c, tag, out));
+		return out;
+	};
+	const head = find(table, 'thead')[0];
+	if (!head) return;
+	const labels = find(head, 'th').map((th) => textOf(th).trim());
+	if (labels.length < 3) return;
+	table.properties = { ...table.properties, className: [...(table.properties?.className || []), 'stack'] };
+	for (const body of find(table, 'tbody')) {
+		for (const tr of find(body, 'tr')) {
+			find(tr, 'td').forEach((td, i) => {
+				td.properties = { ...td.properties, dataLabel: labels[i] || '' };
+				// one wrapper, so the value stays a single run of text beside its label
+				if (td.children?.length) td.children = [{ type: 'element', tagName: 'span', properties: { className: ['cell-v'] }, children: td.children }];
+			});
+		}
+	}
+}
+
 export default function rehypeElevateTokens() {
 	return (tree) => {
 		const walk = (node, parent, inCell) => {
@@ -85,9 +112,14 @@ export default function rehypeElevateTokens() {
 				if (inCell) {
 					node.children = breakable(node.children);
 					node.properties = { ...node.properties, className: [...(node.properties?.className || []), 'cell-code'] };
+				} else if (!parts && only && only.includes('/') && only.length > 16) {
+					// long file paths in prose break after a slash, never mid-name
+					node.children = breakable(node.children, /(\/)/);
+					node.properties = { ...node.properties, className: [...(node.properties?.className || []), 'cell-code'] };
 				}
 				return;
 			}
+			if (node.type === 'element' && node.tagName === 'table') labelTable(node);
 			const cell = inCell || (node.type === 'element' && (node.tagName === 'td' || node.tagName === 'th'));
 			node.children?.forEach((c) => walk(c, node, cell));
 		};

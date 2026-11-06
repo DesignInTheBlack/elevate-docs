@@ -101,9 +101,12 @@ export function compile(input: string): Result {
 			problems.push({ token: item.className, message: e.message });
 			continue;
 		}
-		const lead = LEAD[item.property] ? `\n${LEAD[item.property]}` : '';
-		const body = item.modifiers.map((m: string) => `${m};`).join('\n');
-		const rule = `.${escapeClassName(item.className)}${suffix} {${lead}\n${body}\n}`;
+		// indented for reading; inside a media query, one level deeper
+		const pad = item.breakpoint ? '    ' : '  ';
+		const lead = LEAD[item.property] ? '\n' + LEAD[item.property].split('\n').map((l) => pad + l).join('\n') : '';
+		const body = item.modifiers.map((m: string) => `${pad}${m};`).join('\n');
+		const close = item.breakpoint ? '  }' : '}';
+		const rule = `${item.breakpoint ? '  ' : ''}.${escapeClassName(item.className)}${suffix} {${lead}\n${body}\n${close}`;
 		if (item.breakpoint !== open) {
 			if (open) css += '}\n\n';
 			if (item.breakpoint) css += `@media only screen and (min-width:${getModifierValue(item.breakpoint.replace(/\//g, ''))}) {\n`;
