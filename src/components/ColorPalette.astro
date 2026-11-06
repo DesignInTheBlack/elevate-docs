@@ -1,0 +1,240 @@
+---
+/*
+  The default palette, read straight from the color tokens the compiler uses.
+  Each family is one continuous ramp, darkest to lightest. Click a step to copy
+  its token.
+*/
+import { colors } from '../../elevate/core/system/design/colors.ts';
+
+const ORDER = ['indigo', 'blue', 'teal', 'green', 'yellow', 'orange', 'red', 'pink', 'purple', 'grey'];
+const STEPS = ['-4', '-3', '-2', '-1', '', '+1', '+2', '+3', '+4'];
+
+const lum = (hex: string) => {
+	const [r, g, b] = [1, 3, 5].map((i) => {
+		const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+		return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+	});
+	return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const C = colors as Record<string, string>;
+const families = ORDER.map((name) => ({
+	name,
+	label: name[0].toUpperCase() + name.slice(1),
+	steps: STEPS.map((st) => {
+		const token = `${name}${st}`;
+		const hex = C[token];
+		return { token, st: st || 'base', hex, light: lum(hex) > 0.36 };
+	}),
+}));
+const neutrals = ['black', 'white', 'transparent'].map((t) => ({ token: t, hex: C[t] }));
+---
+<div class="palette" data-pagefind-ignore>
+	{families.map((f) => (
+		<div class="fam">
+			<span class="name">{f.label}</span>
+			<div class="ramp">
+				{f.steps.map((s) => (
+					<button
+						type="button"
+						class:list={['sw', { light: s.light, base: s.st === 'base' }]}
+						style={`--c:${s.hex}`}
+						data-token={s.token}
+						aria-label={`${s.token}, ${s.hex}. Copy token`}
+					>
+						<span class="st">{s.st === 'base' ? f.name : s.st}</span>
+						<span class="hex">{s.hex}</span>
+					</button>
+				))}
+			</div>
+		</div>
+	))}
+	<div class="fam">
+		<span class="name">Neutrals</span>
+		<div class="ramp ramp-n">
+			{neutrals.map((n) => (
+				<button
+					type="button"
+					class:list={['sw', 'n', `n-${n.token}`, { light: n.token !== 'black' }]}
+					style={n.token === 'transparent' ? '' : `--c:${n.hex}`}
+					data-token={n.token}
+					aria-label={`${n.token}. Copy token`}
+				>
+					<span class="st">{n.token}</span>
+					<span class="hex">{n.token === 'transparent' ? 'none' : n.hex}</span>
+				</button>
+			))}
+		</div>
+	</div>
+	<p class="tip" aria-live="polite">Click any color to copy its token.</p>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('.palette').forEach((pal) => {
+		const tip = pal.querySelector<HTMLElement>('.tip')!;
+		const base = tip.textContent;
+		let t = 0;
+		pal.addEventListener('click', async (e) => {
+			const sw = (e.target as HTMLElement).closest<HTMLElement>('.sw');
+			if (!sw) return;
+			const token = sw.dataset.token!;
+			try {
+				await navigator.clipboard.writeText(token);
+				tip.innerHTML = `Copied <code>${token}</code>`;
+			} catch {
+				tip.innerHTML = `<code>${token}</code>`;
+			}
+			pal.querySelectorAll('.sw[data-copied]').forEach((el) => el.removeAttribute('data-copied'));
+			sw.setAttribute('data-copied', '');
+			clearTimeout(t);
+			t = window.setTimeout(() => {
+				tip.textContent = base;
+				sw.removeAttribute('data-copied');
+			}, 1600);
+		});
+		if (matchMedia('(hover: none)').matches) tip.textContent = 'Tap any color to copy its token.';
+	});
+</script>
+
+<style>
+	.palette {
+		display: grid;
+		gap: var(--s-3);
+	}
+	.palette :global(*) {
+		margin-top: 0 !important;
+	}
+	.fam {
+		display: grid;
+		grid-template-columns: 5.5rem minmax(0, 1fr);
+		align-items: center;
+		gap: var(--s-4);
+	}
+	.name {
+		font-size: var(--t-s);
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	/* One continuous ramp: square steps, rounded only at its two ends */
+	.ramp {
+		display: grid;
+		grid-template-columns: repeat(9, minmax(0, 1fr));
+		height: 3.5rem;
+		border-radius: var(--r-s);
+		overflow: hidden;
+		isolation: isolate;
+	}
+	.sw {
+		position: relative;
+		display: grid;
+		align-content: space-between;
+		justify-items: start;
+		padding: 0.5rem 0.5rem 0.4375rem;
+		border: none;
+		border-radius: 0;
+		background: var(--c);
+		color: rgb(255 255 255 / 0.92);
+		font: 500 0.6875rem/1 var(--sl-font-mono);
+		text-align: left;
+		cursor: copy;
+		transition: transform 0.25s cubic-bezier(0.3, 1.3, 0.45, 1), box-shadow 0.25s ease, border-radius 0.25s ease;
+	}
+	.sw.light {
+		color: rgb(29 29 31 / 0.78);
+	}
+	.sw.base .st {
+		font-weight: 700;
+	}
+	.hex {
+		opacity: 0;
+		font-size: 0.625rem;
+		letter-spacing: -0.02em;
+		transition: opacity 0.2s ease;
+	}
+	.sw:hover,
+	.sw:focus-visible,
+	.sw[data-copied] {
+		z-index: 1;
+		transform: scale(1.08);
+		border-radius: var(--r-xs);
+		box-shadow: 0 10px 24px -8px rgb(0 0 0 / 0.35);
+		outline: none;
+	}
+	.sw:hover .hex,
+	.sw:focus-visible .hex {
+		opacity: 1;
+	}
+	.sw:focus-visible {
+		box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink);
+	}
+	/* the ramp clips the lifted step, so let it breathe while one is lifted */
+	.ramp:has(.sw:hover, .sw:focus-visible, .sw[data-copied]) {
+		overflow: visible;
+	}
+	.ramp:has(.sw:hover, .sw:focus-visible, .sw[data-copied]) .sw:first-child {
+		border-start-start-radius: var(--r-s);
+		border-end-start-radius: var(--r-s);
+	}
+	.ramp:has(.sw:hover, .sw:focus-visible, .sw[data-copied]) .sw:last-child {
+		border-start-end-radius: var(--r-s);
+		border-end-end-radius: var(--r-s);
+	}
+
+	/* Neutrals */
+	.ramp-n {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	.n-white,
+	.n-transparent {
+		box-shadow: inset 0 0 0 1px var(--hair);
+	}
+	.ramp-n .n-transparent {
+		border-start-end-radius: var(--r-s);
+		border-end-end-radius: var(--r-s);
+	}
+	.n-transparent {
+		background:
+			repeating-conic-gradient(#e5e5ea 0 25%, #fff 0 50%) 0 0 / 12px 12px;
+	}
+
+	.tip {
+		margin-top: var(--s-2) !important;
+		padding-left: calc(5.5rem + var(--s-4));
+		font-size: var(--t-xs);
+		color: var(--slate);
+	}
+	.tip :global(code) {
+		font-size: inherit;
+	}
+
+	/* Phones: the name sits above its ramp so the ramp gets the full width */
+	@media (max-width: 40rem) {
+		.palette {
+			gap: var(--s-4);
+		}
+		.fam {
+			grid-template-columns: 1fr;
+			gap: var(--s-2);
+		}
+		.ramp {
+			height: 3rem;
+		}
+		.sw {
+			padding: 0.375rem;
+			font-size: 0.625rem;
+		}
+		.sw.base .st {
+			font-size: 0;
+		}
+		.sw.base .st::after {
+			content: 'base';
+			font-size: 0.625rem;
+		}
+		.tip {
+			padding-left: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.sw { transition: none; }
+	}
+</style>

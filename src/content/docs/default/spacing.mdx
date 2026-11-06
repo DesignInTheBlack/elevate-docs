@@ -1,105 +1,50 @@
 ---
 title: "Spacing"
-description: "A 4-point spacing system in three scales: detail, content and space."
+description: "One ruler from a 1px hairline to a 1920px page, split into three scales."
 ---
 
-Every spacing value comes from one of three scales: `d` for details inside components, `c` for gaps and sections, and `s` for page-sized widths. `px` adds a one-pixel hairline for borders and dividers. Use them anywhere a property takes a spacing token: padding, margin, gap, width, height and offsets.
-
 import { Aside } from '@astrojs/starlight/components';
+import SpacingLab from '../../../components/SpacingLab.astro';
+import SpacingScales from '../../../components/SpacingScales.astro';
+
+Every spacing value in Elevate is a named step on one ruler. Use the tokens anywhere a property takes a length: `pd` and `mg`, `gap`, `w` and `h`, `max-w`, and offsets like `inset`.
+
+<SpacingLab />
+
+## Three scales, one ruler
+
+The steps are grouped by what they're for, and the letter tells you which group you're in. `d` is for detail inside components, `c` is for room between blocks and sections, and `s` is for widths and page structure. Each scale picks up where the one before it ends.
+
+<SpacingScales view="map" />
+
+### Detail scale
+
+Tokens start with `d` and run from `0.125rem` to `3.5rem`, climbing in even 4px steps from `d1` to `d12`. Use them for padding, gaps and offsets inside buttons, cards, inputs and lists. `px` adds a one-pixel hairline for borders and dividers. The bars below are drawn at their real width.
+
+<SpacingScales view="d" />
+
+### Content scale
+
+Tokens start with `c` and run from `4rem` to `20rem`. Use them for space between sections, column gaps in page layouts, and the size of media like avatars, thumbnails and icon tiles.
+
+<SpacingScales view="c" />
+
+### Space scale
+
+Tokens start with `s` and run from `24rem` to `120rem`. Use them for widths: a readable text column, a dialog, a sidebar, or the maximum width of a page.
+
+<SpacingScales view="s" />
+
+## Using them together
+
+```html title="A pricing card, a section and a page column"
+<article class="pd:d6 gap:d4 bd:round-d4">…</article>
+<section class="pd-y:c5 gap:c1">…</section>
+<main class="max-w:s10 mg-x:auto">…</main>
+```
+
+The [Margin and padding](/css/marginpadding/) page covers giving each side its own value.
 
 <Aside title="Make it yours">
-These are starting values. Override them or add your own in the [Configuration](/guides/3-configuration/) guide.
+These are starting values. Change them, or add your own, in `elevate/core/system/design/spacing.ts`. The [Configuration](/guides/3-configuration/) guide shows how.
 </Aside>
-
-## Spacing scales overview
-
-### 1. Detail scale
-
-The **detail scale** is for fine-grained adjustments in small components, such as buttons, cards, and inputs. It offers precise control over spacing from `0.125rem` to `3.5rem`.
-
-| **Token** | **Value** | **Description**       |
-|-----------|-----------|-----------------------|
-| `px`      | `1px`     | Hairline: borders and dividers |
-| `d0`      | `0.125rem`    | 2pt                   |
-| `d1`      | `0.25rem` | 4pt  |
-| `d2`      | `0.5rem`  | 8pt                   |
-| `d3`      | `0.75rem` | 12pt                  |
-| `d4`      | `1rem`    | 16pt                  |
-| `d5`      | `1.25rem` | 20pt                  |
-| `d6`      | `1.5rem`  | 24pt                  |
-| `d7`      | `1.75rem` | 28pt                  |
-| `d8`      | `2rem`    | 32pt                  |
-| `d9`      | `2.25rem` | 36pt                  |
-| `d10`     | `2.5rem`  | 40pt                  |
-| `d11`     | `2.75rem` | 44pt                  |
-| `d12`     | `3rem`    | 48pt                  |
-| `d13`     | `3.5rem`  | 56pt                  |
-
-### 2. Content scale
-
-The **content scale** is optimized for spacing within layouts, such as column gaps or section margins, spanning `4rem` to `20rem`.
-
-| **Token** | **Value** | **Description**       |
-|-----------|-----------|-----------------------|
-| `c1`      | `4rem`    | 64pt                  |
-| `c2`      | `4.5rem`  | 72pt                  |
-| `c3`      | `5rem`    | 80pt                  |
-| `c4`      | `5.5rem`  | 88pt                  |
-| `c5`      | `6rem`    | 96pt                  |
-| `c6`      | `7rem`    | 112pt                 |
-| `c7`      | `7.5rem`  | 120pt                 |
-| `c8`      | `8rem`    | 128pt                 |
-| `c9`      | `9rem`    | 144pt                 |
-| `c10`     | `10rem`   | 160pt                 |
-| `c11`     | `12rem`   | 192pt                 |
-| `c12`     | `16rem`   | 256pt                 |
-| `c13`     | `20rem`   | 320pt                 |
-
-### 3. Space scale
-
-The **space scale** addresses large-scale layouts, ideal for page sections, full-width elements, and larger spacing needs. The values range from `24rem` to `120rem`.
-
-| **Token** | **Value**  | **Description**         |
-|-----------|------------|-------------------------|
-| `s1`      | `24rem`    | 384pt                   |
-| `s2`      | `28rem`    | 448pt                   |
-| `s3`      | `32rem`    | 512pt                   |
-| `s4`      | `36rem`    | 576pt                   |
-| `s5`      | `40rem`    | 640pt                   |
-| `s6`      | `48rem`    | 768pt                   |
-| `s7`      | `56rem`    | 896pt                   |
-| `s8`      | `60rem`    | 960pt                   |
-| `s9`      | `64rem`    | 1024pt                  |
-| `s10`     | `72rem`    | 1152pt                  |
-| `s11`     | `80rem`    | 1280pt                  |
-| `s12`     | `90rem`    | 1440pt                  |
-| `s13`     | `120rem`   | 1920pt                  |
-
-## Differences between scales
-
-| **Aspect**       | **Detail Scale**             | **Content Scale**            | **Space Scale**              |
-|-------------------|------------------------------|------------------------------|------------------------------|
-| **Granularity**   | Fine-grained adjustments     | Medium-scale spacing         | Large-scale layouts          |
-| **Primary Use**   | Component-level styling      | Layout spacing for sections  | Major page structures        |
-| **Value Range**   | `0.125rem` to `3.5rem`       | `4rem` to `20rem`            | `24rem` to `120rem`          |
-
-## Applying spacing in utility strings
-
-You can mix and match these scales in your designs:
-
-```html
-<!-- Detail spacing for components -->
-<p class="pd:d4 mg:d8">
-  <!-- Padding of 1rem and margin of 2rem -->
-</p>
-
-<!-- Content spacing for layouts -->
-<div class="h:c5 w:c10">
-  <!-- Height of 6rem and width of 10rem -->
-</div>
-
-<!-- Space scale for sections -->
-<section class="pd:s3 max-w:s5">
-  <!-- Uniform padding of 32rem and max-width of 40rem -->
-</section>
-```

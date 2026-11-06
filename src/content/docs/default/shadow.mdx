@@ -4,32 +4,26 @@ description: "Seven box shadows from a hairline lift to a glow, plus three text 
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import ShadowGallery from '../../../components/ShadowGallery.astro';
 
 One property, `shadow`, handles both box shadows and text shadows. Elevate picks the right CSS property from the token.
 
 ## Box shadows
 
-| Token | Looks like | Example |
-|---|---|---|
-| `subtle` | A hairline lift for inputs and small cards | <div class="shadow:subtle bg-color:white bd:round-d3 h:d12 w:c2"></div> |
-| `soft` | Five stacked layers, a gentle all-round lift | <div class="shadow:soft bg-color:white bd:round-d3 h:d12 w:c2"></div> |
-| `lifted` | A clear step off the page, for cards and menus | <div class="shadow:lifted bg-color:white bd:round-d3 h:d12 w:c2"></div> |
-| `floating` | A deep, soft shadow for dialogs and popovers | <div class="shadow:floating bg-color:white bd:round-d3 h:d12 w:c2"></div> |
-| `physical` | A firm drop with an inset edge, like a key | <div class="shadow:physical bg-color:white bd:round-d3 h:d12 w:c2"></div> |
-| `inner` | Pressed in, for wells and inputs | <div class="shadow:inner bg-color:grey+4 bd:round-d3 h:d12 w:c2"></div> |
-| `glow` | An indigo halo for focus and highlights | <div class="shadow:glow bg-color:white bd:round-d3 h:d12 w:c2"></div> |
-| `none` | Removes a shadow, for example on hover | |
+<ShadowGallery view="box" />
 
-## Text shadows
-
-| Token | Looks like | Example |
-|---|---|---|
-| `soft-text` | Keeps text legible over images | `shadow:soft-text` |
-| `crisp-text` | A one-pixel edge under light text | `shadow:crisp-text` |
-| `glow-text` | An indigo glow for display type | `shadow:glow-text` |
+`shadow:none` removes a shadow, for example to flatten a card on a state.
 
 ```html title="A card that lifts on hover"
 <article class="shadow:subtle transition:snappy @hover:[shadow:lifted]">…</article>
+```
+
+## Text shadows
+
+<ShadowGallery view="text" />
+
+```html title="A caption that stays readable over a photo"
+<figcaption class="text:white shadow:soft-text">…</figcaption>
 ```
 
 <Aside title="Shadows are design tokens">

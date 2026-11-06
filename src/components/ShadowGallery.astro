@@ -1,0 +1,234 @@
+---
+/*
+  Shadows shown the way they're used: white surfaces resting on a soft
+  backdrop, big enough to see the falloff. Values come straight from the
+  effect tokens the compiler uses.
+  view="box": the box shadows, plus one card that lifts on hover.
+  view="text": the text shadows, each on the kind of background it's for.
+*/
+import { effects } from '../../elevate/core/system/design/effects.ts';
+
+interface Props {
+	view?: 'box' | 'text';
+}
+const { view = 'box' } = Astro.props;
+
+const BOX = [
+	{ k: 'subtle', say: 'A hairline lift for inputs and small cards' },
+	{ k: 'soft', say: 'Five stacked layers for a rich, defined lift' },
+	{ k: 'lifted', say: 'A clear step off the page, for cards and menus' },
+	{ k: 'floating', say: 'Deep and soft, for dialogs and popovers' },
+	{ k: 'physical', say: 'A firm drop with a pressed edge, like a key' },
+	{ k: 'inner', say: 'Pressed in, for wells and inputs' },
+	{ k: 'glow', say: 'An indigo halo for focus and highlights' },
+];
+const TEXT = [
+	{ k: 'soft-text', say: 'Keeps light text readable over images', word: 'Golden hour' },
+	{ k: 'crisp-text', say: 'A one-pixel edge under light text', word: 'Pressed' },
+	{ k: 'glow-text', say: 'An indigo glow for display type', word: 'Elevate' },
+];
+const S = effects.shadows as Record<string, string>;
+const T = effects.textShadows as Record<string, string>;
+---
+{view === 'box' ? (
+	<div class="sg" data-pagefind-ignore>
+		{BOX.map((b) => (
+			<figure class={`spec spec-${b.k}`}>
+				<div class="card" style={`box-shadow:${S[b.k]}`}>
+					<span class="lbl"><b>{b.k}</b></span>
+				</div>
+				<figcaption>{b.say}</figcaption>
+			</figure>
+		))}
+		<figure class="spec spec-try">
+			<div class="card card-try" tabindex="0" style={`--rest:${S.subtle};--lift:${S.lifted}`}>
+				<span class="lbl"><b class="on-hover">Hover me</b><b class="on-touch">Tap me</b></span>
+			</div>
+			<figcaption>The example below: <code>subtle</code>, lifting to <code>lifted</code> on hover</figcaption>
+		</figure>
+	</div>
+) : (
+	<div class="tg" data-pagefind-ignore>
+		{TEXT.map((t) => (
+			<figure class={`tspec tspec-${t.k}`}>
+				<div class="plate">
+					<span class="word" style={`text-shadow:${T[t.k]}`}>{t.word}</span>
+					<span class="lbl">shadow:<b>{t.k}</b></span>
+				</div>
+				<figcaption>{t.say}</figcaption>
+			</figure>
+		))}
+	</div>
+)}
+
+<style>
+	.sg :global(*),
+	.tg :global(*) {
+		margin-top: 0 !important;
+	}
+
+	/* ---------- Box shadows: white cards on a soft backdrop ---------- */
+	.sg {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: var(--s-8) var(--s-5);
+		padding: var(--s-8) var(--s-6) var(--s-7);
+		border-radius: var(--r-l);
+		background: #f2f2f5;
+	}
+	.spec {
+		display: grid;
+		align-content: start;
+		gap: var(--s-4);
+		min-width: 0;
+		margin: 0;
+	}
+	.card {
+		display: flex;
+		align-items: flex-end;
+		aspect-ratio: 4 / 3;
+		padding: var(--s-3) var(--s-4);
+		border-radius: var(--r-m);
+		background: #fff;
+	}
+	.lbl {
+		font: 500 var(--t-xs) / 1 var(--sl-font-mono);
+		white-space: nowrap;
+	}
+	.card .lbl {
+		color: var(--slate);
+	}
+	.card .lbl i {
+		font-style: normal;
+		color: #c7c7cc;
+	}
+	.card .lbl b {
+		font-weight: 600;
+		color: var(--ink);
+	}
+	/* Inner is a recess in the backdrop, not a raised card */
+	.spec-inner .card {
+		background: #e9e9ee;
+	}
+	.spec figcaption {
+		font-size: var(--t-xs);
+		line-height: 1.45;
+		color: var(--slate);
+	}
+
+	/* The one that moves: what the code example on this page does */
+	.card-try {
+		align-items: center;
+		justify-content: center;
+		box-shadow: var(--rest);
+		cursor: default;
+		transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.6, 1); /* transition:snappy */
+		background:
+			linear-gradient(#fff, #fff) padding-box,
+			repeating-linear-gradient(-45deg, rgb(29 29 31 / 0.12) 0 4px, transparent 4px 8px) border-box;
+		border: 1px dashed transparent;
+	}
+	.on-touch {
+		display: none;
+	}
+	@media (hover: none) {
+		.on-hover { display: none; }
+		.on-touch { display: inline; }
+	}
+	.card-try:hover,
+	.card-try:active,
+	.card-try:focus-visible {
+		box-shadow: var(--lift);
+		outline: none;
+	}
+	.card-try .lbl b {
+		font-family: var(--sl-font);
+		font-size: var(--t-s);
+		font-weight: 600;
+	}
+	.spec-try figcaption code {
+		font-size: inherit;
+	}
+
+	/* ---------- Text shadows: each on its own kind of background ---------- */
+	.tg {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--s-4);
+	}
+	.tspec {
+		display: grid;
+		gap: var(--s-3);
+		margin: 0;
+	}
+	.plate {
+		position: relative;
+		display: grid;
+		place-items: center;
+		aspect-ratio: 4 / 3;
+		border-radius: var(--r-m);
+		overflow: hidden;
+	}
+	.word {
+		font-size: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
+		font-weight: 680;
+		letter-spacing: -0.035em;
+		line-height: 1;
+		text-align: center;
+	}
+	.plate .lbl {
+		position: absolute;
+		left: var(--s-4);
+		bottom: var(--s-3);
+	}
+	.plate .lbl b {
+		font-weight: 600;
+	}
+	/* a bright, busy sky: exactly where white text needs help */
+	.tspec-soft-text .plate {
+		background:
+			radial-gradient(circle at 70% 30%, #fff6c9 0 8%, transparent 30%),
+			radial-gradient(ellipse 80% 60% at 30% 100%, #ff7a59, transparent 70%),
+			linear-gradient(170deg, #ffd27a, #ff9a7a 55%, #f0638f);
+	}
+	.tspec-soft-text .word,
+	.tspec-soft-text .lbl { color: #fff; }
+	/* light text on a mid tone, pressed in by a one-pixel edge */
+	.tspec-crisp-text .plate {
+		background: linear-gradient(#b5b7bd, #a5a7ae);
+	}
+	.tspec-crisp-text .word { color: #f4f4f6; }
+	.tspec-crisp-text .lbl { color: rgb(255 255 255 / 0.85); }
+	/* display type on black */
+	.tspec-glow-text .plate {
+		background: #000;
+	}
+	.tspec-glow-text .word { color: #c7d2ff; }
+	.tspec-glow-text .lbl { color: rgb(255 255 255 / 0.6); }
+	.tspec figcaption {
+		font-size: var(--t-xs);
+		line-height: 1.45;
+		color: var(--slate);
+	}
+
+	@media (max-width: 60rem) {
+		.sg {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (max-width: 40rem) {
+		.sg {
+			gap: var(--s-7) var(--s-5);
+			padding: var(--s-7) var(--s-5) var(--s-6);
+		}
+		.tg {
+			grid-template-columns: 1fr;
+		}
+		.plate {
+			aspect-ratio: 16 / 7;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.card-try { transition: none; }
+	}
+</style>

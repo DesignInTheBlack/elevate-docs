@@ -1,0 +1,445 @@
+---
+/*
+  SpacingLab: the detail scale, drawn at real size and played like an instrument.
+  Every bar in the ruler is exactly as tall as its token. Drag across it, or
+  click the class, and the specimen's padding or gap follows.
+  Values come straight from the design tokens the compiler uses.
+*/
+import { spacing } from '../../elevate/core/system/design/spacing.ts';
+
+const keys = ['px', ...Array.from({ length: 14 }, (_, i) => `d${i}`)];
+const steps = keys.map((k) => {
+	const v = spacing[k as keyof typeof spacing] as string;
+	const px = v.endsWith('rem') ? parseFloat(v) * 16 : parseFloat(v);
+	return { k, v, px };
+});
+const start = steps.findIndex((s) => s.k === 'd6');
+---
+<figure class="splab" data-pagefind-ignore data-prop="pd" style={`--v:${steps[start].px}px`} data-steps={JSON.stringify(steps)} data-i={start}>
+	<div class="stage" aria-hidden="true">
+		<div class="spec spec-pd">
+			<div class="content">
+				<i class="avatar"></i>
+				<span class="lines"><i></i><i></i></span>
+			</div>
+			<span class="dim"></span>
+		</div>
+		<div class="spec spec-gap">
+			<i class="t t1"></i><i class="t t2"></i><i class="t t3"></i>
+			<span class="dim"></span>
+		</div>
+	</div>
+
+	<div class="ruler" role="slider" tabindex="0" aria-label="Spacing token" aria-valuemin="0" aria-valuemax={steps.length - 1}>
+		{steps.map((s, i) => (
+			<span class="step" data-i={i}>
+				<i class="bar" style={`height:${Math.max(s.px, 1)}px`}></i>
+				<b>{s.k}</b>
+			</span>
+		))}
+	</div>
+
+	<div class="read">
+		<div class="token" role="group" aria-label="Elevate class. Activate a part to change it.">
+			<button type="button" class="part el-prop" data-part="prop"></button><span class="colon">:</span><button type="button" class="part el-mod" data-part="mod"></button>
+		</div>
+		<p class="say" aria-live="polite"></p>
+	</div>
+
+	<figcaption class="detail">
+		<p class="hint">Drag across the ruler. Every bar is drawn at its real size.</p>
+		<pre class="css"></pre>
+	</figcaption>
+</figure>
+
+<script>
+	type Step = { k: string; v: string; px: number };
+	const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	document.querySelectorAll<HTMLElement>('.splab').forEach((lab) => {
+		const steps: Step[] = JSON.parse(lab.dataset.steps!);
+		const ruler = lab.querySelector<HTMLElement>('.ruler')!;
+		const stepEls = [...lab.querySelectorAll<HTMLElement>('.step')];
+		const prop = lab.querySelector<HTMLButtonElement>('[data-part="prop"]')!;
+		const mod = lab.querySelector<HTMLButtonElement>('[data-part="mod"]')!;
+		const say = lab.querySelector<HTMLElement>('.say')!;
+		const css = lab.querySelector<HTMLElement>('.css')!;
+		const dims = lab.querySelectorAll<HTMLElement>('.dim');
+		let i = Number(lab.dataset.i);
+
+		const paint = (flash = false) => {
+			const s = steps[i];
+			const p = lab.dataset.prop!;
+			lab.style.setProperty('--v', `${s.px}px`);
+			prop.textContent = p;
+			mod.textContent = s.k;
+			prop.setAttribute('aria-label', `Property: ${p === 'pd' ? 'padding' : 'gap'}. Change`);
+			mod.setAttribute('aria-label', `Value: ${s.k}, ${s.v}. Next`);
+			ruler.setAttribute('aria-valuenow', String(i));
+			ruler.setAttribute('aria-valuetext', `${s.k}, ${s.v}`);
+			stepEls.forEach((el, n) => el.toggleAttribute('data-on', n === i));
+			dims.forEach((d) => (d.textContent = `${s.px}px`));
+			const pxNote = s.v.endsWith('px') ? '' : ` That's ${s.px}px.`;
+			say.innerHTML =
+				p === 'pd'
+					? `<b>${s.v}</b> of padding on every side.${pxNote}`
+					: `A <b>${s.v}</b> gap between items.${pxNote}`;
+			// What the compiler writes (pd expands to the four longhands)
+			const decl = p === 'pd' ? ['padding-top', 'padding-left', 'padding-right', 'padding-bottom'] : ['gap'];
+			const hot = flash ? ' data-hot' : '';
+			css.innerHTML =
+				`<span class="sel">.${p}\\:${s.k}</span> {\n` +
+				decl.map((d) => `<span class="line"${hot}>  ${d}: <b>${s.v}</b>;</span>`).join('\n') +
+				`\n}`;
+		};
+
+		const select = (n: number, flash = true) => {
+			n = Math.max(0, Math.min(steps.length - 1, n));
+			if (n === i && !flash) return;
+			i = n;
+			paint(flash);
+		};
+
+		// ---------- Opening sweep: up the whole scale, then settle ----------
+		let timer = 0;
+		let touring = false;
+		const stop = () => {
+			touring = false;
+			clearTimeout(timer);
+			lab.removeAttribute('data-touring');
+		};
+		const tour = () => {
+			touring = true;
+			lab.setAttribute('data-touring', '');
+			const path: number[] = [];
+			for (let n = 0; n < steps.length; n++) path.push(n);
+			for (let n = steps.length - 2; n >= Number(lab.dataset.i); n--) path.push(n);
+			let k = 0;
+			const tick = () => {
+				if (!touring) return;
+				if (k === path.length) return stop();
+				select(path[k], false);
+				const atTop = path[k] === steps.length - 1;
+				k++;
+				timer = window.setTimeout(tick, atTop ? 700 : 85);
+			};
+			timer = window.setTimeout(tick, 300);
+		};
+
+		// ---------- Controls ----------
+		const fromX = (x: number) => {
+			const r = ruler.getBoundingClientRect();
+			return Math.floor(((x - r.left) / r.width) * steps.length);
+		};
+		ruler.addEventListener('pointerdown', (e) => {
+			stop();
+			ruler.setPointerCapture(e.pointerId);
+			select(fromX(e.clientX));
+		});
+		ruler.addEventListener('pointermove', (e) => {
+			if (ruler.hasPointerCapture(e.pointerId)) select(fromX(e.clientX), false);
+		});
+		ruler.addEventListener('keydown', (e) => {
+			const d = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1 }[e.key];
+			if (d) {
+				e.preventDefault();
+				stop();
+				select(i + d);
+			}
+		});
+		prop.addEventListener('click', () => {
+			stop();
+			lab.dataset.prop = lab.dataset.prop === 'pd' ? 'gap' : 'pd';
+			paint(true);
+		});
+		mod.addEventListener('click', () => {
+			stop();
+			select((i + 1) % steps.length);
+		});
+		lab.addEventListener('pointerdown', stop);
+
+		paint();
+		const io = new IntersectionObserver(
+			(entries) => {
+				if (!entries.some((e) => e.isIntersecting)) return;
+				io.disconnect();
+				if (!reduced) tour();
+			},
+			{ threshold: 0.6 },
+		);
+		io.observe(lab);
+	});
+</script>
+
+<style>
+	@property --v {
+		syntax: '<length>';
+		inherits: true;
+		initial-value: 24px;
+	}
+	.splab {
+		--ink: #1d1d1f;
+		--hatch: repeating-linear-gradient(-45deg, rgb(214 51 138 / 0.34) 0 1.5px, transparent 1.5px 6px);
+		display: grid;
+		gap: var(--s-5);
+		transition: --v 0.45s cubic-bezier(0.3, 1.25, 0.45, 1);
+	}
+	.splab[data-touring] {
+		transition-duration: 0.12s;
+		transition-timing-function: ease-out;
+	}
+	.splab :global(*) {
+		margin-top: 0 !important;
+	}
+
+	/* ---------- Stage ---------- */
+	.stage {
+		position: relative;
+		display: grid;
+		place-items: center;
+		height: clamp(17rem, 30vw, 22rem);
+		border-radius: var(--r-l);
+		background:
+			radial-gradient(ellipse 55% 65% at 50% 50%, rgb(214 51 138 / 0.14), transparent 70%),
+			radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.07) 1px, transparent 0) 0 0 / 22px 22px,
+			#000;
+		overflow: hidden;
+	}
+	.spec {
+		grid-area: 1 / 1;
+		position: relative;
+		transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.3, 1.25, 0.45, 1);
+	}
+	.splab[data-prop='pd'] .spec-gap,
+	.splab[data-prop='gap'] .spec-pd {
+		opacity: 0;
+		transform: scale(0.94);
+		pointer-events: none;
+	}
+
+	/* Padding: the hatched band is the padding, drawn at its real size */
+	.spec-pd {
+		padding: var(--v);
+		width: min(20rem, calc(100% - 2.5rem));
+		border-radius: var(--r-m);
+		background: var(--hatch), #fff;
+		box-shadow: 0 30px 70px -20px rgb(214 51 138 / 0.45);
+	}
+	.content {
+		display: flex;
+		align-items: center;
+		gap: 0.875rem;
+		padding: 0.75rem;
+		border-radius: 0.375rem;
+		background: #fff;
+		box-shadow: 0 0 0 1px rgb(214 51 138 / 0.55);
+	}
+	.avatar {
+		flex: none;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 50%;
+		background: linear-gradient(140deg, #798cff, #d6338a);
+	}
+	.lines {
+		display: grid;
+		flex: 1;
+		gap: 0.5rem;
+	}
+	.lines i {
+		display: block;
+		height: 0.5rem;
+		border-radius: 1rem;
+		background: #e5e5ea;
+	}
+	.lines i:first-child {
+		width: 70%;
+		background: #c7c7cc;
+	}
+
+	/* Gap: the hatched strips between the tiles are the gap */
+	/* the band stays clear of the tiles' rounded corners, so it only shows in the gaps */
+	.spec-gap {
+		--hatch: repeating-linear-gradient(-45deg, rgb(255 122 192 / 0.65) 0 1.5px, transparent 1.5px 6px);
+		display: flex;
+		gap: var(--v);
+		background: var(--hatch) center / 100% 56% no-repeat;
+	}
+	.t {
+		display: block;
+		width: clamp(3.5rem, 9vw, 5rem);
+		aspect-ratio: 1;
+		border-radius: var(--r-m);
+		background: linear-gradient(160deg, var(--a), var(--b));
+		box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 20px 50px -14px var(--g);
+	}
+	.t1 { --a: #6b77ff; --b: #4350d8; --g: rgb(88 101 239 / 0.7); }
+	.t2 { --a: #ff7ac0; --b: #d6338a; --g: rgb(228 72 155 / 0.7); }
+	.t3 { --a: #ffa060; --b: #d9611c; --g: rgb(224 111 42 / 0.7); }
+
+	/* The measurement, riding on the band it measures */
+	.dim {
+		position: absolute;
+		padding: 0.1875rem 0.4375rem;
+		border-radius: var(--r-pill);
+		background: var(--g-mod);
+		color: #fff;
+		font: 600 0.6875rem/1 var(--sl-font-mono);
+		white-space: nowrap;
+		pointer-events: none;
+	}
+	.spec-pd .dim {
+		left: 50%;
+		top: calc(var(--v) / 2);
+		transform: translate(-50%, -50%);
+	}
+	.spec-gap .dim {
+		top: calc(100% + 0.75rem);
+		left: calc(clamp(3.5rem, 9vw, 5rem) + var(--v) / 2);
+		transform: translateX(-50%);
+	}
+
+	/* ---------- Ruler: every bar at its real height ---------- */
+	.ruler {
+		display: grid;
+		grid-template-columns: repeat(15, minmax(0, 1fr));
+		align-items: end;
+		gap: 0.25rem;
+		padding: var(--s-4) var(--s-4) var(--s-3);
+		border-radius: var(--r-m);
+		background: var(--mist);
+		cursor: ew-resize;
+		touch-action: pan-y;
+		user-select: none;
+		-webkit-user-select: none;
+		outline: none;
+	}
+	.ruler:focus-visible {
+		box-shadow: 0 0 0 2px var(--g-mod);
+	}
+	.step {
+		display: grid;
+		justify-items: center;
+		gap: 0.5rem;
+	}
+	.bar {
+		display: block;
+		width: 100%;
+		max-width: 1.5rem;
+		border-radius: 2px;
+		background: #c7c7cc;
+		transition: background-color 0.15s ease;
+	}
+	.step b {
+		font: 500 0.6875rem/1 var(--sl-font-mono);
+		color: var(--slate);
+	}
+	.step:hover .bar {
+		background: #8e8e93;
+	}
+	.step[data-on] .bar {
+		background: var(--g-mod);
+	}
+	.step[data-on] b {
+		color: var(--g-mod);
+		font-weight: 650;
+	}
+
+	/* ---------- Class + sentence ---------- */
+	.read {
+		display: grid;
+		gap: var(--s-2);
+	}
+	.token {
+		display: flex;
+		align-items: baseline;
+		font: 500 clamp(1.75rem, 1rem + 3.4vw, 3.5rem) / 1.1 var(--sl-font-mono);
+		letter-spacing: -0.04em;
+	}
+	.colon {
+		color: #c7c7cc;
+	}
+	.part {
+		appearance: none;
+		border: none;
+		padding: 0 0.04em;
+		font: inherit;
+		letter-spacing: inherit;
+		cursor: pointer;
+		border-radius: 0.18em;
+		background: none;
+		transition: background-color 0.2s ease;
+	}
+	.part.el-prop { color: var(--g-prop); }
+	.part.el-mod { color: var(--g-mod); font-variant-numeric: tabular-nums; }
+	.part:hover,
+	.part:focus-visible {
+		background-color: color-mix(in srgb, currentColor 10%, transparent);
+	}
+	.part:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 0.08em;
+	}
+	.say {
+		font-size: var(--t-lead);
+		line-height: 1.4;
+		letter-spacing: -0.01em;
+		color: var(--slate);
+	}
+	.say :global(b) {
+		color: var(--ink);
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* ---------- Detail ---------- */
+	.detail {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+		gap: var(--s-5);
+		align-items: start;
+	}
+	.hint {
+		font-size: var(--t-s);
+		line-height: 1.5;
+		color: var(--ink);
+		font-weight: 560;
+		transition: opacity 0.3s ease;
+	}
+	.splab[data-touring] .hint {
+		opacity: 0.45;
+	}
+	.css {
+		margin: 0;
+		padding: var(--s-4) var(--s-5);
+		background: var(--mist);
+		border: none;
+		border-radius: var(--r-m);
+		font: var(--t-s)/1.75 var(--sl-font-mono);
+		color: var(--slate);
+		white-space: pre;
+		overflow-x: auto;
+	}
+	.css :global(.sel) { color: var(--ink); }
+	.css :global(b) { font-weight: 500; color: var(--ink); }
+	.css :global(.line) {
+		display: inline-block;
+		width: 100%;
+		border-radius: var(--r-xs);
+	}
+	.css :global(.line[data-hot]) { animation: hot 1.1s ease-out; }
+	@keyframes hot {
+		from { background: rgb(192 42 120 / 0.18); }
+		to { background: transparent; }
+	}
+
+	@media (max-width: 40rem) {
+		.detail { grid-template-columns: 1fr; gap: var(--s-3); }
+		.ruler { gap: 0.125rem; padding-inline: var(--s-3); }
+		.step b { font-size: 0.5625rem; letter-spacing: -0.04em; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.splab { transition: none; }
+		.css :global(.line[data-hot]) { animation: none; }
+	}
+</style>
