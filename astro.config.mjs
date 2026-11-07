@@ -62,6 +62,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Getting started', slug: 'guides/2-getting-started' },
 						{ label: 'Playground', slug: 'playground' },
+						{ label: 'Using Elevate with AI', slug: 'guides/ai' },
 						{ label: 'Why Elevate', slug: 'guides/2-why-elevate' },
 						{ label: 'Configuration', slug: 'guides/3-configuration' },
 					],

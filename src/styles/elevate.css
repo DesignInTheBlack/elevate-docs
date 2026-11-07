@@ -143,677 +143,217 @@ textarea:not([rows]) {
     }
 }
 
-.font\:display {
-font-size: clamp(3.5rem, 2rem + 6vw, 7rem);
-}
-
-.font\:h1 {
-font-size: clamp(3rem, 2rem + 4vw, 5rem);
-}
-
-.font\:h2 {
-font-size: clamp(2.5rem, 1.8rem + 2.8vw, 3.75rem);
-}
-
-.font\:h3 {
-font-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
-}
-
-.font\:h4 {
-font-size: clamp(1.625rem, 1.4rem + 0.9vw, 2rem);
-}
-
-.font\:h5 {
-font-size: 1.375rem;
-}
-
-.font\:h6 {
-font-size: 1.125rem;
-}
-
-.font\:base {
-font-size: 1rem;
-}
-
-.font\:small {
-font-size: 0.875rem;
-}
-
-.font\:eyebrow {
-font-size: 0.8125rem;
-}
-
-.font\:tiny {
-font-size: 0.75rem;
-}
-
-.w\:c2 {
-width: 4.5rem;
-}
-
-.h\:d12 {
-height: 3rem;
+.gradient\:aurora {
+background: linear-gradient(135deg, #5560F5 0%, #9041FF 50%, #D3278A 100%);
 }
 
 .bd\:round-d3 {
 border-radius: 0.75rem;
 }
 
-.bg-color\:white {
-background-color: #FCFCFD;
-}
-
-.shadow\:glow {
-box-shadow: 0 0 0 1px rgba(85, 96, 245, 0.25), 0 8px 32px rgba(85, 96, 245, 0.35);
-}
-
-.bg-color\:grey\+4 {
-background-color: #ECEDEF;
-}
-
-.shadow\:inner {
-box-shadow: inset 0 2px 4px rgba(16, 24, 40, 0.08);
-}
-
-.shadow\:physical {
-box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
-
-.shadow\:floating {
-box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.25);
-}
-
-.shadow\:lifted {
-box-shadow: 0 4px 6px -2px rgba(16, 24, 40, 0.05), 0 12px 24px -4px rgba(16, 24, 40, 0.12);
-}
-
-.shadow\:soft {
-box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-}
-
-.shadow\:subtle {
-box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.1);
-}
-
-.mg-b\:d4 {
-margin-bottom: 1rem;
-}
-
-.mg-t\:d4 {
-margin-top: 1rem;
-}
-
-.pattern\:prism {
-background: linear-gradient(90deg, hsla(194,74%,56%,0.2), hsla(266,74%,56%,0.2), hsla(338,74%,56%,0.2), hsla(50,74%,56%,0.2), hsla(122,74%,56%,0.2));
-}
-
-.h\:c4 {
-height: 5.5rem;
-}
-
-.w\:full {
-width: 100%;
-}
-
-.pattern\:finish {
-background: repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 4px), linear-gradient(90deg, currentColor, currentColor);
-}
-
-.pattern\:carbon {
-background: radial-gradient(circle at center center, transparent, rgba(0,0,0,0.2)), repeating-linear-gradient(135deg, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 1px, transparent 1px, transparent 4px), repeating-linear-gradient(45deg, rgba(0,0,0,0.4) 0px, rgba(0,0,0,0.4) 5px, transparent 5px, transparent 6px), linear-gradient(90deg, currentColor, currentColor);
-}
-
-.pattern\:wheat {
-background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05), transparent 80%), repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 6px), repeating-linear-gradient(44deg, currentColor 0 1px, transparent 1px 6px);
-}
-
-.pattern\:headshot {
-background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05), transparent 80%), linear-gradient(to bottom right, transparent 30%, currentColor 70%);
-}
-
-.pattern\:changeling {
-background: repeating-linear-gradient(0deg, currentColor 0 20px, transparent 20px 40px), repeating-linear-gradient(60deg, currentColor 0 20px, transparent 20px 40px), repeating-linear-gradient(120deg, currentColor 0 20px, transparent 20px 40px);
-}
-
-.pattern\:curtains {
-background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 2px), repeating-linear-gradient(44deg, currentColor 0 1px, transparent 1px 2px);
-}
-
-.pattern\:glow {
-background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.2), transparent), radial-gradient(circle at 65% 65%, rgba(255,255,255,0.15), transparent), currentColor;
-}
-
-.pattern\:plastic {
-background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 40%), radial-gradient(circle at 50% 8%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%);
-}
-
-.pattern\:lattice {
-background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 15px), repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 15px);
-}
-
-.pattern\:speckled {
-background: repeating-linear-gradient(to right, currentColor 0 4px, transparent 4px 8px), repeating-linear-gradient(to bottom, currentColor 0 4px, transparent 4px 8px);
-}
-
-.pattern\:herringbone {
-background: repeating-linear-gradient(135deg, currentColor 0 10px, transparent 10px 20px), repeating-linear-gradient(225deg, currentColor 0 10px, transparent 10px 20px);
-}
-
-.pattern\:pointgrid {
-background: radial-gradient(circle, currentColor 1px, transparent 1px) 0 0 / 10px 10px, radial-gradient(circle, currentColor 2px, transparent 2px) 5px 5px / 10px 10px;
-}
-
-.pattern\:halftone {
-background: radial-gradient(circle, currentColor 1px, transparent 1px) 0 0 / 6px 6px, radial-gradient(circle, transparent 3px, currentColor 3px) 3px 3px / 6px 6px;
-}
-
-.pattern\:shimmer {
-background: linear-gradient(to bottom, transparent, currentColor 50%, transparent);
-}
-
-.pattern\:tape {
-background: repeating-linear-gradient(45deg, currentColor 0 25px, transparent 25px 50px);
-}
-
-.pattern\:grid {
-background: repeating-linear-gradient(currentColor 0 1px, transparent 1px 20px), repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 20px);
-}
-
-.pattern\:velvet {
-background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 6px);
-}
-
-.pattern\:bubbles {
-background: radial-gradient(circle, transparent 4px, currentColor 5px, transparent 6px) 0 0 / 20px 20px, radial-gradient(circle, transparent 4px, currentColor 5px, transparent 6px) 10px 10px / 20px 20px;
-}
-
-.pattern\:microfiber {
-background: radial-gradient(circle, currentColor 1px, transparent 2px) 2px 2px / 6px 6px;
-}
-
-.pattern\:honeycomb {
-background: repeating-linear-gradient(60deg, currentColor 0 2px, transparent 2px 20px), repeating-linear-gradient(120deg, currentColor 0 2px, transparent 2px 20px);
-}
-
-.pattern\:hatching {
-background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 10px), repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 10px);
-}
-
-.pattern\:cotton {
-background: radial-gradient(circle, currentColor 2px, transparent 2px) 0 0 / 10px 10px, radial-gradient(circle, currentColor 2px, transparent 2px) 5px 5px / 10px 10px;
-}
-
-.pattern\:zigzag {
-background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 4px, currentColor 4px 6px, transparent 6px 8px);
-}
-
-.pattern\:thickstripes {
-background: repeating-linear-gradient(45deg, currentColor 0 15px, transparent 15px 30px);
-}
-
-.pattern\:thinstripes {
-background: repeating-linear-gradient(45deg, currentColor 0 5px, transparent 5px 10px);
-}
-
-.h\:full {
-height: 100%;
-}
-
-.gradient\:fadetowhite {
-background: linear-gradient(0deg, rgba(252, 252, 253, 0.9) 0%, rgba(252, 252, 253, 0) 100%);
+.h\:d12 {
+height: 3rem;
 }
 
 .w\:c4 {
 width: 5.5rem;
 }
 
-.bg-color\:indigo {
-background-color: #5560F5;
-}
-
-.gradient\:fadetoblack {
-background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
-}
-
-.gradient\:dusk {
-background: linear-gradient(160deg, #0F1047 0%, #52069E 100%);
-}
-
-.gradient\:mint {
-background: linear-gradient(135deg, #66D09F 0%, #00AFA8 100%);
+.gradient\:sunset {
+background: linear-gradient(135deg, #EB6F1E 0%, #D3278A 55%, #9041FF 100%);
 }
 
 .gradient\:ocean {
 background: linear-gradient(135deg, #00AFA8 0%, #0072DC 55%, #5560F5 100%);
 }
 
-.gradient\:sunset {
-background: linear-gradient(135deg, #EB6F1E 0%, #D3278A 55%, #9041FF 100%);
+.gradient\:mint {
+background: linear-gradient(135deg, #66D09F 0%, #00AFA8 100%);
 }
 
-.gradient\:aurora {
-background: linear-gradient(135deg, #5560F5 0%, #9041FF 50%, #D3278A 100%);
+.gradient\:dusk {
+background: linear-gradient(160deg, #0F1047 0%, #52069E 100%);
 }
 
-.w\:d12 {
-width: 3rem;
+.gradient\:fadetoblack {
+background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-.font\:small\:bold {
+.bg-color\:indigo {
+background-color: #5560F5;
+}
+
+.gradient\:fadetowhite {
+background: linear-gradient(0deg, rgba(252, 252, 253, 0.9) 0%, rgba(252, 252, 253, 0) 100%);
+}
+
+.h\:full {
+height: 100%;
+}
+
+.w\:full {
+width: 100%;
+}
+
+.h\:c4 {
+height: 5.5rem;
+}
+
+.pattern\:thinstripes {
+background: repeating-linear-gradient(45deg, currentColor 0 5px, transparent 5px 10px);
+}
+
+.mg-t\:d4 {
+margin-top: 1rem;
+}
+
+.mg-b\:d4 {
+margin-bottom: 1rem;
+}
+
+.pattern\:thickstripes {
+background: repeating-linear-gradient(45deg, currentColor 0 15px, transparent 15px 30px);
+}
+
+.pattern\:zigzag {
+background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 4px, currentColor 4px 6px, transparent 6px 8px);
+}
+
+.pattern\:cotton {
+background: radial-gradient(circle, currentColor 2px, transparent 2px) 0 0 / 10px 10px, radial-gradient(circle, currentColor 2px, transparent 2px) 5px 5px / 10px 10px;
+}
+
+.pattern\:hatching {
+background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 10px), repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 10px);
+}
+
+.pattern\:honeycomb {
+background: repeating-linear-gradient(60deg, currentColor 0 2px, transparent 2px 20px), repeating-linear-gradient(120deg, currentColor 0 2px, transparent 2px 20px);
+}
+
+.pattern\:microfiber {
+background: radial-gradient(circle, currentColor 1px, transparent 2px) 2px 2px / 6px 6px;
+}
+
+.pattern\:bubbles {
+background: radial-gradient(circle, transparent 4px, currentColor 5px, transparent 6px) 0 0 / 20px 20px, radial-gradient(circle, transparent 4px, currentColor 5px, transparent 6px) 10px 10px / 20px 20px;
+}
+
+.pattern\:velvet {
+background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 6px);
+}
+
+.pattern\:grid {
+background: repeating-linear-gradient(currentColor 0 1px, transparent 1px 20px), repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 20px);
+}
+
+.pattern\:tape {
+background: repeating-linear-gradient(45deg, currentColor 0 25px, transparent 25px 50px);
+}
+
+.pattern\:shimmer {
+background: linear-gradient(to bottom, transparent, currentColor 50%, transparent);
+}
+
+.pattern\:halftone {
+background: radial-gradient(circle, currentColor 1px, transparent 1px) 0 0 / 6px 6px, radial-gradient(circle, transparent 3px, currentColor 3px) 3px 3px / 6px 6px;
+}
+
+.pattern\:pointgrid {
+background: radial-gradient(circle, currentColor 1px, transparent 1px) 0 0 / 10px 10px, radial-gradient(circle, currentColor 2px, transparent 2px) 5px 5px / 10px 10px;
+}
+
+.pattern\:herringbone {
+background: repeating-linear-gradient(135deg, currentColor 0 10px, transparent 10px 20px), repeating-linear-gradient(225deg, currentColor 0 10px, transparent 10px 20px);
+}
+
+.pattern\:speckled {
+background: repeating-linear-gradient(to right, currentColor 0 4px, transparent 4px 8px), repeating-linear-gradient(to bottom, currentColor 0 4px, transparent 4px 8px);
+}
+
+.pattern\:lattice {
+background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 15px), repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 15px);
+}
+
+.pattern\:plastic {
+background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 40%), radial-gradient(circle at 50% 8%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%);
+}
+
+.pattern\:glow {
+background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.2), transparent), radial-gradient(circle at 65% 65%, rgba(255,255,255,0.15), transparent), currentColor;
+}
+
+.pattern\:curtains {
+background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 2px), repeating-linear-gradient(44deg, currentColor 0 1px, transparent 1px 2px);
+}
+
+.pattern\:changeling {
+background: repeating-linear-gradient(0deg, currentColor 0 20px, transparent 20px 40px), repeating-linear-gradient(60deg, currentColor 0 20px, transparent 20px 40px), repeating-linear-gradient(120deg, currentColor 0 20px, transparent 20px 40px);
+}
+
+.pattern\:headshot {
+background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05), transparent 80%), linear-gradient(to bottom right, transparent 30%, currentColor 70%);
+}
+
+.pattern\:wheat {
+background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05), transparent 80%), repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 6px), repeating-linear-gradient(44deg, currentColor 0 1px, transparent 1px 6px);
+}
+
+.pattern\:carbon {
+background: radial-gradient(circle at center center, transparent, rgba(0,0,0,0.2)), repeating-linear-gradient(135deg, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 1px, transparent 1px, transparent 4px), repeating-linear-gradient(45deg, rgba(0,0,0,0.4) 0px, rgba(0,0,0,0.4) 5px, transparent 5px, transparent 6px), linear-gradient(90deg, currentColor, currentColor);
+}
+
+.pattern\:finish {
+background: repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 4px), linear-gradient(90deg, currentColor, currentColor);
+}
+
+.pattern\:prism {
+background: linear-gradient(90deg, hsla(194,74%,56%,0.2), hsla(266,74%,56%,0.2), hsla(338,74%,56%,0.2), hsla(50,74%,56%,0.2), hsla(122,74%,56%,0.2));
+}
+
+.font\:tiny {
+font-size: 0.75rem;
+}
+
+.font\:eyebrow {
+font-size: 0.8125rem;
+}
+
+.font\:small {
 font-size: 0.875rem;
-font-weight: 700;
 }
 
-.h\:d8 {
-height: 2rem;
+.font\:base {
+font-size: 1rem;
 }
 
-.text\:black {
-color: #0B0B0C;
+.font\:h6 {
+font-size: 1.125rem;
 }
 
-.row\:x-center\:y-center {
-display:flex;
-flex-direction:row;
-justify-content: center;
-align-items: center;
+.font\:h5 {
+font-size: 1.375rem;
 }
 
-.bd\:round-d2 {
-border-radius: 0.5rem;
+.font\:h4 {
+font-size: clamp(1.625rem, 1.4rem + 0.9vw, 2rem);
 }
 
-.child\:grow {
-flex-grow: 1;
+.font\:h3 {
+font-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
 }
 
-.text\:white {
-color: #FCFCFD;
+.font\:h2 {
+font-size: clamp(2.5rem, 1.8rem + 2.8vw, 3.75rem);
 }
 
-.bg-color\:black {
-background-color: #0B0B0C;
+.font\:h1 {
+font-size: clamp(3rem, 2rem + 4vw, 5rem);
 }
 
-.row {
-display:flex;
-flex-direction:row;
-
-}
-
-.w\:d8 {
-width: 2rem;
-}
-
-.bg-color\:grey\+3 {
-background-color: #D2D4D8;
-}
-
-.bg-color\:grey\+2 {
-background-color: #B5B7BD;
-}
-
-.bg-color\:grey\+1 {
-background-color: #95989F;
-}
-
-.bg-color\:grey {
-background-color: #6F737A;
-}
-
-.bg-color\:grey-1 {
-background-color: #55585E;
-}
-
-.bg-color\:grey-2 {
-background-color: #404248;
-}
-
-.bg-color\:grey-3 {
-background-color: #2C2E32;
-}
-
-.bg-color\:grey-4 {
-background-color: #191B1D;
-}
-
-.child\:end {
-align-self: flex-end;
-}
-
-.bg-color\:blue\+4 {
-background-color: #E1EEFF;
-}
-
-.bg-color\:blue\+3 {
-background-color: #B8D7FF;
-}
-
-.bg-color\:blue\+2 {
-background-color: #85BBFF;
-}
-
-.bg-color\:blue\+1 {
-background-color: #4499FF;
-}
-
-.bg-color\:blue {
-background-color: #0072DC;
-}
-
-.bg-color\:blue-1 {
-background-color: #0056A9;
-}
-
-.bg-color\:blue-2 {
-background-color: #004182;
-}
-
-.bg-color\:blue-3 {
-background-color: #002D5E;
-}
-
-.bg-color\:blue-4 {
-background-color: #001A3B;
-}
-
-.bg-color\:teal\+4 {
-background-color: #D4F5F2;
-}
-
-.bg-color\:teal\+3 {
-background-color: #A0E3DE;
-}
-
-.bg-color\:teal\+2 {
-background-color: #5FCCC6;
-}
-
-.bg-color\:teal\+1 {
-background-color: #00AFA8;
-}
-
-.bg-color\:teal {
-background-color: #00817C;
-}
-
-.bg-color\:teal-1 {
-background-color: #006662;
-}
-
-.bg-color\:teal-2 {
-background-color: #004D4A;
-}
-
-.bg-color\:teal-3 {
-background-color: #003634;
-}
-
-.bg-color\:teal-4 {
-background-color: #00201E;
-}
-
-.bg-color\:green\+4 {
-background-color: #D6F6E4;
-}
-
-.bg-color\:green\+3 {
-background-color: #A4E6C3;
-}
-
-.bg-color\:green\+2 {
-background-color: #66D09F;
-}
-
-.bg-color\:green\+1 {
-background-color: #00B47A;
-}
-
-.bg-color\:green {
-background-color: #008358;
-}
-
-.bg-color\:green-1 {
-background-color: #006946;
-}
-
-.bg-color\:green-2 {
-background-color: #005034;
-}
-
-.bg-color\:green-3 {
-background-color: #003823;
-}
-
-.bg-color\:green-4 {
-background-color: #002113;
-}
-
-.bg-color\:yellow\+4 {
-background-color: #FFFAE9;
-}
-
-.bg-color\:yellow\+3 {
-background-color: #FFF2C3;
-}
-
-.bg-color\:yellow\+2 {
-background-color: #FFE792;
-}
-
-.bg-color\:yellow\+1 {
-background-color: #FFDC54;
-}
-
-.bg-color\:yellow {
-background-color: #F6CE00;
-}
-
-.bg-color\:yellow-1 {
-background-color: #8A7200;
-}
-
-.bg-color\:yellow-2 {
-background-color: #635100;
-}
-
-.bg-color\:yellow-3 {
-background-color: #443700;
-}
-
-.bg-color\:yellow-4 {
-background-color: #271F00;
-}
-
-.bg-color\:orange\+4 {
-background-color: #FFE7DC;
-}
-
-.bg-color\:orange\+3 {
-background-color: #FFC6A9;
-}
-
-.bg-color\:orange\+2 {
-background-color: #FE9B66;
-}
-
-.bg-color\:orange\+1 {
-background-color: #EB6F1E;
-}
-
-.bg-color\:orange {
-background-color: #BD5300;
-}
-
-.bg-color\:orange-1 {
-background-color: #8E3C00;
-}
-
-.bg-color\:orange-2 {
-background-color: #6D2D00;
-}
-
-.bg-color\:orange-3 {
-background-color: #4D1E00;
-}
-
-.bg-color\:orange-4 {
-background-color: #300F00;
-}
-
-.bg-color\:red\+4 {
-background-color: #FFE6E6;
-}
-
-.bg-color\:red\+3 {
-background-color: #FFC2C4;
-}
-
-.bg-color\:red\+2 {
-background-color: #FF949A;
-}
-
-.bg-color\:red\+1 {
-background-color: #FC546B;
-}
-
-.bg-color\:red {
-background-color: #DE1C4A;
-}
-
-.bg-color\:red-1 {
-background-color: #A60031;
-}
-
-.bg-color\:red-2 {
-background-color: #800024;
-}
-
-.bg-color\:red-3 {
-background-color: #5C0017;
-}
-
-.bg-color\:red-4 {
-background-color: #3A000B;
-}
-
-.bg-color\:pink\+4 {
-background-color: #FFE5EF;
-}
-
-.bg-color\:pink\+3 {
-background-color: #FFBFDA;
-}
-
-.bg-color\:pink\+2 {
-background-color: #FF8CC2;
-}
-
-.bg-color\:pink\+1 {
-background-color: #EF56A6;
-}
-
-.bg-color\:pink {
-background-color: #D3278A;
-}
-
-.bg-color\:pink-1 {
-background-color: #9E0063;
+.font\:display {
+font-size: clamp(3.5rem, 2rem + 6vw, 7rem);
 }
 
-.bg-color\:pink-2 {
-background-color: #7A004B;
-}
-
-.bg-color\:pink-3 {
-background-color: #570034;
-}
-
-.bg-color\:pink-4 {
-background-color: #37001F;
-}
-
-.bg-color\:purple\+4 {
-background-color: #EEE9FF;
-}
-
-.bg-color\:purple\+3 {
-background-color: #D8CBFF;
-}
-
-.bg-color\:purple\+2 {
-background-color: #BFA6FF;
-}
-
-.bg-color\:purple\+1 {
-background-color: #A679FF;
-}
-
-.bg-color\:purple {
-background-color: #9041FF;
-}
-
-.bg-color\:purple-1 {
-background-color: #6B13C9;
-}
-
-.bg-color\:purple-2 {
-background-color: #52069E;
-}
-
-.bg-color\:purple-3 {
-background-color: #390670;
-}
-
-.bg-color\:purple-4 {
-background-color: #220149;
-}
-
-.bg-color\:indigo\+4 {
-background-color: #E7ECFF;
-}
-
-.bg-color\:indigo\+3 {
-background-color: #C7D2FF;
-}
-
-.bg-color\:indigo\+2 {
-background-color: #A1B2FF;
-}
-
-.bg-color\:indigo\+1 {
-background-color: #798CFF;
-}
-
-.bg-color\:indigo-1 {
-background-color: #3C40C6;
-}
-
-.bg-color\:indigo-2 {
-background-color: #2C2E9B;
-}
-
-.bg-color\:indigo-3 {
-background-color: #1E206E;
-}
-
-.bg-color\:indigo-4 {
-background-color: #0F1047;
-}
-
-@media only screen and (min-width:64rem) {
-.h\:c2 {
-height: 4.5rem;
-}
-
-.w\:auto {
-width: auto;
-}
-
-.max-w\:c2 {
-max-width: 4.5rem;
-}
-
-}
 
 

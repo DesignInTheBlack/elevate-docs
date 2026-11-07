@@ -65,7 +65,7 @@ const { title = data.title, tagline, actions = [] } = data.hero || {};
 		{ token: 'bd:round-d4', style: { borderRadius: '1rem' }, rule: ['border-radius: 1rem;'] },
 	];
 	const BAD = 'pd:d99';
-	const ERROR = 'Modifier Validation Failed: Unable to determine modifier type for "d99" in src/components/Card.astro on line 12';
+	const ERROR = 'Spacing Value Required: "pd" takes spacing tokens, and "d99" isn\'t one in src/components/Card.astro on line 12';
 
 	const esc = (s: string) => s.replace(/:/g, '\\:');
 	const colorize = (t: string) => {

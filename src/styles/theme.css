@@ -564,6 +564,13 @@ starlight-toc a[aria-current='true'] {
 	.home-split .home-head {
 		margin-bottom: 0;
 	}
+	/* the mirrored split: the work on the left, the words on the right */
+	.home-split-r {
+		grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+	}
+	.home-split-r .home-head {
+		order: 2;
+	}
 }
 
 /* Editorial: title on the left, the sentence answering it on the right */

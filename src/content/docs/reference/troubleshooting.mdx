@@ -8,11 +8,20 @@ When a class doesn't fit your design system, Elevate stops the build and tells y
 ## Modifier Validation Failed
 
 ```text
-Modifier Validation Failed: Unable to determine modifier type for "d99"
+Modifier Validation Failed: Unable to determine modifier type for "indgo"
 in src/components/Card.astro on line 12
 ```
 
-Elevate couldn't find the value in any token set or rule. Usually it's a typo (`text:indgo`) or a step that doesn't exist (`pd:d99`). Check the value against the [spacing](/default/spacing/), [color](/default/colors/) or [typography](/default/text/) tokens, or the modifier table on the property's page.
+Elevate couldn't find the value in any token set or rule. Usually it's a typo (`text:indgo`) or a step that doesn't exist (`gap:d99`). Check the value against the [spacing](/default/spacing/), [color](/default/colors/) or [typography](/default/text/) tokens, or the modifier table on the property's page.
+
+## Spacing Value Required
+
+```text
+Spacing Value Required: "pd" takes spacing tokens, and "4" isn't one
+in src/components/Card.astro on line 12
+```
+
+Padding, margin and `inset` take [spacing tokens](/default/spacing/) for every side, never bare numbers or other values. Write `pd:d4`, not `pd:4`. To give sides different values, list tokens in order: `pd:d6:d3` for x then y, or `pd:d1:d2:d3:d4` for top, left, right and bottom.
 
 ## Invalid Property/Modifier Relationship
 
@@ -67,3 +76,14 @@ Lexing error: unexpected character: ->;<- at offset: 5
 ```
 
 The class contains a character Elevate's grammar doesn't allow, often a stray `;` or `,` copied from CSS. Remove it. For raw values that need parentheses or special characters, use a pass-through value such as `backdrop-filter:(blur(8px))`.
+
+## Warnings
+
+These don't stop the build, but they point at something that won't behave as written.
+
+| Warning | What it means |
+|---|---|
+| Unclosed ctx scopes | A `ctx:name` was opened and never closed with `ctx:end:name` |
+| `ctx:end:name` does not match the current scope | The end marker names a different scope than the one that's open |
+| `env:name:open` has no definition | The envelope was never defined, so there's nothing to expand |
+| Responsive ambiguity | Two elements carry the same classes in a different order, and one uses a class at every width while the other only uses it from a breakpoint. CSS can't tell them apart. Add or change a class on one of them |

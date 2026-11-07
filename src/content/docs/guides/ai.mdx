@@ -1,0 +1,62 @@
+---
+title: "Using Elevate with AI"
+description: "Give your assistant the reference, let it run the compiler, and it checks its own work."
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+AI assistants have seen far more Tailwind than Elevate, so on their own they tend to write `p-4` and `flex items-center`. Two things fix that: a reference written for them, and the compiler. Elevate stops the build on any class that isn't in your design system and says exactly what's wrong, so an assistant that can run the build can find and fix its own mistakes.
+
+## Give your assistant the reference
+
+There are two plain-text files, written for language models:
+
+| File | What's in it |
+|---|---|
+| [`/llms.txt`](/llms.txt) | The short version: the syntax, the tokens, the properties you'll use most and an example. About 7,000 characters |
+| [`/llms-full.txt`](/llms-full.txt) | Everything: every property and what it accepts, every token and its value, the exact error messages, a Tailwind translation table and patterns to copy |
+
+Both are generated from Elevate's own source, and every example class in them is run through the real compiler before the site is published, so they can't drift from what the compiler accepts.
+
+Paste a link into the chat, or save the full file into your project and point your assistant's instructions file at it. A line like this works in most tools:
+
+```text title="Project instructions for your assistant"
+This project styles HTML with Elevate, not Tailwind.
+Follow https://elevate-docs.pages.dev/llms-full.txt for every class.
+After editing markup, run `npm run elevate` and fix every error it reports.
+```
+
+## Let it run the compiler
+
+<Steps>
+
+1. The assistant writes classes.
+
+   ```html
+   <nav class="row:x-between:y-center pd:4">…</nav>
+   ```
+
+2. The compiler checks every class against your tokens and stops on the first one that doesn't fit, with the file and line.
+
+   ```text
+   Spacing Value Required: "pd" takes spacing tokens, and "4" isn't one
+   in src/components/Nav.astro on line 8
+   ```
+
+3. The assistant fixes exactly that class, and the build passes.
+
+   ```html
+   <nav class="row:x-between:y-center pd:d4">…</nav>
+   ```
+
+</Steps>
+
+In most utility frameworks, a class that doesn't exist is simply ignored. The page builds, the style is missing, and someone has to notice. In Elevate the mistake can't reach the page, which matters more when the code was written by a tool. [Troubleshooting](/reference/troubleshooting/) lists every message.
+
+<Aside title="If your assistant can't run commands">
+Ask it to check its classes against `llms-full.txt` before it answers. Section 17 of the file is a short checklist written for exactly that. You can also paste its classes into the [playground](/playground/), which runs the same compiler in your browser.
+</Aside>
+
+## Envelopes and AI
+
+The compiler rewrites source files when it sees an [envelope](/guides/4-env-aliases/), condensing a class list to one `env:name` class. The reference tells assistants not to add envelopes unless you ask, and to read `elevate.env.json` to see what an existing one contains.

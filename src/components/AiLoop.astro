@@ -1,0 +1,229 @@
+---
+/*
+  The AI loop: an assistant reads the reference, writes classes, the build
+  rejects the one off-system value with the compiler's real message, and the
+  assistant fixes it. The error text is the compiler's actual output for pd:4.
+*/
+const SHORT = 'https://elevate-docs.pages.dev/llms.txt';
+---
+<figure class="loop" data-pagefind-ignore>
+	<ol>
+		<li>
+			<span class="dot">1</span>
+			<div class="step">
+				<p class="what">Give your assistant the reference</p>
+				<div class="url">
+					<code>{SHORT.replace("https://", "")}</code>
+					<button type="button" class="copy" data-copy={SHORT}>Copy</button>
+				</div>
+			</div>
+		</li>
+		<li>
+			<span class="dot">2</span>
+			<div class="step">
+				<p class="what">It writes Elevate</p>
+				<pre class="code"><span class="t">&lt;nav</span> <span class="a">class</span>=<span class="q">"</span><span class="nb"><span class="el-prop">row</span><span class="el-sep">:</span><span class="el-mod">x-between</span><span class="el-sep">:</span><span class="el-mod">y-center</span></span> <span class="bad nb">pd:4</span><span class="q">"</span><span class="t">&gt;</span></pre>
+			</div>
+		</li>
+		<li class="is-error">
+			<span class="dot">!</span>
+			<div class="step">
+				<p class="what">The build stops on the one class that's off-system</p>
+				<pre class="err">Spacing Value Required: "pd" takes spacing tokens, and "4" isn't one
+in src/components/Nav.astro on line 8</pre>
+			</div>
+		</li>
+		<li class="is-ok">
+			<span class="dot">✓</span>
+			<div class="step">
+				<p class="what">It fixes exactly that, and the build passes</p>
+				<pre class="code"><span class="old">pd:4</span> <span class="arrow">→</span> <span class="el-prop">pd</span><span class="el-sep">:</span><span class="el-mod">d4</span>   <span class="ok">Compiled</span></pre>
+			</div>
+		</li>
+	</ol>
+</figure>
+
+<script>
+	document.querySelectorAll<HTMLButtonElement>('.loop .copy').forEach((btn) => {
+		btn.addEventListener('click', async () => {
+			try {
+				await navigator.clipboard.writeText(btn.dataset.copy!);
+				btn.textContent = 'Copied';
+			} catch {
+				btn.textContent = 'Select it';
+			}
+			setTimeout(() => (btn.textContent = 'Copy'), 1500);
+		});
+	});
+</script>
+
+<style>
+	.loop {
+		margin: 0;
+		padding: var(--s-6);
+		border-radius: var(--r-l);
+		background: var(--mist);
+	}
+	.loop :global(*) {
+		margin-top: 0 !important;
+	}
+	ol {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: var(--s-5);
+	}
+	li {
+		position: relative;
+		display: grid;
+		grid-template-columns: 1.75rem minmax(0, 1fr);
+		gap: var(--s-4);
+		margin: 0;
+		padding: 0;
+	}
+	li::marker {
+		content: none;
+	}
+	/* a class never breaks in the middle, only between classes */
+	.nb {
+		white-space: nowrap;
+	}
+	/* the thread that joins the steps */
+	li:not(:last-child)::after {
+		content: '';
+		position: absolute;
+		left: calc(0.875rem - 0.5px);
+		top: 2rem;
+		bottom: calc(var(--s-5) * -1 + 0.25rem);
+		border-left: 1px solid var(--hair);
+	}
+	.dot {
+		display: grid;
+		place-items: center;
+		width: 1.75rem;
+		height: 1.75rem;
+		border-radius: 50%;
+		background: #fff;
+		box-shadow: inset 0 0 0 1px var(--hair);
+		font: 600 var(--t-xs) / 1 var(--sl-font-mono);
+		color: var(--ink);
+	}
+	.is-error .dot {
+		background: #d70015;
+		box-shadow: none;
+		color: #fff;
+	}
+	.is-ok .dot {
+		background: #1d7a54;
+		box-shadow: none;
+		color: #fff;
+	}
+	.step {
+		display: grid;
+		gap: var(--s-2);
+		min-width: 0;
+		padding-top: 0.125rem;
+	}
+	.what {
+		font-size: var(--t-s);
+		font-weight: 600;
+		line-height: 1.5;
+		color: var(--ink);
+	}
+	.url {
+		min-width: 0;
+		display: flex;
+		align-items: center;
+		gap: var(--s-3);
+		padding: var(--s-2) var(--s-2) var(--s-2) var(--s-4);
+		border-radius: var(--r-s);
+		background: #fff;
+		box-shadow: inset 0 0 0 1px var(--hair);
+	}
+	.url code {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		background: none !important;
+		padding: 0 !important;
+		font-size: var(--t-s);
+		color: var(--ink);
+	}
+	.copy {
+		flex: none;
+		appearance: none;
+		border: none;
+		padding: var(--s-2) var(--s-3);
+		border-radius: var(--r-xs);
+		background: var(--ink);
+		color: #fff;
+		font: 600 var(--t-xs) / 1 var(--sl-font);
+		cursor: pointer;
+	}
+	.copy:hover {
+		background: #3a3a3c;
+	}
+	.code,
+	.err {
+		margin: 0;
+		padding: var(--s-3) var(--s-4);
+		border: none;
+		border-radius: var(--r-s);
+		font: var(--t-s) / 1.6 var(--sl-font-mono);
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+	}
+	.code {
+		background: #fff;
+		box-shadow: inset 0 0 0 1px var(--hair);
+		color: var(--ink);
+	}
+	.code .t,
+	.code .q {
+		color: var(--slate);
+	}
+	.code .a {
+		color: #6e6e73;
+	}
+	.bad {
+		color: #d70015;
+		text-decoration: underline wavy #d70015;
+		text-decoration-skip-ink: none;
+		text-underline-offset: 0.3em;
+	}
+	.err {
+		background: #fff1f2;
+		color: #a3000f;
+		box-shadow: inset 0 0 0 1px rgb(215 0 21 / 0.18);
+	}
+	.old {
+		color: var(--slate);
+		text-decoration: line-through;
+	}
+	.arrow {
+		color: var(--slate);
+	}
+	.ok {
+		font-family: var(--sl-font);
+		font-weight: 600;
+		font-size: var(--t-xs);
+		color: #1d7a54;
+	}
+
+	@media (max-width: 40rem) {
+		.loop {
+			padding: var(--s-5) var(--s-4);
+		}
+		li {
+			gap: var(--s-3);
+		}
+		.code,
+		.err {
+			font-size: var(--t-xs);
+			padding: var(--s-3);
+		}
+	}
+</style>

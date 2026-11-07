@@ -10,6 +10,7 @@
 import { Code } from '@astrojs/starlight/components';
 import FlexLab from './FlexLab.astro';
 import TokenMap from './TokenMap.astro';
+import AiLoop from './AiLoop.astro';
 ---
 <div class="home">
 
@@ -63,6 +64,16 @@ import TokenMap from './TokenMap.astro';
 			<p>Change several things on hover, focus or any other state, in one group.</p>
 		</a>
 	</div>
+</section>
+
+<section class="home-section home-split home-split-r">
+	<div class="home-head">
+		<p class="home-eyebrow">AI</p>
+		<h2>Wrong never ships quietly.</h2>
+		<p class="home-sub">A mistyped utility class usually does nothing, and nobody notices. A wrong Elevate class stops the build and names the fix, so an AI assistant can check its own work.</p>
+		<a class="home-more" href="/guides/ai/">Using Elevate with AI</a>
+	</div>
+	<AiLoop />
 </section>
 
 <section class="home-section">

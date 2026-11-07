@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "tsx scripts/gen-llms.mts && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "elevate": "tsx elevate/core/index.ts"
+    "elevate": "tsx elevate/core/index.ts",
+    "llms": "tsx scripts/gen-llms.mts"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.30.3",
