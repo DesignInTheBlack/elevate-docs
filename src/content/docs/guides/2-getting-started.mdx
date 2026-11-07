@@ -123,7 +123,7 @@ Three kinds of files decide what a class can say. You'll usually only touch them
 
 ## Running Elevate in its own process
 
-If your framework's dependencies clash with Elevate's, as can happen with Next.js, give the `elevate/` folder its own `package.json` and run it from there:
+If your framework's dependencies clash with Elevate's, as can happen with Next.js, run Elevate from inside the `elevate/` folder. It already has its own `package.json`; add a script to it:
 
 ```json title="elevate/package.json"
 {

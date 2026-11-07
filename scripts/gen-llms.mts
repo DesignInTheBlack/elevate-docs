@@ -31,8 +31,8 @@ const { effects } = await import(fw('core/system/design/effects.ts'));
 const { contain } = await import(fw('core/system/etc/contain.ts'));
 const { rules: userRules } = await import(fw('config/syntax.ts'));
 
-// The docs bundle the framework source they document; this is its version.
-const VERSION = process.env.ELEVATE_VERSION || '1.1.0';
+// The published version the docs depend on
+const VERSION = JSON.parse(fs.readFileSync(path.join(root, 'node_modules/elevate-framework/package.json'), 'utf8')).version;
 
 const R: Record<string, any> = { ...elevateRules, ...userRules };
 const T: Record<string, any> = designSystem;

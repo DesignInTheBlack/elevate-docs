@@ -1,6 +1,6 @@
 # Elevate
 
-> Elevate (v1.1.0, beta) is a compile-time CSS framework. Classes like `pd:d4`, `row:x-between:y-center` and `@hover:[bg-color:indigo]` compile into one `elevate.css`. Every value must be a design token; anything else stops the build with the file, line and reason.
+> Elevate (v1.1.1, beta) is a compile-time CSS framework. Classes like `pd:d4`, `row:x-between:y-center` and `@hover:[bg-color:indigo]` compile into one `elevate.css`. Every value must be a design token; anything else stops the build with the file, line and reason.
 
 This is the short version. For every property, every token, the exact error messages and copyable patterns, read the full reference: https://elevate-docs.pages.dev/llms-full.txt
 

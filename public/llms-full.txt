@@ -1,6 +1,6 @@
 # Elevate: the complete reference for AI assistants
 
-> Elevate (v1.1.0, beta) is a compile-time CSS framework. You style HTML with classes like `pd:d4`, `row:x-between:y-center` and `@hover:[bg-color:indigo]`, and a compiler turns them into a single `elevate.css`. Every value must come from the project's design tokens. A value outside the system stops the build with the file, the line and the reason, so a mistake is caught at build time and never ships quietly.
+> Elevate (v1.1.1, beta) is a compile-time CSS framework. You style HTML with classes like `pd:d4`, `row:x-between:y-center` and `@hover:[bg-color:indigo]`, and a compiler turns them into a single `elevate.css`. Every value must come from the project's design tokens. A value outside the system stops the build with the file, the line and the reason, so a mistake is caught at build time and never ships quietly.
 
 Docs: https://elevate-docs.pages.dev · Short version: https://elevate-docs.pages.dev/llms.txt · Package: `elevate-framework` on npm
 
