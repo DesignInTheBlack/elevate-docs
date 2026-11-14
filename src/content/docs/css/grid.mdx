@@ -13,7 +13,7 @@ description: "Columns, rows and gaps, set in one class."
 | Column gap | `colgap-` plus a spacing token | `column-gap` | `grid:colgap-d6` |
 | Row gap | `rowgap-` plus a spacing token | `row-gap` | `grid:rowgap-d2` |
 
-`cols-3` compiles to `repeat(3,auto)`, which sizes columns by their content, so wider content gets a wider column. `cols-3-fr` compiles to `repeat(3,1fr)`: equal columns that share the space.
+`cols-3` compiles to `repeat(3,auto)`, which sizes columns by their content, so wider content gets a wider column. `cols-3-fr` compiles to `repeat(3,minmax(0,1fr))`: equal columns that share the space, and stay equal even when one holds a long word or a wide table.
 
 ```html title="Three equal columns"
 <div class="grid:cols-3-fr:gap-d4">…</div>

@@ -177,7 +177,7 @@ Children of a flex container use `child`:
 
 `grid` writes `display: grid` and takes:
 
-- `cols-1` … `cols-12` (`repeat(n, auto)`) or `cols-1-fr` … `cols-12-fr` (`repeat(n, 1fr)`, equal columns: usually what you want)
+- `cols-1` … `cols-12` (`repeat(n, auto)`) or `cols-1-fr` … `cols-12-fr` (`repeat(n, minmax(0, 1fr))`, equal columns that never stretch to fit wide content: usually what you want)
 - `rows-1` … `rows-12` and `rows-1-fr` … `rows-12-fr`
 - `gap-<spacing>`, `colgap-<spacing>`, `rowgap-<spacing>`
 
@@ -195,10 +195,12 @@ Grid alignment uses `items` (align-items and justify-items) and `content` (align
 |---|---|---|
 | `stack` | `display: flex; flex-direction: column` | `gap-<spacing>`, `align-*`, `just-*`, `reverse` |
 | `cluster` | `display: flex; flex-direction: row; flex-wrap: wrap` | `gap-<spacing>`, `align-*`, `just-*`, `wrap`/`no-wrap`/`reverse` |
-| `split` | `display: grid; grid-template-columns: 1fr 1fr` | `ratio-1-1`, `ratio-2-1`, `ratio-1-2`, `ratio-3-1`, `ratio-1-3`, `ratio-2-2`, `ratio-3-2`, `ratio-2-3`, `gap-<spacing>` |
+| `split` | `display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)` | `ratio-1-1`, `ratio-2-1`, `ratio-1-2`, `ratio-3-1`, `ratio-1-3`, `ratio-2-2`, `ratio-3-2`, `ratio-2-3`, `gap-<spacing>` |
 | `center` | `margin-left: auto; margin-right: auto` | `max-<spacing>`, `text` (centers text) |
 | `grid-auto` | `display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr))` | `min-<spacing>`, `gap-<spacing>`, `fit` or `fill` |
-| `contain` | centered, with side padding that grows at each breakpoint | nothing |
+| `contain` | centered, with side padding that grows at each breakpoint (`d5`, then `d8` from `md`, then `c12` from `3xl`, 120rem) | nothing |
+
+The `3xl` padding is 16rem a side, and it comes out of any `max-w` you add: `contain max-w:s11` on a 1920px screen is 1,280px wide but holds only 768px of content. To keep the narrower gutter, end the class list with `/3xl/ pd-x:d8`.
 
 `align-*` values: `align-start`, `align-end`, `align-center`, `align-stretch`, `align-baseline`, `align-self-start`, `align-self-end`. `just-*` values: `just-start`, `just-end`, `just-center`, `just-stretch`, `just-between`, `just-around`, `just-evenly`, `just-left`, `just-right`.
 

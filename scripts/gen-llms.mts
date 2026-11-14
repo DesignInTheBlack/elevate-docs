@@ -61,7 +61,7 @@ const IMPLICIT: Record<string, string[]> = {
 	'col-r': ['display: flex', 'flex-direction: column-reverse'],
 	stack: ['display: flex', 'flex-direction: column'],
 	cluster: ['display: flex', 'flex-direction: row', 'flex-wrap: wrap'],
-	split: ['display: grid', 'grid-template-columns: 1fr 1fr'],
+	split: ['display: grid', 'grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)'],
 	center: ['margin-left: auto', 'margin-right: auto'],
 	'grid-auto': ['display: grid', 'grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr))'],
 	grid: ['display: grid'],
@@ -255,7 +255,7 @@ const describeSlot = (slot: string, prop: string): string => {
 		if (track) {
 			const n = keys.filter((k) => /^(cols|rows)-\d+$/.test(k)).length;
 			const t = track[1];
-			return `${code(`${t}-1`)} … ${code(`${t}-${n}`)} (repeat(n, auto)), ${code(`${t}-1-fr`)} … ${code(`${t}-${n}-fr`)} (repeat(n, 1fr))`;
+			return `${code(`${t}-1`)} … ${code(`${t}-${n}`)} (repeat(n, auto)), ${code(`${t}-1-fr`)} … ${code(`${t}-${n}-fr`)} (${t === 'cols' ? 'repeat(n, minmax(0, 1fr))' : 'repeat(n, 1fr)'})`;
 		}
 		// long value lists are printed once; later properties point back to them
 		if (keys.length > 12 && printedRules.has(slot)) return `same values as ${code(printedRules.get(slot)!)}`;
