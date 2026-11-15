@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-behavior:smooth bg-color:midnight">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nocturne Night Train</title>
+<meta name="description" content="The Nocturne: an overnight train from Lisbon to Paris. A demo page built entirely with Elevate.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Martian+Mono:wght@400;500;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="elevate.css">
+</head>
+<body class="font:grotesk:base text:ticket:relaxed bg-color:midnight overflow-x:hidden">
+
+<!-- ═══════════════ Header ═══════════════ -->
+<header class="sticky top:0 z:30 isolation:isolate bd-b:width-px:solid:rail backdrop-filter:(blur(14px)_saturate(140%)) @before:[empty_absolute_inset:0_z:-1_bg-color:midnight_opacity:0.82]">
+  <div class="contain max-w:s11 row:x-between:y-center gap:d4 h:c1 /3xl/ pd-x:d8">
+    <a href="#top" class="row:y-center gap:d3 text:ticket @focus-visible:[outline:d0:solid:lamp:off-d1]" aria-label="Nocturne, back to top">
+      <span aria-hidden="true" class="relative w:d7 h:d7 child:no-shrink bd:round-full bg-color:lamp overflow:hidden @after:[empty_absolute_top:0_left:d2_w:d7_h:d7_bd:round-full_bg-color:midnight]"></span>
+      <span class="font:signage:h5:extra-bold:widest format:uppercase">Nocturne</span>
+    </a>
+
+    <nav aria-label="Sections" class="hidden /lg/ row:y-center gap:d8">
+      <a href="#route" class="font:small:medium text:haze transition:fast @hover:[text:ticket] @focus-visible:[outline:d0:solid:lamp:off-d1]">Route</a>
+      <a href="#cabins" class="font:small:medium text:haze transition:fast @hover:[text:ticket] @focus-visible:[outline:d0:solid:lamp:off-d1]">Cabins</a>
+      <a href="#onboard" class="font:small:medium text:haze transition:fast @hover:[text:ticket] @focus-visible:[outline:d0:solid:lamp:off-d1]">On board</a>
+      <a href="#timetable" class="font:small:medium text:haze transition:fast @hover:[text:ticket] @focus-visible:[outline:d0:solid:lamp:off-d1]">Timetable</a>
+      <a href="#questions" class="font:small:medium text:haze transition:fast @hover:[text:ticket] @focus-visible:[outline:d0:solid:lamp:off-d1]">Questions</a>
+    </nav>
+
+    <div class="row:y-center gap:d3">
+      <a href="#cabins" class="hidden /sm/ inline-flex items:align-center pd:d5:d2 bd:round-c1 bg-color:lamp text:midnight font:small:bold transition:snappy @hover:[bg-color:ticket] @focus-visible:[outline:d0:solid:lamp:off-d1]">Choose a cabin</a>
+      <details class="relative /lg/ hidden">
+        <summary class="list-style-type:none cursor:pointer row:y-center gap:d2 pd:d4:d2 bd:width-px:solid:rail:round-c1 font:small:semibold text:ticket transition:fast @hover:[bd:haze] @focus-visible:[outline:d0:solid:lamp:off-d1]">
+          <span aria-hidden="true" class="col gap:d0"><span class="block w:d4 h:d0 bg-color:ticket"></span><span class="block w:d4 h:d0 bg-color:ticket"></span><span class="block w:d4 h:d0 bg-color:ticket"></span></span>
+          Menu
+        </summary>
+        <nav aria-label="Sections" class="absolute right:0 top:full mg-t:d3 w:c12 col pd:d2 bg-color:night bd:width-px:solid:rail:round-d5 shadow:floating">
+          <a href="#route" class="pd:d4:d3 bd:round-d3 font:base:medium text:ticket @hover:[bg-color:rail]">Route</a>
+          <a href="#cabins" class="pd:d4:d3 bd:round-d3 font:base:medium text:ticket @hover:[bg-color:rail]">Cabins</a>
+          <a href="#onboard" class="pd:d4:d3 bd:round-d3 font:base:medium text:ticket @hover:[bg-color:rail]">On board</a>
+          <a href="#timetable" class="pd:d4:d3 bd:round-d3 font:base:medium text:ticket @hover:[bg-color:rail]">Timetable</a>
+          <a href="#questions" class="pd:d4:d3 bd:round-d3 font:base:medium text:ticket @hover:[bg-color:rail]">Questions</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════════ Hero: the departure board ═══════════════ -->
+<section id="top" class="relative overflow:hidden gradient:starfield scroll-margin:c1">
+  <div aria-hidden="true" class="absolute inset:0 gradient:starfield opacity:0.7 events:none animation:(twinkle_7s_ease-in-out_infinite)"></div>
+
+  <div class="contain max-w:s11 relative grid:cols-1-fr:gap-d10 pd-t:d12 pd-b:c5 /md/ pd-t:c1 /lg/ grid:cols-12-fr:gap-d8 items:align-start pd-t:c3 pd-b:c8 /3xl/ pd-x:d8">
+
+    <div class="col gap:d6 min-w:0 /lg/ col-spans-all">
+      <p class="row:y-center gap:d3 font:board:tiny:medium:wider format:uppercase text:lamp">
+        <span aria-hidden="true" class="w:d2 h:d2 child:no-shrink bd:round-full bg-color:lamp animation:(blink_1.6s_steps(2)_infinite)"></span>
+        Lisbon to Paris, every night
+      </p>
+      <h1 class="font:signage:poster:extra-bold:tight format:uppercase text:ticket:none"><span class="block">Board in Lisbon.</span> <span class="block text:lamp">Wake up in France.</span></h1>
+    </div>
+
+    <div class="col gap:d7 min-w:0 /lg/ col-spans:from-1:to-7">
+      <p class="font:h6 text:haze:relaxed:brief text-wrap:pretty">One train, nine stops, and two borders you'll sleep through. The Nocturne leaves Santa Apolónia at 17:05 and pulls into Paris-Austerlitz at 11:12 the next morning.</p>
+      <div class="cluster:gap-d3">
+        <a href="#cabins" class="pd:d7:d4 bd:round-c1 bg-color:lamp text:midnight font:base:bold transition:snappy shadow:none @hover:[bg-color:ticket] @focus-visible:[outline:d0:solid:lamp:off-d1]">Choose a cabin</a>
+        <a href="#route" class="pd:d7:d4 bd:width-px:solid:rail:round-c1 text:ticket font:base:semibold transition:snappy @hover:[bd:haze_bg-color:night] @focus-visible:[outline:d0:solid:lamp:off-d1]">See the route</a>
+      </div>
+      <dl class="grid:cols-3-fr:gap-d4 pd-t:d6 bd-t:width-px:solid:rail max-w:s3">
+        <div class="col-r gap:d1">
+          <dt class="font:board:tiny text:haze format:uppercase">Distance</dt>
+          <dd class="font:signage:h4:bold text:ticket:none numerals:tabular /sm/ font:h3">1,832 km</dd>
+        </div>
+        <div class="col-r gap:d1">
+          <dt class="font:board:tiny text:haze format:uppercase">On board</dt>
+          <dd class="font:signage:h4:bold text:ticket:none numerals:tabular /sm/ font:h3">17 h 07</dd>
+        </div>
+        <div class="col-r gap:d1">
+          <dt class="font:board:tiny text:haze format:uppercase">Track gauges</dt>
+          <dd class="font:signage:h4:bold text:ticket:none /sm/ font:h3">2</dd>
+        </div>
+      </dl>
+    </div>
+
+    <figure class="-board relative col min-w:0 bg-color:black bd:width-px:solid:rail:round-d6 shadow:floating overflow:hidden /lg/ col-spans:from-7:to-13" aria-label="Departure board, Lisboa Santa Apolónia">
+      <figcaption class="row:x-between:y-center gap:d4 pd:d4 bd-b:width-px:solid:rail /sm/ pd:d5:d4">
+        <span class="col gap:d0 min-w:0">
+          <span class="font:board:tiny:wider text:haze format:uppercase"><span class="hidden /xs/ inline">Partidas · </span>Departures</span>
+          <span class="font:grotesk:small:semibold text:ticket">Lisboa Santa Apolónia</span>
+        </span>
+        <span class="col:x-end gap:d0">
+          <span class="font:board:tiny text:haze format:uppercase format:no-wrap">Lisbon time</span>
+          <time id="clock" class="font:board:h5:medium text:lamp numerals:tabular">16:52</time>
+        </span>
+      </figcaption>
+
+      <div aria-hidden="true" class="row gap:d3 pd:d4:d2 font:board:tiny:wider text:rail format:uppercase bg-color:night /sm/ pd:d5:d2">
+        <span class="w:c1 child:no-shrink">Time</span>
+        <span class="child:grow">Destination</span>
+        <span class="w:d8 child:no-shrink text:center /sm/ w:d10">Plat</span>
+        <span class="hidden /xs/ block w:c3 child:no-shrink text:right">Status</span>
+      </div>
+
+      <ol class="list-style-type:none font:board:small numerals:tabular">
+        <li class="row:y-center gap:d3 pd:d4:d3 bd-t:width-px:solid:rail /sm/ pd:d5:d3" data-time="16:30">
+          <span class="w:c1 child:no-shrink text:lamp" data-flap>16:30</span>
+          <span class="child:grow min-w:0 overflow:hidden format:no-wrap text-overflow:ellipsis text:ticket" data-flap>PORTO CAMPANHÃ</span>
+          <span class="w:d8 child:no-shrink text:center text:lamp /sm/ w:d10">2</span>
+          <span class="hidden /xs/ block w:c3 child:no-shrink text:right font:tiny text:haze" data-status>DEPARTED</span>
+        </li>
+        <li class="relative row:y-center gap:d3 pd:d4:d3 bd-t:width-px:solid:rail /sm/ pd:d5:d3 bg-color:night @before:[empty_absolute_left:0_top:0_bottom:0_w:d1_bg-color:lamp]" data-time="17:05" data-nocturne>
+          <span class="w:c1 child:no-shrink text:lamp font:bold" data-flap>17:05</span>
+          <span class="child:grow min-w:0 row:y-center gap:d2">
+            <span class="child:no-shrink pd:d1:d0 bd:round-d1 bg-color:lamp text:midnight font:tiny:bold">N1</span>
+            <span class="min-w:0 overflow:hidden format:no-wrap text-overflow:ellipsis text:ticket font:bold" data-flap>PARIS-AUSTERLITZ</span>
+          </span>
+          <span class="w:d8 child:no-shrink text:center text:lamp font:bold /sm/ w:d10">4</span>
+          <span class="hidden /xs/ block w:c3 child:no-shrink text:right font:tiny:bold text:lamp animation:(blink_1.4s_steps(2)_infinite)" data-status>BOARDING</span>
+        </li>
+        <li class="row:y-center gap:d3 pd:d4:d3 bd-t:width-px:solid:rail /sm/ pd:d5:d3" data-time="17:39">
+          <span class="w:c1 child:no-shrink text:lamp" data-flap>17:39</span>
+          <span class="child:grow min-w:0 overflow:hidden format:no-wrap text-overflow:ellipsis text:ticket" data-flap>BRAGA</span>
+          <span class="w:d8 child:no-shrink text:center text:lamp /sm/ w:d10">1</span>
+          <span class="hidden /xs/ block w:c3 child:no-shrink text:right font:tiny text:haze" data-status>ON TIME</span>
+        </li>
+        <li class="row:y-center gap:d3 pd:d4:d3 bd-t:width-px:solid:rail /sm/ pd:d5:d3" data-time="18:12">
+          <span class="w:c1 child:no-shrink text:lamp" data-flap>18:12</span>
+          <span class="child:grow min-w:0 overflow:hidden format:no-wrap text-overflow:ellipsis text:ticket" data-flap>COIMBRA-B</span>
+          <span class="w:d8 child:no-shrink text:center text:lamp /sm/ w:d10">3</span>
+          <span class="hidden /xs/ block w:c3 child:no-shrink text:right font:tiny text:haze" data-status>ON TIME</span>
+        </li>
+        <li class="row:y-center gap:d3 pd:d4:d3 bd-t:width-px:solid:rail /sm/ pd:d5:d3" data-time="18:39">
+          <span class="w:c1 child:no-shrink text:lamp" data-flap>18:39</span>
+          <span class="child:grow min-w:0 overflow:hidden format:no-wrap text-overflow:ellipsis text:ticket" data-flap>GUIMARÃES</span>
+          <span class="w:d8 child:no-shrink text:center text:lamp /sm/ w:d10">2</span>
+          <span class="hidden /xs/ block w:c3 child:no-shrink text:right font:tiny text:haze" data-status>ON TIME</span>
+        </li>
+      </ol>
+
+      <p class="row:x-between:y-center gap:d4 pd:d4 bd-t:width-px:solid:rail font:board:tiny text:haze /sm/ pd:d5:d4">
+        <span>Next Nocturne</span>
+        <span id="countdown" class="text:ticket numerals:tabular">leaves at 17:05</span>
+      </p>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════════ The route: vertical on phones, a horizontal line from lg ═══════════════ -->
+<section id="route" class="bg-color:midnight pd-y:c5 scroll-margin:c1 /lg/ pd-y:c8">
+  <div class="contain max-w:s11 col gap:c1 /3xl/ pd-x:d8">
+
+    <div class="col gap:d6 /lg/ row:x-between:y-end gap:c1">
+      <div class="col gap:d4 max-w:s5">
+        <p class="font:board:tiny:medium:wider format:uppercase text:lamp">The route</p>
+        <h2 class="font:signage:h1:extra-bold:tight format:uppercase text:ticket:none text-wrap:balance">Nine stops from dusk to daybreak</h2>
+      </div>
+      <p class="text:haze:relaxed:brief text-wrap:pretty /lg/ pd-b:d2">Times are local. Spain and France run an hour ahead of Portugal, so the clocks jump at the first border.</p>
+    </div>
+
+    <ol class="list-style-type:none col /xl/ grid:cols-9-fr:gap-d3">
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">17:05</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:indigo+1 shadow:glow"></span>
+          <span class="child:grow w:d0 mg-y:d1 bg-color:indigo+1 /xl/ w:auto h:d0 mg-y:0 mg-x:d1"></span>
+        </div>
+        <div class="col gap:d1 pd-b:d8 min-w:0 /xl/ pd-b:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Lisboa Santa Apolónia</h3>
+          <p class="font:board:tiny text:haze">0 km</p>
+          <p class="font:small text:haze:snug">Portugal</p>
+        </div>
+      </li>
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">18:55</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:indigo"></span>
+          <span class="child:grow w:d0 mg-y:d1 bg-color:indigo /xl/ w:auto h:d0 mg-y:0 mg-x:d1"></span>
+        </div>
+        <div class="col gap:d1 pd-b:d8 min-w:0 /xl/ pd-b:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Coimbra-B</h3>
+          <p class="font:board:tiny text:haze">218 km</p>
+          <p class="font:small text:haze:snug">Dinner from 19:30</p>
+        </div>
+      </li>
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">22:52</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:purple+1"></span>
+          <span class="child:grow w:d0 mg-y:d1 bg-color:purple+1 /xl/ w:auto h:d0 mg-y:0 mg-x:d1"></span>
+        </div>
+        <div class="col gap:d1 pd-b:d8 min-w:0 /xl/ pd-b:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Vilar Formoso</h3>
+          <p class="font:board:tiny text:haze">412 km</p>
+          <p class="font:small text:haze:snug">Into Spain</p>
+          <p class="pd:d2:d0 bd:round-c1 bg-color:night text:lamp font:board:tiny w:fit-content">Clocks +1 h</p>
+        </div>
+      </li>
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">00:04</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:purple"></span>
+          <span class="child:grow w:d0 mg-y:d1 bg-color:purple /xl/ w:auto h:d0 mg-y:0 mg-x:d1"></span>
+        </div>
+        <div class="col gap:d1 pd-b:d8 min-w:0 /xl/ pd-b:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Salamanca</h3>
+          <p class="font:board:tiny text:haze">535 km</p>
+          <p class="font:small text:haze:snug">Quiet hours</p>
+        </div>
+      </li>
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">01:24</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:purple-1"></span>
+          <span class="child:grow w:d0 mg-y:d1 bg-color:purple-1 /xl/ w:auto h:d0 mg-y:0 mg-x:d1"></span>
+        </div>
+        <div class="col gap:d1 pd-b:d8 min-w:0 /xl/ pd-b:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Valladolid</h3>
+          <p class="font:board:tiny text:haze">650 km</p>
+        </div>
+      </li>
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">02:33</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:pink-1"></span>
+          <span class="child:grow w:d0 mg-y:d1 bg-color:pink-1 /xl/ w:auto h:d0 mg-y:0 mg-x:d1"></span>
+        </div>
+        <div class="col gap:d1 pd-b:d8 min-w:0 /xl/ pd-b:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Burgos</h3>
+          <p class="font:board:tiny text:haze">772 km</p>
+        </div>
+      </li>
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">05:20</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:pink"></span>
+          <span class="child:grow w:d0 mg-y:d1 bg-color:pink /xl/ w:auto h:d0 mg-y:0 mg-x:d1"></span>
+        </div>
+        <div class="col gap:d1 pd-b:d8 min-w:0 /xl/ pd-b:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Hendaye</h3>
+          <p class="font:board:tiny text:haze">1,013 km</p>
+          <p class="font:small text:haze:snug">Into France</p>
+          <p class="pd:d2:d0 bd:round-c1 bg-color:night text:lamp font:board:tiny w:fit-content">Gauge change</p>
+        </div>
+      </li>
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">07:44</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:orange+1"></span>
+          <span class="child:grow w:d0 mg-y:d1 bg-color:orange+1 /xl/ w:auto h:d0 mg-y:0 mg-x:d1"></span>
+        </div>
+        <div class="col gap:d1 pd-b:d8 min-w:0 /xl/ pd-b:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Bordeaux Saint-Jean</h3>
+          <p class="font:board:tiny text:haze">1,248 km</p>
+          <p class="font:small text:haze:snug">Breakfast</p>
+        </div>
+      </li>
+      <li class="row gap:d4 /xl/ col gap:d3">
+        <p class="w:c1 child:no-shrink text:right font:board:small:bold text:lamp numerals:tabular /xl/ w:auto text:left">11:12</p>
+        <div aria-hidden="true" class="col:x-center w:d4 child:no-shrink /xl/ row:y-center w:full h:d4 child:order--1">
+          <span class="w:d4 h:d4 child:no-shrink bd:round-full bg-color:lamp shadow:glow-text"></span>
+        </div>
+        <div class="col gap:d1 min-w:0">
+          <h3 class="font:h6:semibold text:ticket:snug">Paris-Austerlitz</h3>
+          <p class="font:board:tiny text:haze">1,832 km</p>
+          <p class="font:small text:haze:snug">Arrive</p>
+        </div>
+      </li>
+    </ol>
+
+    <!-- Two things only this route has -->
+    <div class="grid:cols-1-fr:gap-d4 /md/ grid:cols-2-fr:gap-d6">
+
+      <article class="col gap:d6 pd:d6 bg-color:night bd:width-px:solid:rail:round-d6 /lg/ pd:d10">
+        <div class="col gap:d3">
+          <p class="font:board:tiny:wider format:uppercase text:lamp">Hendaye · 05:02 to 05:20</p>
+          <h3 class="font:signage:h3:bold:tight format:uppercase text:ticket:hug text-wrap:balance">The wheels change while you sleep</h3>
+          <p class="text:haze:relaxed:brief text-wrap:pretty">Portugal and Spain lay their rails wider apart than France does. At Hendaye the train rolls through a gauge changer at walking pace, and every wheel slides to the new width.</p>
+        </div>
+        <div class="col gap:d5" role="img" aria-label="Iberian gauge, 1,668 millimetres between the rails, beside standard gauge, 1,435 millimetres">
+          <div class="col gap:d2">
+            <p class="row:x-between:y-baseline gap:d3 font:board:tiny text:haze format:uppercase"><span>Iberian gauge</span><span class="font:small text:ticket numerals:tabular">1,668 mm</span></p>
+            <div class="h:d13 bd-t:width-d0:solid:haze bd-b:width-d0:solid:haze bg-img:(repeating-linear-gradient(90deg,#262E5C_0_8px,transparent_8px_22px))"></div>
+          </div>
+          <div class="col gap:d2">
+            <p class="row:x-between:y-baseline gap:d3 font:board:tiny text:haze format:uppercase"><span>Standard gauge</span><span class="font:small text:lamp numerals:tabular">1,435 mm</span></p>
+            <div class="h:d12 bd-t:width-d0:solid:lamp bd-b:width-d0:solid:lamp bg-img:(repeating-linear-gradient(90deg,#262E5C_0_8px,transparent_8px_22px))"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="col gap:d6 pd:d6 bg-color:night bd:width-px:solid:rail:round-d6 /lg/ pd:d10">
+        <div class="col gap:d3">
+          <p class="font:board:tiny:wider format:uppercase text:lamp">Vilar Formoso · Fuentes de Oñoro</p>
+          <h3 class="font:signage:h3:bold:tight format:uppercase text:ticket:hug text-wrap:balance">An hour goes missing at the border</h3>
+          <p class="text:haze:relaxed:brief text-wrap:pretty">The train stops for twelve minutes. When it leaves, the clocks are an hour ahead: Portugal keeps Western European Time, Spain keeps Central European Time.</p>
+        </div>
+        <div class="row:y-center gap:d4 /xs/ gap:d6">
+          <div class="col gap:d1">
+            <span class="font:board:tiny text:haze format:uppercase">Arrive, Portugal</span>
+            <span class="font:signage:h1:bold text:ticket:none numerals:tabular">21:40</span>
+          </div>
+          <span aria-hidden="true" class="child:grow h:d0 min-w:d6 gradient:nightline-x bd:round-c1"></span>
+          <div class="col:x-end gap:d1">
+            <span class="font:board:tiny text:haze format:uppercase">Leave, Spain</span>
+            <span class="font:signage:h1:bold text:lamp:none numerals:tabular">22:52</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Cabins: tickets on paper ═══════════════ -->
+<section id="cabins" class="bg-color:ticket text:midnight pd-y:c5 scroll-margin:c1 /lg/ pd-y:c8">
+  <div class="contain max-w:s11 col gap:d12 /lg/ gap:c1 /3xl/ pd-x:d8">
+
+    <div class="col gap:d6 /lg/ row:x-between:y-end gap:c1">
+      <div class="col gap:d4 max-w:s5">
+        <p class="font:board:tiny:medium:wider format:uppercase text:orange-1">Cabins</p>
+        <h2 class="font:signage:h1:extra-bold:tight format:uppercase text:midnight:none text-wrap:balance">Three ways to spend the night</h2>
+      </div>
+      <p class="text:grey-2:relaxed:brief text-wrap:pretty /lg/ pd-b:d2">Every fare covers the whole route, fresh linen, and a table in the dining car. Prices are per night, Lisbon to Paris.</p>
+    </div>
+
+    <div class="grid:cols-1-fr:gap-d6 /md/ grid:cols-2-fr /xl/ grid:cols-3-fr">
+
+      <!-- Couchette -->
+      <article class="col bg-color:white bd:round-d6 shadow:lifted">
+        <div class="col gap:d6 pd:d6 child:grow /xl/ pd:d8">
+          <div class="row:x-between:y-start gap:d4">
+            <div class="col gap:d1">
+              <h3 class="font:signage:h2:extra-bold:tight format:uppercase text:midnight:none">Couchette</h3>
+              <p class="font:board:tiny text:grey format:uppercase">4 berths · shared</p>
+            </div>
+            <span class="pd:d2:d1 bd:width-px:solid:grey+3:round-c1 font:board:tiny text:grey-2 format:no-wrap">Coaches 5–7</span>
+          </div>
+          <div role="img" aria-label="Floor plan: two berths on each side of a centre aisle" class="grid:cols-3-fr:rows-2-fr:gap-d1 aspect:pano pd:d1 bd:width-d0:solid:grey-3:round-d3 grid-template-areas:('left_aisle_right'_'left_aisle_right')">
+            <span class="grid-area:(left) col:x-center:y-center bd:round-d1 bg-color:indigo+3 font:board:tiny text:indigo-2:center">2 berths</span>
+            <span class="grid-area:(aisle) col:x-center:y-end pd-b:d1 font:board:tiny text:grey+1">aisle</span>
+            <span class="grid-area:(right) col:x-center:y-center bd:round-d1 bg-color:indigo+3 font:board:tiny text:indigo-2:center">2 berths</span>
+          </div>
+          <ul class="list-style-type:none col gap:d3">
+            <li class="row:y-start gap:d3 font:small text:grey-3:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:indigo"></span>Fresh linen, a pillow and a blanket</li>
+            <li class="row:y-start gap:d3 font:small text:grey-3:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:indigo"></span>A reading light and a socket at every berth</li>
+            <li class="row:y-start gap:d3 font:small text:grey-3:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:indigo"></span>A lockable luggage space under the bunks</li>
+          </ul>
+        </div>
+        <div aria-hidden="true" class="relative @before:[empty_absolute_left:0_top:0_w:d6_h:d6_bd:round-full_bg-color:ticket_translate:(-50%_-50%)] @after:[empty_absolute_right:0_top:0_w:d6_h:d6_bd:round-full_bg-color:ticket_translate:(50%_-50%)]">
+          <div class="mg-x:d6 bd-t:width-d0:dashed:grey+3"></div>
+        </div>
+        <div class="row:x-between:y-end gap:d4 pd:d6 /xl/ pd:d8">
+          <p class="col gap:d1">
+            <span class="font:signage:h1:extra-bold:tight text:midnight:none numerals:tabular">€89</span>
+            <span class="font:small text:grey-1">per berth</span>
+          </p>
+          <span class="font:board:tiny text:grey format:uppercase">N1 · N2</span>
+        </div>
+      </article>
+
+      <!-- Sleeper: the dark ticket -->
+      <article class="relative col bg-color:midnight text:ticket bd:round-d6 shadow:floating">
+        <div class="col gap:d6 pd:d6 child:grow /xl/ pd:d8">
+          <div class="row:x-between:y-start gap:d4">
+            <div class="col gap:d1">
+              <h3 class="font:signage:h2:extra-bold:tight format:uppercase text:ticket:none">Sleeper</h3>
+              <p class="font:board:tiny text:haze format:uppercase">2 beds · private</p>
+            </div>
+            <span class="pd:d2:d1 bd:round-c1 bg-color:lamp font:board:tiny:bold text:midnight format:no-wrap">Best for two</span>
+          </div>
+          <div role="img" aria-label="Floor plan: bunk beds on one side, a washbasin and a seat on the other" class="grid:cols-3-fr:rows-2-fr:gap-d1 aspect:pano pd:d1 bd:width-d0:solid:haze:round-d3 grid-template-areas:('bed_aisle_sink'_'bed_aisle_seat')">
+            <span class="grid-area:(bed) col:x-center:y-center bd:round-d1 bg-color:indigo+3 font:board:tiny text:indigo-2:center">2 beds</span>
+            <span class="grid-area:(aisle) col:x-center:y-end pd-b:d1 font:board:tiny text:haze">door</span>
+            <span class="grid-area:(sink) col:x-center:y-center bd:round-d1 bg-color:teal+3 font:board:tiny text:teal-2:center">basin</span>
+            <span class="grid-area:(seat) col:x-center:y-center bd:round-d1 bg-color:orange+3 font:board:tiny text:orange-2:center">seat</span>
+          </div>
+          <ul class="list-style-type:none col gap:d3">
+            <li class="row:y-start gap:d3 font:small text:haze:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:lamp"></span>Your own washbasin, towels and toiletries</li>
+            <li class="row:y-start gap:d3 font:small text:haze:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:lamp"></span>A breakfast tray at your door after Bordeaux</li>
+            <li class="row:y-start gap:d3 font:small text:haze:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:lamp"></span>A key-card door that locks from inside</li>
+          </ul>
+        </div>
+        <div aria-hidden="true" class="relative @before:[empty_absolute_left:0_top:0_w:d6_h:d6_bd:round-full_bg-color:ticket_translate:(-50%_-50%)] @after:[empty_absolute_right:0_top:0_w:d6_h:d6_bd:round-full_bg-color:ticket_translate:(50%_-50%)]">
+          <div class="mg-x:d6 bd-t:width-d0:dashed:rail"></div>
+        </div>
+        <div class="row:x-between:y-end gap:d4 pd:d6 /xl/ pd:d8">
+          <p class="col gap:d1">
+            <span class="font:signage:h1:extra-bold:tight text:lamp:none numerals:tabular">€229</span>
+            <span class="font:small text:haze">per cabin, one or two people</span>
+          </p>
+          <span class="font:board:tiny text:haze format:uppercase format:no-wrap">Coaches 2–4</span>
+        </div>
+      </article>
+
+      <!-- Suite -->
+      <article class="col bg-color:white bd:round-d6 shadow:lifted /md/ col-spans:from-1:to-3 /xl/ col-spans:from-3:to-4">
+        <div class="col gap:d6 pd:d6 child:grow /xl/ pd:d8">
+          <div class="row:x-between:y-start gap:d4">
+            <div class="col gap:d1">
+              <h3 class="font:signage:h2:extra-bold:tight format:uppercase text:midnight:none">Suite</h3>
+              <p class="font:board:tiny text:grey format:uppercase">Double bed · private</p>
+            </div>
+            <span class="pd:d2:d1 bd:width-px:solid:grey+3:round-c1 font:board:tiny text:grey-2 format:no-wrap">Coach 1</span>
+          </div>
+          <div role="img" aria-label="Floor plan: a double bed, a shower and an armchair" class="grid:cols-3-fr:rows-2-fr:gap-d1 aspect:pano pd:d1 bd:width-d0:solid:grey-3:round-d3 grid-template-areas:('bed_bed_shower'_'bed_bed_chair') /md/ aspect:wide-banner /xl/ aspect:pano">
+            <span class="grid-area:(bed) col:x-center:y-center bd:round-d1 bg-color:indigo+3 font:board:tiny text:indigo-2:center">double bed</span>
+            <span class="grid-area:(shower) col:x-center:y-center bd:round-d1 bg-color:teal+3 font:board:tiny text:teal-2:center">shower</span>
+            <span class="grid-area:(chair) col:x-center:y-center bd:round-d1 bg-color:orange+3 font:board:tiny text:orange-2:center">chair</span>
+          </div>
+          <ul class="list-style-type:none col gap:d3">
+            <li class="row:y-start gap:d3 font:small text:grey-3:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:indigo"></span>A shower and toilet inside the cabin</li>
+            <li class="row:y-start gap:d3 font:small text:grey-3:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:indigo"></span>Dinner in the dining car, included</li>
+            <li class="row:y-start gap:d3 font:small text:grey-3:snug"><span aria-hidden="true" class="w:d2 h:d2 mg-t:d1 child:no-shrink bd:round-full bg-color:indigo"></span>Breakfast served in the cabin, when you want it</li>
+          </ul>
+        </div>
+        <div aria-hidden="true" class="relative @before:[empty_absolute_left:0_top:0_w:d6_h:d6_bd:round-full_bg-color:ticket_translate:(-50%_-50%)] @after:[empty_absolute_right:0_top:0_w:d6_h:d6_bd:round-full_bg-color:ticket_translate:(50%_-50%)]">
+          <div class="mg-x:d6 bd-t:width-d0:dashed:grey+3"></div>
+        </div>
+        <div class="row:x-between:y-end gap:d4 pd:d6 /xl/ pd:d8">
+          <p class="col gap:d1">
+            <span class="font:signage:h1:extra-bold:tight text:midnight:none numerals:tabular">€419</span>
+            <span class="font:small text:grey-1">per cabin, one or two people</span>
+          </p>
+          <span class="font:board:tiny text:grey format:uppercase">N1 · N2</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ On board: a bento that rearranges at md and lg ═══════════════ -->
+<section id="onboard" class="bg-color:midnight pd-y:c5 scroll-margin:c1 /lg/ pd-y:c8">
+  <div class="contain max-w:s11 col gap:d12 /lg/ gap:c1 /3xl/ pd-x:d8">
+
+    <div class="col gap:d4 max-w:s5">
+      <p class="font:board:tiny:medium:wider format:uppercase text:lamp">On board</p>
+      <h2 class="font:signage:h1:extra-bold:tight format:uppercase text:ticket:none text-wrap:balance">Dinner in Portugal, breakfast in France</h2>
+    </div>
+
+    <div class="grid:cols-1-fr:gap-d4 /md/ grid:cols-2-fr grid-template-areas:('dining_dining'_'dawn_quiet'_'bikes_showers') /xl/ grid:cols-4-fr grid-template-areas:('dining_dining_dawn_quiet'_'dining_dining_bikes_showers')">
+
+      <article class="relative overflow:hidden col:y-end gap:d6 min-h:c13 pd:d6 bg-color:night bd:width-px:solid:rail:round-d6 /md/ grid-area:(dining) /lg/ pd:d10">
+        <div aria-hidden="true" class="absolute inset:0 pattern:herringbone:bg-night:fg-rail opacity:0.35"></div>
+        <div aria-hidden="true" class="absolute inset:0 bg-img:(radial-gradient(70%_60%_at_85%_0%,#FFB52E40,transparent_70%))"></div>
+        <div class="relative col gap:d3">
+          <p class="font:board:tiny:wider format:uppercase text:lamp">Coach 4 · 19:30 to 22:00</p>
+          <h3 class="font:signage:h2:extra-bold:tight format:uppercase text:ticket:none">The dining car</h3>
+          <p class="text:haze:relaxed:brief">Served between Coimbra and Valladolid, from a kitchen that restocks at each end of the line.</p>
+        </div>
+        <ul class="relative list-style-type:none col gap:d3 max-w:s3 font:small numerals:tabular">
+          <li class="row:y-baseline gap:d3"><span class="text:ticket">Caldo verde</span><span aria-hidden="true" class="child:grow bd-b:width-px:dotted:rail"></span><span class="font:board text:lamp">€7</span></li>
+          <li class="row:y-baseline gap:d3"><span class="text:ticket">Bacalhau à Brás</span><span aria-hidden="true" class="child:grow bd-b:width-px:dotted:rail"></span><span class="font:board text:lamp">€16</span></li>
+          <li class="row:y-baseline gap:d3"><span class="text:ticket">Tortilla de patatas</span><span aria-hidden="true" class="child:grow bd-b:width-px:dotted:rail"></span><span class="font:board text:lamp">€9</span></li>
+          <li class="row:y-baseline gap:d3"><span class="text:ticket">Tarte aux pommes</span><span aria-hidden="true" class="child:grow bd-b:width-px:dotted:rail"></span><span class="font:board text:lamp">€6</span></li>
+        </ul>
+      </article>
+
+      <article class="relative overflow:hidden col:y-end gap:d2 min-h:c11 pd:d6 gradient:daybreak bd:round-d6 /md/ grid-area:(dawn)">
+        <div aria-hidden="true" class="absolute right:d5 top:d5 w:d10 h:d10 bd:round-full bg-img:(radial-gradient(circle,#FFE3A3_0%,#FFB52E_55%,#FFB52E00_72%))"></div>
+        <p class="relative font:board:tiny:wider format:uppercase text:lamp">After Bordeaux</p>
+        <h3 class="relative font:h5:bold:tight text:ticket:snug">Breakfast at first light</h3>
+        <p class="relative font:small text:ticket:relaxed opacity:0.85">Coffee, croissants, and pastéis de nata loaded in Lisbon the night before.</p>
+      </article>
+
+      <article class="relative overflow:hidden col:y-end gap:d2 min-h:c11 pd:d6 bg-color:night bd:width-px:solid:rail:round-d6 /md/ grid-area:(quiet)">
+        <div aria-hidden="true" class="absolute inset:0 pattern:pointgrid:bg-night:fg-rail opacity:0.6"></div>
+        <p class="relative font:board:tiny:wider format:uppercase text:lamp numerals:tabular">23:00 to 06:30</p>
+        <h3 class="relative font:h5:bold:tight text:ticket:snug">Quiet hours</h3>
+        <p class="relative font:small text:haze:relaxed">Corridor lights dim to blue and the announcements stop until morning.</p>
+      </article>
+
+      <article class="relative overflow:hidden col:y-end gap:d2 min-h:c11 pd:d6 bg-color:night bd:width-px:solid:rail:round-d6 /md/ grid-area:(bikes)">
+        <div aria-hidden="true" class="absolute inset:0 pattern:lattice:bg-night:fg-rail opacity:0.6"></div>
+        <p class="relative font:board:tiny:wider format:uppercase text:lamp">Coach 7</p>
+        <h3 class="relative font:h5:bold:tight text:ticket:snug">Six bike hooks</h3>
+        <p class="relative font:small text:haze:relaxed">Reserve one with your berth. It's €10 for the whole route.</p>
+      </article>
+
+      <article class="relative overflow:hidden col:y-end gap:d2 min-h:c11 pd:d6 bg-color:night bd:width-px:solid:rail:round-d6 /md/ grid-area:(showers)">
+        <div aria-hidden="true" class="absolute inset:0 pattern:honeycomb:bg-night:fg-rail opacity:0.5"></div>
+        <p class="relative font:board:tiny:wider format:uppercase text:lamp">Every sleeper coach</p>
+        <h3 class="relative font:h5:bold:tight text:ticket:snug">A hot shower</h3>
+        <p class="relative font:small text:haze:relaxed">Towels wait in your cabin. Book a slot from the attendant.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Timetable: scrolls sideways on phones, station column stays put ═══════════════ -->
+<section id="timetable" class="bg-color:midnight pd-b:c5 scroll-margin:c1 /lg/ pd-b:c8">
+  <div class="contain max-w:s11 col gap:d10 /3xl/ pd-x:d8">
+
+    <div class="col gap:d6 /lg/ row:x-between:y-end gap:c1">
+      <div class="col gap:d4 max-w:s5">
+        <p class="font:board:tiny:medium:wider format:uppercase text:lamp">Timetable</p>
+        <h2 class="font:signage:h1:extra-bold:tight format:uppercase text:ticket:none text-wrap:balance">Both directions, every night</h2>
+      </div>
+      <p class="text:haze:relaxed:brief text-wrap:pretty /lg/ pd-b:d2">The N2 runs the other way, so read its columns from the bottom up. <span class="text:lamp">+1</span> means the next day.</p>
+    </div>
+
+    <div class="overflow-x:auto bd:width-px:solid:rail:round-d6 bg-color:night overscroll-x:contain" tabindex="0" role="region" aria-label="Timetable, scrolls sideways">
+      <table class="w:full min-w:s1 border-collapse:collapse font:board:small numerals:tabular text:left">
+        <thead>
+          <tr class="bg-color:black">
+            <th scope="col" rowspan="2" class="sticky left:0 z:1 bg-color:black pd:d4:d3 text:left font:grotesk:small:semibold text:haze /md/ pd:d5:d4">Station</th>
+            <th scope="col" rowspan="2" class="hidden pd:d4 text:right font:tiny:regular text:haze /sm/ table-cell">km</th>
+            <th scope="colgroup" colspan="2" class="pd:d4:d3 bd-l:width-px:solid:rail text:left font:tiny:regular text:haze format:no-wrap"><span class="pd:d2:d0 bd:round-d1 bg-color:lamp text:midnight font:bold">N1</span> Lisbon to Paris</th>
+            <th scope="colgroup" colspan="2" class="pd:d4:d3 bd-l:width-px:solid:rail text:left font:tiny:regular text:haze format:no-wrap"><span class="pd:d2:d0 bd:round-d1 bg-color:haze text:midnight font:bold">N2</span> Paris to Lisbon</th>
+          </tr>
+          <tr class="bg-color:black">
+            <th scope="col" class="pd:d4:d2 bd-l:width-px:solid:rail text:left font:tiny:regular text:rail format:uppercase">Arr</th>
+            <th scope="col" class="pd:d4:d2 text:left font:tiny:regular text:rail format:uppercase">Dep</th>
+            <th scope="col" class="pd:d4:d2 bd-l:width-px:solid:rail text:left font:tiny:regular text:rail format:uppercase">Arr</th>
+            <th scope="col" class="pd:d4:d2 text:left font:tiny:regular text:rail format:uppercase">Dep</th>
+          </tr>
+        </thead>
+        <tbody class="text:ticket">
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Lisboa Santa Apolónia</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">0</td><td class="pd:d4:d3 bd-l:width-px:solid:rail text:rail">—</td><td class="pd:d4:d3 text:lamp font:bold">17:05</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">10:38</td><td class="pd:d4:d3 text:rail">—</td></tr>
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Coimbra-B</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">218</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">18:52</td><td class="pd:d4:d3">18:55</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">08:47</td><td class="pd:d4:d3">08:50</td></tr>
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Vilar Formoso</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">412</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">21:40</td><td class="pd:d4:d3">22:52</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">06:50</td><td class="pd:d4:d3">06:02</td></tr>
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Salamanca</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">535</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">23:58</td><td class="pd:d4:d3">00:04<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3 bd-l:width-px:solid:rail">05:40</td><td class="pd:d4:d3">05:46</td></tr>
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Valladolid Campo Grande</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">650</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">01:18<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3">01:24<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3 bd-l:width-px:solid:rail">04:22</td><td class="pd:d4:d3">04:28</td></tr>
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Burgos Rosa Manzano</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">772</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">02:30<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3">02:33<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3 bd-l:width-px:solid:rail">03:12</td><td class="pd:d4:d3">03:15</td></tr>
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Hendaye</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">1,013</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">05:02<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3">05:20<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3 bd-l:width-px:solid:rail">00:28<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3">00:46<sup class="vertical:super font:tiny text:lamp">+1</sup></td></tr>
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Bordeaux Saint-Jean</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">1,248</td><td class="pd:d4:d3 bd-l:width-px:solid:rail">07:38<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3">07:44<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3 bd-l:width-px:solid:rail">22:06</td><td class="pd:d4:d3">22:12</td></tr>
+          <tr class="bd-t:width-px:solid:rail"><th scope="row" class="sticky left:0 z:1 bg-color:night pd:d4:d3 text:left font:grotesk:small:semibold /md/ pd:d5:d3 format:no-wrap">Paris-Austerlitz</th><td class="hidden pd:d4:d3 text:right text:haze /sm/ table-cell">1,832</td><td class="pd:d4:d3 bd-l:width-px:solid:rail text:lamp font:bold">11:12<sup class="vertical:super font:tiny text:lamp">+1</sup></td><td class="pd:d4:d3 text:rail">—</td><td class="pd:d4:d3 bd-l:width-px:solid:rail text:rail">—</td><td class="pd:d4:d3">18:40</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Questions ═══════════════ -->
+<section id="questions" class="bg-color:midnight pd-b:c5 scroll-margin:c1 /lg/ pd-b:c8">
+  <div class="contain max-w:s11 grid:cols-1-fr:gap-d10 /lg/ split:ratio-1-2:gap-c1 /3xl/ pd-x:d8">
+    <div class="col gap:d4 /lg/ sticky top:c3 align-self:align-start">
+      <p class="font:board:tiny:medium:wider format:uppercase text:lamp">Questions</p>
+      <h2 class="font:signage:h1:extra-bold:tight format:uppercase text:ticket:none text-wrap:balance">Before you board</h2>
+    </div>
+    <dl class="col bd-b:width-px:solid:rail">
+      <div class="grid:cols-1-fr:gap-d2 pd-y:d6 bd-t:width-px:solid:rail /md/ grid:cols-2-fr:gap-d8">
+        <dt class="font:h6:semibold text:ticket:snug text-wrap:balance">Can I ride only part of the way?</dt>
+        <dd class="text:haze:relaxed">Yes. Every stop sells tickets to every later stop, and a berth from Salamanca to Bordeaux costs less than the full run.</dd>
+      </div>
+      <div class="grid:cols-1-fr:gap-d2 pd-y:d6 bd-t:width-px:solid:rail /md/ grid:cols-2-fr:gap-d8">
+        <dt class="font:h6:semibold text:ticket:snug text-wrap:balance">Will anyone wake me at the borders?</dt>
+        <dd class="text:haze:relaxed">No. Portugal, Spain and France are all in the Schengen area, so there are no passport checks on board. Keep your ID with you anyway.</dd>
+      </div>
+      <div class="grid:cols-1-fr:gap-d2 pd-y:d6 bd-t:width-px:solid:rail /md/ grid:cols-2-fr:gap-d8">
+        <dt class="font:h6:semibold text:ticket:snug text-wrap:balance">Does the gauge change mean changing trains?</dt>
+        <dd class="text:haze:relaxed">No. The train's axles are built to slide between the two gauges, so you stay in your cabin while it rolls through.</dd>
+      </div>
+      <div class="grid:cols-1-fr:gap-d2 pd-y:d6 bd-t:width-px:solid:rail /md/ grid:cols-2-fr:gap-d8">
+        <dt class="font:h6:semibold text:ticket:snug text-wrap:balance">Can I bring my dog?</dt>
+        <dd class="text:haze:relaxed">Small dogs travel free in a Sleeper or Suite you've booked whole. Couchettes are shared, so pets stay home on those.</dd>
+      </div>
+      <div class="grid:cols-1-fr:gap-d2 pd-y:d6 bd-t:width-px:solid:rail /md/ grid:cols-2-fr:gap-d8">
+        <dt class="font:h6:semibold text:ticket:snug text-wrap:balance">Where do I find the train in Paris?</dt>
+        <dd class="text:haze:relaxed">Paris-Austerlitz, beside the Jardin des Plantes. The N2 boards forty minutes before it leaves.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════ Footer: the line ends at dawn ═══════════════ -->
+<footer class="relative overflow:hidden gradient:daybreak pd-t:c5 /lg/ pd-t:c8">
+  <div aria-hidden="true" class="absolute left:0 right:0 bottom:0 row:x-center events:none">
+    <span class="block w:c13 h:c13 child:no-shrink translate:(0_45%) bg-img:(radial-gradient(circle,#FFE3A3_0%,#FFB52E_32%,#FFB52E00_68%)) /md/ w:s3 h:s3"></span>
+  </div>
+  <div class="contain max-w:s11 relative col gap:c1 /3xl/ pd-x:d8">
+    <p aria-hidden="true" class="font:signage:giant:black:tight format:uppercase text:center:none gradient:wordmark bg-attr:text text:transparent select:none">Nocturne</p>
+    <div class="col gap:d6 pd-y:d8 bd-t:width-px:solid:ticket /md/ row:x-between:y-end">
+      <div class="col gap:d2 max-w:s3">
+        <p class="font:signage:h5:extra-bold:widest format:uppercase text:ticket">Nocturne Line</p>
+        <p class="font:small text:ticket:relaxed opacity:0.85">A fictional night train, and a demo page. Every class on it is Elevate, checked by the compiler before the page was built.</p>
+      </div>
+      <div class="col gap:d5 /sm/ row:y-center gap:d7">
+        <a href="https://github.com/DesignInTheBlack/elevate-docs/tree/master/showcase/nocturne" class="font:small:semibold text:ticket:underline @hover:[text:lamp] @focus-visible:[outline:d0:solid:ticket:off-d1]">View the source</a>
+        <a href="/" class="row:y-center gap:d2 w:fit-content pd:d5:d3 bd:width-px:solid:ticket:round-c1 font:small:semibold text:ticket transition:snappy @hover:[bg-color:ticket_text:midnight] @focus-visible:[outline:d0:solid:ticket:off-d1]">Built with Elevate</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (() => {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const lisbonTime = () => {
+      const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Lisbon', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+      const get = (t) => Number(parts.find((p) => p.type === t).value);
+      return { h: get('hour') % 24, m: get('minute') };
+    };
+    const pad = (n) => String(n).padStart(2, '0');
+    const toMin = (hhmm) => { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; };
+
+    // The clock, the statuses and the countdown, all in Lisbon time
+    const clock = document.getElementById('clock');
+    const countdown = document.getElementById('countdown');
+    const tick = () => {
+      const { h, m } = lisbonTime();
+      const now = h * 60 + m;
+      clock.textContent = `${pad(h)}:${pad(m)}`;
+      clock.setAttribute('datetime', `${pad(h)}:${pad(m)}`);
+      // The board lists the next five departures, soonest first
+      const rows = [...document.querySelectorAll('[data-time]')];
+      const until = (row) => (toMin(row.dataset.time) - now + 1440) % 1440;
+      rows.sort((a, b) => until(a) - until(b)).forEach((row) => row.parentElement.appendChild(row));
+      rows.forEach((row) => {
+        const status = row.querySelector('[data-status]');
+        const boarding = until(row) <= 20;
+        status.textContent = boarding ? 'BOARDING' : until(row) > 720 ? 'TOMORROW' : 'ON TIME';
+        if (row.hasAttribute('data-nocturne')) status.style.animationName = boarding ? '' : 'none';
+      });
+      let wait = toMin('17:05') - now;
+      if (wait < 0) wait += 24 * 60;
+      countdown.textContent = wait === 0 ? 'leaving now' : `leaves in ${wait >= 60 ? `${Math.floor(wait / 60)} h ` : ''}${wait % 60} min`;
+    };
+    tick();
+    setInterval(tick, 15000);
+
+    // The board flips its characters into place once, on load
+    if (reduced) return;
+    const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    document.querySelectorAll('[data-flap]').forEach((el, row) => {
+      const target = el.textContent;
+      let frame = 0;
+      const settleAt = (i) => 6 + i * 2 + row * 3;
+      const total = settleAt(target.length);
+      const step = () => {
+        el.textContent = [...target].map((ch, i) => (ch === ' ' || ch === ':' || ch === '-' || frame >= settleAt(i) ? ch : glyphs[(Math.random() * glyphs.length) | 0])).join('');
+        if (frame++ < total) setTimeout(step, 38);
+      };
+      step();
+    });
+  })();
+</script>
+</body>
+</html>

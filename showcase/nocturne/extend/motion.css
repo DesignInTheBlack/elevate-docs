@@ -1,0 +1,39 @@
+/* Appended to elevate.css through the Extend option.
+   Elevate classes can play an animation (animation:(…)), but the keyframes
+   themselves, and a reduced-motion switch, are plain CSS. */
+
+@keyframes blink {
+  50% { opacity: 0.25; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* the train light travelling the route, night to dawn */
+@keyframes run-x {
+  from { left: 0%; }
+  to { left: 100%; }
+}
+@keyframes run-y {
+  from { top: 0%; }
+  to { top: 100%; }
+}
+
+@keyframes rise {
+  from { opacity: 0; translate: 0 0.75rem; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}

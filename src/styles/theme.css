@@ -329,7 +329,7 @@ starlight-toc a[aria-current='true'] {
 }
 
 /* Links */
-.sl-markdown-content a:not(.lab a, .pg a, .home-actions a, .home-specs > a, .home-more) {
+.sl-markdown-content a:not(.lab a, .pg a, .home-actions a, .home-specs > a, .home-more, .home-shot) {
 	color: var(--ink);
 	font-weight: 500;
 	text-decoration-line: underline;
@@ -552,6 +552,55 @@ starlight-toc a[aria-current='true'] {
 }
 .home-more::after {
 	content: ' →';
+}
+
+/* Showcase: a desktop shot with a phone shot over its corner */
+.home-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--s-3) var(--s-6);
+}
+.home-more-quiet {
+	color: var(--slate) !important;
+}
+.home-shot {
+	position: relative;
+	display: block;
+	padding-bottom: 12%;
+	padding-right: 6%;
+}
+.home-shot img {
+	margin: 0 !important;
+	display: block;
+	height: auto;
+	border-radius: var(--r-m);
+	box-shadow: 0 0 0 1px var(--hair), 0 24px 48px -24px rgb(7 10 31 / 0.45);
+	transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.home-shot-desk {
+	width: 100%;
+}
+.home-shot-phone {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 24%;
+	border-radius: var(--r-l) !important;
+	box-shadow: 0 0 0 6px #070a1f, 0 0 0 7px var(--hair), 0 28px 48px -16px rgb(7 10 31 / 0.6) !important;
+}
+.home-shot:hover .home-shot-desk {
+	transform: translateY(-4px);
+}
+.home-shot:hover .home-shot-phone {
+	transform: translateY(-10px);
+}
+.home-shot:focus-visible {
+	outline: 2px solid var(--g-prop);
+	outline-offset: 6px;
+	border-radius: var(--r-m);
+}
+@media (prefers-reduced-motion: reduce) {
+	.home-shot img { transition: none; }
 }
 
 /* Split: the head on the left, the work on the right */
