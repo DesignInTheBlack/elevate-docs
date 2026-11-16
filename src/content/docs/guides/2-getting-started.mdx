@@ -39,6 +39,17 @@ Elevate needs Node.js 18 or later.
 
 By default Elevate watches `elevate/templates` and writes `elevate.css` to your project root. Point it at your own source folders in [Configuration](/guides/3-configuration/). To compile once without watching, or to check a class from the terminal, see [Commands and API](/reference/commands/).
 
+## Upgrading
+
+Install the new version, then run `prepare` again.
+
+```bash
+npm install elevate-framework@latest
+npx elevate-framework prepare
+```
+
+This replaces only `elevate/core/`, the compiler. Your config, tokens, rules and templates stay as they are. The old `core` is saved in `.elevate-backup/` first, in case you had edited anything in it.
+
 ## How a class is built
 
 Every class names a property, then one or more values, separated by colons.
