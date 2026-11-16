@@ -34,12 +34,14 @@ export const config = options
 
 | Option | What it does |
 |---|---|
-| `Watch` | The folder Elevate scans, including every folder inside it except `node_modules` and hidden folders. Relative to where you run Elevate |
+| `Watch` | The folder Elevate scans, or a list of folders (`['./src/pages', './src/blocks']`). It reads every folder inside them except `node_modules` and hidden folders. Relative to where you run Elevate |
 | `FileTypes` | Which file extensions to read |
 | `Output` | The folder `elevate.css` is written to |
-| `Extend` | Paths to CSS files appended to the end of `elevate.css` |
+| `Extend` | Paths to CSS files appended to the end of `elevate.css`. Saving one recompiles |
 | `ClassRegex` | Patterns that find class lists in your files. Add one if your framework writes classes another way |
 | `SafeList` | Class names Elevate should skip, such as ones your JavaScript relies on |
+
+While `npm run elevate` is running, saving a template recompiles, and adding or deleting one does too. Saving any file in `elevate/config/`, `elevate/design/` or `elevate/rules/` restarts the compiler, so new tokens, rules and settings take effect without stopping it yourself.
 
 `elevate.css` also starts with a small CSS reset and the [`contain`](/default/containers/) class. Elevate skips class lists inside comments and fenced code blocks.
 

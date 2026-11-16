@@ -27,7 +27,7 @@ Elevate needs Node.js 18 or later.
    npx elevate-framework prepare
    ```
 
-3. Start the compiler. It watches your files and rewrites `elevate.css` every time you save.
+3. Start the compiler. It compiles once, then watches your files and rewrites `elevate.css` every time you save. When you change a token, a rule or the config, it restarts itself to pick up the change.
 
    ```bash
    npm run elevate
@@ -37,7 +37,7 @@ Elevate needs Node.js 18 or later.
 
 </Steps>
 
-By default Elevate watches `elevate/templates` and writes `elevate.css` to your project root. Point it at your own source folder in [Configuration](/guides/3-configuration/).
+By default Elevate watches `elevate/templates` and writes `elevate.css` to your project root. Point it at your own source folders in [Configuration](/guides/3-configuration/). To compile once without watching, or to check a class from the terminal, see [Commands and API](/reference/commands/).
 
 ## How a class is built
 

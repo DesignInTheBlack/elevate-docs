@@ -1,0 +1,97 @@
+---
+title: "Commands and API"
+description: "Compile, check classes and read the design system from the terminal or from your own code."
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Everything here runs your project's own copy of Elevate, so it uses your tokens, rules and config.
+
+## Commands
+
+| Command | What it does |
+|---|---|
+| `npm run elevate` | Compiles once, then watches. Recompiles when a template is saved, added or deleted, and restarts itself when you change a token, rule or setting |
+| `npm run elevate -- build` | Compiles once and exits. Exits with an error code if a class is wrong, which makes it a good build step on a host like Cloudflare Pages or Netlify |
+| `npm run elevate -- check "…"` | Checks a class list without building, and names each class that's wrong |
+| `npm run elevate -- describe` | Prints every breakpoint, token, rule and property as JSON. Add `--out=system.json` to write it to a file |
+
+`npx elevate-framework build`, `check` and `describe` do the same thing.
+
+```bash
+npm run elevate -- check "row gap:d4 /md/ col text:pnk"
+```
+
+```text title="Output"
+× text:pnk: Unable to determine modifier type for "pnk"
+```
+
+Add `--json` to `build` or `check` to get the result as JSON instead of text.
+
+## From your own code
+
+Tools that work alongside Elevate, like a CMS or an editor plugin, can call it directly. Import from your project's `elevate/core/api.ts`, not from the package, so it reads your config. TypeScript files need [tsx](https://tsx.is), which Elevate already installs.
+
+```ts
+import { build, validate, describe } from './elevate/core/api.ts';
+```
+
+None of these start a watcher, and none of them throw.
+
+### build
+
+Compiles every watched template into one stylesheet and writes `elevate.css`.
+
+```ts
+const result = await build();
+if (!result.ok) console.log(result.error);
+```
+
+| Option | Default | What it does |
+|---|---|---|
+| `write` | `true` | Write `elevate.css`. Set it to `false` to get the stylesheet back in `result.css` instead |
+| `extra` | `[]` | More class lists to compile, as if each one were an element in a template |
+| `files` | `true` | Let [envelopes](/guides/4-env-aliases/) update `elevate.env.json` and your templates. Set it to `false` to leave every file alone |
+
+The result has `ok`, `css`, `error`, `warnings`, and `file` once written. When a build fails, nothing is written, so the last good stylesheet stays in place.
+
+### validate
+
+Checks one class list the way the compiler would read it in a template: breakpoint markers, state blocks, scopes and envelopes included.
+
+```ts
+validate('row gap:d4 /zz/ col');
+// {
+//   ok: false,
+//   classes: ['row', 'gap:d4', '/zz/', 'col'],
+//   problems: [{ token: '/zz/', message: '"/zz/" is not a breakpoint. Use one of: 2xs, xs, …', detail: '…' }]
+// }
+```
+
+Each problem names the class that caused it, a one-sentence `message`, and the compiler's full `detail` with its tips.
+
+### describe
+
+Returns the whole design system as plain JSON, so a tool can offer only valid choices.
+
+| Field | What it holds |
+|---|---|
+| `breakpoints` | Each breakpoint's name and minimum width, in order |
+| `tokens` | Your design tokens, by type: `ColorToken`, `SpacingToken`, `FontSizeToken` and the rest, each with its CSS value |
+| `rules` | Keyword values, by rule type, with their CSS. A key ending in `-`, like `from-`, is a prefix that takes a value of the type it maps to |
+| `properties` | For every property, its CSS declarations, the token and rule types it `accepts`, whether it works on its own (`standalone`), and whether it only takes a raw `(value)` (`passThroughOnly`) |
+| `layout` | Layout shorthands that need no value, like `stack` and `split` |
+| `states` | The pseudo-elements and combinators states can use. Any CSS pseudo-class works as a state |
+| `config` | The watched folders, file types, output file and Extend files |
+
+<Aside title="Tokens in JSON">
+`design.ts` can load tokens from a JSON file, which is easier for a tool to write than TypeScript:
+
+```ts
+import brand from "../design/brand.json";
+// …
+ColorToken: { ...colors, ...brand },
+```
+
+Saving the JSON file restarts the compiler, the same as saving `design.ts`.
+</Aside>

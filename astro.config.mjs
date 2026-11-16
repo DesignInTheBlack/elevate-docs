@@ -88,6 +88,7 @@ export default defineConfig({
 					label: 'Reference',
 					items: [
 						{ label: 'Token types', slug: 'reference/system-token-types' },
+						{ label: 'Commands and API', slug: 'reference/commands' },
 						{ label: 'Troubleshooting', slug: 'reference/troubleshooting' },
 					],
 				},
