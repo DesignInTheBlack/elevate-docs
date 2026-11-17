@@ -37,3 +37,11 @@ In Elevate, breakpoints are applied using the `/breakpoint/` syntax in your clas
 <div class="pd:d4 /lg/ pd:d8 /2xl/ pd:d12">Responsive, Organized</div>
 ```
 
+A marker applies to every class after it, up to the next marker. So write the sizes smallest first, and keep each size's classes behind its own marker:
+
+```html
+<!-- pd:d4 everywhere, pd:d8 from md, pd:d12 and a row from lg -->
+<div class="col pd:d4 /md/ pd:d8 /lg/ pd:d12 row">…</div>
+```
+
+A class added to the end of that list lands in the `lg` group, not the base one. Elevate warns, with the file and line, when a class list's markers go backwards (`/lg/ … /md/`) or one appears twice, since that usually means a class is in the wrong group.
