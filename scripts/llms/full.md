@@ -244,6 +244,7 @@ Each element keeps its own breakpoints. If one element writes `col /md/ row:y-ce
 ```
 
 - Chain with `+`: `@hover+focus-visible:[…]` writes `:hover:focus-visible`. To style hover *or* focus, write two blocks.
+- Attribute states follow ARIA and open state, so scripts set attributes instead of swapping classes: `@current` (`aria-current`), `@expanded`, `@selected`, `@pressed` (each `="true"`), `@open` (`[open]`). The `hidden` attribute always wins over display classes.
 - Pseudo-elements: `before`, `after`, `placeholder`, `marker`, `selection`, `backdrop`, `file-selector-button`. One per chain. Use `empty` to set `content: ''`: `@before:[empty_absolute_inset:0_bg-color:black_opacity:0.4]`.
 - Pass-through values work inside: `@hover:[transform:(translateY(-2px))]`.
 - Not supported: nested blocks (`@child:[@hover:[…]]`), pseudo-classes with arguments (`nth-child(2)`, `not(...)`), raw selectors, and media queries inside a block. Put a state block after a breakpoint marker to make it responsive.

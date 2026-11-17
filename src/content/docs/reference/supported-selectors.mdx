@@ -13,6 +13,27 @@ Any pseudo-class token you place in the state chain is passed through without va
 <div class="@hover+focus-visible:[bg-color:indigo_text:white]"></div>
 ```
 
+## Attribute states
+
+These states follow an element's ARIA or open state, so a script can set an attribute and the styles follow, with no classes to swap:
+
+| State | Matches |
+| --- | --- |
+| `@current` | `[aria-current]`, unless it is `"false"` |
+| `@expanded` | `[aria-expanded="true"]` |
+| `@selected` | `[aria-selected="true"]` |
+| `@pressed` | `[aria-pressed="true"]` |
+| `@open` | `[open]`, on `details` and `dialog` |
+
+```html
+<a href="/docs/" aria-current="page" class="text:grey-3 @current:[text:black_font:semibold]">Docs</a>
+<button aria-expanded="false" class="@expanded:[bg-color:grey-1]">Menu</button>
+```
+
+They chain like any state: `@current+hover:[…]`.
+
+The `hidden` attribute always hides an element, even one with a display class such as `row` or `grid`. Toggle `element.hidden` instead of swapping display classes.
+
 ## Pseudo-elements
 
 Supported pseudo-elements are:
