@@ -72,4 +72,4 @@ Each of these is its own property.
 | `text-decoration-style` | `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset`, `outset`, `none`, `hidden` | `text-decoration-style:dotted` |
 | `text-decoration-thickness` | A spacing token | `text-decoration-thickness:d0` |
 
-`line-clamp` writes only the standard `line-clamp` property. Browsers that need the older `-webkit-line-clamp` with `display: -webkit-box` won't clamp from this class alone.
+`line-clamp` writes everything a browser needs to cut text off at that many lines: the line count, plus `display: -webkit-box`, the box direction and `overflow: hidden`. One class is enough.

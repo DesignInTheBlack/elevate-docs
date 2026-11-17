@@ -14,3 +14,14 @@ These are standalone classes. Unlike `hidden`, which removes the element from th
 ```html
 <span class="invisible">Placeholder that still takes up room</span>
 ```
+
+## Hidden from sight, still read aloud
+
+`visually-hidden` takes an element off the screen and leaves it for screen readers. Use it for a label or a status message that sighted visitors don't need.
+
+```html
+<button class="row:x-center:y-center w:d10 h:d10">
+  <svg aria-hidden="true">…</svg>
+  <span class="visually-hidden">Copy</span>
+</button>
+```
