@@ -1,6 +1,6 @@
 ---
 title: "Breakpoints"
-description: "Ten mobile-first breakpoints, from small phones to 4K displays."
+description: "Ten mobile-first breakpoints, from small phones to 4K displays, and how to set your own."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -21,7 +21,13 @@ Each breakpoint is a minimum width. Classes after `/md/` apply from 768px up, so
 | `5xl` | `240rem` | 3840px | 4K displays |
 
 <Aside title="Make it yours">
-Change these values in `elevate/core/system/design/breakpoints.ts`. Keep them in ascending order, since Elevate writes media queries in the order they're listed, and keep names to three letters or numbers: the compiler only recognizes `/name/` markers up to three characters long.
+Set your own breakpoints as `BreakPointToken` in `elevate/config/design.ts`. You can change a width, rename one, add one or remove one:
+
+```ts
+BreakPointToken: { ...breakpoints, tablet: '45rem', wide: '100rem' },
+```
+
+Elevate puts breakpoints in width order wherever it uses them, so the order you write them in doesn't matter. Names can be up to twelve letters, numbers, hyphens or underscores. A `/name/` marker that isn't one of your breakpoints is an error that lists the ones you have. Leave `elevate/core/` alone: an upgrade replaces it.
 </Aside>
 
 ## How to use breakpoints
