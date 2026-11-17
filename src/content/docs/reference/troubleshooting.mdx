@@ -86,4 +86,4 @@ These don't stop the build, but they point at something that won't behave as wri
 | Unclosed ctx scopes | A `ctx:name` was opened and never closed with `ctx:end:name` |
 | `ctx:end:name` does not match the current scope | The end marker names a different scope than the one that's open |
 | `env:name:open` has no definition | The envelope was never defined, so there's nothing to expand |
-| Responsive ambiguity | Two elements carry the same classes in a different order, and one uses a class at every width while the other only uses it from a breakpoint. CSS can't tell them apart. Add or change a class on one of them |
+| Responsive ambiguity | Two elements have exactly the same classes, written in a different order, so one uses a class at every width and the other only from a breakpoint. CSS can't tell them apart. The warning names both places. Add or change a class on one of them. Elements that only share some classes are always told apart |
