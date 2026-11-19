@@ -62,7 +62,7 @@ Three kinds of marker can also appear in a class list. They are not styles thems
 
 ### How values are matched
 
-Each property writes one or more CSS declarations, and each declaration accepts one kind of value. When a class has several values, Elevate gives each value to the first declaration that accepts its kind. That is why order doesn't matter. It also means two values of the same kind go to the same declaration: `bd:indigo:grey` writes `border-color` twice and the last one wins. Give each value its own slot, or use a more specific property (`bd-b:grey+3`).
+Each property writes one or more CSS declarations, and each declaration accepts one kind of value. When a class has several values, Elevate gives each value to the first declaration that accepts its kind. That is why order doesn't matter. If one name belongs to two kinds of token (a size and a typeface both called `display`, say), it goes to whichever declaration the class's other values leave free. On such a site, font:display:hero sets the typeface and the size. It also means two values of the same kind go to the same declaration: `bd:indigo:grey` writes `border-color` twice and the last one wins. Give each value its own slot, or use a more specific property (`bd-b:grey+3`).
 
 Some values carry a prefix that names their slot: `width-px`, `round-d3`, `gap-d4`, `basis-c10`, `order-2`, `from-1`, `to-3`, `off-d1`, `min-c10`, `max-s8`, `bg-grey-4`, `fg-grey-3`. The part after the first `-` is the token: `round-d3` is border-radius `0.75rem`.
 
