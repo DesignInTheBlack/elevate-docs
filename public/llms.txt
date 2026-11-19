@@ -1,6 +1,6 @@
 # Elevate
 
-> Elevate (v1.1.1, beta) is a compile-time CSS framework. Classes like `pd:d4`, `row:x-between:y-center` and `@hover:[bg-color:indigo]` compile into one `elevate.css`. Every value must be a design token; anything else stops the build with the file, line and reason.
+> Elevate (v1.3.1, beta) is a compile-time CSS framework. Classes like `pd:d4`, `row:x-between:y-center` and `@hover:[bg-color:indigo]` compile into one `elevate.css`. Every value must be a design token; anything else stops the build with the file, line and reason.
 
 This is the short version. For every property, every token, the exact error messages and copyable patterns, read the full reference: https://elevate-docs.pages.dev/llms-full.txt
 
@@ -45,7 +45,7 @@ This is the short version. For every property, every token, the exact error mess
 ## Responsive, states, scopes
 
 - Breakpoints are markers: `col gap:d4 /md/ row gap:d8`. A marker applies to every class after it, from that width up (mobile first).
-- States: `@hover:[bg-color:indigo-1_text:white]`. Classes inside are joined with `_`, never spaces. Chain with `+`: `@hover+focus-visible:[…]`. Pseudo-elements: `@before:[empty_absolute_inset:0]`.
+- States: `@hover:[bg-color:indigo-1_text:white]`. Classes inside are joined with `_`, never spaces. Chain with `+`: `@hover+focus-visible:[…]`. Pseudo-elements: `@before:[empty_absolute_inset:0]`. Attribute states: `@current:[…]` (aria-current), `@expanded`, `@selected`, `@pressed`, `@open`; the `hidden` attribute always hides.
 - Scopes: `ctx:card` … `ctx:end:card` raise specificity for the classes between them (in file order). Inside a scope, combinators style relatives: `@child+hover:[…]`, `@children:[…]`, `@siblings:[…]`, `@ancestor:[…]`.
 - Envelopes: `env:card` saves a class list under a name. The compiler rewrites source files when it sees one, so don't add envelopes unless asked.
 

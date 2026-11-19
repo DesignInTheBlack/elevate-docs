@@ -1,6 +1,6 @@
 # Elevate: the complete reference for AI assistants
 
-> Elevate (v1.1.1, beta) is a compile-time CSS framework. You style HTML with classes like `pd:d4`, `row:x-between:y-center` and `@hover:[bg-color:indigo]`, and a compiler turns them into a single `elevate.css`. Every value must come from the project's design tokens. A value outside the system stops the build with the file, the line and the reason, so a mistake is caught at build time and never ships quietly.
+> Elevate (v1.3.1, beta) is a compile-time CSS framework. You style HTML with classes like `pd:d4`, `row:x-between:y-center` and `@hover:[bg-color:indigo]`, and a compiler turns them into a single `elevate.css`. Every value must come from the project's design tokens. A value outside the system stops the build with the file, the line and the reason, so a mistake is caught at build time and never ships quietly.
 
 Docs: https://elevate-docs.pages.dev · Short version: https://elevate-docs.pages.dev/llms.txt · Package: `elevate-framework` on npm
 
@@ -295,6 +295,7 @@ Each element keeps its own breakpoints. If one element writes `col /md/ row:y-ce
 ```
 
 - Chain with `+`: `@hover+focus-visible:[…]` writes `:hover:focus-visible`. To style hover *or* focus, write two blocks.
+- Attribute states follow ARIA and open state, so scripts set attributes instead of swapping classes: `@current` (`aria-current`), `@expanded`, `@selected`, `@pressed` (each `="true"`), `@open` (`[open]`). The `hidden` attribute always wins over display classes.
 - Pseudo-elements: `before`, `after`, `placeholder`, `marker`, `selection`, `backdrop`, `file-selector-button`. One per chain. Use `empty` to set `content: ''`: `@before:[empty_absolute_inset:0_bg-color:black_opacity:0.4]`.
 - Pass-through values work inside: `@hover:[transform:(translateY(-2px))]`.
 - Not supported: nested blocks (`@child:[@hover:[…]]`), pseudo-classes with arguments (`nth-child(2)`, `not(...)`), raw selectors, and media queries inside a block. Put a state block after a breakpoint marker to make it responsive.
@@ -464,6 +465,7 @@ This is the full list the compiler knows. Each property shows the CSS it writes 
 | `invisible` | visibility: hidden | standalone |
 | `collapse` | visibility: collapse | standalone |
 | `content-visibility` | content-visibility | `auto`, `visible`, `hidden` |
+| `visually-hidden` | position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0 | standalone |
 
 #### Position
 
@@ -573,6 +575,7 @@ This is the full list the compiler knows. Each property shows the CSS it writes 
 | `font-style` | font-style | `normal`, `italic`, `oblique` |
 | `font-variant` | font-variant | `normal`, `small-caps`, `all-small-caps`, `petite-caps`, `all-petite-caps`, `unicase`, `titling-caps` |
 | `font-stretch` | font-stretch | `ultra-condensed`, `extra-condensed`, `condensed`, `semi-condensed`, `normal`, `semi-expanded`, `expanded`, `extra-expanded`, `ultra-expanded` |
+| `font-numeric` | font-variant-numeric | `normal`, `tabular-nums`, `proportional-nums`, `lining-nums`, `oldstyle-nums`, `slashed-zero`, `diagonal-fractions`, `ordinal` |
 | `text-indent` | text-indent | <spacing> |
 | `text-overflow` | text-overflow | `clip`, `ellipsis` |
 | `text-rendering` | text-rendering | `auto`, `optimizeSpeed`, `optimizeLegibility`, `geometricPrecision` |
@@ -581,7 +584,7 @@ This is the full list the compiler knows. Each property shows the CSS it writes 
 | `writing-mode` | writing-mode | `horizontal-tb`, `vertical-rl`, `vertical-lr`, `sideways-rl`, `sideways-lr` |
 | `direction` | direction | `ltr`, `rtl` |
 | `unicode-bidi` | unicode-bidi | `normal`, `embed`, `bidi-override`, `isolate`, `isolate-override`, `plaintext` |
-| `line-clamp` | line-clamp | <number> |
+| `line-clamp` | -webkit-line-clamp | <number> |
 | `text-decoration-color` | text-decoration-color | <color> |
 | `text-decoration-style` | text-decoration-style | `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset`, `outset`, `none`, `hidden` |
 | `text-decoration-thickness` | text-decoration-thickness | <spacing> |

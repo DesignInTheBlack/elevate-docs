@@ -5,7 +5,7 @@
 // ╚════════════════════════════════════════════════════════════════════╝
 
 import { elevateCompiler } from './parser.js';
-import { getBreakpointPriority, getModifierValue, assembleCSS } from './utility.js';
+import { getBreakpointPriority, getBreakpointWidth, getModifierValue, assembleCSS } from './utility.js';
 import { scanFolders, parseClassValue, splitClassTokens } from './scan.js';
 import { config } from '../config/elevate.js';
 import fs from 'fs';
@@ -52,8 +52,8 @@ const cssEscape = (value: string) =>
 
 const isEnvToken = (token: string) => Boolean(getEnvDefineName(token) || getEnvOpenName(token));
 const isCtxToken = (token: string) => token.startsWith('ctx:');
-const isBreakpointToken = (token: string) => /^\/[a-zA-Z0-9_-]{1,5}\/$/.test(token);
-const isMarkerToken = (token: string) => /^\/[a-zA-Z0-9]{1,3}\/$/.test(token);
+const isBreakpointToken = (token: string) => /^\/[a-zA-Z0-9_-]{1,12}\/$/.test(token);
+const isMarkerToken = (token: string) => /^\/[a-zA-Z0-9_-]{1,12}\/$/.test(token);
 
 export const loadEnvRegistry = (warn: Warn = console.warn): Record<string, string[]> => {
   try {
@@ -348,6 +348,17 @@ export function generateCSS(
           // A marker is a whole class like /md/. Anchored, so a pass-through value
           // such as bg-img:(url(/img/a.jpg)) is never mistaken for one.
           if (isMarkerToken(classString)) {
+            // Mobile first: a marker applies to every class after it, so the
+            // sizes read smallest to largest. One that goes backwards usually
+            // means a class has landed in the wrong group.
+            const rank = getBreakpointPriority(classString);
+            const before = lastBreak ? getBreakpointPriority(lastBreak) : -1;
+            if (lastBreak && rank >= 0 && rank <= before) {
+              const where = instance.file ? ` in ${instance.file} on line ${instance.lineNumber}` : '';
+              warn(rank === before
+                ? `Breakpoint written twice: ${classString} appears more than once in one class list${where}. Put its classes together after a single ${classString}.`
+                : `Breakpoints out of order: ${classString} comes after ${lastBreak} in one class list${where}. A marker applies to every class after it, so write the sizes smallest first and keep each size's classes behind its own marker.`);
+            }
             lastBreak = classString;
             return;
           }
@@ -461,19 +472,31 @@ export function generateCSS(
       const excludeIsExact = !elsewhere.some((e) => here.some((h) => covers(e, h)));
       const include = `:where(${Array.from(new Set(here.map((u) => u.selector))).join(', ')})`;
       const exclude = `:where(:not(${Array.from(new Set(elsewhere.map((u) => u.selector))).join(', ')}))`;
-      if (!includeIsExact && !excludeIsExact) {
+      // :where() adds no specificity, so rule weights are unchanged.
+      // Prefer an exact form; between two exact forms, the shorter one.
+      if (excludeIsExact && (!includeIsExact || elsewhere.length <= here.length)) return exclude;
+      if (includeIsExact) return include;
+      // Neither short form is exact: some element here is a smaller set of
+      // classes than one elsewhere, and the other way round. So name each
+      // element here by its classes, minus every element elsewhere that
+      // carries all of them and more.
+      const same = (a: Use, b: Use) => a.tokens.size === b.tokens.size && covers(a, b);
+      const precise = here.map((h) => {
+        const larger = elsewhere.filter((e) => covers(h, e) && !same(h, e)).map((e) => e.selector);
+        return larger.length ? `${h.selector}:not(${Array.from(new Set(larger)).join(', ')})` : h.selector;
+      });
+      // Only the very same classes at different breakpoints, which takes two
+      // elements that write them in a different order, can't be separated.
+      const twin = here.find((h) => elsewhere.some((e) => same(h, e)));
+      if (twin) {
         const key = `${className}@${rank}`;
         if (!warnedAmbiguity.has(key)) {
           warnedAmbiguity.add(key);
-          const e = elsewhere.find((x) => here.some((h) => covers(x, h)))!;
-          warn(`Responsive ambiguity: "${className}" in ${e.where} can't be told apart from an element that carries all of its classes but uses "${className}" at a different breakpoint. Add or change a class on one of them.`);
+          const other = elsewhere.find((e) => same(twin, e))!;
+          warn(`Responsive ambiguity: the elements in ${twin.where} and ${other.where} have exactly the same classes, but use "${className}" at different breakpoints, so CSS can't tell them apart. Add or change a class on one of them.`);
         }
       }
-      // :where() adds no specificity, so rule weights are unchanged.
-      // Prefer the exact form; between two exact forms, the shorter one.
-      if (excludeIsExact && (!includeIsExact || elsewhere.length <= here.length)) return exclude;
-      if (includeIsExact) return include;
-      return exclude;
+      return `:where(${Array.from(new Set(precise)).join(', ')})`;
     };
     scopeByFile.forEach((stack, fileKey) => {
       if (stack.length > 0) {
@@ -548,15 +571,29 @@ export function generateCSS(
       'file-selector-button',
     ]);
 
+    // States that follow an element's ARIA or open state, so a script sets
+    // aria-current or aria-expanded and the styles follow, without touching
+    // classes: @current:[text:ink], @expanded:[rotate:180].
+    const ATTRIBUTE_STATES: Record<string, string> = {
+      current: '[aria-current]:not([aria-current="false"])',
+      expanded: '[aria-expanded="true"]',
+      selected: '[aria-selected="true"]',
+      pressed: '[aria-pressed="true"]',
+      open: '[open]',
+    };
+
     const buildStateSuffix = (state: string | string[] | null | undefined) => {
       if (!state) return '';
       const chain = Array.isArray(state) ? state : String(state).split('+');
       const pseudoClasses: string[] = [];
       const pseudoElems: string[] = [];
 
+      const attributes: string[] = [];
       chain.forEach((token) => {
         if (!token) return;
-        if (pseudoElements.has(token)) {
+        if (ATTRIBUTE_STATES[token]) {
+          attributes.push(ATTRIBUTE_STATES[token]);
+        } else if (pseudoElements.has(token)) {
           pseudoElems.push(token);
         } else {
           pseudoClasses.push(token);
@@ -570,7 +607,7 @@ export function generateCSS(
         );
       }
       const elemPart = pseudoElems.length ? `::${pseudoElems[0]}` : '';
-      return `${classPart}${elemPart}`;
+      return `${attributes.join('')}${classPart}${elemPart}`;
     };
 
     const defaultAutoGridMin = (() => {
@@ -594,7 +631,7 @@ export function generateCSS(
 
         // Open new media query if breakpoint exists
         if (breakpointSupervisor) {
-          const breakpoint = getModifierValue(item.breakpoint.replace(/\//g, ''));
+          const breakpoint = getBreakpointWidth(item.breakpoint);
           if (!breakpoint) {
             throw new Error(`Invalid breakpoint value: ${item.breakpoint}`);
           }
@@ -625,7 +662,9 @@ export function generateCSS(
                           ? `display:grid;\ngrid-template-columns:repeat(auto-fit, minmax(${defaultAutoGridMin}, 1fr));`
                           : item.property === 'grid'
                             ? 'display:grid;'
-                            : '';
+                            : item.property === 'line-clamp'
+                              ? 'display:-webkit-box;\n-webkit-box-orient:vertical;\noverflow:hidden;'
+                              : '';
 
       const modifiers = item.modifiers.map((modifier: string) => `${modifier};`).join('\n');
 

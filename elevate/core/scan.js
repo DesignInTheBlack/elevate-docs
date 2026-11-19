@@ -110,7 +110,7 @@ const isValidClass = (c) => {
     ) return false
   
     // Allow slash-wrapped breakpoints like /lg/
-    const isSlashWrapped = /^\/[a-zA-Z0-9_-]{1,5}\/$/.test(c)
+    const isSlashWrapped = /^\/[a-zA-Z0-9_-]{1,12}\/$/.test(c)
     if (c.startsWith('/') || c.endsWith('/')) {
       return isSlashWrapped
     }
@@ -417,7 +417,8 @@ const extractClasses = (content, classList, filePath) => {
       const isStatic = !rawValue.includes('${')
       let classValue = rawValue.trim()
 
-      if (regex.source.includes('`') || regex.source.includes('{')) {
+      // A ${…} inside the quotes is the script's own value, not a class.
+      if (!isStatic || regex.source.includes('`') || regex.source.includes('{')) {
         const staticParts = extractStaticClassesFromTemplate(classValue)
         classValue = staticParts.join(' ')
       }

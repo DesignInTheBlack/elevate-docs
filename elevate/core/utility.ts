@@ -413,7 +413,23 @@ function constructRule(modType: string, property: string, modifier: string, cont
 // ╚════════════════════════════════════════════════════════════════════╝
 
 // Determines the type of a given modifier (token) by checking known token maps and patterns.
+// The answer depends only on the modifier and the token maps, which don't
+// change after loading, so each modifier is worked out once. (Builds call this
+// for every modifier of every class at every screen size.)
+const modifierTypes = new Map<string, string[]>();
+
 export function getModifierType(
+    modifier: string,
+    context?: { fileName: string, lineNumber: number }
+): string[] {
+    const known = modifierTypes.get(modifier);
+    if (known) return [...known];
+    const found = findModifierType(modifier, context);
+    modifierTypes.set(modifier, found);
+    return [...found];
+}
+
+function findModifierType(
     modifier: string,
     context?: { fileName: string, lineNumber: number }
 ): string[] {
@@ -533,7 +549,19 @@ For more information, refer to https://elevate-docs.pages.dev\n`
 }
 
 // Attempts to find a given modifier in the general token maps and returns its corresponding value if found.
+// Like getModifierType, the answer depends only on the modifier and which token
+// types the property accepts, so each pair is looked up once.
+const generalValues = new Map<string, string | null | undefined>();
+
 function getGeneralTokenValue(modifier: string, context: Record<string, string>): string | null {
+    const key = context ? `${modifier}\u0001${JSON.stringify(Object.values(context))}` : `${modifier}\u0001`;
+    if (generalValues.has(key)) return generalValues.get(key) as string | null;
+    const value = findGeneralTokenValue(modifier, context);
+    generalValues.set(key, value);
+    return value;
+}
+
+function findGeneralTokenValue(modifier: string, context: Record<string, string>): string | null {
 
     if (context) {
 
@@ -713,10 +741,33 @@ For more information, refer to https://elevate-docs.pages.dev\n`
 // ║    Handles final CSS content output to a file.                     ║
 // ╚════════════════════════════════════════════════════════════════════╝
 
-// Determines the priority of a breakpoint by its index in the breakpoints map, used for responsive ordering.
+// A breakpoint's width in px, for putting breakpoints in order.
+const widthInPx = (value: string): number => {
+    const m = /^(-?[\d.]+)(px|rem|em)?$/.exec(String(value).trim());
+    if (!m) return Number.POSITIVE_INFINITY;
+    return Number(m[1]) * (m[2] === 'rem' || m[2] === 'em' ? 16 : 1);
+};
+
+// The project's breakpoints: BreakPointToken in config/design.ts (Elevate's
+// defaults unless the project changes them), narrowest first. Every part of
+// Elevate reads breakpoints from here, so a project can rename, move, add or
+// remove them in one place.
+export const siteBreakpoints: { name: string; minWidth: string }[] = Object.entries(
+    ((designSystem as any).BreakPointToken || breakpoints) as Record<string, string>
+)
+    .map(([name, minWidth]) => ({ name, minWidth: String(minWidth) }))
+    .sort((a, b) => widthInPx(a.minWidth) - widthInPx(b.minWidth));
+
+// A breakpoint's min-width, or undefined if the project has no such breakpoint.
+export function getBreakpointWidth(breakpoint: string): string | undefined {
+    const clean = breakpoint.replace(/\//g, '');
+    return siteBreakpoints.find((b) => b.name === clean)?.minWidth;
+}
+
+// Determines the priority of a breakpoint by its width order, used for responsive ordering.
 export function getBreakpointPriority(breakpoint: string): number {
-    const clean = breakpoint.replace(/\//g, '') as BreakpointToken;
-    return Object.keys(breakpoints).indexOf(clean);
+    const clean = breakpoint.replace(/\//g, '');
+    return siteBreakpoints.findIndex((b) => b.name === clean);
 }
 // ╔════════════════════════════════════════════════════════════════════╗
 // ║                   FILE WRITING                                     ║
@@ -733,7 +784,8 @@ export async function assembleCSS(content: string): Promise<{ css: string; warni
         const breakpointKey = key as BreakpointToken;
         const spacingValue = value as SpacingToken;
         // Resolve actual values
-        const minWidth = breakpoints[breakpointKey]; // e.g., '320px'
+        const minWidth = getBreakpointWidth(breakpointKey); // e.g., '320px'
+        if (!minWidth) return; // the project has no breakpoint by that name
         const padding = spacing[spacingValue];      // e.g., '1.25rem'
         // Create CSS entry
         let newEntry = `
